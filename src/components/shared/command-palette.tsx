@@ -9,8 +9,10 @@ import {
     Smile,
     User,
     UserPlus,
-    FileText
+    FileText,
+    Loader2
 } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
 
 import {
     CommandDialog,
@@ -31,12 +33,22 @@ interface PatientResult {
     name: string;
     phone: string;
     healthFloId: string;
+    maskedAadhaar: string;
 }
 
 export function CommandPalette() {
     const [open, setOpen] = React.useState(false)
     const [query, setQuery] = React.useState("")
+    const [debouncedQuery, setDebouncedQuery] = React.useState("")
     const router = useRouter()
+
+    // ⏲️ 300ms Debounce (Master Blueprint requirement)
+    React.useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedQuery(query)
+        }, 300)
+        return () => clearTimeout(timer)
+    }, [query])
 
     React.useEffect(() => {
         const down = (e: KeyboardEvent) => {
@@ -51,13 +63,13 @@ export function CommandPalette() {
     }, [])
 
     const { data: searchResults, isLoading } = useQuery({
-        queryKey: ['globalSearch', query],
+        queryKey: ['globalSearch', debouncedQuery],
         queryFn: async () => {
-            if (query.length < 2) return [];
-            const res = await api.get<PatientResult[]>(`/patients/search?q=${query}`);
+            if (debouncedQuery.length < 2) return [];
+            const res = await api.get<PatientResult[]>(`/patients/search?q=${debouncedQuery}`);
             return res.data;
         },
-        enabled: query.length >= 2,
+        enabled: debouncedQuery.length >= 2,
     })
 
     const onSelectPatient = (id: string) => {
@@ -68,13 +80,23 @@ export function CommandPalette() {
     return (
         <>
             <CommandDialog open={open} onOpenChange={setOpen}>
-                <CommandInput
-                    placeholder="Search patients by name, ID or mobile..."
-                    value={query}
-                    onValueChange={setQuery}
-                />
-                <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                <div className="relative">
+                    <CommandInput
+                        placeholder="Search patients by name, ID or mobile..."
+                        value={query}
+                        onValueChange={setQuery}
+                        className="h-14"
+                    />
+                    {isLoading && (
+                        <div className="absolute right-4 top-4">
+                            <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
+                        </div>
+                    )}
+                </div>
+                <CommandList className="max-h-[450px]">
+                    <CommandEmpty>
+                        {query.length < 2 ? "Type at least 2 characters..." : "No results found."}
+                    </CommandEmpty>
 
                     {searchResults && searchResults.length > 0 && (
                         <CommandGroup heading="Patients">
@@ -82,14 +104,27 @@ export function CommandPalette() {
                                 <CommandItem
                                     key={patient.id}
                                     onSelect={() => onSelectPatient(patient.id)}
-                                    className="flex items-center justify-between"
+                                    className="flex items-center justify-between p-3"
                                 >
-                                    <div className="flex items-center">
-                                        <User className="mr-2 h-4 w-4" />
-                                        <span>{patient.name}</span>
-                                        <span className="ml-2 text-[10px] text-muted-foreground">({patient.healthFloId})</span>
+                                    <div className="flex items-center space-x-3">
+                                        <div className="h-9 w-9 rounded-full bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
+                                            <User className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center">
+                                                <span className="font-semibold text-sm">{patient.name}</span>
+                                                <Badge variant="outline" className="ml-2 text-[9px] font-mono border-indigo-100 bg-indigo-50/30 text-indigo-700">
+                                                    {patient.healthFloId}
+                                                </Badge>
+                                            </div>
+                                            <div className="text-[10px] text-muted-foreground flex items-center space-x-2 mt-0.5">
+                                                <span>{patient.maskedAadhaar}</span>
+                                                <span>•</span>
+                                                <span>{patient.phone}</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <span className="text-xs font-mono text-muted-foreground">{patient.phone}</span>
+                                    <CommandShortcut>↵</CommandShortcut>
                                 </CommandItem>
                             ))}
                         </CommandGroup>
