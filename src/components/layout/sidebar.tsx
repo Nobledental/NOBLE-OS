@@ -3,26 +3,25 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import {
-    LayoutDashboard,
-    Users,
-    Calendar,
-    Settings,
-    Activity,
-    CreditCard,
-    Box
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PermissionGuard } from "@/components/security/permission-guard";
 
 const sidebarItems = [
     { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
     { name: "Live Queue", icon: Activity, href: "/dashboard/queue" },
     { name: "Patients", icon: Users, href: "/dashboard/patients" },
     { name: "Appointments", icon: Calendar, href: "/dashboard/appointments" },
-    { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing" },
-    { name: "Inventory", icon: Box, href: "/dashboard/inventory" },
-    { name: "Settings", icon: Settings, href: "/dashboard/settings" },
-];
+    { name: "Clinical Master", icon: Stethoscope, href: "/dashboard/clinical", permission: 'can_view_clinical' },
+    { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' },
+    { name: "Inventory", icon: Box, href: "/dashboard/inventory", permission: 'can_edit_inventory' },
+    { name: "Settings", icon: Settings, href: "/dashboard/settings", permission: 'can_manage_staff' },
+] as const;
+
+interface SidebarItem {
+    name: string;
+    icon: any;
+    href: string;
+    permission?: "can_view_revenue" | "can_edit_inventory" | "can_view_clinical" | "can_manage_staff";
+}
 
 export function AppSidebar() {
     const pathname = usePathname();
@@ -38,22 +37,34 @@ export function AppSidebar() {
                         Clinic Manager v2.0
                     </p>
                     <div className="space-y-1">
-                        {sidebarItems.map((item) => (
-                            <Button
-                                key={item.href}
-                                variant={pathname === item.href ? "secondary" : "ghost"}
-                                className={cn(
-                                    "w-full justify-start",
-                                    pathname === item.href && "bg-slate-100 dark:bg-slate-800"
-                                )}
-                                asChild
-                            >
-                                <Link href={item.href}>
-                                    <item.icon className="mr-2 h-4 w-4" />
-                                    {item.name}
-                                </Link>
-                            </Button>
-                        ))}
+                        {sidebarItems.map((item) => {
+                            const button = (
+                                <Button
+                                    key={item.href}
+                                    variant={pathname === item.href ? "secondary" : "ghost"}
+                                    className={cn(
+                                        "w-full justify-start",
+                                        pathname === item.href && "bg-slate-100 dark:bg-slate-800"
+                                    )}
+                                    asChild
+                                >
+                                    <Link href={item.href}>
+                                        <item.icon className="mr-2 h-4 w-4" />
+                                        {item.name}
+                                    </Link>
+                                </Button>
+                            );
+
+                            if (item.permission) {
+                                return (
+                                    <PermissionGuard key={item.href} permission={item.permission} fallback={null}>
+                                        {button}
+                                    </PermissionGuard>
+                                );
+                            }
+
+                            return button;
+                        })}
                     </div>
                 </div>
                 <div className="px-3 py-2">
