@@ -10,9 +10,12 @@ import {
     User,
     UserPlus,
     FileText,
-    Loader2
+    Loader2,
+    CheckCircle2,
+    AlertCircle
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
+import { toast } from "sonner"
 
 import {
     CommandDialog,
@@ -77,6 +80,20 @@ export function CommandPalette() {
         router.push(`/patients/${id}`)
     }
 
+    const onCheckIn = async (patientId: string, isEmergency = false) => {
+        try {
+            await api.post('/appointments/check-in', {
+                patientId,
+                clinicId: 'noble-dental-primary', // Hardcoded for Noble Dental
+                isEmergency
+            });
+            toast.success(isEmergency ? "Emergency Check-in Priority #1" : "Patient Checked In successfully");
+            setOpen(false);
+        } catch (error) {
+            toast.error("Check-in failed. Please try again.");
+        }
+    }
+
     return (
         <>
             <CommandDialog open={open} onOpenChange={setOpen}>
@@ -124,7 +141,23 @@ export function CommandPalette() {
                                             </div>
                                         </div>
                                     </div>
-                                    <CommandShortcut>↵</CommandShortcut>
+                                    <div className="flex items-center space-x-2">
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onCheckIn(patient.id) }}
+                                            className="p-1.5 hover:bg-green-100 rounded-full text-green-600 transition-colors"
+                                            title="Normal Check-in"
+                                        >
+                                            <CheckCircle2 className="h-4 w-4" />
+                                        </button>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); onCheckIn(patient.id, true) }}
+                                            className="p-1.5 hover:bg-red-100 rounded-full text-red-600 transition-colors"
+                                            title="Emergency Check-in"
+                                        >
+                                            <AlertCircle className="h-4 w-4" />
+                                        </button>
+                                        <CommandShortcut>↵</CommandShortcut>
+                                    </div>
                                 </CommandItem>
                             ))}
                         </CommandGroup>

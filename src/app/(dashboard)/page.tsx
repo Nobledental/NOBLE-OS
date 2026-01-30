@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Activity, DollarSign, Users, ArrowUpRight, Clock } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ActiveQueue } from "@/components/dashboard/active-queue";
 
 export default function DashboardPage() {
     return (
@@ -38,34 +39,10 @@ export default function DashboardPage() {
                     </CardContent>
                 </Card>
 
-                {/* Zone 2: Live Queue (Takes up 3 cols) */}
-                <Card className="col-span-3">
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-medium">
-                            Live Queue Status
-                        </CardTitle>
-                        <Activity className="h-4 w-4 text-muted-foreground animate-pulse" />
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4 mt-2">
-                            {[1, 2, 3].map((i) => (
-                                <div key={i} className="flex items-center justify-between border-b pb-2 last:border-0">
-                                    <div className="flex items-center space-x-3">
-                                        <div className="h-9 w-9 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-700">{i}</div>
-                                        <div>
-                                            <p className="text-sm font-medium leading-none">Walk-in Patient</p>
-                                            <p className="text-xs text-muted-foreground">General Checkup</p>
-                                        </div>
-                                    </div>
-                                    <div className="text-xs font-mono text-slate-500 flex items-center">
-                                        <Clock className="w-3 h-3 mr-1" /> 12m
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        <Button variant="ghost" className="w-full mt-4 text-xs text-muted-foreground">View Full Queue</Button>
-                    </CardContent>
-                </Card>
+                {/* Zone 2: Live Queue (Takes up 3 cols) - Master Blueprint Phase 5 */}
+                <div className="col-span-3">
+                    <ActiveQueue />
+                </div>
 
                 {/* Zone 3: Quick Stats (Row 2) */}
                 <Card className="col-span-2">

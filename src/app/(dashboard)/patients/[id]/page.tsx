@@ -13,6 +13,8 @@ import { ClinicalTimeline } from "@/components/clinical/timeline";
 import { DentalChart } from "@/components/clinical/dental-chart";
 import { ClinicalConsultation } from "@/components/clinical/consultation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { VitalsHUD } from "@/components/clinical/vitals-hud";
+import { PreOpChecklist } from "@/components/clinical/pre-op-checklist";
 
 export default function PatientDetailPage() {
     const { id } = useParams();
@@ -58,147 +60,148 @@ export default function PatientDetailPage() {
         .reverse() || [];
 
     return (
-        <div className="p-8 space-y-6">
-            {/* Hero Section */}
-            <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-6">
-                    <Avatar className="h-20 w-20 ring-4 ring-indigo-50">
-                        <AvatarFallback className="text-2xl font-bold bg-indigo-600 text-white">
-                            {patient.name?.charAt(0)}
-                        </AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <h1 className="text-3xl font-bold tracking-tight">{patient.name}</h1>
-                        <div className="flex items-center space-x-2 mt-2">
-                            <Badge variant="secondary" className="font-mono">{patient.healthflo_id}</Badge>
-                            <span className="text-muted-foreground text-sm flex items-center">
-                                <Activity className="w-3 h-3 mr-1" />
-                                {patient.gender}, {patient.age} yrs
-                            </span>
+        <div className="flex flex-col h-full bg-slate-50/30 dark:bg-slate-950">
+            {/* Phase 6: Chair-Side HUD */}
+            <VitalsHUD />
+
+            <div className="p-8 space-y-6">
+                {/* Hero Section */}
+                <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-6">
+                        <Avatar className="h-20 w-20 ring-4 ring-indigo-50">
+                            <AvatarFallback className="text-2xl font-bold bg-indigo-600 text-white">
+                                {patient.name?.charAt(0)}
+                            </AvatarFallback>
+                        </Avatar>
+                        <div>
+                            <h1 className="text-3xl font-bold tracking-tight">{patient.name}</h1>
+                            <div className="flex items-center space-x-2 mt-2">
+                                <Badge variant="secondary" className="font-mono">{patient.healthflo_id}</Badge>
+                                <span className="text-muted-foreground text-sm flex items-center">
+                                    <Activity className="w-3 h-3 mr-1" />
+                                    {patient.gender}, {patient.age} yrs
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="flex space-x-2">
-                    <Button variant="outline">Schedule Visit</Button>
-                    <Button className="bg-indigo-600 hover:bg-indigo-700">New Clinical Note</Button>
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Column 1: Info & Baseline */}
-                <div className="space-y-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-sm font-semibold flex items-center">
-                                <Phone className="w-4 h-4 mr-2" />
-                                Contact Details
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="flex items-center text-sm group cursor-pointer">
-                                <Phone className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
-                                {patient.pii?.primary_contact || patient.user?.phone}
-                            </div>
-                            <div className="flex items-center text-sm group cursor-pointer">
-                                <Mail className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
-                                {patient.pii?.email || patient.user?.email || "No email"}
-                            </div>
-                            <div className="flex items-center text-sm group cursor-pointer">
-                                <MapPin className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
-                                <span className="line-clamp-2">{patient.pii?.full_address || "No address provided"}</span>
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-sm font-semibold flex items-center">
-                                <Activity className="w-4 h-4 mr-2" />
-                                Medical Baseline
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border">
-                                    <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Blood Group</p>
-                                    <p className="font-bold text-red-600">{patient.blood_group || "O+"}</p>
-                                </div>
-                                <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border">
-                                    <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Latest BMI</p>
-                                    <p className="font-bold">{patient.anthropometry?.bmi || "22.4"}</p>
-                                </div>
-                            </div>
-                            <div>
-                                <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Chronic Conditions</p>
-                                <div className="flex flex-wrap gap-1">
-                                    {patient.medical_history?.list?.map((h: any, i: number) => (
-                                        <Badge key={i} variant="outline" className="text-[10px]">{h.condition}</Badge>
-                                    )) || <span className="text-xs text-muted-foreground">None recorded</span>}
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <div className="flex space-x-2">
+                        <Button variant="outline">Schedule Visit</Button>
+                        <Button className="bg-indigo-600 hover:bg-indigo-700">New Clinical Note</Button>
+                    </div>
                 </div>
 
-                {/* Column 2 & 3: Clinical Workspace */}
-                <div className="lg:col-span-2 space-y-6">
-                    <Tabs defaultValue="consultation" className="w-full">
-                        <TabsList className="grid w-full grid-cols-3 mb-4">
-                            <TabsTrigger value="consultation" className="text-xs">
-                                <ClipboardCheck className="w-3.5 h-3.5 mr-2" />
-                                Consultation
-                            </TabsTrigger>
-                            <TabsTrigger value="charts" className="text-xs">
-                                <LayoutGrid className="w-3.5 h-3.5 mr-2" />
-                                Dental Chart
-                            </TabsTrigger>
-                            <TabsTrigger value="vitals" className="text-xs">
-                                <TrendingUp className="w-3.5 h-3.5 mr-2" />
-                                Vitals History
-                            </TabsTrigger>
-                        </TabsList>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* Column 1: Info & Baseline */}
+                    <div className="space-y-6">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-sm font-semibold flex items-center">
+                                    <Phone className="w-4 h-4 mr-2" />
+                                    Contact Details
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="flex items-center text-sm group cursor-pointer">
+                                    <Phone className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
+                                    {patient.pii?.primary_contact || patient.user?.phone}
+                                </div>
+                                <div className="flex items-center text-sm group cursor-pointer">
+                                    <Mail className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
+                                    {patient.pii?.email || patient.user?.email || "No email"}
+                                </div>
+                                <div className="flex items-center text-sm group cursor-pointer">
+                                    <MapPin className="w-3.5 h-3.5 mr-3 text-muted-foreground group-hover:text-indigo-600" />
+                                    <span className="line-clamp-2">{patient.pii?.full_address || "No address provided"}</span>
+                                </div>
+                            </CardContent>
+                        </Card>
 
-                        <TabsContent value="consultation">
-                            <Card>
-                                <CardContent className="pt-6">
-                                    <ClinicalConsultation />
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-sm font-semibold flex items-center">
+                                    <Activity className="w-4 h-4 mr-2" />
+                                    Medical Baseline
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid grid-cols-2 gap-3">
+                                    <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border">
+                                        <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Blood Group</p>
+                                        <p className="font-bold text-red-600">{patient.blood_group || "O+"}</p>
+                                    </div>
+                                    <div className="p-3 bg-slate-50 dark:bg-slate-900 rounded-lg border">
+                                        <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Latest BMI</p>
+                                        <p className="font-bold">{patient.anthropometry?.bmi || "22.4"}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p className="text-[10px] font-bold uppercase text-slate-500 mb-1">Chronic Conditions</p>
+                                    <div className="flex flex-wrap gap-1">
+                                        {patient.medical_history?.list?.map((h: any, i: number) => (
+                                            <Badge key={i} variant="outline" className="text-[10px]">{h.condition}</Badge>
+                                        )) || <span className="text-xs text-muted-foreground">None recorded</span>}
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
 
-                        <TabsContent value="charts">
-                            <DentalChart />
-                        </TabsContent>
+                    {/* Column 2 & 3: Clinical Workspace */}
+                    <div className="lg:col-span-2 space-y-6">
+                        <Tabs defaultValue="consultation" className="w-full">
+                            <TabsList className="grid w-full grid-cols-3 mb-4">
+                                <TabsTrigger value="consultation" className="text-xs">
+                                    <ClipboardCheck className="w-3.5 h-3.5 mr-2" />
+                                    Consultation
+                                </TabsTrigger>
+                                <TabsTrigger value="charts" className="text-xs">
+                                    <LayoutGrid className="w-3.5 h-3.5 mr-2" />
+                                    Dental Chart
+                                </TabsTrigger>
+                                <TabsTrigger value="vitals" className="text-xs">
+                                    <TrendingUp className="w-3.5 h-3.5 mr-2" />
+                                    Vitals History
+                                </TabsTrigger>
+                            </TabsList>
 
-                        <TabsContent value="vitals">
-                            <Card>
-                                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                                    <CardTitle className="text-sm font-semibold flex items-center">
-                                        <TrendingUp className="w-4 h-4 mr-2" />
-                                        Vitals Trend (Systolic BP vs Pulse)
-                                    </CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <VitalsChart data={vitalsData} />
-                                </CardContent>
-                            </Card>
-                        </TabsContent>
-                    </Tabs>
+                            <TabsContent value="consultation">
+                                <Card>
+                                    <CardContent className="pt-6">
+                                        <ClinicalConsultation />
+                                    </CardContent>
+                                </Card>
+                            </TabsContent>
 
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-sm font-semibold">Visit History</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ClinicalTimeline records={records} />
-                        </CardContent>
-                    </Card>
+                            <TabsContent value="charts">
+                                <DentalChart />
+                            </TabsContent>
+
+                            <TabsContent value="vitals">
+                                <Card>
+                                    <CardHeader className="flex flex-row items-center justify-between pb-2">
+                                        <CardTitle className="text-sm font-semibold flex items-center">
+                                            <TrendingUp className="w-4 h-4 mr-2" />
+                                            Vitals Trend (Systolic BP vs Pulse)
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <VitalsChart data={vitalsData} />
+                                    </CardContent>
+                                </Card>
+                            </TabsContent>
+                        </Tabs>
+
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-sm font-semibold">Visit History</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ClinicalTimeline records={records} />
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             </div>
         </div>
     );
-}
-
-function Label({ children, className }: { children: React.ReactNode, className?: string }) {
-    return <span className={className}>{children}</span>;
 }
