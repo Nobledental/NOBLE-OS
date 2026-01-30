@@ -32,17 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
-          {/* Main Application Layout */}
-          <div className="flex h-screen overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50">
-            {/* Fixed Sidebar */}
-            <AppSidebar />
-
-            {/* Main Content Area */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-              <CommandPalette />
-              {children}
-            </div>
-          </div>
+          {children}
         </Providers>
       </body>
     </html>
