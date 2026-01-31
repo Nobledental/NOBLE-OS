@@ -1,0 +1,815 @@
+/**
+ * Noble-Standard PDF Export Styles
+ * Apple-quality print-ready CSS for clinical documents
+ */
+
+/* =============================================================================
+   PRINT MEDIA CONFIGURATION
+   ============================================================================= */
+
+@page {
+    size: A4 portrait;
+    margin: 20mm 15mm;
+
+    @top-center {
+        content: "Noble Dental Care";
+        font-family: 'Inter', -apple-system, sans-serif;
+        font-size: 9pt;
+        color: #6B7280;
+    }
+
+    @bottom-center {
+        content: counter(page) " of " counter(pages);
+        font-family: 'Inter', -apple-system, sans-serif;
+        font-size: 9pt;
+        color: #6B7280;
+    }
+}
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    .no-print {
+        display: none !important;
+    }
+
+    .page-break {
+        page-break-after: always;
+    }
+
+    .page-break-avoid {
+        page-break-inside: avoid;
+    }
+}
+
+/* =============================================================================
+   NOBLE BRAND VARIABLES
+   ============================================================================= */
+
+:root {
+    /* Primary Palette */
+    --noble-teal: #0D4F4F;
+    --noble-navy: #1E3A5F;
+    --noble-accent: #14B8A6;
+    --noble-light-teal: #F0FDFA;
+
+    /* Neutrals */
+    --noble-bg: #FAFAFA;
+    --noble-card: #FFFFFF;
+    --noble-text: #1F2937;
+    --noble-text-muted: #6B7280;
+    --noble-border: #E5E7EB;
+
+    /* Status Colors */
+    --noble-success: #10B981;
+    --noble-warning: #F59E0B;
+    --noble-danger: #EF4444;
+
+    /* Typography */
+    --font-heading: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+}
+
+/* =============================================================================
+   BASE DOCUMENT STYLES
+   ============================================================================= */
+
+.noble-report {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--noble-text);
+    background: #FFFFFF;
+    max-width: 210mm;
+    margin: 0 auto;
+}
+
+.noble-report * {
+    box-sizing: border-box;
+}
+
+/* =============================================================================
+   HEADER SECTION
+   ============================================================================= */
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 3px solid var(--noble-teal);
+    margin-bottom: 24px;
+}
+
+.report-header__brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.report-header__logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.report-header__clinic {
+    display: flex;
+    flex-direction: column;
+}
+
+.report-header__clinic-name {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--noble-teal);
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.report-header__clinic-tagline {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+    margin: 4px 0 0 0;
+}
+
+.report-header__patient {
+    text-align: right;
+}
+
+.report-header__patient-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin: 0 0 4px 0;
+}
+
+.report-header__patient-meta {
+    font-size: 12px;
+    color: var(--noble-text-muted);
+    margin: 2px 0;
+}
+
+.report-header__uhid {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--noble-teal);
+    background: var(--noble-light-teal);
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* =============================================================================
+   SECTION CARDS
+   ============================================================================= */
+
+.report-section {
+    margin-bottom: 20px;
+    page-break-inside: avoid;
+}
+
+.report-section__title {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--noble-navy);
+    margin: 0 0 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.report-section__title-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--noble-accent);
+}
+
+.report-card {
+    background: #FFFFFF;
+    border: 1px solid var(--noble-border);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.report-card--warning {
+    background: #FEF3C7;
+    border-color: #FCD34D;
+}
+
+.report-card--info {
+    background: var(--noble-light-teal);
+    border-color: var(--noble-accent);
+}
+
+/* =============================================================================
+   HEALTH GAUGE
+   ============================================================================= */
+
+.health-gauge-container {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.health-gauge {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+}
+
+.health-gauge__svg {
+    transform: rotate(-90deg);
+}
+
+.health-gauge__track {
+    fill: none;
+    stroke: #E5E7EB;
+    stroke-width: 10;
+}
+
+.health-gauge__progress {
+    fill: none;
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-out;
+}
+
+.health-gauge__progress--healthy {
+    stroke: var(--noble-success);
+}
+
+.health-gauge__progress--moderate {
+    stroke: var(--noble-warning);
+}
+
+.health-gauge__progress--concern {
+    stroke: var(--noble-danger);
+}
+
+.health-gauge__label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.health-gauge__score {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--noble-text);
+    display: block;
+}
+
+.health-gauge__text {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+}
+
+/* =============================================================================
+   INDEX BARS
+   ============================================================================= */
+
+.index-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    flex: 1;
+}
+
+.index-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.index-bar__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.index-bar__label {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+}
+
+.index-bar__value {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.index-bar__value--healthy {
+    color: var(--noble-success);
+}
+
+.index-bar__value--moderate {
+    color: var(--noble-warning);
+}
+
+.index-bar__value--concern {
+    color: var(--noble-danger);
+}
+
+.index-bar__track {
+    height: 8px;
+    background: #F3F4F6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.index-bar__fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease-out;
+}
+
+.index-bar__fill--healthy {
+    background: var(--noble-success);
+}
+
+.index-bar__fill--moderate {
+    background: var(--noble-warning);
+}
+
+.index-bar__fill--concern {
+    background: var(--noble-danger);
+}
+
+.index-bar__teeth {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--noble-text-muted);
+}
+
+/* =============================================================================
+   VITALS TABLE
+   ============================================================================= */
+
+.vitals-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+}
+
+.vitals-table thead {
+    background: var(--noble-navy);
+    color: #FFFFFF;
+}
+
+.vitals-table th {
+    padding: 10px 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.vitals-table th:first-child {
+    text-align: left;
+    border-radius: 8px 0 0 0;
+}
+
+.vitals-table th:last-child {
+    border-radius: 0 8px 0 0;
+}
+
+.vitals-table td {
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 1px solid var(--noble-border);
+}
+
+.vitals-table td:first-child {
+    text-align: left;
+}
+
+.vitals-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.vitals-table tbody tr:hover {
+    background: #F9FAFB;
+}
+
+.vitals-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.vitals-badge--pre {
+    background: #DBEAFE;
+    color: #1D4ED8;
+}
+
+.vitals-badge--intra {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.vitals-badge--post {
+    background: #D1FAE5;
+    color: #065F46;
+}
+
+/* =============================================================================
+   ANESTHESIA LOG
+   ============================================================================= */
+
+.anesthesia-log {
+    background: var(--noble-light-teal);
+    border: 1px solid var(--noble-accent);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.anesthesia-log__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.anesthesia-log__badge {
+    background: var(--noble-teal);
+    color: #FFFFFF;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.anesthesia-log__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    font-size: 11px;
+}
+
+.anesthesia-log__item {
+    display: flex;
+    flex-direction: column;
+}
+
+.anesthesia-log__label {
+    color: var(--noble-text-muted);
+    font-size: 10px;
+}
+
+.anesthesia-log__value {
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.anesthesia-log__value--success {
+    color: var(--noble-success);
+}
+
+.anesthesia-log__value--danger {
+    color: var(--noble-danger);
+}
+
+/* =============================================================================
+   TREATMENT SITTING
+   ============================================================================= */
+
+.sitting-card {
+    border: 1px solid var(--noble-border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    page-break-inside: avoid;
+}
+
+.sitting-card__header {
+    background: var(--noble-navy);
+    color: #FFFFFF;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sitting-card__number {
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.sitting-card__date {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.sitting-card__content {
+    padding: 16px;
+}
+
+.sitting-card__row {
+    margin-bottom: 12px;
+}
+
+.sitting-card__label {
+    font-size: 10px;
+    color: var(--noble-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.sitting-card__value {
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.sitting-card__procedure {
+    background: #F9FAFB;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+.sitting-card__procedure-name {
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.sitting-card__procedure-teeth {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: var(--noble-accent);
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.sitting-card__procedure-details {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+}
+
+.sitting-card__footer {
+    padding: 12px 16px;
+    background: #F9FAFB;
+    border-top: 1px solid var(--noble-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sitting-card__doctor {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+}
+
+.sitting-card__signature {
+    height: 30px;
+    opacity: 0.7;
+}
+
+/* =============================================================================
+   RADIOLOGY SECTION
+   ============================================================================= */
+
+.radiology-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.radiology-card {
+    border: 1px solid var(--noble-border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.radiology-card__image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    background: #F3F4F6;
+}
+
+.radiology-card__info {
+    padding: 12px;
+}
+
+.radiology-card__type {
+    display: inline-block;
+    background: var(--noble-light-teal);
+    color: var(--noble-teal);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.radiology-card__label {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.radiology-card__findings {
+    font-size: 10px;
+    color: var(--noble-text-muted);
+    margin: 0;
+}
+
+/* =============================================================================
+   VERIFICATION FOOTER
+   ============================================================================= */
+
+.verification-footer {
+    text-align: center;
+    padding: 24px;
+    background: #F9FAFB;
+    border-radius: 12px;
+    margin-top: 32px;
+}
+
+.verification-footer__text {
+    font-size: 11px;
+    color: var(--noble-text-muted);
+    margin: 0 0 12px 0;
+}
+
+.verification-footer__qr {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 12px;
+}
+
+.verification-footer__code {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--noble-teal);
+    letter-spacing: 1px;
+}
+
+.verification-footer__disclaimer {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--noble-border);
+}
+
+.verification-footer__electronic {
+    font-size: 9px;
+    color: #9CA3AF;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.verification-footer__system {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--noble-teal);
+}
+
+/* =============================================================================
+   WATERMARK
+   ============================================================================= */
+
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 80px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.02);
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: -1;
+}
+
+/* =============================================================================
+   MEDICAL CERTIFICATE STYLES
+   ============================================================================= */
+
+.certificate {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 30mm 25mm;
+    position: relative;
+}
+
+.certificate__letterhead {
+    text-align: center;
+    border-bottom: 3px solid var(--noble-teal);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.certificate__clinic-name {
+    font-family: var(--font-heading);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--noble-teal);
+    margin: 0;
+}
+
+.certificate__title {
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--noble-navy);
+    margin: 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.certificate__content {
+    font-size: 14px;
+    line-height: 2;
+    text-align: justify;
+}
+
+.certificate__signature {
+    margin-top: 60px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.certificate__signature-block {
+    text-align: center;
+}
+
+.certificate__signature-image {
+    height: 50px;
+    margin-bottom: 8px;
+}
+
+.certificate__signature-name {
+    font-weight: 600;
+    border-top: 1px solid #000;
+    padding-top: 8px;
+}
+
+.certificate__verification {
+    position: absolute;
+    bottom: 30mm;
+    left: 25mm;
+    right: 25mm;
+    text-align: center;
+    font-size: 10px;
+    color: var(--noble-text-muted);
+    border-top: 1px solid var(--noble-border);
+    padding-top: 16px;
+}
+
+/* =============================================================================
+   ANIMATIONS (Screen Only)
+   ============================================================================= */
+
+@media screen {
+    .health-gauge__progress {
+        animation: gauge-fill 1s ease-out forwards;
+    }
+
+    @keyframes gauge-fill {
+        from {
+            stroke-dashoffset: var(--gauge-circumference);
+        }
+
+        to {
+            stroke-dashoffset: var(--gauge-offset);
+        }
+    }
+
+    .index-bar__fill {
+        animation: bar-fill 0.8s ease-out forwards;
+    }
+
+    @keyframes bar-fill {
+        from {
+            width: 0;
+        }
+    }
+
+    .sitting-card {
+        transition: box-shadow 0.2s ease;
+    }
+
+    .sitting-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+}
