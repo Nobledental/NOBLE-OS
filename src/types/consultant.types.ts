@@ -4,7 +4,6 @@
  */
 
 import { v4 as uuidv4 } from 'uuid';
-import * as crypto from 'crypto';
 
 // =============================================================================
 // CONSULTANT & SPECIALIST TYPES
@@ -202,10 +201,10 @@ export interface ReferralTracker {
 // =============================================================================
 
 /**
- * Generates a secure, high-entropy token for referral links
+ * Generates a secure token for referral links
  */
 export function generateReferralToken(): string {
-    return crypto.randomBytes(32).toString('base64url');
+    return uuidv4().replace(/-/g, '');
 }
 
 /**

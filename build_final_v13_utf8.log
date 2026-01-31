@@ -1,0 +1,102 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá 
+Warning: Next.js 
+inferred your 
+workspace root, but 
+it may not be correct.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (ΓÜá Warnin   
+ g: Ne...not be co    
+rrect.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+ We detected multiple 
+lockfiles and 
+selected the 
+directory of C:\Users\
+Dhivakaran\package-loc
+k.json as the root 
+directory.
+ To silence this 
+warning, set 
+`turbopack.root` in 
+your Next.js config, 
+or consider removing 
+one of the lockfiles 
+if it's not needed.
+   See https://nextjs.
+org/docs/app/api-refer
+ence/config/next-confi
+g-js/turbopack#root-di
+rectory for more 
+information.
+ Detected additional 
+lockfiles: 
+   * C:\Users\Dhivakar
+an\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 21.1s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/colla
+boration/referral-link
+-generator.tsx:12:5
+Type error: Module 
+'"lucide-react"' has 
+no exported member 
+'XRay'.
+
+[0m [90m 10 |[39m 
+[36mimport[39m {
+ [90m 11 |[39m     
+[33mLink2[39m[33m,[
+39m [33mCopy[39m[33
+m,[39m [33mCheck[39
+m[33m,[39m [33mCloc
+k[39m[33m,[39m [33
+mShield[39m[33m,[39
+m [33mEye[39m[33m,
+[39m
+[31m[1m>[22m[39m[
+90m 12 |[39m     [33
+mXRay[39m[33m,[39m 
+[33mActivity[39m[33
+m,[39m [33mAlertTria
+ngle[39m[33m,[39m 
+[33mCalendar[39m
+ [90m    |[39m     
+[31m[1m^[22m[39m
+ [90m 13 |[39m } 
+[36mfrom[39m [32m'l
+ucide-react'[39m[33m
+;[39m
+ [90m 14 |[39m 
+[36mimport[39m {
+ [90m 15 |[39m     
+[33mReferralLink[39m
+[33m,[39m[0m
+Next.js build worker 
+exited with code: 1 
+and signal: null

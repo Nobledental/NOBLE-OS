@@ -93,46 +93,44 @@ export default function CaseSheetRenderer({
             case 'GENERAL':
             default:
                 return (
-                    <Card className=\"p-6\">
-                        < div className =\"text-center text-muted-foreground py-8\">
-                            < Shield className =\"w-12 h-12 mx-auto mb-4 opacity-50\" />
-                                < p > General examination fields will appear here</p >
-                                    <p className=\"text-sm mt-2\">Chief Complaint, Clinical Findings, Diagnosis</p>
-                        </div >
-                    </Card >
+                    <Card className="p-6">
+                        <div className="text-center text-muted-foreground py-8">
+                            <Shield className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                            <p>General examination fields will appear here</p>
+                            <p className="text-sm mt-2">Chief Complaint, Clinical Findings, Diagnosis</p>
+                        </div>
+                    </Card>
                 );
-}
+        }
     };
 
-return (
-    <div className=\"space-y-4\">
-        < Card className =\"p-4\">
-            < Tabs value = { selectedDepartment } onValueChange = {(v) => setSelectedDepartment(v as Department)}>
-                <TabsList className=\"grid w-full\" style={{ gridTemplateColumns: `repeat(${availableDepartments.length}, 1fr)` }}>
-{
-    availableDepartments.map(([key, config]) => {
-        const Icon = config.icon;
-        return (
-            <TabsTrigger key={key} value={key} className=\"flex items-center gap-2\">
-                < Icon className = {`w-4 h-4 ${config.color}`
-    } />
-    < span className =\"hidden md:inline\">{config.name}</span>
-                                </TabsTrigger >
+    return (
+        <div className="space-y-4">
+            <Card className="p-4">
+                <Tabs value={selectedDepartment} onValueChange={(v) => setSelectedDepartment(v as Department)}>
+                    <TabsList className="grid w-full" style={{ gridTemplateColumns: `repeat(${availableDepartments.length}, 1fr)` }}>
+                        {availableDepartments.map(([key, config]) => {
+                            const Icon = config.icon;
+                            return (
+                                <TabsTrigger key={key} value={key} className="flex items-center gap-2">
+                                    <Icon className={`w-4 h-4 ${config.color}`} />
+                                    <span className="hidden md:inline">{config.name}</span>
+                                </TabsTrigger>
                             );
-})}
-                    </TabsList >
-                </Tabs >
+                        })}
+                    </TabsList>
+                </Tabs>
 
-    <div className=\"mt-4 flex items-center justify-between\">
-        < div >
-        <h3 className=\"font-semibold\">{departmentConfig[selectedDepartment].name}</h3>
-            < p className =\"text-sm text-muted-foreground\">{departmentConfig[selectedDepartment].description}</p>
-                    </div >
-    <Badge variant=\"outline\">{selectedDepartment.replace('_', ' ')}</Badge>
-                </div >
-            </Card >
+                <div className="mt-4 flex items-center justify-between">
+                    <div>
+                        <h3 className="font-semibold">{departmentConfig[selectedDepartment].name}</h3>
+                        <p className="text-sm text-muted-foreground">{departmentConfig[selectedDepartment].description}</p>
+                    </div>
+                    <Badge variant="outline">{selectedDepartment.replace('_', ' ')}</Badge>
+                </div>
+            </Card>
 
-    { renderDepartmentForm() }
-        </div >
+            {renderDepartmentForm()}
+        </div>
     );
 }

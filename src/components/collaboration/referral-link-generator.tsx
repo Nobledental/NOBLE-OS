@@ -9,7 +9,7 @@ import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
 import {
     Link2, Copy, Check, Clock, Shield, Eye,
-    XRay, Activity, AlertTriangle, Calendar
+    Image as ImageIcon, Activity, AlertCircle, Calendar
 } from 'lucide-react';
 import {
     ReferralLink,
@@ -129,7 +129,7 @@ export default function ReferralLinkGenerator({
 
                 <label className="flex items-center justify-between">
                     <span className="flex items-center gap-2">
-                        <XRay className="w-4 h-4" />
+                        <ImageIcon className="w-4 h-4" />
                         X-rays (IOPA/OPG)
                     </span>
                     <Switch checked={includeXrays} onCheckedChange={setIncludeXrays} />
@@ -145,7 +145,7 @@ export default function ReferralLinkGenerator({
 
                 <label className="flex items-center justify-between">
                     <span className="flex items-center gap-2">
-                        <AlertTriangle className="w-4 h-4" />
+                        <AlertCircle className="w-4 h-4" />
                         Risk Predictor Scores
                     </span>
                     <Switch checked={includeRiskPredictor} onCheckedChange={setIncludeRiskPredictor} />

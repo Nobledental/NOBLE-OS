@@ -1,0 +1,107 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá 
+Warning: Next.js 
+inferred your 
+workspace root, but 
+it may not be correct.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (ΓÜá Warnin   
+ g: Ne...not be co    
+rrect.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+ We detected multiple 
+lockfiles and 
+selected the 
+directory of C:\Users\
+Dhivakaran\package-loc
+k.json as the root 
+directory.
+ To silence this 
+warning, set 
+`turbopack.root` in 
+your Next.js config, 
+or consider removing 
+one of the lockfiles 
+if it's not needed.
+   See https://nextjs.
+org/docs/app/api-refer
+ence/config/next-confi
+g-js/turbopack#root-di
+rectory for more 
+information.
+ Detected additional 
+lockfiles: 
+   * C:\Users\Dhivakar
+an\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 22.8s
+  Running TypeScript ...
+Failed to compile.
+
+./src/app/layout.tsx:2
+0:8
+Type error: Module '"C
+:/Users/Dhivakaran/Des
+ktop/CORE/NOBLE-OS/src
+/components/providers"
+' has no default 
+export. Did you mean 
+to use 'import { 
+Providers } from "C:/U
+sers/Dhivakaran/Deskto
+p/CORE/NOBLE-OS/src/co
+mponents/providers"' 
+instead?
+
+[0m [90m 18 |[39m 
+}[33m;[39m
+ [90m 19 |[39m
+[31m[1m>[22m[39m[
+90m 20 |[39m 
+[36mimport[39m 
+[33mProviders[39m 
+[36mfrom[39m [32m"@
+/components/providers"
+[39m[33m;[39m
+ [90m    |[39m      
+  [31m[1m^[22m[39m
+ [90m 21 |[39m 
+[36mimport[39m { 
+[33mAppSidebar[39m 
+} [36mfrom[39m [32m
+"@/components/layout/s
+idebar"[39m[33m;[39
+m
+ [90m 22 |[39m 
+[36mimport[39m { [3
+3mCommandPalette[39m 
+} [36mfrom[39m [32m
+"@/components/shared/c
+ommand-palette"[39m[
+33m;[39m
+ [90m 23 |[39m[0m
+Next.js build worker 
+exited with code: 1 
+and signal: null

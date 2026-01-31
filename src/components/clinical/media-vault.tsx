@@ -76,72 +76,70 @@ export default function MediaVault({ patientId }: { patientId: string }) {
     };
 
     const getAssetIcon = (type: string) => {
-        if (type.includes('PHOTO')) return <ImageIcon className=\"w-4 h-4\" />;
-        return <FileImage className=\"w-4 h-4\" />;
+        if (type.includes('PHOTO')) return <ImageIcon className="w-4 h-4" />;
+        return <FileImage className="w-4 h-4" />;
     };
 
     return (
-        <Card className=\"p-6 space-y-4\">
-            < div className =\"flex items-center justify-between\">
-                < h3 className =\"text-lg font-semibold\">Media Vault</h3>
-                    < label htmlFor =\"file-upload\">
-                        < Button disabled = { uploading } asChild >
-                            <span className=\"cursor-pointer\">
-                                < Upload className =\"w-4 h-4 mr-2\" />
-    { uploading ? 'Uploading...' : 'Upload' }
-                        </span >
-                    </Button >
-        <Input
-            id=\"file-upload\"
-    type =\"file\"
-    multiple
-    accept =\"image/*\"
-    className =\"hidden\"
-    onChange = { handleFileUpload }
-        />
-                </label >
-            </div >
+        <Card className="p-6 space-y-4">
+            <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">Media Vault</h3>
+                <label htmlFor="file-upload">
+                    <Button disabled={uploading} asChild>
+                        <span className="cursor-pointer">
+                            <Upload className="w-4 h-4 mr-2" />
+                            {uploading ? 'Uploading...' : 'Upload'}
+                        </span>
+                    </Button>
+                    <Input
+                        id="file-upload"
+                        type="file"
+                        multiple
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                    />
+                </label>
+            </div>
 
-    {
-        isLoading?(
-                <div className =\"text-center text-muted-foreground py-8\">Loading assets...</div>
-        ): assets.length === 0 ? (
-        <div className=\"text-center text-muted-foreground py-8\">
-                    No clinical photos or X - rays uploaded yet.
-                </div >
-            ) : (
-        <div className=\"grid grid-cols-3 gap-4\">
-    {
-        assets.map((asset: Asset) => (
-            <div key={asset.id} className=\"relative group\">
-        < div className =\"aspect-square rounded-lg overflow-hidden bg-muted\">
-        < img
-                                    src = { asset.url }
-                                    alt = { asset.type }
-                                    className =\"w-full h-full object-cover\"
-        />
-                            </div >
-            <div className=\"absolute top-2 left-2\">
-        < div className =\"bg-black/60 text-white px-2 py-1 rounded text-xs flex items-center gap-1\">
-                                    { getAssetIcon(asset.type)
-    }
-    { asset.type }
-                                </div >
-                            </div >
-        <div className=\"absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center\">
-            < Button
-    variant =\"destructive\"
-    size =\"sm\"
-    className =\"opacity-0 group-hover:opacity-100 transition-opacity\"
-        >
-        <Trash2 className=\"w-4 h-4\" />
-                                </Button >
-                            </div >
-                        </div >
-                    ))
-}
-                </div >
-            )}
+            {
+                isLoading ? (
+                    <div className="text-center text-muted-foreground py-8">Loading assets...</div>
+                ) : assets.length === 0 ? (
+                    <div className="text-center text-muted-foreground py-8">
+                        No clinical photos or X-rays uploaded yet.
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-3 gap-4">
+                        {assets.map((asset: Asset) => (
+                            <div key={asset.id} className="relative group">
+                                <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+                                    <img
+                                        src={asset.url}
+                                        alt={asset.type}
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <div className="absolute top-2 left-2">
+                                    <div className="bg-black/60 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                                        {getAssetIcon(asset.type)}
+                                        {asset.type}
+                                    </div>
+                                </div>
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all flex items-center justify-center">
+                                    <Button
+                                        variant="destructive"
+                                        size="sm"
+                                        className="opacity-0 group-hover:opacity-100 transition-opacity"
+                                    >
+                                        <Trash2 className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )
+            }
         </Card >
     );
 }

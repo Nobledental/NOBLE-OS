@@ -1,0 +1,116 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá 
+Warning: Next.js 
+inferred your 
+workspace root, but 
+it may not be correct.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (ΓÜá Warnin   
+ g: Ne...not be co    
+rrect.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+ We detected multiple 
+lockfiles and 
+selected the 
+directory of C:\Users\
+Dhivakaran\package-loc
+k.json as the root 
+directory.
+ To silence this 
+warning, set 
+`turbopack.root` in 
+your Next.js config, 
+or consider removing 
+one of the lockfiles 
+if it's not needed.
+   See https://nextjs.
+org/docs/app/api-refer
+ence/config/next-confi
+g-js/turbopack#root-di
+rectory for more 
+information.
+ Detected additional 
+lockfiles: 
+   * C:\Users\Dhivakar
+an\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 19.0s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/analy
+tics/business-oracle.t
+sx:46:22
+Type error: This 
+condition will always 
+return true since 
+this function is 
+always defined. Did 
+you mean to call it 
+instead?
+
+[0m [90m 44 |[39m  
+               [33m<
+[39m[33m/[39m[33mdi
+v[39m[33m>[39m
+ [90m 45 |[39m      
+           [33m<[39m
+[33mdiv[39m classNam
+e[33m=[39m{[32m`p-2
+ rounded-lg 
+${metrics.trend === 
+'up' ? 'bg-green-100 
+dark:bg-green-900/30' 
+: metrics.trend === 
+'down' ? 'bg-red-100 
+dark:bg-red-900/30' : 
+'bg-gray-100 dark:bg-g
+ray-800'}`[39m}[33m>
+[39m
+[31m[1m>[22m[39m[
+90m 46 |[39m         
+            
+{trendIcon 
+[33m&&[39m [33m<[3
+9m[33mtrendIcon[39m 
+className[33m=[39m{
+[32m`w-5 h-5 
+${trendColor}`[39m} 
+[33m/[39m[33m>[39m}
+ [90m    |[39m      
+                
+[31m[1m^[22m[39m
+ [90m 47 |[39m      
+           [33m<[39m
+[33m/[39m[33mdiv[3
+9m[33m>[39m
+ [90m 48 |[39m      
+       [33m<[39m[33
+m/[39m[33mdiv[39m[
+33m>[39m
+ [90m 49 |[39m[0m
+Next.js build worker 
+exited with code: 1 
+and signal: null

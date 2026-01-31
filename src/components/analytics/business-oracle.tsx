@@ -30,7 +30,7 @@ interface ConversionCardProps {
 }
 
 export function ConversionCard({ metrics, onViewDetails }: ConversionCardProps) {
-    const trendIcon = metrics.trend === 'up' ? TrendingUp :
+    const TrendIcon = metrics.trend === 'up' ? TrendingUp :
         metrics.trend === 'down' ? TrendingDown : Activity;
     const trendColor = metrics.trend === 'up' ? 'text-green-500' :
         metrics.trend === 'down' ? 'text-red-500' : 'text-gray-500';
@@ -43,7 +43,7 @@ export function ConversionCard({ metrics, onViewDetails }: ConversionCardProps) 
                     <p className="text-3xl font-bold">{metrics.conversionRate.toFixed(1)}%</p>
                 </div>
                 <div className={`p-2 rounded-lg ${metrics.trend === 'up' ? 'bg-green-100 dark:bg-green-900/30' : metrics.trend === 'down' ? 'bg-red-100 dark:bg-red-900/30' : 'bg-gray-100 dark:bg-gray-800'}`}>
-                    {trendIcon && <trendIcon className={`w-5 h-5 ${trendColor}`} />}
+                    <TrendIcon className={`w-5 h-5 ${trendColor}`} />
                 </div>
             </div>
 
@@ -98,9 +98,9 @@ export function LTVLeaderboard({ patients, limit = 5 }: LTVLeaderboardProps) {
                 {topPatients.map((patient, index) => (
                     <div key={patient.patientId} className="flex items-center gap-3">
                         <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${index === 0 ? 'bg-amber-100 text-amber-700' :
-                                index === 1 ? 'bg-gray-100 text-gray-700' :
-                                    index === 2 ? 'bg-orange-100 text-orange-700' :
-                                        'bg-muted text-muted-foreground'
+                            index === 1 ? 'bg-gray-100 text-gray-700' :
+                                index === 2 ? 'bg-orange-100 text-orange-700' :
+                                    'bg-muted text-muted-foreground'
                             }`}>
                             {index + 1}
                         </div>

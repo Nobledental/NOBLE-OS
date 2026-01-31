@@ -1,0 +1,114 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá 
+Warning: Next.js 
+inferred your 
+workspace root, but 
+it may not be correct.
+At line:1 char:1
++ & "C:\Program Files\
+nodejs/node.exe" 
+"C:\Program 
+Files\nodejs/node_mo 
+...
++ ~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (ΓÜá Warnin   
+ g: Ne...not be co    
+rrect.:String) []    
+, RemoteException
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+ We detected multiple 
+lockfiles and 
+selected the 
+directory of C:\Users\
+Dhivakaran\package-loc
+k.json as the root 
+directory.
+ To silence this 
+warning, set 
+`turbopack.root` in 
+your Next.js config, 
+or consider removing 
+one of the lockfiles 
+if it's not needed.
+   See https://nextjs.
+org/docs/app/api-refer
+ence/config/next-confi
+g-js/turbopack#root-di
+rectory for more 
+information.
+ Detected additional 
+lockfiles: 
+   * C:\Users\Dhivakar
+an\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 22.8s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/gestu
+res/ios-gestures.tsx:3
+52:24
+Type error: Expected 
+1 arguments, but got 
+0.
+
+[0m [90m 350 |[39m
+ [90m 351 |[39m 
+[36mexport[39m 
+[36mfunction[39m 
+useLongPress({ delay 
+[33m=[39m [35m500[
+39m[33m,[39m onLongP
+ress[33m,[39m 
+onPress }[33m:[39m 
+[33mLongPressOptions[
+39m) {
+[31m[1m>[22m[39m[
+90m 352 |[39m     
+[36mconst[39m 
+timeoutRef 
+[33m=[39m useRef[33
+m<[39m[33mNodeJS[39
+m[33m.[39m[33mTimeo
+ut[39m[33m>[39m()[
+33m;[39m
+ [90m     |[39m     
+                   
+[31m[1m^[22m[39m
+ [90m 353 |[39m     
+[36mconst[39m [isLon
+gPressed[33m,[39m 
+setIsLongPressed] 
+[33m=[39m useState(
+[36mfalse[39m)[33m;
+[39m
+ [90m 354 |[39m     
+[36mconst[39m 
+touchStartRef 
+[33m=[39m 
+useRef[33m<[39m{ 
+x[33m:[39m 
+number[33m;[39m 
+y[33m:[39m number } 
+[33m|[39m [36mnull
+[39m[33m>[39m([36mn
+ull[39m)[33m;[39m
+ [90m 355 |[39m[0m
+Next.js build worker 
+exited with code: 1 
+and signal: null

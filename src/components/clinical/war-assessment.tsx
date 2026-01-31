@@ -90,121 +90,120 @@ export default function WARAssessmentModule() {
     };
 
     return (
-        <Card className=\"p-6 space-y-6\">
-            < div className =\"flex items-center gap-2\">
-                < Calculator className =\"w-5 h-5 text-orange-500\" />
-                    < h3 className =\"text-lg font-semibold\">WAR Assessment Module</h3>
-                        < Badge variant =\"outline\" className=\"ml-auto\">Oral Surgery</Badge>
-            </div >
+        <Card className="p-6 space-y-6">
+            <div className="flex items-center gap-2">
+                <Calculator className="w-5 h-5 text-orange-500" />
+                <h3 className="text-lg font-semibold">WAR Assessment Module</h3>
+                <Badge variant="outline" className="ml-auto">Oral Surgery</Badge>
+            </div>
 
-        <div className=\"grid grid-cols-2 gap-4\">
-    {/* Tooth Selection */ }
-    <div className=\"space-y-2\">
-        < Label > Impacted Tooth</Label >
+            <div className="grid grid-cols-2 gap-4">
+                {/* Tooth Selection */}
+                <div className="space-y-2">
+                    <Label>Impacted Tooth</Label>
                     <Select value={toothNumber.toString()} onValueChange={(v) => setToothNumber(parseInt(v))}>
                         <SelectTrigger>
                             <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value=\"18\">Tooth 18 (UR8)</SelectItem>
-                            <SelectItem value=\"28\">Tooth 28 (UL8)</SelectItem>
-                            <SelectItem value=\"38\">Tooth 38 (LL8)</SelectItem>
-        < SelectItem value =\"48\">Tooth 48 (LR8)</SelectItem>
-                        </SelectContent >
-                    </Select >
-                </div >
+                            <SelectItem value="18">Tooth 18 (UR8)</SelectItem>
+                            <SelectItem value="28">Tooth 28 (UL8)</SelectItem>
+                            <SelectItem value="38">Tooth 38 (LL8)</SelectItem>
+                            <SelectItem value="48">Tooth 48 (LR8)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-        {/* Winter's Classification */ }
-        < div className =\"space-y-2\">
-            < Label > Winter's Classification (Angulation)</Label>
-                < Select value = { winterClass } onValueChange = { setWinterClass } >
+                {/* Winter's Classification */}
+                <div className="space-y-2">
+                    <Label>Winter's Classification (Angulation)</Label>
+                    <Select value={winterClass} onValueChange={setWinterClass}>
                         <SelectTrigger>
-                            <SelectValue placeholder=\"Select...\" />
+                            <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value=\"VERTICAL\">Vertical</SelectItem>
-                            <SelectItem value=\"MESIOANGULAR\">Mesioangular</SelectItem>
-        < SelectItem value =\"HORIZONTAL\">Horizontal</SelectItem>
-            < SelectItem value =\"DISTOANGULAR\">Distoangular</SelectItem>
-                        </SelectContent >
-                    </Select >
-                </div >
+                            <SelectItem value="VERTICAL">Vertical</SelectItem>
+                            <SelectItem value="MESIOANGULAR">Mesioangular</SelectItem>
+                            <SelectItem value="HORIZONTAL">Horizontal</SelectItem>
+                            <SelectItem value="DISTOANGULAR">Distoangular</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-        {/* Arch Relationship */ }
-        < div className =\"space-y-2\">
-            < Label > Arch Relationship</Label >
+                {/* Arch Relationship */}
+                <div className="space-y-2">
+                    <Label>Arch Relationship</Label>
                     <Select value={archClass} onValueChange={setArchClass}>
                         <SelectTrigger>
-                            <SelectValue placeholder=\"Select...\" />
+                            <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value=\"CLASS_I\">Class I (Adequate space)</SelectItem>
-                            <SelectItem value=\"CLASS_II\">Class II (Reduced space)</SelectItem>
-                            <SelectItem value=\"CLASS_III\">Class III (No space)</SelectItem>
-                        </SelectContent >
-                    </Select >
-                </div >
+                            <SelectItem value="CLASS_I">Class I (Adequate space)</SelectItem>
+                            <SelectItem value="CLASS_II">Class II (Reduced space)</SelectItem>
+                            <SelectItem value="CLASS_III">Class III (No space)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-        {/* Radio Depth */ }
-        < div className =\"space-y-2\">
-            < Label > Radio Depth(Position)</Label >
+                {/* Radio Depth */}
+                <div className="space-y-2">
+                    <Label>Radio Depth (Position)</Label>
                     <Select value={radioDepth} onValueChange={setRadioDepth}>
                         <SelectTrigger>
-                            <SelectValue placeholder=\"Select...\" />
+                            <SelectValue placeholder="Select..." />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value=\"POSITION_A\">Position A (Above occlusal)</SelectItem>
-                            <SelectItem value=\"POSITION_B\">Position B (At occlusal)</SelectItem>
-                            <SelectItem value=\"POSITION_C\">Position C (Below occlusal)</SelectItem>
-                        </SelectContent >
-                    </Select >
-                </div >
-            </div >
+                            <SelectItem value="POSITION_A">Position A (Above occlusal)</SelectItem>
+                            <SelectItem value="POSITION_B">Position B (At occlusal)</SelectItem>
+                            <SelectItem value="POSITION_C">Position C (Below occlusal)</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
+            </div>
 
-        <Button
-            onClick={calculateWARScore}
-            disabled={!winterClass || !archClass || !radioDepth}
-            className=\"w-full\"
-                >
+            <Button
+                onClick={calculateWARScore}
+                disabled={!winterClass || !archClass || !radioDepth}
+                className="w-full"
+            >
                 Calculate Surgical Difficulty
-            </Button >
+            </Button>
 
-        { assessment && (
-            <div className=\"border-t pt-4 space-y-4\">
-                < div className =\"flex items-center justify-between\">
-                    < span className =\"font-medium\">Difficulty Score:</span>
-                        < Badge className = { getDifficultyColor(assessment.difficulty) + ' text-white'
-}>
-    { assessment.score } / 10 - { assessment.difficulty }
-                        </Badge >
-                    </div >
+            {assessment && (
+                <div className="border-t pt-4 space-y-4">
+                    <div className="flex items-center justify-between">
+                        <span className="font-medium">Difficulty Score:</span>
+                        <Badge className={getDifficultyColor(assessment.difficulty) + ' text-white'}>
+                            {assessment.score} / 10 - {assessment.difficulty}
+                        </Badge>
+                    </div>
 
-    <div className=\"grid grid-cols-2 gap-4 text-sm\">
-        < div className =\"bg-muted/50 p-3 rounded-lg\">
-            < div className =\"text-xs text-muted-foreground\">Estimated Surgical Time</div>
-                < div className =\"font-medium mt-1\">{assessment.surgicalTime}</div>
-                        </div >
-    <div className=\"bg-muted/50 p-3 rounded-lg\">
-        < div className =\"text-xs text-muted-foreground\">Classification</div>
-            < div className =\"font-medium mt-1\">{assessment.winterClass.replace('_', ' ')}</div>
-                        </div >
-                    </div >
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="bg-muted/50 p-3 rounded-lg">
+                            <div className="text-xs text-muted-foreground">Estimated Surgical Time</div>
+                            <div className="font-medium mt-1">{assessment.surgicalTime}</div>
+                        </div>
+                        <div className="bg-muted/50 p-3 rounded-lg">
+                            <div className="text-xs text-muted-foreground">Classification</div>
+                            <div className="font-medium mt-1">{assessment.winterClass.replace('_', ' ')}</div>
+                        </div>
+                    </div>
 
-    <div className=\"bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-900 p-3 rounded-lg\">
-        < div className =\"flex gap-2\">
-            < AlertTriangle className =\"w-4 h-4 text-orange-600 dark:text-orange-400 mt-0.5\" />
-                < div >
-                <div className=\"text-sm font-medium text-orange-900 dark:text-orange-200\">Complications Risk</div>
-                    < div className =\"text-xs text-orange-700 dark:text-orange-300 mt-1\">{assessment.complications}</div>
-                            </div >
-                        </div >
-                    </div >
+                    <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-900 p-3 rounded-lg">
+                        <div className="flex gap-2">
+                            <AlertTriangle className="w-4 h-4 text-orange-600 dark:text-orange-400 mt-0.5" />
+                            <div>
+                                <div className="text-sm font-medium text-orange-900 dark:text-orange-200">Complications Risk</div>
+                                <div className="text-xs text-orange-700 dark:text-orange-300 mt-1">{assessment.complications}</div>
+                            </div>
+                        </div>
+                    </div>
 
-    <Button onClick={saveAssessment} variant=\"outline\" className=\"w-full\">
+                    <Button onClick={saveAssessment} variant="outline" className="w-full">
                         Save WAR Assessment to Case Sheet
-                    </Button >
-                </div >
+                    </Button>
+                </div>
             )}
-        </Card >
+        </Card>
     );
 }
