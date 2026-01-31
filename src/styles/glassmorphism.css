@@ -1,0 +1,446 @@
+/**
+ * Phase 23: iOS Premium Glassmorphism Design System
+ * 
+ * Dynamic Apple Mesh Gradient + Frosted Glass Effects
+ */
+
+/* =============================================================================
+   TYPOGRAPHY - SF Pro / Inter
+   ============================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Typography */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-dark: rgba(30, 30, 45, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-border-dark: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+  --glass-blur-heavy: 40px;
+  
+  /* Mesh Gradient Colors */
+  --mesh-blue: #1a365d;
+  --mesh-violet: #7c3aed;
+  --mesh-slate: #475569;
+  --mesh-indigo: #4338ca;
+  --mesh-purple: #9333ea;
+  
+  /* Soft Shadows (iOS Style) */
+  --shadow-soft-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-soft-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-soft-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-soft-xl: 0 16px 48px rgba(0, 0, 0, 0.12);
+  
+  /* Spring Animation */
+  --spring-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --spring-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --spring-swift: cubic-bezier(0.55, 0, 0.1, 1);
+}
+
+/* Dark mode adjustments */
+.dark {
+  --glass-bg: rgba(30, 30, 45, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+/* =============================================================================
+   DYNAMIC APPLE MESH GRADIENT BACKGROUND
+   ============================================================================= */
+
+@keyframes meshGradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 100%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 0%;
+  }
+}
+
+.mesh-gradient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(ellipse at 20% 20%, var(--mesh-violet) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, var(--mesh-blue) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, var(--mesh-indigo) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, var(--mesh-purple) 0%, transparent 50%),
+    linear-gradient(135deg, var(--mesh-slate) 0%, var(--mesh-blue) 100%);
+  background-size: 200% 200%;
+  animation: meshGradientShift 20s ease-in-out infinite;
+  opacity: 0.15;
+}
+
+.dark .mesh-gradient-bg {
+  opacity: 0.25;
+}
+
+/* Static version for performance mode */
+.performance-mode-low .mesh-gradient-bg {
+  animation: none;
+  background: linear-gradient(135deg, var(--mesh-slate) 0%, var(--mesh-blue) 100%);
+  opacity: 0.1;
+}
+
+/* =============================================================================
+   GLASSMORPHISM CARDS
+   ============================================================================= */
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft-md);
+  transition: all 0.3s var(--spring-smooth);
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-soft-lg);
+  transform: translateY(-2px);
+}
+
+.glass-card-heavy {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft-lg);
+}
+
+/* Sidebar Glass */
+.glass-sidebar {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border-right: 1px solid var(--glass-border);
+}
+
+/* =============================================================================
+   BENTO GRID SYSTEM
+   ============================================================================= */
+
+.bento-grid {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Mobile First: Single Column */
+.bento-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Tablet: 2 Columns */
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    padding: 1.5rem;
+  }
+  
+  .bento-span-2 {
+    grid-column: span 2;
+  }
+}
+
+/* Desktop: 4 Columns */
+@media (min-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    padding: 2rem;
+  }
+  
+  .bento-span-2 {
+    grid-column: span 2;
+  }
+  
+  .bento-span-3 {
+    grid-column: span 3;
+  }
+  
+  .bento-span-4 {
+    grid-column: span 4;
+  }
+  
+  .bento-row-2 {
+    grid-row: span 2;
+  }
+}
+
+/* =============================================================================
+   iOS BOTTOM NAVIGATION (Mobile Only)
+   ============================================================================= */
+
+.ios-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur-heavy));
+  -webkit-backdrop-filter: blur(var(--glass-blur-heavy));
+  border-top: 1px solid var(--glass-border);
+}
+
+.ios-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  transition: all 0.2s var(--spring-smooth);
+  color: var(--muted-foreground);
+}
+
+.ios-nav-item:active {
+  transform: scale(0.95);
+}
+
+.ios-nav-item.active {
+  color: var(--primary);
+  background: rgba(var(--primary-rgb), 0.1);
+}
+
+.ios-nav-item span {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Hide bottom nav on desktop */
+@media (min-width: 768px) {
+  .ios-bottom-nav {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   SPRING ANIMATIONS (Framer Motion Compatible)
+   ============================================================================= */
+
+@keyframes springIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes springBounce {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes springPress {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.97);
+  }
+}
+
+.animate-spring-in {
+  animation: springIn 0.4s var(--spring-bounce);
+}
+
+.animate-spring-bounce {
+  animation: springBounce 0.3s var(--spring-bounce);
+}
+
+/* Interactive elements */
+.spring-interactive {
+  transition: transform 0.2s var(--spring-bounce);
+}
+
+.spring-interactive:hover {
+  transform: scale(1.02);
+}
+
+.spring-interactive:active {
+  transform: scale(0.98);
+}
+
+/* Tooth map specific */
+.tooth-spring {
+  transition: all 0.3s var(--spring-bounce);
+}
+
+.tooth-spring:hover {
+  transform: scale(1.08);
+  filter: brightness(1.1);
+}
+
+.tooth-spring:active {
+  transform: scale(0.95);
+}
+
+/* =============================================================================
+   SOFT BACK BUTTON & BREADCRUMBS
+   ============================================================================= */
+
+.soft-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  font-weight: 500;
+  transition: all 0.2s var(--spring-smooth);
+}
+
+.soft-back-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: translateX(-4px);
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.breadcrumb-item a {
+  color: var(--muted-foreground);
+  transition: color 0.2s;
+}
+
+.breadcrumb-item a:hover {
+  color: var(--foreground);
+}
+
+.breadcrumb-separator {
+  margin: 0 0.25rem;
+  opacity: 0.5;
+}
+
+.breadcrumb-current {
+  color: var(--foreground);
+  font-weight: 500;
+}
+
+/* =============================================================================
+   PRIVACY BLUR (Data Masking)
+   ============================================================================= */
+
+.privacy-blur {
+  filter: blur(8px);
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.3s var(--spring-smooth);
+}
+
+.privacy-blur:hover {
+  filter: blur(4px);
+}
+
+.privacy-blur-strong {
+  filter: blur(12px);
+}
+
+/* =============================================================================
+   EMPTY STATES
+   ============================================================================= */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.empty-state-icon {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  opacity: 0.6;
+}
+
+.empty-state-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-description {
+  color: var(--muted-foreground);
+  max-width: 300px;
+}
+
+/* =============================================================================
+   PWA STANDALONE MODE ADJUSTMENTS
+   ============================================================================= */
+
+@media (display-mode: standalone) {
+  /* Extra padding for notch */
+  .app-header {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+  
+  /* Hide browser-specific elements */
+  .browser-only {
+    display: none !important;
+  }
+}
+
+/* =============================================================================
+   HAPTIC TOUCH FEEDBACK
+   ============================================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+  .haptic-touch {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .haptic-touch:active {
+    opacity: 0.7;
+  }
+}
