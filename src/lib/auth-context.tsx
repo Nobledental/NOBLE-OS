@@ -41,18 +41,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         const cachedUser = sessionStorage.getItem("healthflo_user");
         if (cachedUser) {
-            setUser(JSON.parse(cachedUser));
+            try {
+                setUser(JSON.parse(cachedUser));
+            } catch (e) {
+                console.error("Failed to parse auth session", e);
+            }
         } else {
-            // Mock Solo User for Development as requested
-            const mockUser: User = {
-                id: "c6375005-950c-4ec7-9941-764720619580",
-                email: "admin@healthflo.ai",
+            // Default to OWNER for development as requested
+            const defaultUser: User = {
+                id: "u1",
+                email: "dhivakaran@healthflo.ai",
                 full_name: "Dr. Dhivakaran",
-                role: "CLINIC_ADMIN",
-                permissions: { ...DEFAULT_PERMISSIONS, solo_mode: true, can_view_revenue: true, can_view_clinical: true, can_edit_inventory: true, can_manage_staff: true },
+                role: "OWNER",
+                permissions: {
+                    can_view_revenue: true,
+                    can_edit_inventory: true,
+                    can_view_clinical: true,
+                    can_manage_staff: true,
+                    solo_mode: true
+                }
             };
-            setUser(mockUser);
-            sessionStorage.setItem("healthflo_user", JSON.stringify(mockUser));
+            setUser(defaultUser);
+            sessionStorage.setItem("healthflo_user", JSON.stringify(defaultUser));
         }
     }, []);
 

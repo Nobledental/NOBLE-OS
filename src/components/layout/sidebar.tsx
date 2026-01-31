@@ -3,32 +3,52 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Switch } from "@/components/ui/switch";
+import {
+    LayoutDashboard,
+    Activity,
+    Users,
+    Calendar,
+    Stethoscope,
+    CreditCard,
+    Box,
+    Settings,
+    Zap,
+    LucideIcon,
+    BarChart3,
+    ShieldCheck
+} from "lucide-react";
 import { PermissionGuard } from "@/components/security/permission-guard";
+import { useAuth } from "@/lib/auth-context";
 
-const sidebarItems = [
+interface SidebarItem {
+    name: string;
+    icon: LucideIcon;
+    href: string;
+    permission?: "can_view_revenue" | "can_edit_inventory" | "can_view_clinical" | "can_manage_staff";
+}
+
+const sidebarItems: SidebarItem[] = [
     { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
+    { name: "Performance Pulse", icon: BarChart3, href: "/dashboard/analytics", permission: 'can_manage_staff' },
     { name: "Live Queue", icon: Activity, href: "/dashboard/queue" },
     { name: "Patients", icon: Users, href: "/dashboard/patients" },
     { name: "Appointments", icon: Calendar, href: "/dashboard/appointments" },
     { name: "Clinical Master", icon: Stethoscope, href: "/dashboard/clinical", permission: 'can_view_clinical' },
     { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' },
+    { name: "Day Settlement", icon: ShieldCheck, href: "/dashboard/settlement", permission: 'can_view_revenue' },
     { name: "Inventory", icon: Box, href: "/dashboard/inventory", permission: 'can_edit_inventory' },
     { name: "Settings", icon: Settings, href: "/dashboard/settings", permission: 'can_manage_staff' },
-] as const;
-
-interface SidebarItem {
-    name: string;
-    icon: any;
-    href: string;
-    permission?: "can_view_revenue" | "can_edit_inventory" | "can_view_clinical" | "can_manage_staff";
-}
+];
 
 export function AppSidebar() {
     const pathname = usePathname();
+    const { user, updatePermissions } = useAuth();
 
     return (
-        <div className="pb-12 min-h-screen w-64 border-r bg-slate-50/50 dark:bg-slate-900/50 hidden md:block">
-            <div className="space-y-4 py-4">
+        <div className="flex flex-col h-screen w-64 border-r bg-slate-50/50 dark:bg-slate-900/50 hidden md:flex">
+            <div className="flex-1 space-y-4 py-4 overflow-y-auto">
                 <div className="px-3 py-2">
                     <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
                         HealthFlo
@@ -67,15 +87,24 @@ export function AppSidebar() {
                         })}
                     </div>
                 </div>
-                <div className="px-3 py-2">
-                    <h2 className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                        Quick Actions
-                    </h2>
-                    <div className="space-y-1">
-                        <Button variant="ghost" className="w-full justify-start">
-                            <span className="mr-2">⌘K</span> Command Palette
-                        </Button>
+            </div>
+
+            {/* Sidebar Footer: Solo Mode Toggle */}
+            <div className="p-4 border-t bg-white dark:bg-slate-950">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-900/50">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center">
+                            <Zap className="w-4 h-4 fill-white" />
+                        </div>
+                        <div>
+                            <div className="text-[10px] font-bold text-indigo-900 dark:text-indigo-100 uppercase tracking-tighter">Solo Mode</div>
+                            <div className="text-[9px] text-indigo-600 dark:text-indigo-400">Admin Bypass</div>
+                        </div>
                     </div>
+                    <Switch
+                        checked={user?.permissions?.solo_mode || false}
+                        onCheckedChange={(checked) => updatePermissions({ solo_mode: checked })}
+                    />
                 </div>
             </div>
         </div>

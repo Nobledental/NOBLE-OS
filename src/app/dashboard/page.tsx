@@ -1,4 +1,11 @@
+"use client";
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Activity, Users, ArrowUpRight } from "lucide-react";
+import { ActiveQueue } from "@/components/dashboard/active-queue";
 import { PermissionGuard } from "@/components/security/permission-guard";
+import { ChiefPulse } from "@/components/dashboard/chief-pulse";
 
 export default function DashboardPage() {
     return (
@@ -69,16 +76,24 @@ export default function DashboardPage() {
                     </Card>
                 </PermissionGuard>
 
-                {/* Zone 4: Quick Action - Guarded for Revenue */}
+                {/* Zone 4: Chief's Pulse - Guarded for Admin/Owner */}
+                <PermissionGuard permission="can_manage_staff">
+                    <ChiefPulse />
+                </PermissionGuard>
+
+                {/* Zone 5: Quick Action - Guarded for Revenue */}
                 <PermissionGuard permission="can_view_revenue">
-                    <Card className="col-span-3 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800 flex items-center justify-center cursor-pointer hover:bg-indigo-100 transition-colors group">
-                        <div className="text-center">
-                            <div className="h-12 w-12 bg-indigo-600 rounded-full text-white mx-auto flex items-center justify-center mb-2 shadow-lg group-hover:scale-110 transition-transform">
+                    <Card className="col-span-4 bg-indigo-50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800 flex items-center justify-between p-6 cursor-pointer hover:bg-indigo-100 transition-all group">
+                        <div className="flex items-center gap-4">
+                            <div className="h-12 w-12 bg-indigo-600 rounded-full text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                                 <ArrowUpRight className="h-6 w-6" />
                             </div>
-                            <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">Quick Invoice</h3>
-                            <p className="text-xs text-indigo-600 dark:text-indigo-300">Create bill without appointment</p>
+                            <div>
+                                <h3 className="font-semibold text-indigo-900 dark:text-indigo-100">Quick Invoice</h3>
+                                <p className="text-xs text-indigo-600 dark:text-indigo-300">Create bill without appointment</p>
+                            </div>
                         </div>
+                        <Button variant="ghost" className="text-indigo-600 group-hover:translate-x-1 transition-transform">Get Started</Button>
                     </Card>
                 </PermissionGuard>
 
