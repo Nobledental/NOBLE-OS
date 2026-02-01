@@ -1,0 +1,98 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js inferred 
+your workspace root, but it may not be 
+correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: 
+    (ΓÜá Warning: Ne...not be correct.:Str  
+  ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommand 
+   Error
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json as 
+the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js config, or 
+consider removing one of the lockfiles if 
+it's not needed.
+   See https://nextjs.org/docs/app/api-refer
+ence/config/next-config-js/turbopack#root-di
+rectory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 27.7s
+  Running TypeScript ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/11) ...
+The width(-1) and height(-1) of chart 
+should be greater than 0,
+       please check the style of container, 
+or the props width(100%) and height(100%),
+       or add a minWidth(0) or 
+minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+The width(-1) and height(-1) of chart 
+should be greater than 0,
+       please check the style of container, 
+or the props width(100%) and height(100%),
+       or add a minWidth(0) or 
+minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+The width(-1) and height(-1) of chart 
+should be greater than 0,
+       please check the style of container, 
+or the props width(100%) and height(100%),
+       or add a minWidth(0) or 
+minHeight(undefined) or use 
+aspect(undefined) to control the
+       height and width.
+Error occurred prerendering page 
+"/dashboard". Read more: https://nextjs.org/
+docs/messages/prerender-error
+Error: supabaseUrl is required.
+    at <unknown> (C:\Users\Dhivakaran\Deskto
+p\CORE\NOBLE-OS\.next\server\chunks\ssr\Desk
+top_CORE_NOBLE-OS_src_app_dashboard_page_tsx
+_d5c78daf._.js:37:43462)
+    at new ci (C:\Users\Dhivakaran\Desktop\C
+ORE\NOBLE-OS\.next\server\chunks\ssr\Desktop
+_CORE_NOBLE-OS_src_app_dashboard_page_tsx_d5
+c78daf._.js:37:43713)
+    at module evaluation (C:\Users\Dhivakara
+n\Desktop\CORE\NOBLE-OS\.next\server\chunks\
+ssr\Desktop_CORE_NOBLE-OS_src_app_dashboard_
+page_tsx_d5c78daf._.js:37:47995)
+    at instantiateModule (C:\Users\Dhivakara
+n\Desktop\CORE\NOBLE-OS\.next\server\chunks\
+ssr\[turbopack]_runtime.js:740:9)
+    at getOrInstantiateModuleFromParent (C:\
+Users\Dhivakaran\Desktop\CORE\NOBLE-OS\.next
+\server\chunks\ssr\[turbopack]_runtime.js:76
+3:12)
+    at Context.commonJsRequire [as r] (C:\Us
+ers\Dhivakaran\Desktop\CORE\NOBLE-OS\.next\s
+erver\chunks\ssr\[turbopack]_runtime.js:249:
+12) {
+  digest: '3701173911'
+}
+Export encountered an error on 
+/dashboard/page: /dashboard, exiting the 
+build.
+Γ¿» Next.js build worker exited with code: 
+1 and signal: null

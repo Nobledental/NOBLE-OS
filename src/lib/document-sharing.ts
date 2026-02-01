@@ -156,7 +156,7 @@ export class DocumentSharingQueueService {
 
             // Check for 48-hour penalty
             const hoursSinceRequest = (currentTime.getTime() - request.requestedAt.getTime()) / (1000 * 60 * 60);
-            if (hoursSinceRequest >= 48 && request.status !== 'shared') {
+            if (hoursSinceRequest >= 48) {
                 penalties.push(this.createPenalty(request.clinicId, 'LATE_SHARE', request.documentId, request.patientId));
             }
         }

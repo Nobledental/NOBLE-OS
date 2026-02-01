@@ -1,0 +1,58 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js inferred 
+your workspace root, but it may not be 
+correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: 
+    (ΓÜá Warning: Ne...not be correct.:Str  
+  ing) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommand 
+   Error
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json as 
+the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js config, or 
+consider removing one of the lockfiles if 
+it's not needed.
+   See https://nextjs.org/docs/app/api-refer
+ence/config/next-config-js/turbopack#root-di
+rectory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\NOBLE-
+OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 15.9s
+  Running TypeScript ...
+  Collecting page data using 3 workers ...
+  Generating static pages using 3 workers (0/11) ...
+Error occurred prerendering page 
+"/dashboard/analytics". Read more: https://n
+extjs.org/docs/messages/prerender-error
+Error: useAuth must be used within an 
+AuthProvider
+    at d (C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\.next\server\chunks\ssr\[root-of-the
+-server]__5b13cbad._.js:1:18710)
+    at w (C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\.next\server\chunks\ssr\Desktop_CORE
+_NOBLE-OS_f70ffe7c._.js:1:2187) {
+  digest: '3667784577'
+}
+Export encountered an error on 
+/dashboard/analytics/page: 
+/dashboard/analytics, exiting the build.
+Γ¿» Next.js build worker exited with code: 
+1 and signal: null

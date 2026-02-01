@@ -113,7 +113,7 @@ export function ComplicationChat({
                 // Handle actions
                 if (nextNode.action) {
                     if (nextNode.action.type === 'create_alert' && nextNode.action.payload.emergency) {
-                        hapticPatterns.warningVibration();
+                        hapticPatterns.warningShake();
                     }
                 }
 
@@ -129,7 +129,7 @@ export function ComplicationChat({
                 if (nextNode.type === 'end') {
                     setIsComplete(true);
                     if (priority === 'CRITICAL') {
-                        hapticPatterns.warningVibration();
+                        hapticPatterns.warningShake();
                     } else {
                         hapticPatterns.successPulse();
                     }
@@ -190,9 +190,9 @@ export function ComplicationChat({
                         <span className="font-medium">Recovery Check-in</span>
                     </div>
                     <div className={`px-2 py-1 rounded text-xs font-medium ${priority === 'GREEN' ? 'bg-green-500' :
-                            priority === 'YELLOW' ? 'bg-amber-500' :
-                                priority === 'RED' ? 'bg-red-500' :
-                                    'bg-red-600 animate-pulse'
+                        priority === 'YELLOW' ? 'bg-amber-500' :
+                            priority === 'RED' ? 'bg-red-500' :
+                                'bg-red-600 animate-pulse'
                         }`}>
                         {priority}
                     </div>
@@ -210,8 +210,8 @@ export function ComplicationChat({
                             className={`flex ${msg.type === 'user' ? 'justify-end' : 'justify-start'}`}
                         >
                             <div className={`max-w-[80%] p-3 rounded-2xl ${msg.type === 'user'
-                                    ? 'bg-primary text-primary-foreground rounded-br-sm'
-                                    : 'bg-white dark:bg-gray-800 shadow-sm rounded-bl-sm'
+                                ? 'bg-primary text-primary-foreground rounded-br-sm'
+                                : 'bg-white dark:bg-gray-800 shadow-sm rounded-bl-sm'
                                 }`}>
                                 <p className="text-sm">{msg.message}</p>
                             </div>
@@ -243,7 +243,7 @@ export function ComplicationChat({
                         variant="destructive"
                         className="w-full"
                         onClick={() => {
-                            hapticPatterns.warningVibration();
+                            hapticPatterns.warningShake();
                             onEmergency();
                         }}
                     >

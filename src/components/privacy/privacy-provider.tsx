@@ -113,7 +113,7 @@ export function PrivacyProvider({ children }: PrivacyProviderProps) {
         if (!settings.autoBlurTimeout) return;
 
         const interval = setInterval(() => {
-            const inactive = Date.now() - lastActivity > settings.autoBlurTimeout * 1000;
+            const inactive = settings.autoBlurTimeout && (Date.now() - lastActivity > settings.autoBlurTimeout * 1000);
             if (inactive && !settings.isBlurred) {
                 setSettings(prev => ({ ...prev, isBlurred: true }));
             }
@@ -180,8 +180,8 @@ export function PrivacyToggle({ className = '' }: PrivacyToggleProps) {
         <button
             onClick={toggleBlur}
             className={`p-2 rounded-lg transition-all ${settings.isBlurred
-                    ? 'bg-red-100 text-red-600 dark:bg-red-900/30'
-                    : 'bg-muted hover:bg-muted/80'
+                ? 'bg-red-100 text-red-600 dark:bg-red-900/30'
+                : 'bg-muted hover:bg-muted/80'
                 } ${className}`}
             title={settings.isBlurred ? 'Click to reveal data (Cmd+B)' : 'Click to blur data (Cmd+B)'}
         >

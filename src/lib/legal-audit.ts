@@ -186,10 +186,9 @@ export class LegalAuditService {
     updateNote(
         noteId: string,
         currentNote: VersionedClinicalNote,
-        updates: Partial<VersionedClinicalNote['chiefComplaint' | 'historyOfPresentIllness' | 'clinicalFindings' | 'diagnosis' | 'treatmentPlan' | 'procedureNotes']> & {
-            prescriptions?: string[];
-            nextVisitDate?: Date;
-        },
+        updates: Partial<Pick<VersionedClinicalNote,
+            'chiefComplaint' | 'historyOfPresentIllness' | 'clinicalFindings' |
+            'diagnosis' | 'treatmentPlan' | 'procedureNotes' | 'prescriptions' | 'nextVisitDate'>>,
         changedBy: string,
         changeReason: string,
         changeType: 'UPDATE' | 'CORRECTION' | 'ADDENDUM' = 'UPDATE',

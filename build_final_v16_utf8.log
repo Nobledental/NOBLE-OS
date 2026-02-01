@@ -1,0 +1,69 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js 
+inferred your workspace root, but it 
+may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (ΓÜá Warning: Ne...not be co  
+  rrect.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json 
+as the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js 
+config, or consider removing one of 
+the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-
+reference/config/next-config-js/turbopa
+ck#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 28.4s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/postop/complication-ch
+at.tsx:116:40
+Type error: Property 
+'warningVibration' does not exist on 
+type '{ softTap: () => void; 
+successPulse: () => void; 
+warningShake: () => void; heavyImpact: 
+() => void; selectionTick: () => void; 
+}'.
+
+[0m [90m 114 |[39m                 
+[36mif[39m 
+(nextNode[33m.[39maction) {
+ [90m 115 |[39m                     
+[36mif[39m (nextNode[33m.[39maction
+[33m.[39mtype [33m===[39m 
+[32m'create_alert'[39m [33m&&[39m n
+extNode[33m.[39maction[33m.[39mpayl
+oad[33m.[39memergency) {
+[31m[1m>[22m[39m[90m 116 |[39m   
+                      hapticPatterns[3
+3m.[39mwarningVibration()[33m;[39m
+ [90m     |[39m                      
+                  [31m[1m^[22m[39m
+ [90m 117 |[39m                     }
+ [90m 118 |[39m                 }
+ [90m 119 |[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

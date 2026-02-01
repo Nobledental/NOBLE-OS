@@ -1,5 +1,5 @@
 /**
- * Phase 24: JARVIS Autonomous Agent
+ * Phase 24: NEO Autonomous Agent
  * 
  * Proactive clinical auditor, auto-notifications, and self-correction logic
  */
@@ -72,7 +72,7 @@ export interface ConfirmationRequest {
 export interface AutoModeStatus {
     isActive: boolean;
     activatedAt?: Date;
-    reason: 'no_receptionist' | 'emergency' | 'after_hours';
+    reason?: 'no_receptionist' | 'emergency' | 'after_hours';
     features: {
         autoCheckIn: boolean;
         autoBilling: boolean;
@@ -89,10 +89,10 @@ export interface ProcedureDataRequirements {
 }
 
 // =============================================================================
-// JARVIS CLINICAL AUDITOR
+// NEO CLINICAL AUDITOR
 // =============================================================================
 
-export class JARVISClinicalAuditor {
+export class NEOClinicalAuditor {
     private readonly PROCEDURE_REQUIREMENTS: Map<string, ProcedureDataRequirements> = new Map([
         ['RCT', {
             procedureCode: 'RCT',
@@ -221,7 +221,7 @@ export class JARVISClinicalAuditor {
         data: Record<string, string>;
     } {
         return {
-            title: `JARVIS: Clinical data missing`,
+            title: `NEO: Clinical data missing`,
             body: `${audit.procedureName} for ${audit.patientName}. Missing: ${audit.missingFields.slice(0, 2).join(', ')}${audit.missingFields.length > 2 ? '...' : ''}. Tap to update.`,
             data: {
                 type: 'CLINICAL_AUDIT',
@@ -476,13 +476,13 @@ export class AutoModeService {
         body: string;
     } {
         return {
-            title: 'JARVIS: Auto-Mode Activated',
+            title: 'NEO: Auto-Mode Activated',
             body: 'No receptionist detected. Digital check-ins and auto-billing are now active.'
         };
     }
 }
 
 // Export instances
-export const jarvisAuditor = new JARVISClinicalAuditor();
+export const neoAuditor = new NEOClinicalAuditor();
 export const morningSyncService = new MorningSyncService();
 export const autoModeService = new AutoModeService();

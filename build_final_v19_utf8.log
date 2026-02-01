@@ -1,0 +1,77 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js 
+inferred your workspace root, but it 
+may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (ΓÜá Warning: Ne...not be co  
+  rrect.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json 
+as the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js 
+config, or consider removing one of 
+the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-
+reference/config/next-config-js/turbopa
+ck#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 21.3s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/document-sharing.ts:159:44
+Type error: This comparison appears to 
+be unintentional because the types 
+'"queued"' and '"shared"' have no 
+overlap.
+
+[0m [90m 157 |[39m             
+[90m// Check for 48-hour penalty[39m
+ [90m 158 |[39m             
+[36mconst[39m hoursSinceRequest 
+[33m=[39m 
+(currentTime[33m.[39mgetTime() 
+[33m-[39m request[33m.[39mrequested
+At[33m.[39mgetTime()) [33m/[39m 
+([35m1000[39m [33m*[39m 
+[35m60[39m [33m*[39m 
+[35m60[39m)[33m;[39m
+[31m[1m>[22m[39m[90m 159 |[39m   
+          [36mif[39m 
+(hoursSinceRequest [33m>=[39m 
+[35m48[39m [33m&&[39m 
+request[33m.[39mstatus [33m!==[39m 
+[32m'shared'[39m) {
+ [90m     |[39m                      
+                      
+[31m[1m^[22m[39m
+ [90m 160 |[39m                 penal
+ties[33m.[39mpush([36mthis[39m[33m
+.[39mcreatePenalty(request[33m.[39mc
+linicId[33m,[39m 
+[32m'LATE_SHARE'[39m[33m,[39m reque
+st[33m.[39mdocumentId[33m,[39m requ
+est[33m.[39mpatientId))[33m;[39m
+ [90m 161 |[39m             }
+ [90m 162 |[39m         }[0m
+Next.js build worker exited with code: 
+1 and signal: null

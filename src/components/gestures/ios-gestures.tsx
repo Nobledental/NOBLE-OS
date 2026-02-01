@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useTransform, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, useMotionValue, useTransform, AnimatePresence, PanInfo, HTMLMotionProps } from 'framer-motion';
 import { Trash2, Check, MoreHorizontal, X } from 'lucide-react';
 import { triggerHaptic } from '@/components/navigation/navigation-components';
 
@@ -349,7 +349,7 @@ interface LongPressOptions {
 }
 
 export function useLongPress({ delay = 500, onLongPress, onPress }: LongPressOptions) {
-    const timeoutRef = useRef<NodeJS.Timeout>();
+    const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
     const [isLongPressed, setIsLongPressed] = useState(false);
     const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -419,10 +419,9 @@ export function useLongPress({ delay = 500, onLongPress, onPress }: LongPressOpt
 // SPRING BUTTON
 // =============================================================================
 
-interface SpringButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface SpringButtonProps extends HTMLMotionProps<'button'> {
     variant?: 'default' | 'primary' | 'success' | 'danger';
     size?: 'sm' | 'md' | 'lg';
-    children: React.ReactNode;
 }
 
 export function SpringButton({

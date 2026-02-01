@@ -381,7 +381,7 @@ export function OfferSuggestionCard({ suggestion, onAccept, onDismiss }: OfferSu
                         <Sparkles className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <p className="text-xs text-primary font-medium">JARVIS Suggestion</p>
+                        <p className="text-xs text-primary font-medium">NEO Suggestion</p>
                         <h3 className="font-semibold">{suggestion.title}</h3>
                     </div>
                 </div>

@@ -1,0 +1,68 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js 
+inferred your workspace root, but it 
+may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (ΓÜá Warning: Ne...not be co  
+  rrect.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json 
+as the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js 
+config, or consider removing one of 
+the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-
+reference/config/next-config-js/turbopa
+ck#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 19.5s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/privacy/privacy-provid
+er.tsx:4:28
+Type error: Cannot find module 
+'react-hotkeys-hook' or its 
+corresponding type declarations.
+
+[0m [90m 2 |[39m
+ [90m 3 |[39m [36mimport[39m { 
+useState[33m,[39m 
+useEffect[33m,[39m 
+useCallback[33m,[39m 
+createContext[33m,[39m useContext } 
+[36mfrom[39m 
+[32m'react'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 4 |[39m 
+[36mimport[39m { useHotkeys } 
+[36mfrom[39m [32m'react-hotkeys-hook
+'[39m[33m;[39m
+ [90m   |[39m                        
+    [31m[1m^[22m[39m
+ [90m 5 |[39m
+ [90m 6 |[39m [90m// ===============
+=======================================
+=======================[39m
+ [90m 7 |[39m [90m// PRIVACY 
+CONTEXT[39m[0m
+Next.js build worker exited with code: 
+1 and signal: null

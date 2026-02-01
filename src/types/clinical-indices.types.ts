@@ -379,8 +379,8 @@ export function calculateHygieneIndices(
     plaqueScores: PlaquScore[],
     gingivalScores: GingivalScore[]
 ): HygieneIndexResult {
-    const avgPlaque = plaqueScores.reduce((a, b) => a + b, 0) / plaqueScores.length;
-    const avgGingival = gingivalScores.reduce((a, b) => a + b, 0) / gingivalScores.length;
+    const avgPlaque = plaqueScores.reduce<number>((a, b) => a + b, 0) / plaqueScores.length;
+    const avgGingival = gingivalScores.reduce<number>((a, b) => a + b, 0) / gingivalScores.length;
 
     // Full mouth plaque % = sites with plaque / total sites * 100
     const sitesWithPlaque = plaqueScores.filter(s => s > 0).length;

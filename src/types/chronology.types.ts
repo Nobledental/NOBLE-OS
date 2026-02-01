@@ -229,8 +229,8 @@ export function calculateOHIS(
     const debrisValues = Object.values(debrisScores);
     const calculusValues = Object.values(calculusScores);
 
-    const debrisIndex = debrisValues.reduce((a, b) => a + b, 0) / debrisValues.length;
-    const calculusIndex = calculusValues.reduce((a, b) => a + b, 0) / calculusValues.length;
+    const debrisIndex = debrisValues.reduce<number>((a, b) => a + b, 0) / debrisValues.length;
+    const calculusIndex = calculusValues.reduce<number>((a, b) => a + b, 0) / calculusValues.length;
     const ohisTotal = debrisIndex + calculusIndex;
 
     let interpretation: OHISResult['interpretation'];

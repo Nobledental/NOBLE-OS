@@ -1,5 +1,8 @@
 import { AppSidebar } from "@/components/layout/sidebar";
 import { CommandPalette } from "@/components/shared/command-palette";
+
+export const dynamic = 'force-dynamic';
+
 // UserNav removed for now
 
 export default function DashboardLayout({

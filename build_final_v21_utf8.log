@@ -1,0 +1,65 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js 
+inferred your workspace root, but it 
+may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (ΓÜá Warning: Ne...not be co  
+  rrect.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json 
+as the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js 
+config, or consider removing one of 
+the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-
+reference/config/next-config-js/turbopa
+ck#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 26.0s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/legal-audit.ts:212:13
+Type error: Spread types may only be 
+created from object types.
+
+[0m [90m 210 |[39m         
+[36mconst[39m updatedNote[33m:[39m 
+[33mVersionedClinicalNote[39m 
+[33m=[39m {
+ [90m 211 |[39m             
+[33m...[39mcurrentNote[33m,[39m
+[31m[1m>[22m[39m[90m 212 |[39m   
+          
+[33m...[39mupdates[33m,[39m
+ [90m     |[39m             
+[31m[1m^[22m[39m
+ [90m 213 |[39m             
+currentVersion[33m:[39m 
+newVersion[33m,[39m
+ [90m 214 |[39m             
+lastModifiedBy[33m:[39m 
+changedBy[33m,[39m
+ [90m 215 |[39m             
+lastModifiedAt[33m:[39m now[0m
+Next.js build worker exited with code: 
+1 and signal: null

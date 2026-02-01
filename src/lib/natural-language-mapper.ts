@@ -133,7 +133,7 @@ class ToothMapStateManager {
         if (previousState !== newState) {
             actions.push({
                 type: 'dmft_update',
-                description: `DMFT updated to ${result.dmft.total} (D:${result.dmft.d} M:${result.dmft.m} F:${result.dmft.f})`,
+                description: `DMFT updated to ${result.dmft.total} (D:${result.dmft.decayed} M:${result.dmft.missing} F:${result.dmft.filled})`,
                 data: result.dmft
             });
         }

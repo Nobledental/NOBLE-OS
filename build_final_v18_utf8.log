@@ -1,0 +1,70 @@
+﻿
+> manager@0.1.0 build
+> next build
+
+node.exe : ΓÜá Warning: Next.js 
+inferred your workspace root, but it 
+may not be correct.
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" 
+"C:\Program Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpeci 
+   fied: (ΓÜá Warning: Ne...not be co  
+  rrect.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCo 
+   mmandError
+ 
+ We detected multiple lockfiles and 
+selected the directory of 
+C:\Users\Dhivakaran\package-lock.json 
+as the root directory.
+ To silence this warning, set 
+`turbopack.root` in your Next.js 
+config, or consider removing one of 
+the lockfiles if it's not needed.
+   See https://nextjs.org/docs/app/api-
+reference/config/next-config-js/turbopa
+ck#root-directory for more information.
+ Detected additional lockfiles: 
+   * C:\Users\Dhivakaran\Desktop\CORE\N
+OBLE-OS\package-lock.json
+
+Γû▓ Next.js 16.1.6 (Turbopack)
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 28.8s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/privacy/privacy-provid
+er.tsx:116:58
+Type error: 'settings.autoBlurTimeout' 
+is possibly 'null'.
+
+[0m [90m 114 |[39m
+ [90m 115 |[39m         
+[36mconst[39m interval [33m=[39m 
+setInterval(() [33m=>[39m {
+[31m[1m>[22m[39m[90m 116 |[39m   
+          [36mconst[39m inactive 
+[33m=[39m 
+[33mDate[39m[33m.[39mnow() 
+[33m-[39m lastActivity [33m>[39m 
+settings[33m.[39mautoBlurTimeout 
+[33m*[39m [35m1000[39m[33m;[39m
+ [90m     |[39m                      
+                                    
+[31m[1m^[22m[39m
+ [90m 117 |[39m             
+[36mif[39m (inactive [33m&&[39m [3
+3m![39msettings[33m.[39misBlurred) {
+ [90m 118 |[39m                 
+setSettings(prev [33m=>[39m ({ 
+[33m...[39mprev[33m,[39m 
+isBlurred[33m:[39m [36mtrue[39m 
+}))[33m;[39m
+ [90m 119 |[39m             }[0m
+Next.js build worker exited with code: 
+1 and signal: null

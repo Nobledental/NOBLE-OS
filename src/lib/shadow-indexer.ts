@@ -7,7 +7,7 @@ import {
     classifyGVBlack,
     classifyKennedy,
     calculateDMFT,
-    DMFTData
+    DMFTResult
 } from '@/types/clinical-indices.types';
 
 // =============================================================================
@@ -38,7 +38,7 @@ export interface ToothMapEvent {
 }
 
 export interface ShadowIndexResult {
-    dmft: DMFTData;
+    dmft: DMFTResult;
     kennedyMaxilla?: { classification: string; modifications: number };
     kennedyMandible?: { classification: string; modifications: number };
     missingTeeth: number[];
@@ -204,7 +204,7 @@ export interface MetadataUpdate {
     patientId: string;
     timestamp: string;
     indices: {
-        dmft: DMFTData;
+        dmft: DMFTResult;
         kennedyMaxilla?: string;
         kennedyMandible?: string;
     };
