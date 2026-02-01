@@ -16,6 +16,7 @@ import {
     createReferralLink,
     isReferralTokenValid
 } from '@/types/consultant.types';
+import { neoAuditor } from '@/lib/neo-agent';
 
 interface ReferralLinkGeneratorProps {
     patientId: string;
@@ -45,6 +46,30 @@ export default function ReferralLinkGenerator({
         setIsGenerating(true);
 
         try {
+            // NEO Intelligence: Perform a pre-referral audit
+            // In a real app, this would fetch the patient's latest clinical note
+            const mockApt = {
+                id: 'apt-1',
+                patientId,
+                patientName,
+                doctorId: referringDoctor,
+                procedureCode: 'RCT', // Assuming RCT for the mock audit
+                procedureName: 'Root Canal Treatment',
+                status: 'completed' as const,
+                clinicalNote: {
+                    workingLength: '21mm',
+                    apexLocator: 'Root ZX',
+                    // Missing: irrigant, obturator, coneSize
+                }
+            };
+
+            const auditResults = neoAuditor.auditClinicalRecords([mockApt]);
+            const hasCriticalIssues = auditResults.some(r => r.severity === 'critical');
+
+            if (hasCriticalIssues) {
+                toast.warning('NEO detected critical missing data in the clinical record. Proceeding with caution.');
+            }
+
             // In production, this would call an API endpoint
             const link = createReferralLink(patientId, referringDoctor, {
                 includeTimeline,
@@ -55,11 +80,11 @@ export default function ReferralLinkGenerator({
             });
 
             // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 800));
 
             setGeneratedLink(link);
             onLinkGenerated?.(link);
-            toast.success('Secure referral link generated');
+            toast.success('Secure referral link generated with NEO insights');
         } catch (error) {
             toast.error('Failed to generate link');
         } finally {

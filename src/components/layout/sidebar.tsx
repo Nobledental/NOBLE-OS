@@ -17,7 +17,8 @@ import {
     Zap,
     LucideIcon,
     BarChart3,
-    ShieldCheck
+    ShieldCheck,
+    Briefcase
 } from "lucide-react";
 import { PermissionGuard } from "@/components/security/permission-guard";
 import { useAuth } from "@/lib/auth-context";
@@ -36,6 +37,7 @@ const sidebarItems: SidebarItem[] = [
     { name: "Patients", icon: Users, href: "/dashboard/patients" },
     { name: "Appointments", icon: Calendar, href: "/dashboard/appointments" },
     { name: "Clinical Master", icon: Stethoscope, href: "/dashboard/clinical", permission: 'can_view_clinical' },
+    { name: "Specialists", icon: Briefcase, href: "/dashboard/specialists" },
     { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' },
     { name: "Day Settlement", icon: ShieldCheck, href: "/dashboard/settlement", permission: 'can_view_revenue' },
     { name: "Inventory", icon: Box, href: "/dashboard/inventory", permission: 'can_edit_inventory' },
