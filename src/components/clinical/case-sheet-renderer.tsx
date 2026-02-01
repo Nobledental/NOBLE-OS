@@ -9,8 +9,11 @@ import {
     Syringe,
     Scissors,
     Smile,
-    Shield
+    Shield,
+    FileText
 } from 'lucide-react';
+import { GlassCard } from '@/components/ui/glass-card';
+import { cn } from '@/lib/utils';
 
 // Department-specific sub-forms
 import AIProvisionalDiagnosis from './ai-diagnosis';
@@ -105,32 +108,48 @@ export default function CaseSheetRenderer({
     };
 
     return (
-        <div className="space-y-4">
-            <Card className="p-4">
+        <div className="space-y-8 animate-ios-reveal">
+            <GlassCard className="p-2 glass" intensity="low">
                 <Tabs value={selectedDepartment} onValueChange={(v) => setSelectedDepartment(v as Department)}>
-                    <TabsList className="grid w-full" style={{ gridTemplateColumns: `repeat(${availableDepartments.length}, 1fr)` }}>
+                    <TabsList className="grid w-full h-14 bg-transparent" style={{ gridTemplateColumns: `repeat(${availableDepartments.length}, 1fr)` }}>
                         {availableDepartments.map(([key, config]) => {
                             const Icon = config.icon;
                             return (
-                                <TabsTrigger key={key} value={key} className="flex items-center gap-2">
-                                    <Icon className={`w-4 h-4 ${config.color}`} />
-                                    <span className="hidden md:inline">{config.name}</span>
+                                <TabsTrigger
+                                    key={key}
+                                    value={key}
+                                    className={cn(
+                                        "flex items-center gap-2 rounded-xl transition-all duration-300",
+                                        "data-[state=active]:bg-white dark:data-[state=active]:bg-slate-800 data-[state=active]:shadow-sm data-[state=active]:text-slate-900 dark:data-[state=active]:text-white"
+                                    )}
+                                >
+                                    <Icon className={cn("w-4 h-4", config.color)} />
+                                    <span className="hidden md:inline font-bold text-xs uppercase tracking-widest">{config.name}</span>
                                 </TabsTrigger>
                             );
                         })}
                     </TabsList>
                 </Tabs>
+            </GlassCard>
 
-                <div className="mt-4 flex items-center justify-between">
+            <div className="flex items-center justify-between px-2">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                        <FileText className="w-6 h-6 text-slate-500" />
+                    </div>
                     <div>
-                        <h3 className="font-semibold">{departmentConfig[selectedDepartment].name}</h3>
+                        <h3 className="text-2xl font-black tracking-tight">{departmentConfig[selectedDepartment].name}</h3>
                         <p className="text-sm text-muted-foreground">{departmentConfig[selectedDepartment].description}</p>
                     </div>
-                    <Badge variant="outline">{selectedDepartment.replace('_', ' ')}</Badge>
                 </div>
-            </Card>
+                <Badge variant="outline" className="rounded-full px-4 py-1 glass text-[10px] font-bold uppercase tracking-widest border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400">
+                    Clinical Ref: {selectedDepartment.replace('_', ' ')}
+                </Badge>
+            </div>
 
-            {renderDepartmentForm()}
+            <div className="bg-white dark:bg-slate-950/20 rounded-[32px] p-8 shadow-inner border border-slate-100 dark:border-slate-800 min-h-[400px]">
+                {renderDepartmentForm()}
+            </div>
         </div>
     );
 }

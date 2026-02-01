@@ -49,8 +49,11 @@ export function AppSidebar() {
     const { user, updatePermissions } = useAuth();
 
     return (
-        <div className="flex flex-col h-screen w-64 border-r bg-slate-50/50 dark:bg-slate-900/50 hidden md:flex">
-            <div className="flex-1 space-y-4 py-4 overflow-y-auto">
+        <div className="flex flex-col h-screen w-64 border-r glass dark:bg-slate-900/40 hidden md:flex relative overflow-hidden">
+            {/* Mesh Background Overlay */}
+            <div className="absolute inset-0 bg-mesh-gradient opacity-30 pointer-events-none" />
+
+            <div className="flex-1 space-y-4 py-4 overflow-y-auto relative z-10">
                 <div className="px-3 py-2">
                     <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
                         HealthFlo
@@ -58,15 +61,16 @@ export function AppSidebar() {
                     <p className="px-4 text-xs text-muted-foreground mb-4">
                         Clinic Manager v2.0
                     </p>
-                    <div className="space-y-1">
-                        {sidebarItems.map((item) => {
+                    <div className="space-y-1 animate-ios-reveal">
+                        {sidebarItems.map((item, index) => {
                             const button = (
                                 <Button
                                     key={item.href}
                                     variant={pathname === item.href ? "secondary" : "ghost"}
+                                    style={{ animationDelay: `${index * 50}ms` }}
                                     className={cn(
-                                        "w-full justify-start",
-                                        pathname === item.href && "bg-slate-100 dark:bg-slate-800"
+                                        "w-full justify-start rounded-xl px-4 py-6 transition-all duration-300",
+                                        pathname === item.href ? "bg-white/80 dark:bg-slate-800/80 shadow-sm" : "hover:bg-white/40 dark:hover:bg-slate-800/40"
                                     )}
                                     asChild
                                 >

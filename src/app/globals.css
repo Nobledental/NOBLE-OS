@@ -44,6 +44,10 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Apple-grade Animation Tokens */
+  --animation-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
+  --animation-duration-ios: 500ms;
 }
 
 :root {
@@ -79,6 +83,14 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Medical iOS Palette */
+  --ios-navy: #0A192F;
+  --ios-teal: #00BFA5;
+  --ios-coral: #FF6B6B;
+  --ios-mesh-1: #e0e7ff;
+  --ios-mesh-2: #f0fdfa;
+  --ios-mesh-3: #fef2f2;
 }
 
 .dark {
@@ -113,13 +125,64 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Dark Mode Medical iOS Palette */
+  --ios-navy: #020617;
+  --ios-mesh-1: #1e1b4b;
+  --ios-mesh-2: #064e3b;
+  --ios-mesh-3: #450a0a;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+@utility bg-mesh-gradient {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(at 0% 0%, var(--ios-mesh-1) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, var(--ios-mesh-2) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, var(--ios-mesh-3) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, var(--ios-mesh-2) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+@utility glass {
+  @apply bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border border-white/20 dark:border-white/10;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+@utility glass-premium {
+  @apply bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-[24px] overflow-hidden;
+  box-shadow:
+    0 10px 40px -10px rgba(0, 0, 0, 0.1),
+    0 1px 1px 0 rgba(255, 255, 255, 0.3) inset,
+    0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+@utility text-ios-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-900 to-slate-500 dark:from-white dark:to-slate-400;
+}
+
+@utility animate-ios-reveal {
+  animation: ios-reveal var(--animation-duration-ios) var(--animation-ease-ios) forwards;
+}
+
+@keyframes ios-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }

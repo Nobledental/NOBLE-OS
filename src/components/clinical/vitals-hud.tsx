@@ -8,8 +8,10 @@ import {
     Droplets,
     Wind,
     AlertCircle,
-    Zap
+    Zap,
+    HeartPulse
 } from "lucide-react"
+import { GlassCard } from "@/components/ui/glass-card"
 
 interface VitalCardProps {
     label: string
@@ -23,38 +25,33 @@ interface VitalCardProps {
 function VitalCard({ label, value, unit, icon: Icon, status = "normal" }: VitalCardProps) {
     return (
         <div className={cn(
-            "flex flex-col p-4 rounded-xl border transition-all animate-in fade-in slide-in-from-top-2",
-            status === "risk"
-                ? "bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800 animate-pulse-slow font-bold"
-                : status === "warning"
-                    ? "bg-amber-50 border-amber-200 dark:bg-amber-900/20 dark:border-amber-800"
-                    : "bg-white border-slate-200 dark:bg-slate-950 dark:border-slate-800"
+            "flex flex-col min-w-[120px] transition-all duration-500 group",
+            status === "risk" && "relative"
         )}>
-            <div className="flex items-center justify-between mb-2">
-                <span className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{label}</span>
+            <div className="flex items-center gap-2 mb-1">
                 <Icon className={cn(
-                    "h-4 w-4",
-                    status === "risk" ? "text-red-600" : status === "warning" ? "text-amber-600" : "text-slate-400"
+                    "h-3 w-3",
+                    status === "risk" ? "text-rose-500 animate-pulse" : status === "warning" ? "text-amber-500" : "text-slate-400"
                 )} />
+                <span className="text-[9px] text-muted-foreground uppercase tracking-widest font-black leading-none">{label}</span>
             </div>
             <div className="flex items-baseline gap-1">
                 <span className={cn(
-                    "text-xl",
-                    status === "risk" ? "text-red-700 dark:text-red-400" : "text-slate-900 dark:text-slate-100"
+                    "text-xl font-black tracking-tight transition-colors",
+                    status === "risk" ? "text-rose-600 dark:text-rose-400" : "text-slate-900 dark:text-slate-100"
                 )}>{value}</span>
-                <span className="text-[10px] text-muted-foreground">{unit}</span>
+                <span className="text-[10px] text-muted-foreground font-bold">{unit}</span>
             </div>
+
             {status === "risk" && (
-                <div className="mt-2 flex items-center gap-1 text-[8px] text-red-600">
-                    <AlertCircle className="h-3 w-3" /> CRITICAL LEVEL
-                </div>
+                <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-rose-500 animate-ping" />
             )}
         </div>
     )
 }
 
 export function VitalsHUD() {
-    // Mock Data (In production, this would subscribe to realtime vitals or fetch recent)
+    // Mock Data
     const vitals = {
         temp: 98.6,
         bp_sys: 165, // Risk Level
@@ -77,56 +74,62 @@ export function VitalsHUD() {
     }
 
     return (
-        <div className="w-full bg-slate-50/50 dark:bg-slate-900/50 p-4 border-b">
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-indigo-600 flex items-center justify-center text-white shadow-lg ring-4 ring-indigo-100 dark:ring-indigo-900/20">
-                        <Zap className="h-5 w-5 fill-current" />
-                    </div>
-                    <div>
-                        <h2 className="text-sm font-bold">Chair-Side Intake</h2>
-                        <div className="flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                            <span className="text-[10px] text-muted-foreground uppercase font-semibold">Live Monitoring Active</span>
-                        </div>
-                    </div>
+        <GlassCard className="mx-4 my-2 px-6 py-4 flex items-center justify-between animate-ios-reveal border-white/20 shadow-lg" intensity="low">
+            <div className="flex items-center gap-4 border-r border-white/10 pr-6 mr-6">
+                <div className="h-10 w-10 rounded-2xl bg-slate-900 dark:bg-white flex items-center justify-center text-white dark:text-slate-900 shadow-xl group hover:scale-110 transition-transform">
+                    <HeartPulse className="h-5 w-5 animate-pulse" />
                 </div>
-
-                <div className="grid grid-cols-5 gap-3">
-                    <VitalCard
-                        label="Temperature"
-                        value={vitals.temp}
-                        unit="°F"
-                        icon={Thermometer}
-                    />
-                    <VitalCard
-                        label="Blood Pressure"
-                        value={`${vitals.bp_sys}/${vitals.bp_dia}`}
-                        unit="mmHg"
-                        icon={Activity}
-                        status={getBPStatus()}
-                    />
-                    <VitalCard
-                        label="Heart Rate"
-                        value={vitals.hr}
-                        unit="BPM"
-                        icon={Droplets}
-                    />
-                    <VitalCard
-                        label="Oxygen Level"
-                        value={vitals.spo2}
-                        unit="%"
-                        icon={Wind}
-                        status={getSPO2Status()}
-                    />
-                    <VitalCard
-                        label="Resp. Rate"
-                        value={vitals.rr}
-                        unit="B/m"
-                        icon={Activity}
-                    />
+                <div>
+                    <h2 className="text-xs font-black uppercase tracking-widest text-ios-gradient">Live Vitals</h2>
+                    <div className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                        <span className="text-[9px] text-muted-foreground font-bold tracking-tighter">Active Telemetry</span>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div className="flex-1 flex items-center gap-10 overflow-x-auto no-scrollbar">
+                <VitalCard
+                    label="TEMP"
+                    value={vitals.temp}
+                    unit="°F"
+                    icon={Thermometer}
+                />
+                <VitalCard
+                    label="SYS/DIA"
+                    value={`${vitals.bp_sys}/${vitals.bp_dia}`}
+                    unit="MMHG"
+                    icon={Activity}
+                    status={getBPStatus()}
+                />
+                <VitalCard
+                    label="HEART RATE"
+                    value={vitals.hr}
+                    unit="BPM"
+                    icon={Droplets}
+                />
+                <VitalCard
+                    label="OXYGEN"
+                    value={vitals.spo2}
+                    unit="%"
+                    icon={Wind}
+                    status={getSPO2Status()}
+                />
+                <VitalCard
+                    label="RESP. RATE"
+                    value={vitals.rr}
+                    unit="B/M"
+                    icon={Activity}
+                />
+            </div>
+
+            <div className="hidden lg:flex items-center gap-2 pl-6 border-l border-white/10 ml-6">
+                <div className="text-right">
+                    <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground leading-tight">Patient Safety</p>
+                    <p className="text-xs font-bold text-rose-600">Action Required</p>
+                </div>
+                <AlertCircle className="w-4 h-4 text-rose-500" />
+            </div>
+        </GlassCard>
     )
 }
