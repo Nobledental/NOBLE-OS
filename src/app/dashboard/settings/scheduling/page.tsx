@@ -4,6 +4,7 @@ import { ClinicSchedulingSettings } from "@/components/settings/clinic-schedulin
 import { useSchedulingStore } from "@/lib/scheduling-store";
 import { generateAvailableSlots } from "@/lib/scheduling-engine";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
 export default function SchedulingPage() {
