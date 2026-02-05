@@ -5,37 +5,37 @@ import { Utensils, ShoppingBag, Stethoscope, Zap, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export function SwiggyBottomBar() {
+export function MobileNavBar() {
     const pathname = usePathname();
 
     const navItems = [
         {
-            name: "Swiggy",
+            name: "Home",
             label: "Clinics",
             icon: Utensils,
             href: "/dashboard/marketplace",
-            activeColor: "text-swiggy-orange"
+            activeColor: "text-brand-primary"
         },
         {
-            name: "Instamart",
-            label: "Pharmacy",
+            name: "Pharmacy",
+            label: "Meds",
             icon: ShoppingBag,
             href: "/dashboard/marketplace/pharmacy",
-            activeColor: "text-swiggy-orange"
+            activeColor: "text-brand-primary"
         },
         {
-            name: "Dineout",
-            label: "Diagnostics",
+            name: "Tests",
+            label: "Labs",
             icon: Stethoscope,
             href: "/dashboard/marketplace/diagnostics",
-            activeColor: "text-swiggy-orange"
+            activeColor: "text-brand-primary"
         },
         {
-            name: "Genie",
-            label: "Fast Aid",
-            icon: Zap, // Lightning for fast aid
+            name: "Fast Aid",
+            label: "Emergency",
+            icon: Zap,
             href: "/dashboard/marketplace/fast-aid",
-            activeColor: "text-blue-500" // Genie is usually blue/purple
+            activeColor: "text-blue-500"
         },
     ];
 
@@ -63,10 +63,6 @@ export function SwiggyBottomBar() {
                             isActive ? item.activeColor : "text-gray-400"
                         )}>
                             {item.name}
-                        </span>
-                        {/* Sub-label for HealthFlo Context */}
-                        <span className="text-[8px] text-gray-300 -mt-1 scale-75 origin-top">
-                            ({item.label})
                         </span>
                     </Link>
                 );

@@ -10,6 +10,8 @@ import {
     AlertCircle
 } from "lucide-react";
 
+import { NewAppointmentDialog } from "@/components/appointments/new-appointment-dialog";
+
 export default function AppointmentsPage() {
     return (
         <div className="flex-1 space-y-6">
@@ -18,10 +20,7 @@ export default function AppointmentsPage() {
                     <h2 className="text-3xl font-bold tracking-tight">Appointments</h2>
                     <p className="text-muted-foreground">Manage schedule and patient bookings.</p>
                 </div>
-                <Button className="bg-indigo-600 hover:bg-indigo-700">
-                    <Plus className="mr-2 h-4 w-4" />
-                    New Appointment
-                </Button>
+                <NewAppointmentDialog />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

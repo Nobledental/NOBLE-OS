@@ -55,7 +55,7 @@ export default function DashboardPage() {
                             onClick={() => setViewMode('active_chair')}
                             className={cn(
                                 "rounded-full px-4 py-2 gap-2 transition-all h-10",
-                                viewMode === 'active_chair' ? "bg-swiggy-orange text-white shadow-md hover:bg-orange-600" : "text-slate-500 hover:bg-slate-50"
+                                viewMode === 'active_chair' ? "bg-brand-primary text-white shadow-md hover:bg-orange-600" : "text-slate-500 hover:bg-slate-50"
                             )}
                         >
                             <Armchair className="w-4 h-4" />

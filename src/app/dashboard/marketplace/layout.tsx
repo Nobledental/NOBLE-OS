@@ -1,6 +1,6 @@
 "use client";
 
-import { SwiggyBottomBar } from "@/components/marketplace/swiggy-bottom-bar";
+import { MobileNavBar } from "@/components/marketplace/mobile-nav-bar";
 
 export default function MarketplaceLayout({
     children,
@@ -8,9 +8,9 @@ export default function MarketplaceLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-screen bg-swiggy-bg pb-24 relative font-sans">
+        <div className="min-h-screen bg-brand-bg-subtle pb-24 relative font-sans">
             {/* Mobile Bottom Bar */}
-            <SwiggyBottomBar />
+            <MobileNavBar />
 
             <div className="max-w-md mx-auto md:max-w-4xl lg:max-w-6xl">
                 {children}

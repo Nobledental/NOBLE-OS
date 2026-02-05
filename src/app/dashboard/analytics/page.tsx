@@ -48,8 +48,34 @@ export default function AnalyticsPage() {
                     <Button variant="outline" size="sm" className="h-8 gap-1">
                         <Share2 className="h-3 w-3" /> Share
                     </Button>
-                    <Button size="sm" className="h-8 gap-1 bg-indigo-600">
-                        <Download className="h-3 w-3" /> Export PDF
+                    import {generateClinicalReport} from "@/lib/clinical-report-generator";
+                    import {createPDFConfiguration} from "@/lib/pdf-config";
+                    import {printHTML} from "@/lib/print-utils";
+
+                    // ... inside the component
+                    <Button
+                        size="sm"
+                        className="h-8 gap-1 bg-indigo-600"
+                        onClick={() => {
+                            const config = createPDFConfiguration();
+                            const html = generateClinicalReport({
+                                reportTitle: "MONTHLY ANALYTICS REPORT",
+                                patientName: "Internal Clinic Audit",
+                                age: 2024,
+                                gender: "FY",
+                                date: new Date(),
+                                doctorName: "System Generated",
+                                notes: [
+                                    "Total Revenue shows a 14% increase.",
+                                    "Patient throughput has improved by 8% in the morning shift.",
+                                    "Staff efficiency score: 92/100"
+                                ],
+                                diagnosis: "Healthy Growth Trajectory"
+                            }, config);
+                            printHTML(html);
+                        }}
+                    >
+                        <Download className="h-3 w-3" /> Export Report
                     </Button>
                 </div>
             </div>

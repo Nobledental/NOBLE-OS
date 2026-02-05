@@ -4,25 +4,28 @@ import { Star, Clock, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
-interface ClinicCardProps {
+interface ProviderCardProps {
     name: string;
     specialties: string[];
     rating: number;
     time: string;
     distance: string;
-    discount?: string;
+    discount?: string; // Renamed from offers to discount to match usage or keep as offers
+    offers?: string;   // Keeping both loosely or unifying.
     imageUrl?: string;
 }
 
-export function SwiggyRestaurantCard({
+export function ProviderCard({
     name,
     specialties,
     rating,
     time,
     distance,
-    discount = "50% OFF UPTO ₹100",
+    discount,
+    offers,
     imageUrl
-}: ClinicCardProps) {
+}: ProviderCardProps) {
+    const displayOffer = discount || offers || "50% OFF UPTO ₹100";
     return (
         <div className="bg-white rounded-2xl overflow-hidden hover:scale-[0.98] transition-transform duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.04)] cursor-pointer group">
             {/* Image Header */}
@@ -46,32 +49,18 @@ export function SwiggyRestaurantCard({
                 <div className="absolute top-3 right-3">
                     {/* Heart svg would go here */}
                 </div>
+
             </div>
-
-            {/* Content Body */}
-            <div className="p-3">
-                <div className="flex justify-between items-start mb-1">
-                    <h3 className="font-bold text-swiggy-text text-lg line-clamp-1">{name}</h3>
-                    <div className="flex items-center gap-1 bg-swiggy-green text-white px-1.5 py-0.5 rounded-[6px] shadow-sm">
-                        <span className="font-bold text-xs">{rating}</span>
-                        <Star className="w-2.5 h-2.5 fill-current" />
-                    </div>
+            <div className="p-4">
+                <div className="flex justify-between items-start">
+                    <h3 className="font-bold text-brand-text-primary text-lg">{name}</h3>
+                    <Badge className="bg-brand-success text-white">{rating} ★</Badge>
                 </div>
-
-                <div className="flex flex-col gap-0.5">
-                    <p className="text-swiggy-text-secondary text-sm truncate font-medium">
-                        {specialties.join(", ")}
-                    </p>
-                    <p className="text-swiggy-text-secondary text-xs truncate">
-                        {distance} away
-                    </p>
-                </div>
-
-                <div className="mt-3 pt-3 border-t border-dashed border-gray-200 flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-swiggy-green" />
-                    <span className="text-xs font-bold text-swiggy-text-secondary uppercase">
-                        {time}
-                    </span>
+                <p className="text-brand-text-secondary text-sm mt-1">{specialties.join(", ")}</p>
+                <div className="flex items-center gap-2 mt-3 text-brand-text-secondary text-xs uppercase font-medium">
+                    <Clock className="w-4 h-4" /> {time}
+                    <span className="w-1 h-1 bg-brand-text-secondary rounded-full" />
+                    <span>{distance}</span>
                 </div>
             </div>
         </div>

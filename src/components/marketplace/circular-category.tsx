@@ -27,7 +27,7 @@ export function CircularCategory() {
                             <div className="w-20 h-20 rounded-full bg-white shadow-sm border border-gray-100 flex items-center justify-center text-4xl group-active:scale-95 transition-transform overflow-hidden relative">
                                 {/* Simulated Image Asset */}
                                 <div className={cn(
-                                    "absolute inset-0 opacity-10 bg-swiggy-orange" // Placeholder tint
+                                    "absolute inset-0 opacity-10 bg-brand-primary" // Placeholder tint
                                 )} />
                                 <span className="z-10">{cat.image}</span>
                             </div>

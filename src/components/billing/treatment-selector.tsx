@@ -7,29 +7,9 @@ import { Search, Plus, Sparkles, AlertCircle } from "lucide-react";
 import { useBillingStore } from "@/lib/billing-store";
 import { useState } from "react";
 
-// Mock Tariff Master Data
-const TARIFF_MASTER = [
-    { id: '1', name: 'Consultation', cost: 500, tax: 0, category: 'General' },
-    { id: '2', name: 'Scaling & Polishing', cost: 1500, tax: 18, category: 'Cleaning' },
-    { id: '3', name: 'Composite Filling', cost: 2500, tax: 0, category: 'Restorative' },
-    { id: '4', name: 'Root Canal Treatment', cost: 4500, tax: 0, category: 'Endo' },
-    {
-        id: '5',
-        name: 'Surgical Extraction (Bundle)',
-        cost: 3500,
-        tax: 0,
-        category: 'Surgery',
-        isBundle: true,
-        bundleDetails: ['Local Anesthesia', 'Sutures', 'Hemostatic Agent', 'Post-op Pack']
-    },
-    {
-        id: '6',
-        name: 'Zirconia Crown',
-        cost: 8000,
-        tax: 12,
-        category: 'Prostho'
-    },
-];
+import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
+
+const TARIFF_MASTER = TARIFF_MASTER_DATA;
 
 export function TreatmentSelector() {
     const { addItem } = useBillingStore();

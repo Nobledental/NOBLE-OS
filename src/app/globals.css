@@ -17,13 +17,13 @@
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
 
-  /* Swiggy Utilities */
-  --color-swiggy-orange: var(--swiggy-orange);
-  --color-swiggy-secondary: var(--swiggy-secondary);
-  --color-swiggy-text: var(--swiggy-text);
-  --color-swiggy-text-secondary: var(--swiggy-text-secondary);
-  --color-swiggy-bg: var(--swiggy-bg);
-  --color-swiggy-green: var(--swiggy-green);
+  /* Marketplace Utilities */
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-secondary: var(--brand-secondary);
+  --color-brand-text-primary: var(--brand-text-primary);
+  --color-brand-text-secondary: var(--brand-text-secondary);
+  --color-brand-bg-subtle: var(--brand-bg-subtle);
+  --color-brand-success: var(--brand-success);
 
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
@@ -141,13 +141,13 @@
   --ios-mesh-2: #064e3b;
   --ios-mesh-3: #450a0a;
 
-  /* Swiggy Design System (Extracted) */
-  --swiggy-orange: #FC8019;
-  --swiggy-secondary: #F15700;
-  --swiggy-text: #3D4152;
-  --swiggy-text-secondary: #686B78;
-  --swiggy-bg: #F2F4F6;
-  --swiggy-green: #48C479;
+  /* Marketplace Design System */
+  --color-brand-primary: #FC8019;
+  --color-brand-secondary: #F15700;
+  --color-brand-text-primary: #3D4152;
+  --color-brand-text-secondary: #686B78;
+  --color-brand-bg-subtle: #F2F4F6;
+  --color-brand-success: #48C479;
 }
 
 @layer base {
