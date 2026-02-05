@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Brain } from "lucide-react";
 
 interface NEOOrbProps {
-    status?: "idle" | "thinking" | "alert";
+    status?: "idle" | "thinking" | "alert" | "listening";
     className?: string;
 }
 
@@ -17,6 +17,7 @@ export function NEOOrb({ status = "idle", className }: NEOOrbProps) {
                 "absolute inset-0 rounded-full blur-xl transition-all duration-1000",
                 status === "idle" && "bg-indigo-500/20",
                 status === "thinking" && "bg-blue-500/40 animate-pulse",
+                status === "listening" && "bg-purple-500/40 animate-pulse",
                 status === "alert" && "bg-red-500/40 animate-bounce"
             )} />
 
@@ -30,6 +31,7 @@ export function NEOOrb({ status = "idle", className }: NEOOrbProps) {
                     "w-6 h-6 transition-colors duration-500",
                     status === "idle" && "text-indigo-600 dark:text-indigo-400",
                     status === "thinking" && "text-blue-500 animate-pulse",
+                    status === "listening" && "text-purple-500 animate-pulse",
                     status === "alert" && "text-red-500"
                 )} />
 
@@ -38,6 +40,7 @@ export function NEOOrb({ status = "idle", className }: NEOOrbProps) {
                     "absolute w-2 h-2 rounded-full",
                     status === "idle" && "bg-indigo-400 blur-[2px]",
                     status === "thinking" && "bg-blue-400 blur-[4px] animate-ping",
+                    status === "listening" && "bg-purple-400 blur-[4px] animate-ping",
                     status === "alert" && "bg-red-400 blur-[2px]"
                 )} />
             </div>
