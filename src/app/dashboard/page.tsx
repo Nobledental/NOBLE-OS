@@ -6,6 +6,7 @@ import { ActiveQueue } from "@/components/dashboard/active-queue";
 import { ProjectsOverview } from "@/components/dashboard/projects-overview";
 import { RevenueChart } from "@/components/dashboard/revenue-chart";
 import { PanzeCard } from "@/components/ui/panze-card";
+import { PatientTracker } from "@/components/dashboard/patient-tracker";
 import { cn } from "@/lib/utils";
 
 export default function DashboardPage() {
@@ -68,7 +69,10 @@ export default function DashboardPage() {
 
                     {/* Top Row: Charts */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 min-h-[400px]">
-                        <ProjectsOverview />
+                        <div className="space-y-6">
+                            <ProjectsOverview />
+                            <PatientTracker />
+                        </div>
                         <RevenueChart />
                     </div>
 
