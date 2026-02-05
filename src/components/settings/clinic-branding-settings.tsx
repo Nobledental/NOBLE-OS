@@ -38,6 +38,8 @@ import {
     createPDFConfiguration
 } from '@/lib/pdf-config';
 import { generateFlightTicketInvoice, createSampleInvoice } from '@/lib/billing-invoice-generator';
+import { LocationPicker } from '@/components/location-picker';
+import { Globe, Search } from 'lucide-react';
 
 // =============================================================================
 // COMPONENT TYPES
@@ -65,8 +67,8 @@ const ThemePreviewCard: React.FC<{
             whileTap={{ scale: 0.98 }}
             onClick={onSelect}
             className={`relative p-4 rounded-xl border-2 transition-all duration-200 ${isSelected
-                    ? 'border-blue-500 shadow-lg shadow-blue-500/20'
-                    : 'border-gray-200 hover:border-gray-300'
+                ? 'border-blue-500 shadow-lg shadow-blue-500/20'
+                : 'border-gray-200 hover:border-gray-300'
                 }`}
             style={{ background: 'white' }}
         >
@@ -194,8 +196,8 @@ const LogoUpload: React.FC<{
                     onDragLeave={() => setIsDragging(false)}
                     onDrop={handleDrop}
                     className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-colors ${isDragging
-                            ? 'border-blue-500 bg-blue-50'
-                            : 'border-gray-300 hover:border-gray-400'
+                        ? 'border-blue-500 bg-blue-50'
+                        : 'border-gray-300 hover:border-gray-400'
                         }`}
                 >
                     <input
@@ -227,7 +229,7 @@ export const ClinicBrandingSettings: React.FC<ClinicBrandingSettingsProps> = ({
     onCancel
 }) => {
     const [settings, setSettings] = useState<ClinicSettings>(initialSettings);
-    const [activeTab, setActiveTab] = useState<'branding' | 'theme' | 'invoice'>('branding');
+    const [activeTab, setActiveTab] = useState<'branding' | 'theme' | 'invoice' | 'marketplace'>('branding');
     const [showPreview, setShowPreview] = useState(false);
 
     // Update branding field
@@ -265,6 +267,7 @@ export const ClinicBrandingSettings: React.FC<ClinicBrandingSettingsProps> = ({
         { id: 'branding' as const, label: 'Clinic Info', icon: Building2 },
         { id: 'theme' as const, label: 'Color Theme', icon: Palette },
         { id: 'invoice' as const, label: 'Invoice Settings', icon: FileText },
+        { id: 'marketplace' as const, label: 'HealthFlo Discovery', icon: Globe },
     ];
 
     return (
@@ -285,8 +288,8 @@ export const ClinicBrandingSettings: React.FC<ClinicBrandingSettingsProps> = ({
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`flex items-center gap-2 px-6 py-4 text-sm font-medium border-b-2 transition-colors ${activeTab === tab.id
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             <tab.icon className="w-4 h-4" />
@@ -399,6 +402,18 @@ export const ClinicBrandingSettings: React.FC<ClinicBrandingSettingsProps> = ({
                                         rows={2}
                                         className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
                                         placeholder="1ST Floor, ICA CLINIC, HUDA LAYOUT, NALLAGANDLA, HYDERABAD -500019"
+                                    />
+                                </div>
+
+                                {/* Location Picker */}
+                                <div className="md:col-span-2 bg-gray-50 p-4 rounded-xl border border-gray-200">
+                                    <LocationPicker
+                                        latitude={settings.branding.latitude}
+                                        longitude={settings.branding.longitude}
+                                        onLocationChange={(lat, lng) => {
+                                            updateBranding('latitude', lat);
+                                            updateBranding('longitude', lng);
+                                        }}
                                     />
                                 </div>
 
@@ -590,6 +605,78 @@ export const ClinicBrandingSettings: React.FC<ClinicBrandingSettingsProps> = ({
                                 <Eye className="w-4 h-4" />
                                 Preview Sample Invoice
                             </button>
+                        </motion.div>
+                    )}
+
+                    {/* Marketplace Tab */}
+                    {activeTab === 'marketplace' && (
+                        <motion.div
+                            key="marketplace"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="space-y-6"
+                        >
+                            <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-xl p-6">
+                                <div className="flex gap-4">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+                                        <Globe className="w-6 h-6 text-blue-600" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-lg font-semibold text-gray-900">HealthFlo Marketplace</h3>
+                                        <p className="text-sm text-gray-600 mt-1">
+                                            Join the HealthFlo network to be discovered by patients in your area.
+                                            Enable discovery to appear in search results.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4">
+                                {/* Toggle Marketplace */}
+                                <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                                    <div className="space-y-1">
+                                        <label className="text-base font-medium text-gray-900 flex items-center gap-2">
+                                            <Globe className="w-4 h-4 text-blue-500" />
+                                            Active on Marketplace
+                                        </label>
+                                        <p className="text-sm text-gray-500">
+                                            Allow your clinic profile to be public on HealthFlo.
+                                        </p>
+                                    </div>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={settings.isMarketplaceActive}
+                                            onChange={(e) => setSettings(prev => ({ ...prev, isMarketplaceActive: e.target.checked }))}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                                    </label>
+                                </div>
+
+                                {/* Toggle Discovery */}
+                                <div className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                                    <div className="space-y-1">
+                                        <label className="text-base font-medium text-gray-900 flex items-center gap-2">
+                                            <Search className="w-4 h-4 text-purple-500" />
+                                            Enable Discovery ("Near Me")
+                                        </label>
+                                        <p className="text-sm text-gray-500">
+                                            Appear in "Clinics Near Me" searches. Requires valid location.
+                                        </p>
+                                    </div>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input
+                                            type="checkbox"
+                                            className="sr-only peer"
+                                            checked={settings.discoveryEnabled}
+                                            onChange={(e) => setSettings(prev => ({ ...prev, discoveryEnabled: e.target.checked }))}
+                                        />
+                                        <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                    </label>
+                                </div>
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>
