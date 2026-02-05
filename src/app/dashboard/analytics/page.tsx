@@ -10,6 +10,10 @@ import { Button } from "@/components/ui/button";
 import { Download, Share2, Filter, Zap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
+import { generateClinicalReport } from "@/lib/clinical-report-generator";
+import { createPDFConfiguration } from "@/lib/pdf-config";
+import { printHTML } from "@/lib/print-utils";
+
 export default function AnalyticsPage() {
     const clinicId = "noble-dental-primary";
 
@@ -48,11 +52,7 @@ export default function AnalyticsPage() {
                     <Button variant="outline" size="sm" className="h-8 gap-1">
                         <Share2 className="h-3 w-3" /> Share
                     </Button>
-                    import {generateClinicalReport} from "@/lib/clinical-report-generator";
-                    import {createPDFConfiguration} from "@/lib/pdf-config";
-                    import {printHTML} from "@/lib/print-utils";
 
-                    // ... inside the component
                     <Button
                         size="sm"
                         className="h-8 gap-1 bg-indigo-600"
