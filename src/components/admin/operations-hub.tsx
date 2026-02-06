@@ -12,7 +12,8 @@ import {
     Settings,
     FileText,
     PieChart,
-    Briefcase
+    Briefcase,
+    ScrollText
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -21,11 +22,15 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { HRStaffDirectory } from "@/components/clinical/hr-staff-directory";
 import RecruitmentCommandCenter from "./recruitment-command-center";
-import SettlementPage from "@/app/dashboard/settlement/page"; // We'll wrap this or extract logic
 import { cn } from "@/lib/utils";
 
+import SettlementPage from "@/app/dashboard/settlement/page";
+import TariffPage from "@/app/dashboard/tariff/page";
+import { SterilizationHub } from "@/components/clinical/sterilization-hub";
+import ConsultantLedgerPanel from "@/components/collaboration/consultant-ledger";
+
 export default function OperationsHub() {
-    const [activeTab, setActiveTab] = useState("treasury");
+    const [activeTab, setActiveTab] = useState("settlement");
 
     return (
         <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 p-6 md:p-10 font-sans">
@@ -40,11 +45,11 @@ export default function OperationsHub() {
                     <div className="space-y-1">
                         <div className="flex items-center gap-3">
                             <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-200">
-                                <Building2 className="w-6 h-6 text-white" />
+                                <ShieldCheck className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white italic">Platform OS</h1>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Noble Unified Command Center</p>
+                                <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white italic uppercase">Operations Hub</h1>
+                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Unified Command Center</p>
                             </div>
                         </div>
                     </div>
@@ -61,24 +66,30 @@ export default function OperationsHub() {
 
                 {/* Main Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-                    <TabsList className="bg-white dark:bg-slate-900 p-2 rounded-[2rem] border border-slate-100 shadow-xl inline-flex h-auto">
+                    <TabsList className="bg-white dark:bg-slate-900 p-2 rounded-[2rem] border border-slate-100 shadow-xl inline-flex h-auto w-full justify-start overflow-x-auto scrollbar-hide">
                         <TabsTrigger
-                            value="treasury"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest"
+                            value="settlement"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
                         >
-                            <Wallet size={16} /> Treasury
+                            <Wallet size={16} /> EOD Settlement
                         </TabsTrigger>
                         <TabsTrigger
-                            value="talent"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest"
+                            value="tariff"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-indigo-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
                         >
-                            <Users size={16} /> Talent Management
+                            <ScrollText size={16} /> Tariff Master
                         </TabsTrigger>
                         <TabsTrigger
-                            value="control"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-rose-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest"
+                            value="sterilization"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-rose-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
                         >
-                            <Zap size={16} /> NEO Control
+                            <ShieldCheck size={16} /> Sterilization
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="ledger"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-emerald-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
+                        >
+                            <PieChart size={16} /> Specialist Ledger
                         </TabsTrigger>
                     </TabsList>
 
@@ -90,53 +101,28 @@ export default function OperationsHub() {
                             exit={{ opacity: 0, x: -10 }}
                             transition={{ duration: 0.2 }}
                         >
-                            <TabsContent value="treasury" className="mt-0 outline-none">
-                                <div className="space-y-8">
-                                    <PanzeCard className="p-0 overflow-hidden border-none shadow-2xl">
-                                        <SettlementPage />
-                                    </PanzeCard>
-                                </div>
+                            <TabsContent value="settlement" className="mt-0 outline-none">
+                                <PanzeCard className="p-0 overflow-hidden border-none shadow-2xl">
+                                    <SettlementPage />
+                                </PanzeCard>
                             </TabsContent>
 
-                            <TabsContent value="talent" className="mt-0 outline-none">
-                                <div className="grid grid-cols-1 gap-10">
-                                    <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
-                                        <h3 className="text-2xl font-black italic tracking-tighter mb-8 flex items-center gap-3">
-                                            <Briefcase className="text-indigo-600" /> Executive Recruitment
-                                        </h3>
-                                        <RecruitmentCommandCenter />
-                                    </PanzeCard>
-
-                                    <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
-                                        <h3 className="text-2xl font-black italic tracking-tighter mb-8 flex items-center gap-3">
-                                            <Users className="text-emerald-600" /> Internal Staff Directory
-                                        </h3>
-                                        <HRStaffDirectory />
-                                    </PanzeCard>
-                                </div>
+                            <TabsContent value="tariff" className="mt-0 outline-none">
+                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
+                                    <TariffPage />
+                                </PanzeCard>
                             </TabsContent>
 
-                            <TabsContent value="control" className="mt-0 outline-none">
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                                    <ModuleToggleCard
-                                        title="Smart Surgery"
-                                        description="AI-driven surgical auditing and real-time intra-op notes."
-                                        icon={<ShieldCheck className="text-rose-500" />}
-                                        status="ACTIVE"
-                                    />
-                                    <ModuleToggleCard
-                                        title="Talent Sourcing"
-                                        description="Marketplace visibility for hiring and student evolution."
-                                        icon={<TrendingUp className="text-indigo-500" />}
-                                        status="ACTIVE"
-                                    />
-                                    <ModuleToggleCard
-                                        title="Auto-Settlement"
-                                        description="Automated EOD revenue locking and ledger verification."
-                                        icon={<Zap className="text-amber-500" />}
-                                        status="PENDING"
-                                    />
-                                </div>
+                            <TabsContent value="sterilization" className="mt-0 outline-none">
+                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
+                                    <SterilizationHub />
+                                </PanzeCard>
+                            </TabsContent>
+
+                            <TabsContent value="ledger" className="mt-0 outline-none">
+                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
+                                    <ConsultantLedgerPanel isAdmin={true} />
+                                </PanzeCard>
                             </TabsContent>
                         </motion.div>
                     </AnimatePresence>

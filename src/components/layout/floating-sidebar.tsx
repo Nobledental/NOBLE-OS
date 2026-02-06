@@ -32,17 +32,8 @@ const NAV_ITEMS = [
     { label: "Appointments", href: "/dashboard/appointments", icon: CalendarDays, id: "appointments" },
     { label: "Clinical", href: "/dashboard/clinical", icon: Stethoscope, id: "clinical" },
     { label: "Patients", href: "/dashboard/patients", icon: Users, id: "patients" },
-    { label: "Analytics", href: "/dashboard/analytics", icon: BarChart3, id: "analytics" },
-    { label: "Billing", href: "/dashboard/billing", icon: Receipt, id: "billing" },
-    { label: "Settlement", href: "/dashboard/settlement", icon: Wallet, id: "settlement" },
-    { label: "Specialists", href: "/dashboard/specialists", icon: UserPlus, id: "specialists" },
-    { label: "Tariff", href: "/dashboard/tariff", icon: ScrollText, id: "tariff" },
+    { label: "Operations", href: "/dashboard/operations", icon: ShieldCheck, id: "operations" }, // COMBINED: Settlement + Tariff + Sterilization
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
-    { label: "Sterilization", href: "/dashboard/sterilization", icon: ShieldCheck, id: "sterilization" },
-    { label: "Lab Orders", href: "/dashboard/lab", icon: FlaskConical, id: "lab" },
-    { label: "Professional", href: "/dashboard/professional", icon: TrendingUp, id: "professional" },
-    { label: "HR Hub", href: "/dashboard/hr", icon: Users, id: "hr" },
-    { label: "Attendance", href: "/dashboard/attendance", icon: Activity, id: "attendance" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
 ];
 
