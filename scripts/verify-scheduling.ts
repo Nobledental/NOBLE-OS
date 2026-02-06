@@ -15,7 +15,9 @@ const mockConfig: SchedulingConfig = {
     bookingMode: 'manual',
     showDoctorAvailability: true,
     slotDurationMinutes: 30,
-    doctors: []
+    doctors: [],
+    patients: [],
+    appointments: []
 };
 
 console.log(`\nPARAMS:

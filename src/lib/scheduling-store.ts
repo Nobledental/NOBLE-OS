@@ -48,6 +48,7 @@ interface SchedulingState extends SchedulingConfig {
     toggleDoctorAvailability: (id: string) => void;
     addPatient: (patient: PatientShort) => void; // Added
     addAppointment: (appt: any) => void; // Added based on usage error
+    assignDoctor: (apptId: string, doctorId: string) => void; // Added for Case Queue
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -102,6 +103,12 @@ export const useSchedulingStore = create<SchedulingState>()(
 
             addAppointment: (appt) => set((state) => ({
                 appointments: [...state.appointments, { ...appt, id: crypto.randomUUID() }]
+            })),
+
+            assignDoctor: (apptId, doctorId) => set((state) => ({
+                appointments: state.appointments.map(a =>
+                    a.id === apptId ? { ...a, doctorId } : a
+                )
             })),
         }),
         {
