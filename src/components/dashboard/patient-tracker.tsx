@@ -12,6 +12,8 @@ const steps = [
     { id: 'billing', label: 'Billing', icon: Banknote, time: '11:45 AM' },
 ];
 
+import { PanzeCard } from "@/components/ui/panze-card";
+
 export function PatientTracker() {
     const [currentStepIndex, setCurrentStepIndex] = useState(1);
     const [isAutoMode, setIsAutoMode] = useState(false);
@@ -32,7 +34,7 @@ export function PatientTracker() {
     }, [isAutoMode]);
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 overflow-hidden relative">
+        <PanzeCard className="p-6 overflow-hidden relative h-full">
             {/* Header (Patient Track Header) */}
             <div className="flex justify-between items-start mb-8 z-10 relative">
                 <div>
@@ -136,6 +138,6 @@ export function PatientTracker() {
                     );
                 })}
             </div>
-        </div>
+        </PanzeCard>
     );
 }

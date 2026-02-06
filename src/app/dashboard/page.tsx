@@ -11,13 +11,30 @@ import { DonutChart } from "@/components/ui/charts/donut-chart";
 import { SplineChart } from "@/components/ui/charts/spline-chart";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { ChiefPulse } from "@/components/dashboard/chief-pulse"; // Added
 
 // Mock NEO Orb (Placeholder for the previous AI component)
 const NEOOrb = ({ status, className }: { status: string, className?: string }) => (
     <div className={cn("w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse shadow-lg", className)} />
 );
+
+// Staggered Animation Variants
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1
+        }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export default function DashboardPage() {
     const [viewMode, setViewMode] = useState<'morning' | 'active_chair'>('morning');
@@ -25,10 +42,10 @@ export default function DashboardPage() {
     const filters = ['Today', 'This Week', 'This Month', 'Reports'];
 
     return (
-        <div className="flex-1 space-y-8 animate-in fade-in duration-500 pb-20 relative">
+        <div className="flex-1 space-y-8 pb-20 relative">
 
             {/* Header Area with View Toggle */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
                     <p className="text-slate-500 text-sm mb-1 font-medium">
                         {viewMode === 'morning' ? 'Good Morning, Dr. Dhivakaran.' : 'Active Chair Mode'}
@@ -39,7 +56,7 @@ export default function DashboardPage() {
                 </div>
 
                 <div className="flex items-center gap-4 flex-wrap">
-                    {/* View Mode Toggle (Restored Feature) */}
+                    {/* View Mode Toggle */}
                     <div className="flex items-center space-x-1 bg-white p-1 rounded-full shadow-sm border border-slate-200">
                         <Button
                             variant="ghost"
@@ -64,7 +81,7 @@ export default function DashboardPage() {
                             <span className="hidden md:inline text-xs font-bold uppercase tracking-wider">Chair</span>
                         </Button>
                         <div className="w-px h-6 bg-slate-200 mx-1" />
-                        <div className="px-2 flex items-center justify-center cursor-pointer">
+                        <div className="px-2 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
                             <NEOOrb status="thinking" className="scale-75" />
                         </div>
                     </div>
@@ -73,7 +90,7 @@ export default function DashboardPage() {
 
             {/* Filters (Visible in Morning Mode) */}
             {viewMode === 'morning' && (
-                <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-4 flex-wrap animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
                     <div className="flex items-center bg-white rounded-full p-1.5 shadow-sm border border-slate-100">
                         {filters.map(filter => (
                             <button
@@ -97,14 +114,14 @@ export default function DashboardPage() {
                 {viewMode === 'morning' ? (
                     <motion.div
                         key="morning"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
                         className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[800px]"
                     >
                         {/* Top Row: Revenue & Highlights */}
-                        <div className="lg:col-span-8 flex flex-col gap-6">
+                        <motion.div variants={itemVariants} className="lg:col-span-8 flex flex-col gap-6">
                             {/* Revenue Spline Chart */}
                             <SplineChart
                                 title="Revenue Trend"
@@ -135,10 +152,15 @@ export default function DashboardPage() {
                                     </div>
                                 </PanzeCard>
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Right Area: Department Breakdown */}
-                        <div className="lg:col-span-4 flex flex-col gap-6">
+                        <motion.div variants={itemVariants} className="lg:col-span-4 flex flex-col gap-6">
+                            {/* Restored: Chief Pulse (Staff Activity) */}
+                            <div className="mb-2">
+                                <ChiefPulse />
+                            </div>
+
                             <DonutChart
                                 title="Department Load"
                                 totalLabel="Total Cases"
@@ -155,17 +177,23 @@ export default function DashboardPage() {
                             <div className="flex-1">
                                 <ProjectsOverview />
                             </div>
-                        </div>
+                        </motion.div>
 
                         {/* Bottom Row: Active Queue & Actions */}
-                        <div className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <motion.div variants={itemVariants} className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
                             <div className="lg:col-span-2">
                                 <ActiveQueue />
                             </div>
 
-                            <div className="lg:col-span-1">
+                            <div className="lg:col-span-1 flex flex-col gap-6">
+                                {/* Restored: Patient Tracker (Quick View) */}
+                                {/* Restored: Patient Tracker (Quick View) */}
+                                <div className="h-full">
+                                    <PatientTracker />
+                                </div>
+
                                 <PanzeCard className="h-full bg-slate-900 text-white flex flex-col items-center justify-center text-center p-6 shadow-xl shadow-slate-900/20">
-                                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4">
+                                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 animate-pulse">
                                         <Mic className="w-8 h-8 text-white" />
                                     </div>
                                     <p className="text-lg font-medium text-slate-200">
@@ -173,7 +201,7 @@ export default function DashboardPage() {
                                     </p>
                                 </PanzeCard>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
                 ) : (
                     <motion.div
