@@ -19,7 +19,8 @@ import {
     Activity,
     LogOut,
     ShieldCheck,
-    Grid
+    Grid,
+    FlaskConical
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -37,14 +38,17 @@ const NAV_ITEMS = [
     { label: "Tariff", href: "/dashboard/tariff", icon: ScrollText, id: "tariff" },
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
     { label: "Sterilization", href: "/dashboard/sterilization", icon: ShieldCheck, id: "sterilization" },
+    { label: "Lab Orders", href: "/dashboard/lab", icon: FlaskConical, id: "lab" },
+    { label: "HR Hub", href: "/dashboard/hr", icon: Users, id: "hr" },
+    { label: "Attendance", href: "/dashboard/attendance", icon: Activity, id: "attendance" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
 ];
 
 const PRIORITY_ITEMS: Record<string, string[]> = {
-    ADMIN: ["dashboard", "analytics", "settings", "sterilization"],
-    DOCTOR: ["dashboard", "appointments", "clinical", "patients"],
-    RECEPTIONIST: ["dashboard", "appointments", "billing", "patients"],
-    ASSISTANT: ["dashboard", "appointments", "sterilization", "marketplace"],
+    ADMIN: ["dashboard", "hr", "analytics", "settings"],
+    DOCTOR: ["dashboard", "appointments", "clinical", "lab"],
+    RECEPTIONIST: ["dashboard", "attendance", "billing", "patients"],
+    ASSISTANT: ["dashboard", "attendance", "sterilization", "lab"],
     CONSULTANT: ["dashboard", "appointments", "clinical", "patients"],
 };
 
