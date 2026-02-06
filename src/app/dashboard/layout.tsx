@@ -14,7 +14,7 @@ export default function DashboardLayout({
             <FloatingSidebar />
 
             {/* Main Content Area */}
-            <main className="flex-1 overflow-y-auto relative flex flex-col p-4 md:p-6 lg:p-8 pl-20 md:pl-24">
+            <main className="flex-1 overflow-y-auto relative flex flex-col p-4 md:p-6 lg:p-8 pl-24 md:pl-32">
 
                 {/* Global Key Listener */}
                 <CommandPalette />
