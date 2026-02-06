@@ -2,16 +2,18 @@
 
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { PanzeCard } from "@/components/ui/panze-card";
+import { cn } from "@/lib/utils";
 
 interface SplineChartProps {
     data: { name: string; value: number }[];
     title: string;
     color?: string; // Hex color
+    className?: string;
 }
 
-export function SplineChart({ data, title, color = "#6366f1" }: SplineChartProps) {
+export function SplineChart({ data, title, color = "#6366f1", className }: SplineChartProps) {
     return (
-        <PanzeCard className="h-[300px] flex flex-col w-full">
+        <PanzeCard className={cn("h-[300px] flex flex-col w-full", className)}>
             <div className="mb-4 flex justify-between items-center">
                 <h3 className="text-lg font-bold text-slate-800">{title}</h3>
                 <div className="flex gap-2">

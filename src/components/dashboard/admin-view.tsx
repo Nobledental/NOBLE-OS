@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
