@@ -20,7 +20,8 @@ import {
     LogOut,
     ShieldCheck,
     Grid,
-    FlaskConical
+    FlaskConical,
+    TrendingUp
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -39,6 +40,7 @@ const NAV_ITEMS = [
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
     { label: "Sterilization", href: "/dashboard/sterilization", icon: ShieldCheck, id: "sterilization" },
     { label: "Lab Orders", href: "/dashboard/lab", icon: FlaskConical, id: "lab" },
+    { label: "Professional", href: "/dashboard/professional", icon: TrendingUp, id: "professional" },
     { label: "HR Hub", href: "/dashboard/hr", icon: Users, id: "hr" },
     { label: "Attendance", href: "/dashboard/attendance", icon: Activity, id: "attendance" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
@@ -46,10 +48,11 @@ const NAV_ITEMS = [
 
 const PRIORITY_ITEMS: Record<string, string[]> = {
     ADMIN: ["dashboard", "hr", "analytics", "settings"],
-    DOCTOR: ["dashboard", "appointments", "clinical", "lab"],
+    DOCTOR: ["dashboard", "appointments", "clinical", "professional"],
     RECEPTIONIST: ["dashboard", "attendance", "billing", "patients"],
     ASSISTANT: ["dashboard", "attendance", "sterilization", "lab"],
     CONSULTANT: ["dashboard", "appointments", "clinical", "patients"],
+    STUDENT: ["dashboard", "professional", "clinical", "lab"],
 };
 
 export function FloatingSidebar() {

@@ -13,8 +13,10 @@ import { CalendarPlus } from "lucide-react";
 import { CaseQueue } from "@/components/clinical/case-queue";
 import { AbhaCard } from "@/components/patient/abha-card";
 import { LabTracker } from "@/components/clinical/lab-tracker";
-import { SmileDesigner } from "@/components/clinical/smile-designer";
+import NobleSmileStudio from "@/components/clinical/noble-smile-studio";
 import { IntraOralCamera } from "@/components/clinical/intra-oral-camera";
+import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
+import NobleSharePortal from "@/components/clinical/noble-share-portal";
 
 
 const MOCK_PATIENT_ID = "p123";
@@ -69,15 +71,16 @@ export default function ClinicalPage() {
                     {/* Right: Tabbed Clinical Workflow */}
                     <div className="xl:col-span-2 bg-white dark:bg-slate-900 border rounded-xl p-4 shadow-sm flex flex-col">
                         <Tabs defaultValue="notes" className="flex-1 flex flex-col">
-                            <TabsList className="grid w-full grid-cols-5 mb-4">
+                            <TabsList className="flex flex-wrap h-auto gap-1 mb-4 bg-slate-100 p-1 rounded-xl">
                                 <TabsTrigger value="history">History</TabsTrigger>
                                 <TabsTrigger value="notes">Case Sheet</TabsTrigger>
                                 <TabsTrigger value="rx">Rx</TabsTrigger>
                                 <TabsTrigger value="surgery" className="data-[state=active]:text-rose-600">Surgery</TabsTrigger>
-                                <TabsTrigger value="scanner" className="data-[state=active]:text-emerald-600">Smart Scan</TabsTrigger>
+                                <TabsTrigger value="bridge" className="data-[state=active]:text-emerald-600">Bridge Hub</TabsTrigger>
                                 <TabsTrigger value="lab" className="data-[state=active]:text-purple-600">Lab Work</TabsTrigger>
                                 <TabsTrigger value="smile" className="data-[state=active]:text-amber-500">Smile Studio</TabsTrigger>
                                 <TabsTrigger value="camera" className="data-[state=active]:text-blue-500">Intra-Oral Cam</TabsTrigger>
+                                <TabsTrigger value="share" className="data-[state=active]:text-indigo-600">Noble Share</TabsTrigger>
                             </TabsList>
 
                             {/* 1. History (Reference) */}
@@ -100,9 +103,9 @@ export default function ClinicalPage() {
                                 <SurgeryNote patientId={MOCK_PATIENT_ID} />
                             </TabsContent>
 
-                            {/* 5. Smart Scanner (OCR) */}
-                            <TabsContent value="scanner" className="flex-1 overflow-y-auto">
-                                <SmartScanner patientId={MOCK_PATIENT_ID} />
+                            {/* 5. Universal Bridge (Imaging) */}
+                            <TabsContent value="bridge" className="flex-1 overflow-y-auto">
+                                <UniversalBridgeHub />
                             </TabsContent>
 
                             {/* 6. Lab Tracker (DentCare Integration) */}
@@ -112,12 +115,17 @@ export default function ClinicalPage() {
 
                             {/* 7. Smile Studio (iSmile Integration) */}
                             <TabsContent value="smile" className="flex-1 overflow-y-auto min-h-0">
-                                <SmileDesigner />
+                                <NobleSmileStudio />
                             </TabsContent>
 
                             {/* 8. Intra-Oral Camera (USB/WiFi) */}
                             <TabsContent value="camera" className="flex-1 overflow-hidden min-h-0 p-1">
                                 <IntraOralCamera patientId={MOCK_PATIENT_ID} />
+                            </TabsContent>
+
+                            {/* 9. Noble Share (Secure Web View) */}
+                            <TabsContent value="share" className="flex-1 overflow-y-auto">
+                                <NobleSharePortal />
                             </TabsContent>
                         </Tabs>
                     </div>

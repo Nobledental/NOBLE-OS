@@ -41,6 +41,7 @@ const sidebarItems: SidebarItem[] = [
     { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' },
     { name: "Day Settlement", icon: ShieldCheck, href: "/dashboard/settlement", permission: 'can_view_revenue' },
     { name: "Inventory", icon: Box, href: "/dashboard/inventory", permission: 'can_edit_inventory' },
+    { name: "Pro Evolution", icon: TrendingUp, href: "/dashboard/professional" },
     { name: "Settings", icon: Settings, href: "/dashboard/settings", permission: 'can_manage_staff' },
 ];
 

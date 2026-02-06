@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { BridgeHub } from "@/components/settings/bridge-hub";
+import { UniversalBridgeHub } from "@/components/clinical/universal-bridge-hub";
 import { BillingSettings } from "@/components/settings/billing-settings";
 import { StaffSettings } from "@/components/settings/staff-settings"; // Added
 import { PanzeCard } from "@/components/ui/panze-card";
@@ -46,8 +46,8 @@ export default function SettingsPage() {
                 {/* Main Content */}
                 <div className="md:col-span-3 space-y-6">
                     {activeTab === "Integrations" && (
-                        <PanzeCard>
-                            <BridgeHub />
+                        <PanzeCard className="p-0 overflow-hidden">
+                            <UniversalBridgeHub />
                         </PanzeCard>
                     )}
 
