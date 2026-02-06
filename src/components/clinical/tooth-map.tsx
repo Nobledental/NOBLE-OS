@@ -28,6 +28,19 @@ const INITIAL_TEETH: ToothData[] = Array.from({ length: 32 }, (_, i) => ({
 export function ToothMap({ patientId }: { patientId: string }) {
     const [teeth, setTeeth] = useState<ToothData[]>(INITIAL_TEETH);
     const [selectedTooth, setSelectedTooth] = useState<number | null>(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const handleToothClick = (id: number) => {
+        setSelectedTooth(id);
+        setIsMenuOpen(true);
+    };
+
+    const updateToothState = (state: ToothState) => {
+        if (!selectedTooth) return;
+        setTeeth(prev => prev.map(t => t.id === selectedTooth ? { ...t, state } : t));
+        setIsMenuOpen(false);
+        // In a real app, this would also add a "Clinical Note" or "Invoice Item"
+    };
 
     const getToothStyles = (state: ToothState) => {
         switch (state) {
@@ -73,15 +86,34 @@ export function ToothMap({ patientId }: { patientId: string }) {
                         </h3>
                         <p className="text-xs text-muted-foreground uppercase font-bold tracking-widest mt-1">interactive 3d dental arch</p>
                     </div>
-                    <div className="flex gap-2">
-                        <Badge variant="outline" className="glass rounded-full px-3">
-                            <ShieldCheck className="w-3 h-3 mr-1 text-emerald-500" />
-                            NEO Verified
-                        </Badge>
-                        <Button variant="ghost" size="icon" className="rounded-full">
-                            <Info className="w-4 h-4" />
-                        </Button>
-                    </div>
+                    {/* Procedure Menu Overlay */}
+                    {isMenuOpen && selectedTooth && (
+                        <div className="absolute top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-indigo-100 shadow-xl animate-in slide-in-from-top-2">
+                            <div className="flex items-center justify-between mb-3">
+                                <h4 className="font-bold text-sm text-indigo-900">
+                                    Treating Tooth #{selectedTooth}
+                                </h4>
+                                <Button size="sm" variant="ghost" className="h-6 w-6" onClick={() => setIsMenuOpen(false)}>X</Button>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2">
+                                <Button size="sm" variant="outline" className="text-xs justify-start hover:bg-emerald-50 hover:text-emerald-600 hover:border-emerald-200" onClick={() => updateToothState('HEALTHY')}>
+                                    ✨ Healthy / Cleaning
+                                </Button>
+                                <Button size="sm" variant="outline" className="text-xs justify-start hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200" onClick={() => updateToothState('DECAY')}>
+                                    🦠 Mark Decay (Caries)
+                                </Button>
+                                <Button size="sm" variant="outline" className="text-xs justify-start hover:bg-amber-50 hover:text-amber-600 hover:border-amber-200" onClick={() => updateToothState('RCT')}>
+                                    ⚡ Root Canal (RCT)
+                                </Button>
+                                <Button size="sm" variant="outline" className="text-xs justify-start hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200" onClick={() => updateToothState('CROWN')}>
+                                    👑 Crown / Cap
+                                </Button>
+                                <Button size="sm" variant="outline" className="text-xs justify-start hover:bg-slate-50 hover:text-slate-600 hover:border-slate-200" onClick={() => updateToothState('IMPLANT')}>
+                                    🔩 Implant / Screw
+                                </Button>
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="relative flex items-center justify-center py-12">
@@ -115,14 +147,18 @@ export function ToothMap({ patientId }: { patientId: string }) {
                         <div className="grid grid-cols-8 gap-4 max-w-2xl w-full">
                             {teeth.slice(0, 16).map((tooth) => {
                                 const styles = getToothStyles(tooth.state);
+                                const isSelected = selectedTooth === tooth.id && isMenuOpen;
+
                                 return (
                                     <Tooltip key={tooth.id}>
                                         <TooltipTrigger asChild>
                                             <div
-                                                onClick={() => setSelectedTooth(tooth.id)}
+                                                onClick={() => handleToothClick(tooth.id)}
                                                 className={cn(
                                                     "cursor-pointer transition-all duration-500 hover:scale-125 aspect-square flex flex-col items-center justify-center rounded-2xl relative",
-                                                    selectedTooth === tooth.id ? "bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)] scale-110 z-20" : "hover:bg-slate-500/5"
+                                                    isSelected ? "bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)] scale-110 z-20 ring-2 ring-indigo-500" : "hover:bg-slate-500/5",
+                                                    // Dim others if menu is open
+                                                    isMenuOpen && !isSelected ? "opacity-30 blur-[1px] scale-90" : "opacity-100"
                                                 )}
                                             >
                                                 <svg viewBox="0 0 40 40" className="w-[85%] h-[85%]">
@@ -138,9 +174,11 @@ export function ToothMap({ patientId }: { patientId: string }) {
                                                 <span className="text-[10px] font-black absolute bottom-0.5 text-slate-400 group-hover:text-indigo-500">{tooth.id}</span>
                                             </div>
                                         </TooltipTrigger>
-                                        <TooltipContent side="top" className="glass-premium px-3 py-1 text-[10px] font-bold uppercase border-none">
-                                            {tooth.state}
-                                        </TooltipContent>
+                                        {!isMenuOpen && (
+                                            <TooltipContent side="top" className="glass-premium px-3 py-1 text-[10px] font-bold uppercase border-none">
+                                                {tooth.state}
+                                            </TooltipContent>
+                                        )}
                                     </Tooltip>
                                 );
                             })}
@@ -151,14 +189,18 @@ export function ToothMap({ patientId }: { patientId: string }) {
 
                             {teeth.slice(16, 32).map((tooth) => {
                                 const styles = getToothStyles(tooth.state);
+                                const isSelected = selectedTooth === tooth.id && isMenuOpen;
+
                                 return (
                                     <Tooltip key={tooth.id}>
                                         <TooltipTrigger asChild>
                                             <div
-                                                onClick={() => setSelectedTooth(tooth.id)}
+                                                onClick={() => handleToothClick(tooth.id)}
                                                 className={cn(
                                                     "cursor-pointer transition-all duration-500 hover:scale-125 aspect-square flex flex-col items-center justify-center rounded-2xl relative",
-                                                    selectedTooth === tooth.id ? "bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)] scale-110 z-20" : "hover:bg-slate-500/5"
+                                                    isSelected ? "bg-indigo-500/10 shadow-[0_0_20px_rgba(99,102,241,0.2)] scale-110 z-20 ring-2 ring-indigo-500" : "hover:bg-slate-500/5",
+                                                    // Dim others if menu is open
+                                                    isMenuOpen && !isSelected ? "opacity-30 blur-[1px] scale-90" : "opacity-100"
                                                 )}
                                             >
                                                 <svg viewBox="0 0 40 40" className="w-[85%] h-[85%] rotate-180">
@@ -174,9 +216,11 @@ export function ToothMap({ patientId }: { patientId: string }) {
                                                 <span className="text-[10px] font-black absolute top-0.5 text-slate-400 rotate-180">{tooth.id}</span>
                                             </div>
                                         </TooltipTrigger>
-                                        <TooltipContent side="bottom" className="glass-premium px-3 py-1 text-[10px] font-bold uppercase border-none">
-                                            {tooth.state}
-                                        </TooltipContent>
+                                        {!isMenuOpen && (
+                                            <TooltipContent side="bottom" className="glass-premium px-3 py-1 text-[10px] font-bold uppercase border-none">
+                                                {tooth.state}
+                                            </TooltipContent>
+                                        )}
                                     </Tooltip>
                                 );
                             })}
@@ -187,15 +231,19 @@ export function ToothMap({ patientId }: { patientId: string }) {
                 <div className="flex justify-center gap-6 border-t border-white/10 pt-6">
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" />
-                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Decay Detected</span>
+                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Decay</span>
                     </div>
                     <div className="flex items-center gap-2">
                         <div className="w-3 h-3 rounded-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
-                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Post-RCT</span>
+                        <span className="text-[10px] font-bold uppercase text-muted-foreground">RCT</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-slate-100 border border-slate-300" />
-                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Healthy Enamel</span>
+                        <div className="w-3 h-3 rounded-full bg-orange-600 shadow-[0_0_8px_rgba(234,88,12,0.5)]" />
+                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Crown</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="w-3 h-3 rounded-full bg-slate-800 border border-slate-600" />
+                        <span className="text-[10px] font-bold uppercase text-muted-foreground">Implant</span>
                     </div>
                 </div>
             </div>

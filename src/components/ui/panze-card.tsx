@@ -9,8 +9,8 @@ export function PanzeCard({ children, className, flat = false, ...props }: Panze
     return (
         <div
             className={cn(
-                "bg-white rounded-[2rem] p-6 lg:p-8",
-                !flat && "shadow-[0_2px_20px_rgb(0,0,0,0.02)] border border-slate-100/50",
+                "glass-panze p-6 lg:p-8",
+                !flat && "shadow-[0_4px_24px_rgba(0,0,0,0.02)]",
                 className
             )}
             {...props}

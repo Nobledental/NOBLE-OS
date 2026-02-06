@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Save, FileText, Mic } from "lucide-react";
 import { toast } from "sonner";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { OtterVoice } from "@/components/clinical/otter-voice";
 
 export function ClinicalNoteEditor({ patientId }: { patientId: string }) {
     const [notes, setNotes] = useState({
@@ -33,10 +35,18 @@ export function ClinicalNoteEditor({ patientId }: { patientId: string }) {
                         <FileText className="w-5 h-5 text-indigo-500" />
                         Case Sheet (SOAP)
                     </div>
-                    <Button variant="outline" size="sm" className="gap-2">
-                        <Mic className="w-4 h-4 text-red-500" />
-                        Dictate
-                    </Button>
+
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="outline" size="sm" className="gap-2 border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700">
+                                <Mic className="w-4 h-4" />
+                                Dictate Notes
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden bg-transparent border-none shadow-none">
+                            <OtterVoice />
+                        </DialogContent>
+                    </Dialog>
                 </CardTitle>
             </CardHeader>
             <CardContent className="px-0 space-y-6">

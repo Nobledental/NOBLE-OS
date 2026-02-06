@@ -7,6 +7,8 @@ import { ProjectsOverview } from "@/components/dashboard/projects-overview";
 import { RevenueChart } from "@/components/dashboard/revenue-chart";
 import { PatientTracker } from "@/components/dashboard/patient-tracker";
 import { PanzeCard } from "@/components/ui/panze-card";
+import { DonutChart } from "@/components/ui/charts/donut-chart";
+import { SplineChart } from "@/components/ui/charts/spline-chart";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -101,52 +103,73 @@ export default function DashboardPage() {
                         transition={{ duration: 0.3 }}
                         className="grid grid-cols-1 lg:grid-cols-12 gap-6 min-h-[800px]"
                     >
-                        {/* Left Column: My Tasks (Active Queue) */}
-                        <div className="lg:col-span-3 h-full">
-                            <ActiveQueue />
-                        </div>
+                        {/* Top Row: Revenue & Highlights */}
+                        <div className="lg:col-span-8 flex flex-col gap-6">
+                            {/* Revenue Spline Chart */}
+                            <SplineChart
+                                title="Revenue Trend"
+                                data={[
+                                    { name: 'Mon', value: 4000 },
+                                    { name: 'Tue', value: 3000 },
+                                    { name: 'Wed', value: 2000 },
+                                    { name: 'Thu', value: 2780 },
+                                    { name: 'Fri', value: 1890 },
+                                    { name: 'Sat', value: 2390 },
+                                    { name: 'Sun', value: 3490 },
+                                ]}
+                            />
 
-                        {/* Right Area: Main Dashboard Grid */}
-                        <div className="lg:col-span-9 flex flex-col gap-6 h-full">
-
-                            {/* Top Row: Tracker & Overview */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <ProjectsOverview />
-                                <PatientTracker />
-                            </div>
-
-                            {/* Middle Row: Revenue */}
-                            <div className="h-[300px]">
-                                <RevenueChart />
-                            </div>
-
-                            {/* Bottom Row: Restored Bento Features */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                {/* Invoice Overview (Restored) */}
-                                <PanzeCard className="md:col-span-2 h-[200px] flex flex-col justify-center relative overflow-hidden group p-8">
-                                    <div className="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                                        <Search className="w-32 h-32" />
-                                    </div>
-                                    <h3 className="text-xl font-medium text-slate-900 mb-2">Invoice Intelligence</h3>
-                                    <div className="flex gap-8">
-                                        <div>
-                                            <span className="block text-slate-400 text-xs uppercase font-bold">Collected</span>
-                                            <span className="text-2xl font-bold text-slate-900">₹4.2L</span>
-                                        </div>
-                                        <div>
-                                            <span className="block text-slate-400 text-xs uppercase font-bold">Outstanding</span>
-                                            <span className="text-2xl font-bold text-red-500">₹12k</span>
-                                        </div>
+                            <div className="grid grid-cols-2 gap-6">
+                                <PanzeCard className="flex flex-col justify-between h-[180px]">
+                                    <h4 className="text-slate-500 font-bold text-xs uppercase">Total Patients</h4>
+                                    <div className="text-4xl font-black text-slate-900">1,284</div>
+                                    <div className="text-green-500 text-sm font-bold flex items-center">
+                                        +12% <span className="text-slate-400 ml-1 font-normal">vs last month</span>
                                     </div>
                                 </PanzeCard>
-
-                                {/* Quick Action (Restored) */}
-                                <PanzeCard className="h-[200px] flex flex-col items-center justify-center gap-4 p-6 bg-slate-900 text-white">
-                                    <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                                        <Mic className="w-6 h-6 text-white" />
+                                <PanzeCard className="flex flex-col justify-between h-[180px]">
+                                    <h4 className="text-slate-500 font-bold text-xs uppercase">Appointments</h4>
+                                    <div className="text-4xl font-black text-slate-900">42</div>
+                                    <div className="text-blue-500 text-sm font-bold flex items-center">
+                                        8 <span className="text-slate-400 ml-1 font-normal">slots remaining</span>
                                     </div>
-                                    <p className="text-center text-sm font-medium text-slate-300">
-                                        "Hey NEO, add patient John Doe for a Root Canal at 5 PM."
+                                </PanzeCard>
+                            </div>
+                        </div>
+
+                        {/* Right Area: Department Breakdown */}
+                        <div className="lg:col-span-4 flex flex-col gap-6">
+                            <DonutChart
+                                title="Department Load"
+                                totalLabel="Total Cases"
+                                totalValue="86"
+                                data={[
+                                    { name: 'General', value: 35, color: '#3b82f6' }, // Blue
+                                    { name: 'Ortho', value: 25, color: '#8b5cf6' },   // Purple
+                                    { name: 'Surgery', value: 15, color: '#ec4899' }, // Pink
+                                    { name: 'Pedo', value: 11, color: '#14b8a6' },   // Teal
+                                ]}
+                            />
+
+                            {/* Active Projects Preview */}
+                            <div className="flex-1">
+                                <ProjectsOverview />
+                            </div>
+                        </div>
+
+                        {/* Bottom Row: Active Queue & Actions */}
+                        <div className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            <div className="lg:col-span-2">
+                                <ActiveQueue />
+                            </div>
+
+                            <div className="lg:col-span-1">
+                                <PanzeCard className="h-full bg-slate-900 text-white flex flex-col items-center justify-center text-center p-6 shadow-xl shadow-slate-900/20">
+                                    <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4">
+                                        <Mic className="w-8 h-8 text-white" />
+                                    </div>
+                                    <p className="text-lg font-medium text-slate-200">
+                                        "Hey NEO, add patient Suresh for a Root Canal."
                                     </p>
                                 </PanzeCard>
                             </div>

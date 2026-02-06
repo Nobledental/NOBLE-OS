@@ -7,15 +7,29 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Trash2, Printer, Share2, CreditCard, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { UpiPaymentCard } from "@/components/billing/upi-payment-card";
 
 export function InvoiceGenerator() {
     const { items, removeItem, enableEmi, toggleEmi, getTotals } = useBillingStore();
     const { subtotal, tax, total, monthlyEmi } = getTotals();
 
     const handleFinalize = () => {
-        // Mock Event: STOCK_DISBURSEMENT
-        console.log("BILL_FINALIZED", { items, total });
-        alert("Bill Generated! Inventory Deducted.");
+        // 1. Generate UPI Intent Link (Standard Format)
+        const clinicVpa = "noble.clinic@okaxis";
+        const clinicName = "Noble Dental Clinic";
+        const invoiceId = "INV-2024-001";
+        // This link opens GPay/PhonePe directly when clicked on mobile
+        const upiLink = `upi://pay?pa=${clinicVpa}&pn=${encodeURIComponent(clinicName)}&am=${total}&tn=${invoiceId}&cu=INR`;
+
+        // 2. Construct WhatsApp Message
+        const message = `🧾 *Invoice Generated*\n\n*Clinic:* ${clinicName}\n*Invoice:* ${invoiceId}\n*Amount:* ₹${total.toLocaleString()}\n\n🔗 *Tap to Pay (UPI):*\n${upiLink}\n\nOr scan the QR code at the desk.`;
+
+        // 3. Open WhatsApp
+        // In a real app, 'phone' would come from patient details. Using blank to open contact picker.
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+
+        console.log("BILL_FINALIZED", { items, total, upiLink });
+        // toast.success("Invoice shared via WhatsApp!"); 
     }
 
     return (
@@ -74,6 +88,9 @@ export function InvoiceGenerator() {
 
             {/* Footer / Calculation */}
             <div className="bg-white dark:bg-slate-900 border-t p-4 space-y-4 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+                {/* One-Tap Payment Integration */}
+                {total > 0 && <UpiPaymentCard amount={total} />}
+
                 {/* Fintech Toggles */}
                 <div className="flex items-center justify-between bg-indigo-50 dark:bg-indigo-900/20 p-3 rounded-lg border border-indigo-100 dark:border-indigo-800">
                     <div className="flex items-center space-x-2">

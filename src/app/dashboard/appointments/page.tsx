@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { NewAppointmentDialog } from "@/components/appointments/new-appointment-dialog";
+import { LiveLocationSharer } from "@/components/communication/live-location-sharer";
 
 export default function AppointmentsPage() {
     return (
@@ -66,17 +67,7 @@ export default function AppointmentsPage() {
                         </CardContent>
                     </Card>
 
-                    <Card className="bg-gradient-to-br from-indigo-600 to-indigo-700 text-white shadow-lg border-none">
-                        <CardContent className="p-6">
-                            <h3 className="font-bold text-lg mb-2">Sync to Phone</h3>
-                            <p className="text-xs text-indigo-100 mb-4 opacity-90">
-                                Get real-time alerts for your next appointment directly on your mobile device.
-                            </p>
-                            <Button variant="secondary" className="w-full text-indigo-600 font-bold">
-                                Enable Notifications
-                            </Button>
-                        </CardContent>
-                    </Card>
+                    <LiveLocationSharer />
                 </div>
             </div>
         </div>

@@ -9,12 +9,12 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex h-screen overflow-hidden bg-mesh-gradient">
+        <div className="flex h-screen overflow-hidden bg-[#F2F3F5]">
             {/* Floating Sidebar (Pill Dock) */}
             <FloatingSidebar />
 
             {/* Main Content Area */}
-            <main className="flex-1 overflow-y-auto relative flex flex-col p-4 md:p-6 lg:p-8 pl-20 md:pl-24">
+            <main className="flex-1 overflow-y-auto relative flex flex-col p-4 md:p-6 lg:p-8 ml-2">
 
                 {/* Global Key Listener */}
                 <CommandPalette />
