@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UniversalBridgeHub } from "@/components/clinical/universal-bridge-hub";
+import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import { BillingSettings } from "@/components/settings/billing-settings";
 import { StaffSettings } from "@/components/settings/staff-settings"; // Added
 import { PanzeCard } from "@/components/ui/panze-card";

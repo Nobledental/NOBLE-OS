@@ -18,7 +18,8 @@ import {
     LucideIcon,
     BarChart3,
     ShieldCheck,
-    Briefcase
+    Briefcase,
+    TrendingUp
 } from "lucide-react";
 import { PermissionGuard } from "@/components/security/permission-guard";
 import { useAuth } from "@/lib/auth-context";
