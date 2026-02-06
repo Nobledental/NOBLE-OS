@@ -31,7 +31,7 @@ export function CircularCategory() {
                                 )} />
                                 <span className="z-10">{cat.image}</span>
                             </div>
-                            <span className="text-xs font-bold text-swiggy-text-secondary text-center w-20 truncate">
+                            <span className="text-[10px] font-black text-slate-500 text-center w-20 truncate uppercase tracking-widest">
                                 {cat.name}
                             </span>
                         </div>

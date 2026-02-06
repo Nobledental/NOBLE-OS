@@ -37,9 +37,9 @@ export function LogisticsCard() {
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-red-400" />
                         <div className="flex-1">
-                            <p className="text-xs text-blue-200 font-bold uppercase tracking-wider">Deliver To</p>
+                            <p className="text-xs text-white/60 font-black uppercase tracking-widest">Destination Lab</p>
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-semibold text-white/50 italic">Select Lab Layout...</span>
+                                <span className="text-sm font-bold text-white/90 italic">Select Lab Partner...</span>
                                 <Button size="sm" variant="ghost" className="h-6 w-6 p-0 hover:bg-white/20 text-white">
                                     <MapPin className="w-4 h-4" />
                                 </Button>
@@ -48,14 +48,14 @@ export function LogisticsCard() {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center gap-4">
-                    <Button className="flex-1 bg-white text-blue-700 hover:bg-blue-50 font-bold rounded-xl h-12 shadow-lg group">
-                        Book Pickup
+                <div className="flex items-center gap-4 mt-6">
+                    <Button className="flex-1 bg-white text-indigo-700 hover:bg-indigo-50 font-black uppercase text-[10px] tracking-widest rounded-xl h-12 shadow-lg group border-none">
+                        Book Lab Pickup
                         <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <div className="flex flex-col items-center justify-center min-w-[60px]">
-                        <Clock className="w-4 h-4 text-blue-200 mb-1" />
-                        <span className="text-[10px] font-bold text-blue-100">~25m</span>
+                        <Clock className="w-4 h-4 text-white/60 mb-1" />
+                        <span className="text-[10px] font-black text-white/80">~25 MINS</span>
                     </div>
                 </div>
             </div>

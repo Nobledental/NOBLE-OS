@@ -8,15 +8,16 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import {
     MessageSquare, Send, Paperclip, User,
-    Stethoscope, Clock, CheckCheck
+    Stethoscope, Clock, CheckCheck, Brain, BookOpen
 } from 'lucide-react';
 import { ConsultantNote } from '@/types/consultant.types';
 
 interface ConsultantDiscussionProps {
-    caseAssignmentId: string;
+    caseAssignmentId?: string;
     currentUserId: string;
-    currentUserRole: 'chief_dentist' | 'consultant';
+    currentUserRole: 'chief_dentist' | 'consultant' | 'student';
     currentUserName: string;
+    isGlobal?: boolean;
 }
 
 // Mock notes
@@ -50,18 +51,31 @@ const mockNotes: ConsultantNote[] = [
         content: 'CBCT ordered. Will share results once available. Please let me know your available slot for the surgery.',
         createdAt: '2026-01-29T09:00:00Z',
         isInternal: true
+    },
+    {
+        id: 'note-4',
+        caseAssignmentId: 'global',
+        authorId: 'neo-ai',
+        authorName: 'Neo AI',
+        authorRole: 'consultant',
+        content: 'Verified Insight: Mesioangular impactions with high WAR scores often require distal guttering. Grossman (Ch. 14) recommends ensuring direct visualization of the distal follicle to avoid lingual plate fracture.',
+        createdAt: '2026-01-29T10:00:00Z',
+        isInternal: false,
+        metadata: { citation: "Grossman's Endodontics, 13th Ed, Ch 14" }
     }
 ];
 
 export default function ConsultantDiscussion({
-    caseAssignmentId,
+    caseAssignmentId = 'global',
     currentUserId,
     currentUserRole,
-    currentUserName
+    currentUserName,
+    isGlobal = false
 }: ConsultantDiscussionProps) {
     const [notes, setNotes] = useState<ConsultantNote[]>(mockNotes);
     const [newMessage, setNewMessage] = useState('');
     const [isSending, setIsSending] = useState(false);
+    const [isStealth, setIsStealth] = useState(false);
 
     const handleSend = async () => {
         if (!newMessage.trim()) return;
@@ -106,14 +120,26 @@ export default function ConsultantDiscussion({
     return (
         <Card className="flex flex-col h-[500px]">
             {/* Header */}
-            <div className="p-4 border-b flex items-center justify-between">
+            <div className="p-4 border-b flex items-center justify-between bg-slate-50/50 dark:bg-white/5">
                 <div className="flex items-center gap-2">
                     <MessageSquare className="w-5 h-5 text-blue-500" />
-                    <h3 className="font-semibold">Case Discussion</h3>
+                    <h3 className="font-bold italic uppercase tracking-widest text-[10px]">
+                        {isGlobal ? 'Global Peer Forum' : 'Case Discussion'}
+                    </h3>
                 </div>
-                <Badge variant="secondary">
-                    Internal • Not visible to patient
-                </Badge>
+                <div className="flex items-center gap-3">
+                    {isGlobal && (
+                        <button
+                            onClick={() => setIsStealth(!isStealth)}
+                            className={`text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full border transition-all ${isStealth ? 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20' : 'bg-white dark:bg-white/5 text-slate-400 border-slate-200'}`}
+                        >
+                            {isStealth ? 'Stealth Rank Active' : 'Go Stealth'}
+                        </button>
+                    )}
+                    <Badge variant="secondary" className="text-[9px] uppercase tracking-tighter">
+                        {isGlobal ? 'Public Peer Network' : 'Internal • Case Only'}
+                    </Badge>
+                </div>
             </div>
 
             {/* Messages */}
@@ -128,33 +154,36 @@ export default function ConsultantDiscussion({
                             className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}
                         >
                             <div className={`max-w-[80%] ${isMe
-                                    ? 'bg-blue-500 text-white rounded-l-lg rounded-br-lg'
-                                    : 'bg-muted rounded-r-lg rounded-bl-lg'
+                                ? 'bg-blue-500 text-white rounded-l-lg rounded-br-lg'
+                                : 'bg-muted rounded-r-lg rounded-bl-lg'
                                 } p-3`}>
                                 {/* Author */}
                                 <div className="flex items-center gap-2 mb-1">
-                                    {isChief
-                                        ? <User className="w-3 h-3" />
-                                        : <Stethoscope className="w-3 h-3" />
+                                    {note.authorId === 'neo-ai'
+                                        ? <Brain className="w-3 h-3 text-rose-500" />
+                                        : isChief ? <User className="w-3 h-3" /> : <Stethoscope className="w-3 h-3" />
                                     }
-                                    <span className={`text-xs font-medium ${isMe ? 'text-blue-100' : 'text-muted-foreground'
-                                        }`}>
-                                        {note.authorName}
+                                    <span className={`text-[9px] font-black uppercase tracking-widest ${isMe ? 'text-blue-100' : 'text-slate-500'}`}>
+                                        {note.authorId === 'neo-ai'
+                                            ? 'Neo AI (GraphRAG)'
+                                            : (isGlobal && isStealth && isMe) ? 'Top 5% Student (You)' : note.authorName
+                                        }
                                     </span>
+                                    {isGlobal && !isMe && note.authorRole === 'student' && (
+                                        <button className="text-[7px] font-black text-rose-500 uppercase ml-auto hover:underline">
+                                            Hiring Unlock
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Content */}
-                                <p className="text-sm">{note.content}</p>
+                                <p className="text-sm italic leading-relaxed">{note.content}</p>
 
-                                {/* Attachments */}
-                                {note.attachments && note.attachments.length > 0 && (
-                                    <div className="mt-2 flex gap-2">
-                                        {note.attachments.map((att, idx) => (
-                                            <Badge key={idx} variant="outline" className="text-xs">
-                                                <Paperclip className="w-3 h-3 mr-1" />
-                                                {att.name}
-                                            </Badge>
-                                        ))}
+                                {/* Citations */}
+                                {note.metadata?.citation && (
+                                    <div className="mt-2 p-2 bg-black/10 rounded-lg border border-black/5 flex items-center gap-2">
+                                        <BookOpen size={10} className="text-rose-500" />
+                                        <span className="text-[8px] font-black uppercase tracking-widest opacity-80">{note.metadata.citation}</span>
                                     </div>
                                 )}
 

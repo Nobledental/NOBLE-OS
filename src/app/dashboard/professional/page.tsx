@@ -5,7 +5,8 @@ import ProfessionalEvolutionPortal from "@/components/profile/professional-evolu
 import MentorCommandCenter from "@/components/academic/mentor-command-center";
 import NEETAcceleratorHub from "@/components/academic/neet-accelerator-hub";
 import RecruitmentCommandCenter from "@/components/admin/recruitment-command-center";
-import { User, Briefcase, GraduationCap, Users } from "lucide-react";
+import ConsultantDiscussion from "@/components/collaboration/consultant-discussion";
+import { User, Briefcase, GraduationCap, Users, MessageSquare } from "lucide-react";
 
 export default function ProfessionalPage() {
     return (
@@ -29,6 +30,10 @@ export default function ProfessionalPage() {
                             <GraduationCap size={14} />
                             Academic Prep
                         </TabsTrigger>
+                        <TabsTrigger value="forum" className="rounded-xl gap-2 px-6">
+                            <MessageSquare size={14} />
+                            Global Forum
+                        </TabsTrigger>
                     </TabsList>
                 </div>
 
@@ -46,6 +51,15 @@ export default function ProfessionalPage() {
 
                 <TabsContent value="academic" className="mt-0 outline-none">
                     <NEETAcceleratorHub />
+                </TabsContent>
+
+                <TabsContent value="forum" className="mt-0 outline-none max-w-4xl mx-auto">
+                    <ConsultantDiscussion
+                        currentUserId="curr-user"
+                        currentUserName="Dhivakaran G."
+                        currentUserRole="student"
+                        isGlobal={true}
+                    />
                 </TabsContent>
             </Tabs>
         </div>

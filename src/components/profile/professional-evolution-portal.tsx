@@ -27,11 +27,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 // Types for Professional Evolution
 type UserRole = 'STUDENT' | 'DOCTOR';
+type RegistrationStatus = 'TEMPORARY' | 'PERMANENT';
 
 export default function ProfessionalEvolutionPortal() {
     const [role, setRole] = useState<UserRole>('STUDENT');
+    const [status, setStatus] = useState<RegistrationStatus>('TEMPORARY');
+    const [regNumber, setRegNumber] = useState('TEMP_2024_08');
     const [isStealth, setIsStealth] = useState(false);
     const [activeTab, setActiveTab] = useState<'PORTFOLIO' | 'CAREER' | 'NETWORK'>('PORTFOLIO');
+    const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+    const [prnInput, setPrnInput] = useState('');
+    const [isUpgrading, setIsUpgrading] = useState(false);
 
     const stats = {
         handSkillScore: 88,
@@ -79,7 +85,9 @@ export default function ProfessionalEvolutionPortal() {
                             <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">
                                 <span>{role === 'STUDENT' ? 'BDS Final Year' : 'Oral & Maxillofacial Surgeon'}</span>
                                 <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
-                                <span>Reg No: {role === 'STUDENT' ? 'TEMP_2024_08' : 'MA_44129'}</span>
+                                <span className={status === 'PERMANENT' ? 'text-emerald-500' : 'text-amber-500'}>
+                                    Reg No: {regNumber} ({status})
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -97,24 +105,85 @@ export default function ProfessionalEvolutionPortal() {
                 </div>
 
                 {/* 2. ROLE SWITCHER (Demo purposes) */}
-                <div className="flex justify-center">
+                {/* 2. ROLE EVOLUTION ENGINE */}
+                <div className="flex justify-center gap-6">
                     <div className="bg-slate-100 dark:bg-white/5 p-2 rounded-[2rem] border border-slate-200 dark:border-white/5 inline-flex gap-2">
                         <button
-                            onClick={() => setRole('STUDENT')}
-                            className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${role === 'STUDENT' ? 'bg-white dark:bg-white/10 text-rose-600 shadow-xl' : 'text-slate-400 hover:text-slate-600'
+                            className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${role === 'STUDENT' ? 'bg-white dark:bg-white/10 text-rose-600 shadow-xl' : 'text-slate-400 opacity-50 cursor-not-allowed'
                                 }`}
                         >
-                            <GraduationCap size={14} className="inline mr-2" /> Student Mode
+                            <GraduationCap size={14} className="inline mr-2" /> Academic Mode
                         </button>
                         <button
-                            onClick={() => setRole('DOCTOR')}
-                            className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${role === 'DOCTOR' ? 'bg-white dark:bg-white/10 text-blue-600 shadow-xl' : 'text-slate-400 hover:text-slate-600'
+                            onClick={() => status === 'PERMANENT' ? setRole('DOCTOR') : setShowUpgradeModal(true)}
+                            className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${role === 'DOCTOR' ? 'bg-white dark:bg-white/10 text-blue-600 shadow-xl' : status === 'PERMANENT' ? 'text-slate-400' : 'text-amber-500 bg-amber-500/5'
                                 }`}
                         >
-                            <Stethoscope size={14} className="inline mr-2" /> Doctor Mode
+                            <Stethoscope size={14} className="inline mr-2" />
+                            {status === 'PERMANENT' ? 'Clinic Mode' : 'Upgrade to Clinic Mode'}
                         </button>
                     </div>
                 </div>
+
+                {/* 2.1 UPGRADE MODAL */}
+                <AnimatePresence>
+                    {showUpgradeModal && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-md">
+                            <motion.div
+                                initial={{ scale: 0.9, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.9, opacity: 0 }}
+                                className="bg-white dark:bg-[#0a0f1d] p-12 rounded-[3.5rem] border border-slate-200 dark:border-white/5 shadow-4xl max-w-md w-full relative"
+                            >
+                                <div className="absolute top-8 right-8 cursor-pointer text-slate-400" onClick={() => setShowUpgradeModal(false)}>
+                                    <ChevronDown size={24} className="rotate-180" />
+                                </div>
+                                <div className="mb-8">
+                                    <div className="w-16 h-16 bg-blue-500/10 text-blue-500 rounded-3xl flex items-center justify-center mb-6">
+                                        <ShieldCheck size={32} />
+                                    </div>
+                                    <h2 className="text-3xl font-black italic tracking-tighter uppercase dark:text-white mb-2">Unlock Clinic Mode</h2>
+                                    <p className="text-sm text-slate-400 italic font-medium">Enter your Permanent Registration Number to verify your degree and unlock Teleconsult & Live Surgery tools.</p>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div className="space-y-2">
+                                        <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">Dental Council Reg No.</div>
+                                        <input
+                                            type="text"
+                                            value={prnInput}
+                                            onChange={(e) => setPrnInput(e.target.value.toUpperCase())}
+                                            placeholder="e.g. MA_44129"
+                                            className="w-full p-6 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl outline-none font-black italic tracking-tighter text-blue-600 focus:border-blue-500 transition-all"
+                                        />
+                                    </div>
+
+                                    <button
+                                        disabled={isUpgrading || prnInput.length < 5}
+                                        onClick={async () => {
+                                            setIsUpgrading(true);
+                                            // Simulate Backend Call
+                                            setTimeout(() => {
+                                                setStatus('PERMANENT');
+                                                setRole('DOCTOR');
+                                                setRegNumber(prnInput);
+                                                setIsUpgrading(false);
+                                                setShowUpgradeModal(false);
+                                            }, 2000);
+                                        }}
+                                        className="w-full py-6 bg-blue-600 disabled:bg-slate-300 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 hover:scale-105 transition-all flex items-center justify-center gap-3"
+                                    >
+                                        {isUpgrading ? (
+                                            <TrendingUp size={16} className="animate-spin" />
+                                        ) : (
+                                            <>Verify & Evolution <ArrowRight size={14} /></>
+                                        )}
+                                    </button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    )}
+                </AnimatePresence>
 
                 <div className="grid grid-cols-12 gap-8">
 

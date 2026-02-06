@@ -150,7 +150,7 @@ export interface ConsultantNote {
     caseAssignmentId: string;
     authorId: string;
     authorName: string;
-    authorRole: 'chief_dentist' | 'consultant';
+    authorRole: 'chief_dentist' | 'consultant' | 'student';
     content: string;
     createdAt: string;
     editedAt?: string;
@@ -160,6 +160,10 @@ export interface ConsultantNote {
         name: string;
     }[];
     isInternal: boolean; // Not visible to patient
+    metadata?: {
+        citation?: string;
+        rank?: string;
+    };
 }
 
 export interface TreatmentPhaseApproval {

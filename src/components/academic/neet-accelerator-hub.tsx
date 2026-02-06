@@ -26,6 +26,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function NEETAcceleratorHub() {
     const [activeSection, setActiveSection] = useState<'SPRINT' | 'RESOURCES' | 'RANK'>('SPRINT');
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [currentYear, setCurrentYear] = useState(4); // Default to Final Year
+    const [showYearSelector, setShowYearSelector] = useState(false);
 
     const questions = [
         {
@@ -58,6 +60,39 @@ export default function NEETAcceleratorHub() {
                         <p className="text-sm font-medium text-slate-400 italic max-w-md">
                             Proprietary NEET-MDS training engine. Transforming your daily clinical recordings into high-yield exam preparation.
                         </p>
+
+                        <div className="flex items-center gap-4">
+                            <button
+                                onClick={() => setShowYearSelector(!showYearSelector)}
+                                className="px-6 py-3 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/5 text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-300 flex items-center gap-3 hover:bg-slate-200 transition-all"
+                            >
+                                <GraduationCap size={16} /> Year: {currentYear === 1 ? '1st' : currentYear === 2 ? '2nd' : currentYear === 3 ? '3rd' : 'Final'}
+                            </button>
+                            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest italic">
+                                Content Filter: Year {currentYear} and below
+                            </div>
+                        </div>
+
+                        <AnimatePresence>
+                            {showYearSelector && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    className="flex gap-2 p-2 bg-slate-50 dark:bg-white/5 rounded-2xl border border-slate-100 dark:border-white/10"
+                                >
+                                    {[1, 2, 3, 4].map(y => (
+                                        <button
+                                            key={y}
+                                            onClick={() => { setCurrentYear(y); setShowYearSelector(false); }}
+                                            className={`w-10 h-10 rounded-xl font-black text-[10px] transition-all ${currentYear === y ? 'bg-rose-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-200'}`}
+                                        >
+                                            {y}
+                                        </button>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                     </div>
 
                     <div className="flex gap-6 relative z-10">
@@ -142,6 +177,15 @@ export default function NEETAcceleratorHub() {
                                 <div className="h-8 w-px bg-slate-100 dark:bg-white/5"></div>
                                 <div className="text-[10px] font-black uppercase tracking-widest text-emerald-500 bg-emerald-500/10 px-4 py-2 rounded-full border border-emerald-500/20">Streak: 12🔥</div>
                             </div>
+                        </div>
+
+                        {/* Revision Loop Status */}
+                        <div className="mb-8 px-8 py-4 bg-amber-500/5 border border-amber-500/20 rounded-2xl flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <Clock size={14} className="text-amber-500" />
+                                <span className="text-[10px] font-black uppercase tracking-widest text-amber-600">Revision Loop Active: 20% Foundational Refresh (Yr 1-3)</span>
+                            </div>
+                            <div className="text-[9px] font-bold text-amber-500 italic">Ensuring no first-year concepts are forgotten.</div>
                         </div>
 
                         {/* QUESTION INTERFACE */}

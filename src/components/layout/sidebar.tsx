@@ -33,15 +33,13 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
     { name: "Overview", icon: LayoutDashboard, href: "/dashboard" },
+    { name: "Platform OS", icon: Zap, href: "/dashboard/operations", permission: 'can_manage_staff' },
     { name: "Performance Pulse", icon: BarChart3, href: "/dashboard/analytics", permission: 'can_manage_staff' },
     { name: "Live Queue", icon: Activity, href: "/dashboard/queue" },
     { name: "Patients", icon: Users, href: "/dashboard/patients" },
     { name: "Appointments", icon: Calendar, href: "/dashboard/appointments" },
     { name: "Clinical Master", icon: Stethoscope, href: "/dashboard/clinical", permission: 'can_view_clinical' },
-    { name: "Specialists", icon: Briefcase, href: "/dashboard/specialists" },
-    { name: "Billing & Fintech", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' },
-    { name: "Day Settlement", icon: ShieldCheck, href: "/dashboard/settlement", permission: 'can_view_revenue' },
-    { name: "Inventory", icon: Box, href: "/dashboard/inventory", permission: 'can_edit_inventory' },
+    { name: "Marketplace", icon: Box, href: "/dashboard/marketplace" },
     { name: "Pro Evolution", icon: TrendingUp, href: "/dashboard/professional" },
     { name: "Settings", icon: Settings, href: "/dashboard/settings", permission: 'can_manage_staff' },
 ];
