@@ -1,139 +1,150 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Users, UserPlus, Fingerprint, TrendingUp, CalendarCheck } from "lucide-react";
+import { StaffHRModule } from "@/components/staff/hr-system";
+import { AttendanceHub } from "@/components/staff/attendance-hub";
+import { PerformanceScorecard } from "@/components/staff/performance-scorecard";
+import { PanzeCard } from "@/components/ui/panze-card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Users, Lock, Unlock, Zap } from "lucide-react";
-import { useAuth } from "@/lib/auth-context";
-import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export default function StaffManagementPage() {
-    const { user, updatePermissions } = useAuth();
-    const [isSaving, setIsSaving] = useState(false);
-
-    const handleToggle = (key: string, value: boolean) => {
-        updatePermissions({ [key]: value });
-        toast.success(`Permission updated locally.`, {
-            description: "Changes will sync with the database on the next heartbeat."
-        });
-    };
-
-    const handleSoloMode = (checked: boolean) => {
-        updatePermissions({ solo_mode: checked });
-        if (checked) {
-            toast.info("Solo Mode Enabled", {
-                description: "All clinical and financial modules are now unlocked for your session."
-            });
-        }
-    };
+    const [activeTab, setActiveTab] = useState("directory");
 
     return (
-        <div className="space-y-6">
-            <div className="flex items-center justify-between">
+        <div className="space-y-8 pb-20">
+            {/* Header */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Staff & Permissions</h2>
-                    <p className="text-muted-foreground">Manage clinic access and role-based security.</p>
-                </div>
-                <div className="flex items-center gap-4 bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-800">
-                    <div className="flex flex-col items-end mr-2">
-                        <span className="text-sm font-semibold text-indigo-900 dark:text-indigo-100 flex items-center gap-1">
-                            <Zap className="w-3 h-3 fill-indigo-500" /> Solo Mode
-                        </span>
-                        <span className="text-[10px] text-indigo-600 dark:text-indigo-400">Unlock all widgets</span>
-                    </div>
-                    <Switch
-                        checked={user?.permissions?.solo_mode || false}
-                        onCheckedChange={handleSoloMode}
-                    />
+                    <p className="text-slate-500 text-sm mb-1 font-medium italic">Human Resources Management</p>
+                    <h1 className="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight font-display">Staff Studio</h1>
                 </div>
             </div>
 
-            <div className="grid gap-6 md:grid-cols-3">
-                <Card className="md:col-span-2">
-                    <CardHeader>
-                        <CardTitle>Clinical Team</CardTitle>
-                        <CardDescription>Grant clinical access to doctors and nurses.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Staff Member</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead>Clinical</TableHead>
-                                    <TableHead>Finance</TableHead>
-                                    <TableHead>Action</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>
-                                        <div>
-                                            <div className="font-medium">Dr. Dhivakaran</div>
-                                            <div className="text-xs text-muted-foreground">Chief Dentist</div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell><Badge variant="secondary">OWNER</Badge></TableCell>
-                                    <TableCell><Switch checked={true} disabled /></TableCell>
-                                    <TableCell><Switch checked={true} disabled /></TableCell>
-                                    <TableCell><Button variant="ghost" size="sm">Edit</Button></TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>
-                                        <div>
-                                            <div className="font-medium">Sarah Miller</div>
-                                            <div className="text-xs text-muted-foreground">Receptionist</div>
-                                        </div>
-                                    </TableCell>
-                                    <TableCell><Badge variant="outline">STAFF</Badge></TableCell>
-                                    <TableCell>
-                                        <Switch
-                                            checked={user?.permissions?.can_view_clinical}
-                                            onCheckedChange={(val) => handleToggle('can_view_clinical', val)}
-                                        />
-                                    </TableCell>
-                                    <TableCell>
-                                        <Switch
-                                            checked={user?.permissions?.can_view_revenue}
-                                            onCheckedChange={(val) => handleToggle('can_view_revenue', val)}
-                                        />
-                                    </TableCell>
-                                    <TableCell><Button variant="ghost" size="sm">Edit</Button></TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+            <Tabs defaultValue="directory" className="w-full" onValueChange={setActiveTab}>
+                <div className="flex items-center justify-between mb-8 overflow-x-auto pb-2">
+                    <TabsList className="bg-white p-1 rounded-full border border-slate-200 shadow-sm h-14">
+                        <TabsTrigger
+                            value="directory"
+                            className="rounded-full px-6 py-2.5 data-[state=active]:bg-slate-900 data-[state=active]:text-white gap-2 h-11"
+                        >
+                            <Users className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase">Directory</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="onboarding"
+                            className="rounded-full px-6 py-2.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white gap-2 h-11"
+                        >
+                            <UserPlus className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase">Onboarding</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="attendance"
+                            className="rounded-full px-6 py-2.5 data-[state=active]:bg-slate-900 data-[state=active]:text-white gap-2 h-11"
+                        >
+                            <Fingerprint className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase">Attendance</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="performance"
+                            className="rounded-full px-6 py-2.5 data-[state=active]:bg-indigo-600 data-[state=active]:text-white gap-2 h-11"
+                        >
+                            <TrendingUp className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase">Performance</span>
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="leave"
+                            className="rounded-full px-6 py-2.5 data-[state=active]:bg-slate-900 data-[state=active]:text-white gap-2 h-11"
+                        >
+                            <CalendarCheck className="w-4 h-4" />
+                            <span className="text-xs font-bold uppercase">Leave</span>
+                        </TabsTrigger>
+                    </TabsList>
+                </div>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <Shield className="w-5 h-5 text-emerald-500" /> Security Status
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border space-y-3">
-                            <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Admin Overridden</span>
-                                <Badge variant={user?.permissions?.solo_mode ? "default" : "secondary"}>
-                                    {user?.permissions?.solo_mode ? "ACTIVE" : "INACTIVE"}
-                                </Badge>
+                <div className="mt-6">
+                    <TabsContent value="directory" className="animate-in fade-in slide-in-from-bottom-4">
+                        <PanzeCard>
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-slate-100 italic">
+                                            <th className="text-left py-4 px-4 text-xs font-bold uppercase tracking-widest text-slate-400">Staff Member</th>
+                                            <th className="text-left py-4 px-4 text-xs font-bold uppercase tracking-widest text-slate-400">Designation</th>
+                                            <th className="text-left py-4 px-4 text-xs font-bold uppercase tracking-widest text-slate-400">Join Date</th>
+                                            <th className="text-left py-4 px-4 text-xs font-bold uppercase tracking-widest text-slate-400">Status</th>
+                                            <th className="text-right py-4 px-4 text-xs font-bold uppercase tracking-widest text-slate-400">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-slate-50">
+                                        {[
+                                            { name: "Dr. Dhivakaran", role: "CHIEF DENTIST", date: "Jan 12, 2024", status: "Active" },
+                                            { name: "Sarah Miller", role: "RECEPTIONIST", date: "Feb 01, 2024", status: "In Clinic" },
+                                            { name: "Arun Kumar", role: "SENIOR ASSISTANT", date: "Dec 15, 2023", status: "On Break" },
+                                        ].map((staff, i) => (
+                                            <tr key={i} className="group hover:bg-slate-50/50 transition-colors">
+                                                <td className="py-5 px-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-black text-xs">
+                                                            {staff.name.split(' ').map(n => n[0]).join('')}
+                                                        </div>
+                                                        <span className="font-bold text-slate-900">{staff.name}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="py-5 px-4">
+                                                    <Badge variant="secondary" className="bg-slate-100 text-slate-600 border-0 text-[10px] font-bold">
+                                                        {staff.role}
+                                                    </Badge>
+                                                </td>
+                                                <td className="py-5 px-4 text-sm font-medium text-slate-500">{staff.date}</td>
+                                                <td className="py-5 px-4">
+                                                    <div className="flex items-center gap-2">
+                                                        <div className={cn(
+                                                            "w-1.5 h-1.5 rounded-full",
+                                                            staff.status === 'Active' ? "bg-green-500" :
+                                                                staff.status === 'In Clinic' ? "bg-indigo-500 animate-pulse" : "bg-orange-500"
+                                                        )} />
+                                                        <span className="text-xs font-bold text-slate-700">{staff.status}</span>
+                                                    </div>
+                                                </td>
+                                                <td className="py-5 px-4 text-right">
+                                                    <Button variant="ghost" size="sm" className="rounded-xl font-bold text-slate-400 hover:text-indigo-600">
+                                                        Profile
+                                                    </Button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
-                            <div className="flex items-center justify-between text-sm">
-                                <span className="text-muted-foreground">Database Sync</span>
-                                <span className="text-emerald-500 font-medium">Healthy</span>
-                            </div>
+                        </PanzeCard>
+                    </TabsContent>
+
+                    <TabsContent value="onboarding" className="animate-in fade-in slide-in-from-bottom-4">
+                        <StaffHRModule />
+                    </TabsContent>
+
+                    <TabsContent value="attendance" className="animate-in fade-in slide-in-from-bottom-4">
+                        <AttendanceHub />
+                    </TabsContent>
+
+                    <TabsContent value="performance" className="animate-in fade-in slide-in-from-bottom-4">
+                        <PerformanceScorecard />
+                    </TabsContent>
+
+                    <TabsContent value="leave" className="animate-in fade-in slide-in-from-bottom-4">
+                        <div className="text-center py-20 bg-slate-50 rounded-[40px] border-2 border-dashed border-slate-100">
+                            <CalendarCheck className="w-12 h-12 text-slate-200 mx-auto mb-4" />
+                            <h3 className="text-xl font-bold text-slate-900">Leave Portal</h3>
+                            <p className="text-slate-500">Automated leave requests and approval flow.</p>
                         </div>
-
-                        <Button className="w-full" onClick={() => setIsSaving(true)} disabled={isSaving}>
-                            {isSaving ? "Syncing..." : "Sync with Backend"}
-                        </Button>
-                    </CardContent>
-                </Card>
-            </div>
+                    </TabsContent>
+                </div>
+            </Tabs>
         </div>
     );
 }
+

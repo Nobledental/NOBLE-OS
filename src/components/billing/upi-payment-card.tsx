@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { QrCode, ArrowRight, CheckCircle2, Copy } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface UpiPaymentCardProps {
@@ -21,13 +21,24 @@ export function UpiPaymentCard({
     invoiceId = "INV-2024-001"
 }: UpiPaymentCardProps) {
     const [isCopied, setIsCopied] = useState(false);
+    const [dynamicVpa, setDynamicVpa] = useState(payeeVpa);
+    const [dynamicName, setDynamicName] = useState(payeeName);
+
+    useEffect(() => {
+        // Hydrate from settings if available
+        const savedUpi = localStorage.getItem("clinic_upi_id");
+        const savedName = localStorage.getItem("clinic_payee_name");
+
+        if (savedUpi) setDynamicVpa(savedUpi);
+        if (savedName) setDynamicName(savedName);
+    }, []);
 
     // Construct the UPI Deep Link
     // Format: upi://pay?pa=<vpa>&pn=<name>&am=<amount>&tn=<note>
-    const upiLink = `upi://pay?pa=${payeeVpa}&pn=${encodeURIComponent(payeeName)}&am=${amount}&tn=${invoiceId}&cu=INR`;
+    const upiLink = `upi://pay?pa=${dynamicVpa}&pn=${encodeURIComponent(dynamicName)}&am=${amount}&tn=${invoiceId}&cu=INR`;
 
     const handleCopyVpa = () => {
-        navigator.clipboard.writeText(payeeVpa);
+        navigator.clipboard.writeText(dynamicVpa);
         setIsCopied(true);
         toast.success("UPI ID copied to clipboard");
         setTimeout(() => setIsCopied(false), 2000);
@@ -54,7 +65,7 @@ export function UpiPaymentCard({
                 <div className="text-center">
                     <span className="text-3xl font-black text-slate-900 dark:text-white">₹{amount.toLocaleString('en-IN')}</span>
                     <div className="flex items-center justify-center gap-2 mt-2 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full cursor-pointer hover:bg-slate-200 transition-colors" onClick={handleCopyVpa}>
-                        <span className="text-xs font-mono text-slate-600 dark:text-slate-400">{payeeVpa}</span>
+                        <span className="text-xs font-mono text-slate-600 dark:text-slate-400">{dynamicVpa}</span>
                         {isCopied ? <CheckCircle2 className="w-3 h-3 text-green-500" /> : <Copy className="w-3 h-3 text-slate-400" />}
                     </div>
                 </div>
