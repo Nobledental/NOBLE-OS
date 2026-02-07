@@ -141,6 +141,58 @@ export function ClinicSchedulingSettings() {
                 </div>
             </div>
 
+            {/* 3. Chair Capacity (NEW) */}
+            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                <div className="flex items-center gap-2 mb-4">
+                    <Armchair className="w-5 h-5 text-gray-400" />
+                    <h4 className="font-semibold text-gray-800">Chair Capacity Configuration</h4>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                    <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium text-gray-700 block">Total Operational Chairs</label>
+                            <Input
+                                type="number"
+                                placeholder="e.g. 5"
+                                className="w-full"
+                            // In a real app, bind to store state
+                            />
+                            <p className="text-xs text-gray-400">Total physical chairs installed in the clinic.</p>
+                        </div>
+                        <div className="space-y-2">
+                            <label className="text-sm font-bold text-brand-primary block">Consultation Ready (Active)</label>
+                            <Input
+                                type="number"
+                                placeholder="e.g. 3"
+                                className="w-full border-brand-primary ring-1 ring-brand-primary/20"
+                            // In a real app, bind to store state
+                            />
+                            <p className="text-xs text-gray-400">
+                                This number controls the <b>Automated Booking System</b>.
+                                <br />If set to <b>3</b>, the system will allow 3 simultaneous appointments.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Utilization Gauge Mock */}
+                    <div className="bg-slate-50 rounded-xl p-6 flex flex-col items-center justify-center text-center space-y-3 border border-dashed border-slate-200">
+                        <div className="relative w-32 h-32">
+                            <svg className="w-full h-full transform -rotate-90">
+                                <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent" className="text-slate-200" />
+                                <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="transparent" strokeDasharray="351.86" strokeDashoffset="140" className="text-brand-primary" />
+                            </svg>
+                            <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center">
+                                <span className="text-3xl font-black text-slate-900">60%</span>
+                                <span className="text-[10px] uppercase font-bold text-slate-400">Yield</span>
+                            </div>
+                        </div>
+                        <p className="text-xs text-slate-500 max-w-[200px]">
+                            You are utilizing <b>3 out of 5</b> chairs. Increasing active chairs will open more slots.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
             {/* 3. Doctor Availability & Visibility */}
             <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
                 <div className="flex items-center justify-between">

@@ -14,10 +14,19 @@ const mockConfig: SchedulingConfig = {
     ],
     bookingMode: 'manual',
     showDoctorAvailability: true,
-    slotDurationMinutes: 30,
+    slotDurationMinutes: 15,
     doctors: [],
     patients: [],
-    appointments: []
+    appointments: [],
+    operationalChairs: 5,
+    activeChairs: 3
+};
+bookingMode: 'manual',
+    showDoctorAvailability: true,
+        slotDurationMinutes: 30,
+            doctors: [],
+                patients: [],
+                    appointments: []
 };
 
 console.log(`\nPARAMS:

@@ -34,8 +34,11 @@ export interface SchedulingConfig {
     showDoctorAvailability: boolean;
     slotDurationMinutes: number;
     doctors: Doctor[];
-    patients: PatientShort[]; // Added
-    appointments: any[]; // Placeholder for appointments if needed, or if they are separate
+    patients: PatientShort[]; 
+    appointments: any[];
+    // Chair Capacity
+    operationalChairs: number;
+    activeChairs: number;
 }
 
 interface SchedulingState extends SchedulingConfig {
@@ -46,9 +49,10 @@ interface SchedulingState extends SchedulingConfig {
     setBookingMode: (mode: BookingMode) => void;
     toggleAvailabilityVisibility: () => void;
     toggleDoctorAvailability: (id: string) => void;
-    addPatient: (patient: PatientShort) => void; // Added
-    addAppointment: (appt: any) => void; // Added based on usage error
-    assignDoctor: (apptId: string, doctorId: string) => void; // Added for Case Queue
+    addPatient: (patient: PatientShort) => void;
+    addAppointment: (appt: any) => void;
+    assignDoctor: (apptId: string, doctorId: string) => void;
+    setChairCapacity: (operational: number, active: number) => void; // Added
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -67,7 +71,38 @@ const DEFAULT_CONFIG: SchedulingConfig = {
         { id: 'p1', name: "Alice Johnson", phone: "9876543210" },
         { id: 'p2', name: "Bob Smith", phone: "9123456780" }
     ],
-    appointments: []
+    appointments: [],
+    // Defaults
+    operationalChairs: 5,
+    activeChairs: 3
+};
+
+// Simulation Logic: Generate slots based on Active Chairs
+export const generateAvailableSlots = (config: SchedulingConfig, dateStr: string) => {
+    // This is a simulation of what the Backend "SlotGenerator" would do
+    const slots = [];
+    let currentTime = new Date(`${dateStr}T${config.operatingHours.start}:00`);
+    const endTime = new Date(`${dateStr}T${config.operatingHours.end}:00`);
+
+    while (currentTime < endTime) {
+        const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+        
+        // precise logic: Check if this time is inside any break
+        const isBreak = config.breaks.some(b => timeString >= b.start && timeString < b.end);
+
+        if (!isBreak) {
+            // CRITICAL LOGIC: 
+            // We create 'N' slots for this time, where N = activeChairs
+            // In a real DB, we would check how many of these 'N' are already taken.
+            slots.push({
+                time: timeString,
+                capacity: config.activeChairs, // The Multiplying Factor
+                available: config.activeChairs - Math.floor(Math.random() * 2) // Mock availability
+            });
+        }
+        currentTime.setMinutes(currentTime.getMinutes() + config.slotDurationMinutes);
+    }
+    return slots;
 };
 
 export const useSchedulingStore = create<SchedulingState>()(
@@ -110,6 +145,8 @@ export const useSchedulingStore = create<SchedulingState>()(
                     a.id === apptId ? { ...a, doctorId } : a
                 )
             })),
+
+            setChairCapacity: (operational, active) => set({ operationalChairs: operational, activeChairs: active }),
         }),
         {
             name: 'noble-scheduling-storage',

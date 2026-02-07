@@ -46,35 +46,6 @@ export function AdminDashboardView() {
                         ]}
                     />
 
-                    {/* Quick Price Check Widget */}
-                    <PanzeCard className="h-full flex flex-col gap-4 bg-indigo-50/50 border-indigo-100">
-                        <div className="flex items-center gap-2">
-                            <ScrollText className="w-4 h-4 text-indigo-600" />
-                            <h4 className="text-xs font-black uppercase text-slate-500 italic">Quick Price Check</h4>
-                        </div>
-                        <div className="relative">
-                            <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
-                            <Input
-                                placeholder="Search procedure..."
-                                className="pl-8 h-9 text-xs bg-white/80 border-indigo-100 focus:ring-indigo-500"
-                                value={priceSearch}
-                                onChange={(e) => setPriceSearch(e.target.value)}
-                            />
-                        </div>
-                        <div className="flex-1 space-y-2 overflow-y-auto max-h-[120px] scrollbar-hide">
-                            {priceSearch && filteredPrices.map(p => (
-                                <div key={p.id} className="flex justify-between items-center p-2 rounded-xl bg-white border border-indigo-50">
-                                    <span className="text-[10px] font-bold text-slate-700 truncate max-w-[100px]">{p.name}</span>
-                                    <span className="text-[10px] font-black text-indigo-600">₹{p.cost}</span>
-                                </div>
-                            ))}
-                            {!priceSearch && (
-                                <div className="text-[9px] text-slate-400 italic text-center py-4">
-                                    Type to search procedures...
-                                </div>
-                            )}
-                        </div>
-                    </PanzeCard>
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
