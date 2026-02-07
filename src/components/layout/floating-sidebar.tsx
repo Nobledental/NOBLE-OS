@@ -32,19 +32,18 @@ const NAV_ITEMS = [
     { label: "Appointments", href: "/dashboard/appointments", icon: CalendarDays, id: "appointments" },
     { label: "Clinical", href: "/dashboard/clinical", icon: Stethoscope, id: "clinical" },
     { label: "Patients", href: "/dashboard/patients", icon: Users, id: "patients" },
-    { label: "Billing", href: "/dashboard/billing", icon: Receipt, id: "billing" }, // ADDED
-    { label: "Operations", href: "/dashboard/operations", icon: ShieldCheck, id: "operations" },
+    { label: "Billing", href: "/dashboard/billing", icon: Receipt, id: "billing" },
+    { label: "Sterilization", href: "/dashboard/sterilization", icon: ShieldCheck, id: "sterilization" }, // SEPARATED
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
 ];
 
 const PRIORITY_ITEMS: Record<string, string[]> = {
-    ADMIN: ["dashboard", "billing", "operations", "settings"], // Updated for visibility
-    DOCTOR: ["dashboard", "appointments", "clinical", "professional"],
-    RECEPTIONIST: ["dashboard", "attendance", "billing", "patients"],
-    ASSISTANT: ["dashboard", "attendance", "sterilization", "lab"],
-    CONSULTANT: ["dashboard", "appointments", "clinical", "patients"],
-    STUDENT: ["dashboard", "professional", "clinical", "lab"],
+    ADMIN: ["dashboard", "appointments", "clinical", "patients", "billing", "marketplace", "settings", "sterilization"],
+    DOCTOR: ["appointments", "clinical", "patients"],
+    CONSULTANT: ["appointments", "clinical", "patients"],
+    RECEPTIONIST: ["appointments", "patients", "billing"],
+    ASSISTANT: ["sterilization", "settings"], // Assuming "Assistant Page" implies Sterilization/Settings
 };
 
 export function FloatingSidebar() {

@@ -1,10 +1,8 @@
-"use client";
-
 import { SterilizationHub } from "@/components/clinical/sterilization-hub";
 
 export default function SterilizationPage() {
     return (
-        <div className="p-8">
+        <div className="h-full p-6">
             <SterilizationHub />
         </div>
     );

@@ -15,6 +15,9 @@ import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import SettlementPage from "@/app/dashboard/settlement/page";
+import TariffPage from "@/app/dashboard/tariff/page";
+import ConsultantLedgerPanel from "@/components/collaboration/consultant-ledger";
 
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -114,52 +117,27 @@ export function AdminDashboardView() {
 
             {/* Bottom Row: Active Queue & Actions */}
             <motion.div variants={itemVariants} className="lg:col-span-12 grid grid-cols-1 lg:grid-cols-4 gap-6">
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-2 space-y-6">
                     <ActiveQueue />
+                    {/* Integrated Tariff Master */}
+                    <PanzeCard className="p-6 bg-white dark:bg-slate-900 border-none shadow-sm h-[400px] overflow-y-auto">
+                        <div className="flex items-center gap-2 mb-4 sticky top-0 bg-white dark:bg-slate-900 z-10 py-2">
+                            <ScrollText className="w-5 h-5 text-indigo-600" />
+                            <h4 className="font-bold text-gray-800 uppercase">Tariff Master</h4>
+                        </div>
+                        <TariffPage />
+                    </PanzeCard>
                 </div>
 
-                <div className="lg:col-span-1 flex flex-col gap-6">
-                    {/* Revenue Ritual / EOD Settlement Mini-Widget */}
-                    <PanzeCard className="bg-emerald-50 border-emerald-100 flex flex-col gap-4 p-6 h-full">
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                                <h4 className="text-sm font-black uppercase text-slate-700 italic tracking-tighter">Revenue Ritual</h4>
-                            </div>
-                            <Badge className="bg-amber-100 text-amber-600 border-amber-200 text-[9px] font-black uppercase tracking-widest px-2">Pending Close</Badge>
-                        </div>
-                        <div className="flex-1 flex flex-col justify-center gap-2">
-                            <div className="flex items-center justify-between">
-                                <span className="text-[11px] font-bold text-slate-500 uppercase">Verification Progress</span>
-                                <span className="text-[11px] font-black text-emerald-600">85%</span>
-                            </div>
-                            <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                                <motion.div
-                                    initial={{ width: 0 }}
-                                    animate={{ width: "85%" }}
-                                    className="bg-emerald-500 h-full"
-                                />
-                            </div>
-                            <p className="text-[10px] text-slate-400 italic">2 transactions pending digital confirmation.</p>
-                        </div>
-                        <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl h-10 font-bold text-xs gap-2">
-                            <Wallet className="w-4 h-4" /> Go to Settlement
-                        </Button>
+                <div className="lg:col-span-2 flex flex-col gap-6">
+                    {/* Integrated Settlement */}
+                    <PanzeCard className="p-0 overflow-hidden border-none shadow-sm min-h-[400px]">
+                        <SettlementPage />
                     </PanzeCard>
 
-                    <div className="h-full">
-                        <PatientTracker />
-                    </div>
-                </div>
-
-                <div className="lg:col-span-1 flex flex-col gap-6">
-                    <PanzeCard className="h-full bg-slate-900 text-white flex flex-col items-center justify-center text-center p-6 shadow-xl shadow-slate-900/20">
-                        <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 animate-pulse">
-                            <Mic className="w-8 h-8 text-white" />
-                        </div>
-                        <p className="text-lg font-medium text-slate-200 italic">
-                            "Hey NEO, add patient Suresh for a Root Canal."
-                        </p>
+                    {/* Integrated Ledger */}
+                    <PanzeCard className="p-6 overflow-hidden border-none shadow-sm min-h-[300px]">
+                        <ConsultantLedgerPanel isAdmin={true} />
                     </PanzeCard>
                 </div>
             </motion.div>

@@ -26,7 +26,6 @@ import { cn } from "@/lib/utils";
 
 import SettlementPage from "@/app/dashboard/settlement/page";
 import TariffPage from "@/app/dashboard/tariff/page";
-import { SterilizationHub } from "@/components/clinical/sterilization-hub";
 import ConsultantLedgerPanel from "@/components/collaboration/consultant-ledger";
 
 export default function OperationsHub() {
@@ -80,12 +79,6 @@ export default function OperationsHub() {
                             <ScrollText size={16} /> Tariff Master
                         </TabsTrigger>
                         <TabsTrigger
-                            value="sterilization"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-rose-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
-                        >
-                            <ShieldCheck size={16} /> Sterilization
-                        </TabsTrigger>
-                        <TabsTrigger
                             value="ledger"
                             className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-emerald-600 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
                         >
@@ -113,11 +106,6 @@ export default function OperationsHub() {
                                 </PanzeCard>
                             </TabsContent>
 
-                            <TabsContent value="sterilization" className="mt-0 outline-none">
-                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
-                                    <SterilizationHub />
-                                </PanzeCard>
-                            </TabsContent>
 
                             <TabsContent value="ledger" className="mt-0 outline-none">
                                 <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
