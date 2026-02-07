@@ -5,7 +5,7 @@ import { useSchedulingStore, BreakInterval } from "@/lib/scheduling-store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch"; // Assuming you have this or standard checkbox
-import { Trash2, Plus, Clock, Users, CalendarCheck, Zap } from "lucide-react";
+import { Trash2, Plus, Clock, Users, CalendarCheck, Zap, Armchair } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function ClinicSchedulingSettings() {
