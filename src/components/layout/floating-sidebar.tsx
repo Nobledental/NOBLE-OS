@@ -32,13 +32,14 @@ const NAV_ITEMS = [
     { label: "Appointments", href: "/dashboard/appointments", icon: CalendarDays, id: "appointments" },
     { label: "Clinical", href: "/dashboard/clinical", icon: Stethoscope, id: "clinical" },
     { label: "Patients", href: "/dashboard/patients", icon: Users, id: "patients" },
-    { label: "Operations", href: "/dashboard/operations", icon: ShieldCheck, id: "operations" }, // COMBINED: Settlement + Tariff + Sterilization
+    { label: "Billing", href: "/dashboard/billing", icon: Receipt, id: "billing" }, // ADDED
+    { label: "Operations", href: "/dashboard/operations", icon: ShieldCheck, id: "operations" },
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
 ];
 
 const PRIORITY_ITEMS: Record<string, string[]> = {
-    ADMIN: ["dashboard", "hr", "analytics", "settings"],
+    ADMIN: ["dashboard", "billing", "operations", "settings"], // Updated for visibility
     DOCTOR: ["dashboard", "appointments", "clinical", "professional"],
     RECEPTIONIST: ["dashboard", "attendance", "billing", "patients"],
     ASSISTANT: ["dashboard", "attendance", "sterilization", "lab"],

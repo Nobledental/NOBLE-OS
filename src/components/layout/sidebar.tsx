@@ -39,6 +39,7 @@ const sidebarItems: SidebarItem[] = [
     { name: "Patients", icon: Users, href: "/dashboard/patients" },
     { name: "Appointments", icon: Calendar, href: "/dashboard/appointments" },
     { name: "Clinical Master", icon: Stethoscope, href: "/dashboard/clinical", permission: 'can_view_clinical' },
+    { name: "Billing", icon: CreditCard, href: "/dashboard/billing", permission: 'can_view_revenue' }, // ADDED
     { name: "Marketplace", icon: Box, href: "/dashboard/marketplace" },
     { name: "Pro Evolution", icon: TrendingUp, href: "/dashboard/professional" },
     { name: "Settings", icon: Settings, href: "/dashboard/settings", permission: 'can_manage_staff' },
