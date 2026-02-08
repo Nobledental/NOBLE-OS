@@ -131,7 +131,7 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-frost rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-white/20 overflow-visible"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-neo rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] border-white/10 overflow-visible"
             >
                 {/* Active Shape Indicator (Organic Blob) */}
                 <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">

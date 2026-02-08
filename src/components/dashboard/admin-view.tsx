@@ -113,39 +113,40 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 </PanzeCard>
 
                 {/* Intelligence Layer (Editorial Soft Emerald) */}
-                <PanzeCard className="flex flex-col bg-slate-950/30 backdrop-blur-[60px] border border-white/5 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.9)] transition-all duration-1000 min-h-[380px]">
-                    <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none" />
-                    <div className="p-8 md:p-10 space-y-10 md:space-y-14 flex-1 relative z-10">
-                        <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 md:w-16 md:h-16 bg-white/[0.03] flex items-center justify-center text-emerald-400/60 rounded-2xl md:rounded-[1.8rem] border border-white/5 group-hover:bg-emerald-500 group-hover:text-black group-hover:scale-105 transition-all duration-700 shadow-inner">
+                <PanzeCard
+                    className="glass-neo relative p-8 md:p-10 rounded-[3rem] h-full flex flex-col justify-between overflow-hidden group"
+                >
+                    <div className="relative z-10 space-y-10">
+                        <div className="flex items-center gap-6">
+                            <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-500/10 flex items-center justify-center text-emerald-400 rounded-2xl md:rounded-[1.8rem] border border-emerald-500/20 group-hover:bg-emerald-500 group-hover:text-black group-hover:scale-105 transition-all duration-700 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
                                 <ZapIcon className="w-7 h-7 md:w-8 md:h-8" />
                             </div>
                             <div>
                                 <div className="flex items-center gap-3 mb-1.5">
-                                    <div className="w-4 h-[1px] bg-emerald-500/60" />
-                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-400/60">AI Pulse</span>
+                                    <div className="w-4 h-[1px] bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.3)]" />
+                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-black text-emerald-400">AI Pulse</span>
                                 </div>
                                 <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white leading-none">Intelligence</h3>
                             </div>
                         </div>
 
                         <div className="relative group/insight pt-4">
-                            <div className="relative bg-white/[0.01] rounded-[2.5rem] md:rounded-[2.8rem] p-8 md:p-10 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
+                            <div className="relative glass-obsidian p-8 md:p-10 border border-white/10 group-hover/insight:bg-white/[0.05] group-hover/insight:border-emerald-500/20 transition-all duration-700 shadow-2xl">
                                 <div className="flex items-center gap-5 mb-8">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-2xl flex items-center justify-center text-emerald-400/40 border border-white/5 group-hover/insight:text-emerald-400 transition-all duration-700">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 border border-emerald-500/20 group-hover/insight:scale-110 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-lg font-bold tracking-tight text-white mb-1 uppercase">Growth Index</div>
-                                        <div className="text-[9px] text-white font-black uppercase tracking-widest opacity-80 underline decoration-white/20 underline-offset-4">Standard Sync</div>
+                                        <div className="text-lg font-black tracking-tight text-white mb-1 uppercase italic">Growth Index</div>
+                                        <div className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest opacity-80 border-b border-emerald-500/20 pb-1 inline-block">Standard Sync</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-white font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-slate-950/20 py-4 rounded-r-2xl">
+                                <p className="text-[11px] md:text-[12px] text-white/90 font-bold leading-relaxed italic border-l-2 border-emerald-400/60 pl-6 py-4">
                                     "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
                                 </p>
                             </div>
                             {/* Emerald Ambient Glow */}
-                            <div className="absolute -inset-10 bg-emerald-500/[0.02] rounded-[4rem] opacity-0 group-hover/insight:opacity-100 blur-[80px] transition-all duration-1000 -z-10" />
+                            <div className="absolute -inset-10 bg-emerald-500/[0.05] rounded-[4rem] opacity-0 group-hover/insight:opacity-100 blur-[80px] transition-all duration-1000 -z-10" />
                         </div>
                     </div>
 
