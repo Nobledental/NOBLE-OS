@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import SettlementPage from "@/app/dashboard/settlement/page";
 import TariffPage from "@/app/dashboard/tariff/page";
 import ConsultantLedgerPanel from "@/components/collaboration/consultant-ledger";
+import { ClinicManagementDeck } from "./clinic-management-deck";
 
 const itemVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -168,6 +169,15 @@ export function AdminDashboardView() {
                         </div>
                     </PanzeCard>
                 </div>
+            </motion.div>
+
+            {/* 4. Clinic Management Deck (Reference Features) *NEW* */}
+            <motion.div variants={itemVariants} className="space-y-4">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-lg font-black italic tracking-tight text-slate-400 uppercase">Clinic Configuration</h2>
+                    <Badge variant="outline" className="border-indigo-100 text-indigo-400">Admin Only</Badge>
+                </div>
+                <ClinicManagementDeck />
             </motion.div>
         </div>
     );

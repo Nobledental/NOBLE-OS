@@ -33,13 +33,14 @@ const NAV_ITEMS = [
     { label: "Clinical", href: "/dashboard/clinical", icon: Stethoscope, id: "clinical" },
     { label: "Patients", href: "/dashboard/patients", icon: Users, id: "patients" },
     { label: "Billing", href: "/dashboard/billing", icon: Receipt, id: "billing" },
+    { label: "Staff & HR", href: "/dashboard/staff", icon: Users, id: "staff" },
     { label: "Sterilization", href: "/dashboard/sterilization", icon: ShieldCheck, id: "sterilization" }, // SEPARATED
     { label: "Marketplace", href: "/dashboard/marketplace", icon: Store, id: "marketplace" },
     { label: "Settings", href: "/dashboard/settings", icon: Settings, id: "settings" },
 ];
 
 const PRIORITY_ITEMS: Record<string, string[]> = {
-    ADMIN: ["dashboard", "appointments", "clinical", "patients", "billing", "marketplace", "settings", "sterilization"],
+    ADMIN: ["dashboard", "appointments", "clinical", "patients", "billing", "staff", "marketplace", "settings", "sterilization"],
     DOCTOR: ["appointments", "clinical", "patients"],
     CONSULTANT: ["appointments", "clinical", "patients"],
     RECEPTIONIST: ["appointments", "patients", "billing"],
