@@ -57,11 +57,7 @@ export function FloatingSidebar() {
     );
 
     const priorityIds = PRIORITY_ITEMS[role] || ["dashboard", "appointments", "clinical", "patients"];
-
-    // Items to show directly on the bar (max 4)
     const topBarItems = filteredItems.filter(item => priorityIds.includes(item.id)).slice(0, 4);
-
-    // Rest of items for the "More" menu
     const moreItems = filteredItems.filter(item => !topBarItems.some(ti => ti.id === item.id));
 
     return (
@@ -70,98 +66,126 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="fixed left-4 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4"
+                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center"
             >
-                <div className="glass-panze p-3 rounded-full flex flex-col gap-3 shadow-2xl border border-white/40">
-                    <div className="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-lg shadow-indigo-500/30">
-                        <Activity className="w-5 h-5 text-white" />
+                <div className="glass-neo p-4 flex flex-col gap-4 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] border-white/10">
+                    <div className="w-12 h-12 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20 rotate-3">
+                        <Activity className="w-6 h-6 text-white" />
                     </div>
 
-                    {filteredItems.map((item) => {
-                        const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
-                        const Icon = item.icon;
+                    <div className="flex flex-col gap-2">
+                        {filteredItems.map((item) => {
+                            const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
+                            const Icon = item.icon;
 
-                        return (
-                            <Tooltip key={item.href}>
-                                <TooltipTrigger asChild>
-                                    <Link href={item.href}>
-                                        <div className={cn(
-                                            "w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 relative group",
-                                            isActive
-                                                ? "bg-slate-900 text-white shadow-lg scale-110"
-                                                : "text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-                                        )}>
-                                            <Icon className="w-5 h-5" />
-                                            {isActive && (
-                                                <motion.div
-                                                    layoutId="sidebar-bubble"
-                                                    className="absolute inset-0 border-2 border-white/20 rounded-full"
-                                                />
-                                            )}
-                                        </div>
-                                    </Link>
-                                </TooltipTrigger>
-                                <TooltipContent side="right" className="font-bold bg-slate-900 text-white border-none ml-2">
-                                    {item.label}
-                                </TooltipContent>
-                            </Tooltip>
-                        );
-                    })}
+                            return (
+                                <Tooltip key={item.href}>
+                                    <TooltipTrigger asChild>
+                                        <Link href={item.href}>
+                                            <motion.div
+                                                whileHover={{ scale: 1.1, x: 5 }}
+                                                className={cn(
+                                                    "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 relative group",
+                                                    isActive
+                                                        ? "bg-white/10 text-neo-vibrant-blue shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+                                                        : "text-slate-400 hover:text-white"
+                                                )}>
+                                                <Icon className={cn("w-5 h-5 transition-transform duration-500", isActive && "scale-110")} />
+                                                {isActive && (
+                                                    <motion.div
+                                                        layoutId="sidebar-active"
+                                                        className="absolute -left-1 w-1 h-6 bg-neo-vibrant-blue rounded-full shadow-[0_0_15px_rgba(0,122,255,0.8)]"
+                                                    />
+                                                )}
+                                            </motion.div>
+                                        </Link>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="right" className="font-bold bg-neo-midnight text-white border-white/10 ml-4 px-4 py-2 rounded-xl">
+                                        {item.label}
+                                    </TooltipContent>
+                                </Tooltip>
+                            );
+                        })}
+                    </div>
 
-                    <div className="h-px w-6 bg-slate-200 mx-auto my-1" />
+                    <div className="h-px w-8 bg-white/10 mx-auto my-2" />
 
-                    <button className="w-10 h-10 rounded-full flex items-center justify-center text-red-400 hover:bg-red-50 hover:text-red-500 transition-colors">
-                        <LogOut className="w-5 h-5" />
+                    <button className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all group">
+                        <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
                     </button>
                 </div>
             </motion.div>
 
-            {/* Mobile/Tablet Bottom Bar */}
+            {/* Mobile/Tablet Bottom Bar (Wavy Organic Style) */}
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-md h-16 glass-panze rounded-[2rem] items-center justify-around px-2 shadow-2xl border border-white/40"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[90%] max-w-md h-20 glass-neo rounded-[2.5rem] items-center justify-around px-4 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] border-white/10 overflow-visible"
             >
+                {/* Active Shape Indicator (Organic Blob) */}
+                <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">
+                    {topBarItems.map((item, idx) => {
+                        const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
+                        return isActive && (
+                            <motion.div
+                                key="blob"
+                                layoutId="mobile-blob"
+                                className="w-16 h-16 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-[2rem] blur-xl opacity-20 absolute"
+                            />
+                        );
+                    })}
+                </div>
+
                 {topBarItems.map((item) => {
                     const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                     const Icon = item.icon;
 
                     return (
-                        <Link key={item.href} href={item.href} className="flex-1">
+                        <Link key={item.href} href={item.href} className="flex-1 z-10">
                             <div className={cn(
-                                "flex flex-col items-center justify-center gap-1 transition-all duration-300 py-2 rounded-2xl mx-1",
-                                isActive ? "text-indigo-600 bg-indigo-50/50" : "text-slate-500 hover:bg-slate-50"
+                                "flex flex-col items-center justify-center gap-1.5 transition-all duration-500 py-3 rounded-[2rem] mx-1",
+                                isActive ? "text-white" : "text-slate-500"
                             )}>
-                                <Icon className={cn("w-5 h-5", isActive && "scale-110")} />
-                                <span className="text-[9px] font-black uppercase tracking-tighter">{item.label.slice(0, 8)}</span>
+                                <div className={cn(
+                                    "p-2 rounded-2xl transition-all duration-500",
+                                    isActive && "bg-white/10 shadow-[inset_0_1px_10px_rgba(255,255,255,0.1)] scale-110"
+                                )}>
+                                    <Icon className="w-6 h-6" />
+                                </div>
+                                <span className={cn(
+                                    "text-[9px] font-bold uppercase tracking-widest transition-opacity duration-500",
+                                    isActive ? "opacity-100" : "opacity-0"
+                                )}>
+                                    {item.label}
+                                </span>
                             </div>
                         </Link>
                     );
                 })}
 
                 {/* More Menu for Mobile */}
-                <div className="flex-1 relative">
+                <div className="flex-1 relative z-10">
                     <button
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className={cn(
-                            "w-full flex flex-col items-center justify-center gap-1 transition-all duration-300 py-2 rounded-2xl mx-1",
-                            isMenuOpen ? "text-indigo-600 bg-indigo-100/50" : "text-slate-500 hover:bg-slate-50"
+                            "w-full flex flex-col items-center justify-center gap-1.5 transition-all duration-500 py-3 rounded-[2rem] mx-1",
+                            isMenuOpen ? "text-white" : "text-slate-500"
                         )}
                     >
-                        <Grid className="w-5 h-5" />
-                        <span className="text-[9px] font-black uppercase tracking-tighter">Menu</span>
+                        <div className={cn("p-2 rounded-2xl transition-all", isMenuOpen && "bg-white/10 rotate-90")}>
+                            <Grid className="w-6 h-6" />
+                        </div>
                     </button>
 
-                    {/* Floating Menu Popover */}
                     <AnimatePresence>
                         {isMenuOpen && (
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                 animate={{ opacity: 1, scale: 1, y: 0 }}
                                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                className="absolute bottom-20 right-0 w-72 bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 p-6 z-[60] origin-bottom-right"
+                                className="absolute bottom-24 right-0 w-80 glass-neo shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-white/10 p-8 origin-bottom-right"
                             >
-                                <div className="grid grid-cols-2 gap-4 mb-4">
+                                <div className="grid grid-cols-2 gap-6 mb-6">
                                     {moreItems.map((item) => {
                                         const Icon = item.icon;
                                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
@@ -171,36 +195,23 @@ export function FloatingSidebar() {
                                                 href={item.href}
                                                 onClick={() => setIsMenuOpen(false)}
                                                 className={cn(
-                                                    "flex flex-col items-center gap-2 p-4 rounded-3xl transition-all",
-                                                    isActive ? "bg-indigo-50 text-indigo-600" : "bg-slate-50 hover:bg-slate-100 text-slate-600"
+                                                    "flex flex-col items-center gap-3 p-5 rounded-[2rem] transition-all duration-500",
+                                                    isActive ? "bg-white/10 text-neo-vibrant-blue shadow-inner" : "bg-black/20 hover:bg-black/40 text-slate-400"
                                                 )}
                                             >
-                                                <div className={cn(
-                                                    "p-2.5 rounded-2xl",
-                                                    isActive ? "bg-indigo-100" : "bg-white shadow-sm"
-                                                )}>
-                                                    <Icon className="w-5 h-5" />
-                                                </div>
-                                                <span className="text-[10px] font-black text-center leading-tight uppercase tracking-tight">{item.label}</span>
+                                                <Icon className="w-6 h-6" />
+                                                <span className="text-[10px] font-bold text-center leading-tight uppercase tracking-widest">{item.label}</span>
                                             </Link>
                                         );
                                     })}
                                 </div>
-                                <button className="w-full flex items-center justify-center gap-3 p-4 rounded-[1.5rem] bg-red-50 text-red-500 font-black text-[10px] uppercase tracking-widest hover:bg-red-100 transition-colors border border-red-100">
+                                <button className="w-full flex items-center justify-center gap-4 p-5 rounded-[2rem] bg-red-500/10 text-red-400 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-red-500/20 transition-all border border-red-500/10">
                                     <LogOut className="w-4 h-4" />
-                                    Sign Out
+                                    Logout
                                 </button>
                             </motion.div>
                         )}
                     </AnimatePresence>
-
-                    {/* Backdrop for closing menu */}
-                    {isMenuOpen && (
-                        <div
-                            className="fixed inset-0 z-[55] bg-slate-900/10 backdrop-blur-[2px]"
-                            onClick={() => setIsMenuOpen(false)}
-                        />
-                    )}
                 </div>
             </motion.div>
         </TooltipProvider>

@@ -94,13 +94,20 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Medical iOS Palette */
+  /* Medical iOS Palette (Classic) */
   --ios-navy: #0A192F;
   --ios-teal: #00BFA5;
   --ios-coral: #FF6B6B;
-  --ios-mesh-1: #e0e7ff;
-  --ios-mesh-2: #f0fdfa;
-  --ios-mesh-3: #fef2f2;
+
+  /* Neo-Trinity Design Tokens (Inspired by user designs) */
+  --neo-midnight: #010409;
+  --neo-deep-blue: #0A1128;
+  --neo-vibrant-blue: #007AFF;
+  --neo-electric-blue: #3E92CC;
+  --neo-emerald: #059669;
+  --neo-lavender: #A78BFA;
+  --neo-glass-bg: rgba(255, 255, 255, 0.03);
+  --neo-glass-border: rgba(255, 255, 255, 0.08);
 }
 
 .dark {
@@ -138,9 +145,12 @@
 
   /* Dark Mode Medical iOS Palette */
   --ios-navy: #020617;
-  --ios-mesh-1: #1e1b4b;
-  --ios-mesh-2: #064e3b;
-  --ios-mesh-3: #450a0a;
+
+  /* Neo-Trinity Dark Overrides */
+  --neo-midnight: #000000;
+  --neo-deep-blue: #010409;
+  --neo-glass-bg: rgba(255, 255, 255, 0.05);
+  --neo-glass-border: rgba(255, 255, 255, 0.1);
 
   /* Dream Design Palette (Dr+) */
   --dream-teal: #a5f3fc;
@@ -194,6 +204,15 @@
     0 0 15px -3px rgba(0, 0, 0, 0.02);
 }
 
+@utility glass-neo {
+  @apply backdrop-blur-[40px] border rounded-[2.5rem];
+  background: linear-gradient(135deg, var(--neo-glass-bg), transparent);
+  border-color: var(--neo-glass-border);
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 @utility glass-dream {
   @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-white/40 dark:border-white/5 rounded-[1.5rem];
   box-shadow:
@@ -215,7 +234,7 @@
 }
 
 @utility glass-panze {
-  @apply glass-dream;
+  @apply glass-neo;
 }
 
 @utility text-ios-gradient {
