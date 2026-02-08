@@ -44,18 +44,25 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 <PanzeCard className="lg:col-span-2 group glass-white border-white/40 bg-white/60 text-slate-900 relative overflow-hidden flex flex-col min-h-[320px] transition-all duration-700 p-8">
                     <div className="relative z-10 flex flex-col h-full">
                         <div className="flex items-center justify-between mb-8">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-neo-vibrant-blue/10 flex items-center justify-center border border-neo-vibrant-blue/20">
-                                    <LayoutDashboard className="w-5 h-5 text-neo-vibrant-blue" />
-                                </div>
-                                <div>
-                                    <span className="text-[10px] uppercase tracking-[0.3em] font-black text-slate-400 leading-none">Management Dashboard</span>
-                                    <h2 className="text-3xl font-bold tracking-tight text-slate-900 mt-1">
-                                        Operations <span className="text-neo-vibrant-blue">Summary</span>
-                                    </h2>
+                            <div className="flex items-center gap-4">
+                                <Link href="/dashboard">
+                                    <Button variant="ghost" className="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 p-0 text-slate-500">
+                                        <ArrowLeft className="w-5 h-5" />
+                                    </Button>
+                                </Link>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-neo-vibrant-blue/10 flex items-center justify-center border border-neo-vibrant-blue/20">
+                                        <LayoutDashboard className="w-5 h-5 text-neo-vibrant-blue" />
+                                    </div>
+                                    <div>
+                                        <span className="text-[10px] uppercase tracking-[0.3em] font-black text-slate-400 leading-none">Management Dashboard</span>
+                                        <h2 className="text-3xl font-bold tracking-tight text-slate-900 mt-1">
+                                            Operations <span className="text-neo-vibrant-blue">Summary</span>
+                                        </h2>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="text-right">
+                            <div className="text-right flex items-center gap-4">
                                 <Badge variant="outline" className="bg-white/50 border-slate-200 px-4 py-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
                                     {activeFilter} Review
                                 </Badge>
