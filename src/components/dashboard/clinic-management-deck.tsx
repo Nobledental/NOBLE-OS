@@ -33,9 +33,6 @@ import { BillingSettings } from "@/components/settings/billing-settings";
 import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import { ClinicBrandingSettings } from "@/components/settings/clinic-branding-settings";
 
-// - [x] **Design**: Implemented "Soft Glass" light-frosted cards and bento-style summary.
-// - [x] **Typography**: All dashboard text transitioned to high-contrast black/slate-900.
-// - [x] **Consistency**: UI now uses soft color blobs and deep blurs for a premium dimensionality.
 interface ManagementFeature {
     title: string;
     subtitle: string;
@@ -95,13 +92,6 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         bg: "bg-white/10",
         href: "/dashboard/tariff"
     },
-    /* ### 4. Dashboard "Soft Glass" Overhaul
-    Shifted the entire Management Dashboard to a premium light-mode "Soft Glass" aesthetic:
-    - **Frosted Light Cards**: Replaced dark cards in the `ClinicManagementDeck` with light frosted glass pods (`bg-slate-200/50`) with deep backdrop blurs and high-radius corners.
-    - **Bento Operations Summary**: Replaced the old banner with a `OperationsSummaryGlass` component, featuring a premium grid layout.
-    - **Content Recovery**: Restored all previous dashboard data fields—Net Revenue, Patient Flow, and Clinical Utilization—into the glass bento nodes.
-    - **Intelligence Core Integration**: Re-implemented the "Intelligence Core" suite, featuring the "Growth Catalyst" stat and dynamic Analyst Quote within a dedicated glass block.
-    - **Dynamic Filter Support**: Full restoration of real-time mapping for "Today", "This Week", and "This Month" filters. */
     {
         title: "Specialists",
         subtitle: "Ledger & Settlements",
@@ -185,19 +175,20 @@ export function ClinicManagementDeck() {
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
                             {/* Pure White Hover Glow */}
-                            <div className="absolute -inset-[1px] bg-white opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-500 -z-10" />
+                            <div className="absolute -inset-[1px] bg-white/30 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-500 -z-10" />
+                            <div className="absolute -inset-[2px] bg-white/10 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-md transition-all duration-500 -z-10" />
 
-                            {/* Frosted White Glass Node Card */}
-                            <div className="bg-slate-200/50 backdrop-blur-xl rounded-[2rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[170px] border border-white/60 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-500 group-hover:bg-white group-hover:border-white group-hover:shadow-[0_30px_60px_-20px_rgba(0,0,0,0.1)]">
+                            {/* Compact Dark Node Card */}
+                            <div className="bg-[#05060f] rounded-[1.8rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[170px] border border-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#0a0b14]">
                                 {/* Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-6">
-                                    <div className="w-9 h-9 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-900 border border-slate-900/10 group-hover:bg-slate-900 group-hover:text-white transition-all duration-500">
+                                    <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10 group-hover:bg-white group-hover:border-white group-hover:text-black group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-500">
                                         <feature.icon className="w-4.5 h-4.5" />
                                     </div>
                                     {feature.locked ? (
-                                        <Lock className="w-3.5 h-3.5 text-slate-400/30" />
+                                        <Lock className="w-3.5 h-3.5 text-white/10" />
                                     ) : feature.badge && (
-                                        <div className="bg-slate-900/5 border border-slate-900/10 text-[7px] uppercase font-black tracking-widest px-2 py-0.5 rounded-md text-slate-500">
+                                        <div className="bg-white/5 border border-white/10 text-[7px] uppercase font-black tracking-widest px-2 py-0.5 rounded-md text-white/40">
                                             {feature.badge}
                                         </div>
                                     )}
@@ -205,22 +196,22 @@ export function ClinicManagementDeck() {
 
                                 {/* Content Section */}
                                 <div className="mt-auto relative z-10">
-                                    <h3 className="text-xl font-black tracking-tight text-slate-900 mb-1 leading-none">
+                                    <h3 className="text-xl font-black tracking-tight text-white mb-1 leading-none group-hover:text-white transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] text-slate-500 font-medium leading-tight">
+                                    <p className="text-[10px] text-white/30 font-medium leading-tight group-hover:text-white/50 transition-colors duration-500">
                                         {feature.subtitle}
                                     </p>
                                 </div>
 
-                                {/* Refined Action Line (Silver/Black) */}
+                                {/* Refined Action Line (Silver/White) */}
                                 {!feature.locked && (
-                                    <div className="absolute bottom-4 left-6 right-6 h-[1.5px] bg-slate-900/5 rounded-full overflow-hidden">
+                                    <div className="absolute bottom-4 left-6 right-6 h-[1.5px] bg-white/5 rounded-full overflow-hidden">
                                         <motion.div
                                             initial={{ x: '-100%' }}
                                             whileHover={{ x: '0%' }}
                                             transition={{ duration: 0.4 }}
-                                            className="w-full h-full bg-slate-900/20"
+                                            className="w-full h-full bg-gradient-to-r from-white/20 via-white/80 to-white/20"
                                         />
                                     </div>
                                 )}
@@ -230,14 +221,14 @@ export function ClinicManagementDeck() {
 
                     if (feature.href && !feature.action) {
                         return (
-                            <Link key={i} href={feature.locked ? "#" : feature.href} className={feature.locked ? "cursor-not-allowed opacity-50" : ""}>
+                            <Link key={i} href={feature.locked ? "#" : feature.href} className={feature.locked ? "cursor-not-allowed opacity-40" : ""}>
                                 {CardContent}
                             </Link>
                         );
                     }
 
                     return (
-                        <div key={i} className={feature.locked ? "cursor-not-allowed opacity-50" : ""}>
+                        <div key={i} className={feature.locked ? "cursor-not-allowed opacity-40" : ""}>
                             {CardContent}
                         </div>
                     );
