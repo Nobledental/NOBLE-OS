@@ -83,42 +83,53 @@
 @layer utilities {
   .glass-neo {
     @apply backdrop-blur-3xl border border-white/20 rounded-[2.5rem] saturate-[1.8];
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
     box-shadow:
-      0 8px 32px 0 rgba(0, 0, 0, 0.4),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+      0 8px 32px 0 rgba(31, 38, 135, 0.07),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
 
-  .glass-dream {
-    @apply backdrop-blur-3xl border border-white/10 rounded-[2.5rem] saturate-[1.8];
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  .glass-white {
+    @apply backdrop-blur-[40px] border border-white/40 rounded-[2.5rem] saturate-[1.6];
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 10px 40px -10px rgba(0, 0, 0, 0.05),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   }
 
   .glass-frost {
-    @apply backdrop-blur-[50px] border border-white/20 rounded-[3rem] saturate-[2];
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow:
-      0 25px 50px -12px rgba(0, 0, 0, 0.5),
-      inset 0 0 80px rgba(255, 255, 255, 0.05);
-  }
-
-  .glass-thick {
-    @apply backdrop-blur-2xl border border-white/20 rounded-[2.5rem] saturate-[1.5];
+    @apply backdrop-blur-[50px] border border-white/30 rounded-[3rem] saturate-[2];
     background: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.08),
+      inset 0 0 80px rgba(255, 255, 255, 0.1);
   }
 
   .bg-apple-mesh,
-  .bg-mesh-gradient {
-    background: #000;
+  .bg-mesh-gradient,
+  .bg-aurora {
+    background: #fdfcfb;
     background-image:
-      radial-gradient(circle at 0% 0%, hsla(225, 100%, 25%, 0.9) 0%, transparent 45%),
-      radial-gradient(circle at 100% 0%, hsla(339, 100%, 25%, 0.8) 0%, transparent 45%),
-      radial-gradient(circle at 50% 100%, hsla(210, 100%, 20%, 0.9) 0%, transparent 45%),
-      radial-gradient(circle at 80% 50%, hsla(280, 100%, 20%, 0.6) 0%, transparent 40%);
+      radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(280, 100%, 20%, 0.6) 0, transparent 50%),
+      radial-gradient(at 50% 50%, hsla(202, 100%, 20%, 0.9) 0, transparent 50%),
+      radial-gradient(at 100% 50%, hsla(350, 100%, 20%, 0.8) 0, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(11, 100%, 20%, 0.7) 0, transparent 50%),
+      radial-gradient(at 50% 100%, hsla(210, 100%, 20%, 0.9) 0, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(225, 100%, 25%, 0.9) 0, transparent 50%);
+    /* Fluid background effect based on Nike image but lighter for white glass blend */
+    background-image:
+      radial-gradient(at 10% 20%, rgba(255, 0, 0, 0.15) 0%, transparent 40%),
+      radial-gradient(at 80% 10%, rgba(0, 255, 255, 0.15) 0%, transparent 40%),
+      radial-gradient(at 40% 60%, rgba(255, 100, 0, 0.2) 0%, transparent 45%),
+      radial-gradient(at 90% 90%, rgba(0, 0, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(at 20% 80%, rgba(200, 0, 255, 0.15) 0%, transparent 45%),
+      radial-gradient(at 50% 30%, rgba(100, 255, 0, 0.1) 0%, transparent 40%);
     background-attachment: fixed;
-    background-size: cover;
+    background-size: 100% 100%;
+    animation: aurora-shift 30s ease infinite alternate;
   }
 
   .text-ios-gradient {

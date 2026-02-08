@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAuth } from "@/hooks/use-auth";
 
 const NAV_ITEMS = [
@@ -65,61 +66,63 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-6 p-5 glass-frost border-white/20 bg-white/[0.05] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] rounded-[3.5rem]"
+                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4 p-4 glass-white shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] rounded-[3rem] h-[85vh] max-h-[800px]"
             >
-                <div className="flex flex-col items-center">
-                    <div className="mb-6 group relative">
-                        <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-2xl shadow-neo-vibrant-blue/40 group-hover:scale-110 transition-all duration-700 cursor-pointer">
-                            <Activity className="w-8 h-8 drop-shadow-lg" />
+                <div className="flex flex-col items-center h-full w-full">
+                    <div className="mb-4 group relative shrink-0">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-xl shadow-neo-vibrant-blue/20 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+                            <Activity className="w-6 h-6 drop-shadow-md" />
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-5">
-                        {filteredItems.map((item) => {
-                            const Icon = item.icon;
-                            const isActive = pathname === item.href;
+                    <ScrollArea className="flex-1 w-full px-1">
+                        <div className="flex flex-col gap-3 py-2">
+                            {filteredItems.map((item) => {
+                                const Icon = item.icon;
+                                const isActive = pathname === item.href;
 
-                            return (
-                                <Tooltip key={item.id}>
-                                    <TooltipTrigger asChild>
-                                        <Link href={item.href}>
-                                            <motion.div
-                                                whileHover={{ scale: 1.15, x: 4 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                className={cn(
-                                                    "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500",
-                                                    isActive
-                                                        ? "bg-white/[0.1] text-white shadow-xl border border-white/20"
-                                                        : "text-white/40 hover:text-white hover:bg-white/[0.05]"
-                                                )}
-                                            >
-                                                <Icon className={cn(
-                                                    "w-6 h-6 transition-all duration-500",
-                                                    isActive ? "scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" : ""
-                                                )} />
+                                return (
+                                    <Tooltip key={item.id}>
+                                        <TooltipTrigger asChild>
+                                            <Link href={item.href}>
+                                                <motion.div
+                                                    whileHover={{ scale: 1.1, x: 2 }}
+                                                    whileTap={{ scale: 0.95 }}
+                                                    className={cn(
+                                                        "relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500",
+                                                        isActive
+                                                            ? "bg-slate-900/5 text-slate-900 shadow-sm border border-slate-200/50"
+                                                            : "text-slate-400 hover:text-slate-600 hover:bg-slate-900/5"
+                                                    )}
+                                                >
+                                                    <Icon className={cn(
+                                                        "w-5 h-5 transition-all duration-500",
+                                                        isActive ? "scale-105" : ""
+                                                    )} />
 
-                                                {isActive && (
-                                                    <motion.div
-                                                        layoutId="sidebar-active"
-                                                        className="absolute -left-6 w-1.5 h-8 bg-neo-vibrant-blue rounded-full shadow-[4px_0_15px_rgba(0,122,255,0.8)]"
-                                                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                                                    />
-                                                )}
-                                            </motion.div>
-                                        </Link>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="right" className="glass-frost border-white/10 text-[10px] font-black uppercase tracking-widest text-white px-4 py-2">
-                                        {item.label}
-                                    </TooltipContent>
-                                </Tooltip>
-                            );
-                        })}
-                    </div>
+                                                    {isActive && (
+                                                        <motion.div
+                                                            layoutId="sidebar-active"
+                                                            className="absolute -left-5 w-1 h-6 bg-neo-vibrant-blue rounded-full"
+                                                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                                                        />
+                                                    )}
+                                                </motion.div>
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right" className="glass-white border-white/40 text-[9px] font-black uppercase tracking-widest text-slate-900 px-3 py-1.5 ml-2">
+                                            {item.label}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                );
+                            })}
+                        </div>
+                    </ScrollArea>
 
-                    <div className="h-px w-8 bg-white/10 mx-auto my-4" />
+                    <div className="h-px w-6 bg-slate-200 mx-auto my-3 shrink-0" />
 
-                    <button className="w-14 h-14 rounded-2xl flex items-center justify-center text-white/30 hover:bg-red-500/20 hover:text-red-400 transition-all duration-500 group">
-                        <LogOut className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+                    <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-all duration-500 group shrink-0">
+                        <LogOut className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
                     </button>
                 </div>
             </motion.div>
