@@ -33,6 +33,7 @@ import { BillingSettings } from "@/components/settings/billing-settings";
 import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import { ClinicBrandingSettings } from "@/components/settings/clinic-branding-settings";
 import { InventoryHub } from "@/components/inventory/inventory-hub";
+import { SterilizationHub } from "@/components/clinical/sterilization-hub";
 import { cn } from "@/lib/utils";
 
 interface ManagementFeature {
@@ -178,6 +179,16 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         category: "Security",
         action: "INVENTORY",
         locked: false
+    },
+    {
+        title: "Sterilization",
+        description: "Safety registry for surgical instrument cycles.",
+        icon: ShieldCheck,
+        color: "text-emerald-400",
+        glow: "emerald",
+        category: "Safety",
+        action: "STERILIZATION",
+        locked: false
     }
 ];
 
@@ -299,23 +310,40 @@ export function ClinicManagementDeck() {
                             {activeAction === "INTEGRATIONS" && <UniversalBridgeHub />}
                             {activeAction === "IDENTITY" && <ClinicBrandingSettings onSave={() => setActiveAction(null)} />}
                             {activeAction === "INVENTORY" && <InventoryHub />}
+                            {activeAction === "STERILIZATION" && (
+                                <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                    <SterilizationHub />
+                                </div>
+                            )}
 
                             {/* Fallback */}
                             {["WORKFLOW"].includes(activeAction!) && (
-                                <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-6">
-                                    <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-100 rounded-full flex items-center justify-center">
-                                        <Settings2 className="w-8 h-8 md:w-10 md:h-10 text-slate-300" />
+                                <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-10">
+                                    <div className="relative">
+                                        <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-3xl" />
+                                        <div className="w-24 h-24 md:w-28 md:h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] flex items-center justify-center text-blue-400/40 relative z-10">
+                                            <Settings2 className="w-10 h-10 md:w-12 md:h-12" />
+                                        </div>
                                     </div>
-                                    <div className="space-y-1 px-4">
-                                        <h2 className="text-2xl md:text-3xl font-bold text-slate-900">Module Optimization</h2>
-                                        <p className="text-sm md:text-base text-slate-500">This configuration module is currently being calibrated for your workspace.</p>
+                                    <div className="space-y-4 relative z-10">
+                                        <div className="flex items-center justify-center gap-4">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500/40" />
+                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white/20 uppercase">Core Logic Layer</span>
+                                        </div>
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight italic">Workflow <span className="text-white/10 font-light">Optimization</span></h3>
+                                        <p className="text-white/30 text-[11px] font-medium max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
+                                            Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle.
+                                        </p>
                                     </div>
+                                    <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/5 bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/5 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
+                                        View Documentation
+                                    </Button>
                                 </div>
                             )}
                         </div>
-                    </div>
+                    </div >
                 </DialogContent>
             </Dialog>
-        </div>
+        </div >
     );
 }

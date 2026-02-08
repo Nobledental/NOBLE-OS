@@ -28,6 +28,7 @@ import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { PanzeCard } from "@/components/ui/panze-card";
 
 export type SterilizationStatus = 'COLLECTING' | 'PROCESSING' | 'COMPLETED' | 'APPROVED' | 'FAILED';
 
@@ -120,49 +121,53 @@ export function SterilizationHub() {
     const pendingApprovals = batches.filter(b => b.status === 'COMPLETED').length;
 
     return (
-        <div className="space-y-10 max-w-6xl mx-auto p-4 md:p-8">
-            {/* Header Section */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div className="space-y-2">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100">
-                            <ShieldCheck className="w-6 h-6 text-emerald-600" />
-                        </div>
-                        <div>
-                            <h2 className="text-3xl font-black tracking-tighter text-slate-800 italic">Sterilization Hub</h2>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Armamentarium Safety Center</p>
-                        </div>
-                    </div>
+        <div className="space-y-12 pb-32">
+            {/* Editorial Header */}
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/40" />
+                    <span className="text-[10px] font-bold tracking-[0.6em] text-white/20 uppercase">Armamentarium Safety</span>
                 </div>
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white flex items-center gap-6">
+                        <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.8rem] bg-white/[0.03] border border-white/5 flex items-center justify-center text-emerald-400/40 shadow-inner">
+                            <ShieldCheck className="w-7 h-7 md:w-8 md:h-8" />
+                        </div>
+                        Sterilization <span className="text-white/10 font-light translate-x-1">Center</span>
+                    </h1>
 
-                <div className="flex gap-4">
-                    <div className="h-20 bg-white rounded-3xl border border-slate-100 shadow-sm px-6 flex items-center gap-4">
-                        <div className="text-right">
-                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Active Cycles</p>
-                            <p className="text-2xl font-black italic text-amber-500">{activeCycles}</p>
+                    <div className="flex gap-4">
+                        <div className="h-16 px-6 bg-white/[0.02] border border-white/5 rounded-2xl flex items-center gap-4">
+                            <div className="text-right">
+                                <p className="text-[8px] font-bold text-white/20 uppercase tracking-widest">Active Cycles</p>
+                                <p className="text-xl font-semibold text-amber-400/80 tracking-tight">{activeCycles}</p>
+                            </div>
+                            <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                                <Flame className="w-4 h-4 text-amber-500/60" />
+                            </div>
                         </div>
-                        <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
-                            <Flame className="w-5 h-5 text-amber-500" />
-                        </div>
+                        <Button
+                            onClick={() => setIsCreating(true)}
+                            className="h-16 px-8 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 gap-3 transition-all duration-700 shadow-xl"
+                        >
+                            <Plus className="w-4 h-4" />
+                            <span className="text-[10px] font-bold uppercase tracking-widest">New Cycle</span>
+                        </Button>
                     </div>
-                    <Button
-                        onClick={() => setIsCreating(true)}
-                        className="h-20 px-8 rounded-3xl bg-slate-900 text-white font-black italic uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-200 gap-3"
-                    >
-                        <Plus className="w-6 h-6" />
-                        New Cycle
-                    </Button>
                 </div>
             </div>
 
-            {/* Active Monitoring */}
+            {/* Main Content Grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-                <div className="lg:col-span-8 space-y-6">
+                <div className="lg:col-span-8 space-y-8">
                     <div className="flex items-center justify-between px-2">
-                        <h3 className="text-xs font-black uppercase tracking-widest text-slate-400">Current Batches</h3>
-                        <Badge variant="outline" className="rounded-full px-3 text-[8px] font-black uppercase tracking-widest bg-slate-50 border-slate-200">
+                        <div className="flex items-center gap-3">
+                            <div className="w-3 h-[1px] bg-white/20" />
+                            <h3 className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/30">Current Monitoring</h3>
+                        </div>
+                        <div className="px-3 py-1 rounded-full bg-white/5 border border-white/5 text-[8px] font-bold text-white/20 uppercase tracking-widest">
                             Real-time Sync
-                        </Badge>
+                        </div>
                     </div>
 
                     <div className="space-y-6">
@@ -175,73 +180,80 @@ export function SterilizationHub() {
                                     <motion.div
                                         key={batch.id}
                                         layout
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
+                                        initial={{ opacity: 0, scale: 0.95 }}
+                                        animate={{ opacity: 1, scale: 1 }}
                                         className="group"
                                     >
-                                        <Card className="rounded-[2.5rem] border-slate-100 overflow-hidden hover:shadow-2xl hover:shadow-emerald-500/5 transition-all p-8 border-b-4 border-b-slate-100">
-                                            <div className="flex flex-col md:flex-row gap-8">
-                                                <div className="flex-1 space-y-6">
+                                        <PanzeCard className="relative overflow-hidden bg-slate-950/40 backdrop-blur-[60px] border border-white/5 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 transition-all duration-1000 hover:border-white/20 shadow-2xl">
+                                            {/* Silk Glow */}
+                                            <div className={cn(
+                                                "absolute top-0 right-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000",
+                                                batch.status === 'PROCESSING' ? "bg-[radial-gradient(circle_at_85%_0%,_rgba(245,158,11,0.05)_0%,_transparent_75%)]" :
+                                                    batch.status === 'APPROVED' ? "bg-[radial-gradient(circle_at_85%_0%,_rgba(16,185,129,0.05)_0%,_transparent_75%)]" :
+                                                        "bg-[radial-gradient(circle_at_85%_0%,_rgba(59,130,246,0.05)_0%,_transparent_75%)]"
+                                            )} />
+
+                                            <div className="flex flex-col md:flex-row gap-8 relative z-10">
+                                                <div className="flex-1 space-y-8">
                                                     <div className="flex items-start justify-between">
-                                                        <div className="space-y-1">
-                                                            <div className="flex items-center gap-2">
-                                                                <Badge className={cn("rounded-lg px-2 py-0.5 text-[8px] font-black uppercase tracking-widest text-white border-none", Config.color)}>
-                                                                    {Config.label}
-                                                                </Badge>
-                                                                <span className="text-[10px] font-bold text-slate-300">#{batch.id}</span>
+                                                        <div className="space-y-3">
+                                                            <div className="flex items-center gap-3">
+                                                                <div className={cn("w-2 h-2 rounded-full", Config.color)} />
+                                                                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40">{Config.label}</span>
+                                                                <span className="text-[9px] font-bold text-white/10 tracking-widest">#{batch.id}</span>
                                                             </div>
-                                                            <h4 className="text-xl font-black text-slate-800 italic mt-2">{batch.name}</h4>
+                                                            <h4 className="text-2xl font-semibold text-white tracking-tight">{batch.name}</h4>
                                                         </div>
                                                         <div className={cn(
-                                                            "w-14 h-14 rounded-2xl flex items-center justify-center transition-all",
-                                                            batch.status === 'PROCESSING' ? "bg-amber-50 animate-pulse" : "bg-slate-50"
+                                                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border border-white/5 bg-white/[0.02]",
+                                                            batch.status === 'PROCESSING' && "animate-pulse border-amber-500/20"
                                                         )}>
-                                                            <Icon className={cn("w-6 h-6", Config.color.replace('bg-', 'text-'))} />
+                                                            <Icon className={cn("w-5 h-5", batch.status === 'PROCESSING' ? "text-amber-400/60" : "text-white/20")} />
                                                         </div>
                                                     </div>
 
                                                     <div className="flex flex-wrap gap-2">
                                                         {batch.kits.map((kit, i) => (
-                                                            <div key={i} className="px-3 py-1.5 bg-slate-50 rounded-xl border border-slate-100 flex items-center gap-2">
-                                                                <div className="w-1.5 h-1.5 rounded-full bg-slate-300" />
-                                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-tighter">{kit}</span>
+                                                            <div key={i} className="px-4 py-2 bg-white/[0.03] rounded-xl border border-white/5 flex items-center gap-3 group/kit">
+                                                                <div className="w-1 h-1 rounded-full bg-white/20 group-hover/kit:bg-white/60 transition-colors" />
+                                                                <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">{kit}</span>
                                                             </div>
                                                         ))}
                                                     </div>
 
-                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+                                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-4 border-t border-white/5">
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Machine</p>
-                                                            <p className="text-[10px] font-bold text-slate-600 tracking-tight">{batch.machineId}</p>
+                                                            <p className="text-[8px] font-bold text-white/10 uppercase tracking-[0.2em]">Equipment</p>
+                                                            <p className="text-[10px] font-bold text-white/40 tracking-tight uppercase">{batch.machineId}</p>
                                                         </div>
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Started At</p>
-                                                            <p className="text-[10px] font-bold text-slate-600 tracking-tight">
+                                                            <p className="text-[8px] font-bold text-white/10 uppercase tracking-[0.2em]">Start Time</p>
+                                                            <p className="text-[10px] font-bold text-white/40 tracking-tight">
                                                                 {batch.startTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '--:--'}
                                                             </p>
                                                         </div>
                                                         {batch.temperature && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Temp / Pressure</p>
-                                                                <p className="text-[10px] font-bold text-slate-600 tracking-tight">{batch.temperature}°C / {batch.pressure} bar</p>
+                                                                <p className="text-[8px] font-bold text-white/10 uppercase tracking-[0.2em]">Vitals</p>
+                                                                <p className="text-[10px] font-bold text-white/40 tracking-tight">{batch.temperature}°C • {batch.pressure} bar</p>
                                                             </div>
                                                         )}
                                                         {batch.verifiedBy && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Verified By</p>
-                                                                <p className="text-[10px] font-bold text-slate-600 tracking-tight">{batch.verifiedBy}</p>
+                                                                <p className="text-[8px] font-bold text-white/10 uppercase tracking-[0.2em]">Verifier</p>
+                                                                <p className="text-[10px] font-bold text-white/40 tracking-tight uppercase">{batch.verifiedBy}</p>
                                                             </div>
                                                         )}
                                                     </div>
                                                 </div>
 
-                                                <div className="w-full md:w-48 flex md:flex-col justify-center items-center gap-4">
+                                                <div className="w-full md:w-56 flex md:flex-col justify-center items-center gap-4">
                                                     {batch.status === 'PROCESSING' && (
                                                         <Button
                                                             onClick={() => finishCycle(batch.id)}
-                                                            className="w-full h-14 rounded-2xl bg-amber-500 text-white font-black uppercase tracking-widest text-[9px] hover:bg-amber-600"
+                                                            className="w-full h-14 rounded-2xl bg-amber-500/10 text-amber-500/80 border border-amber-500/20 hover:bg-amber-500/20 font-bold uppercase tracking-widest text-[9px] transition-all"
                                                         >
-                                                            Finish Cycle
+                                                            Terminate Cycle
                                                         </Button>
                                                     )}
                                                     {batch.status === 'COMPLETED' && (
@@ -250,22 +262,22 @@ export function SterilizationHub() {
                                                                 setSelectedBatch(batch);
                                                                 setIsVerifying(true);
                                                             }}
-                                                            className="w-full h-14 rounded-2xl bg-indigo-600 text-white font-black uppercase tracking-widest text-[9px] hover:bg-indigo-700"
+                                                            className="w-full h-14 rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 font-bold uppercase tracking-widest text-[9px] transition-all"
                                                         >
-                                                            Verify Logs
+                                                            Validate Safety
                                                         </Button>
                                                     )}
                                                     {batch.status === 'APPROVED' && (
-                                                        <div className="flex flex-col items-center gap-2">
-                                                            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center">
-                                                                <Check className="w-6 h-6 text-emerald-600" />
+                                                        <div className="flex flex-col items-center gap-4">
+                                                            <div className="w-14 h-14 rounded-full bg-emerald-500/5 flex items-center justify-center border border-emerald-500/10 shadow-[0_0_30px_rgba(16,185,129,0.05)]">
+                                                                <Check className="w-6 h-6 text-emerald-500/60" />
                                                             </div>
-                                                            <span className="text-[9px] font-black text-emerald-600 uppercase tracking-widest">Validated</span>
+                                                            <span className="text-[9px] font-bold text-emerald-500/40 uppercase tracking-[0.4em]">Safe for Clinical Use</span>
                                                         </div>
                                                     )}
                                                 </div>
                                             </div>
-                                        </Card>
+                                        </PanzeCard>
                                     </motion.div>
                                 );
                             })}
@@ -274,45 +286,48 @@ export function SterilizationHub() {
                 </div>
 
                 <div className="lg:col-span-4 space-y-8">
-                    <Card className="p-8 rounded-[3rem] bg-indigo-900 text-white shadow-2xl shadow-indigo-200">
-                        <div className="space-y-6">
-                            <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center">
-                                <ShieldCheck className="w-6 h-6 text-indigo-300" />
+                    <PanzeCard className="p-10 rounded-[3rem] bg-indigo-950/40 border border-indigo-500/10 shadow-2xl">
+                        <div className="space-y-8">
+                            <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                                <ShieldCheck className="w-7 h-7 text-indigo-400/60" />
                             </div>
-                            <div className="space-y-2">
-                                <h4 className="text-2xl font-black italic tracking-tighter">Compliance Score</h4>
-                                <p className="text-sm font-bold text-indigo-300/60 leading-relaxed">
-                                    Your sterilization protocols are 98.4% compliant with NABH standards this month.
+                            <div className="space-y-3">
+                                <h4 className="text-2xl font-semibold text-white tracking-tight">Compliance Score</h4>
+                                <p className="text-xs font-medium text-white/20 leading-relaxed uppercase tracking-widest">
+                                    Armamentarium protocols are 98.4% compliant with NABH standards.
                                 </p>
                             </div>
-                            <div className="h-px w-full bg-white/10" />
+                            <div className="h-px w-full bg-white/5" />
                             <div className="flex items-center justify-between">
-                                <div className="space-y-0.5">
-                                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Monthly Cycles</p>
-                                    <p className="text-xl font-black italic">142</p>
+                                <div className="space-y-1">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/10">Cycles Processed</p>
+                                    <p className="text-2xl font-semibold text-white tracking-tight">142</p>
                                 </div>
-                                <div className="text-right space-y-0.5">
-                                    <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Failed Loads</p>
-                                    <p className="text-xl font-black italic text-rose-400">02</p>
+                                <div className="text-right space-y-1">
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/10">Safety Alerts</p>
+                                    <p className="text-2xl font-semibold text-rose-500/60 tracking-tight">02</p>
                                 </div>
                             </div>
                         </div>
-                    </Card>
+                    </PanzeCard>
 
-                    <div className="p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100 space-y-6">
-                        <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Sterility Guidelines</h4>
-                        <div className="space-y-4">
+                    <div className="p-8 rounded-[3rem] bg-white/[0.02] border border-white/5 space-y-8">
+                        <div className="flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-white/10" />
+                            <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
+                        </div>
+                        <div className="space-y-6">
                             {[
-                                "B-Class Autoclave: 134°C for 5 mins",
-                                "Maintain Indicator Strip Logs Daily",
-                                "Weekly Biological Spore Test required",
-                                "Instruments must be dry before storage"
+                                "B-Class Autoclave: 134°C (5 mins)",
+                                "Daily Indicator Tape Validation",
+                                "Weekly Spore Test Documentation",
+                                "Dry Storage protocol mandatory"
                             ].map((rule, i) => (
-                                <div key={i} className="flex gap-3">
-                                    <div className="w-5 h-5 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
-                                        <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                                <div key={i} className="flex gap-4 group/rule">
+                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/5 flex items-center justify-center shrink-0 border border-emerald-500/10 group-hover/rule:bg-emerald-500/10 transition-colors">
+                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500/40" />
                                     </div>
-                                    <span className="text-[11px] font-bold text-slate-600 leading-tight">{rule}</span>
+                                    <span className="text-[11px] font-bold text-white/30 uppercase tracking-widest leading-relaxed">{rule}</span>
                                 </div>
                             ))}
                         </div>
@@ -322,18 +337,21 @@ export function SterilizationHub() {
 
             {/* Verification Modal */}
             <Dialog open={isVerifying} onOpenChange={setIsVerifying}>
-                <DialogContent className="sm:max-w-[420px] rounded-[3rem] p-0 overflow-hidden border-none shadow-2xl">
-                    <div className="bg-indigo-600 p-8 text-white relative">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 blur-2xl" />
-                        <h3 className="text-2xl font-black italic tracking-tighter">Cycle Verification</h3>
-                        <p className="text-sm font-bold opacity-60 mt-1 uppercase tracking-widest">Batch #{selectedBatch?.id}</p>
+                <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border border-white/10 bg-slate-950 shadow-2xl">
+                    <div className="bg-blue-600 p-10 text-white relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -mr-24 -mt-24 blur-3xl opacity-50" />
+                        <div className="relative z-10 space-y-2">
+                            <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white/40">Manual Override</span>
+                            <h3 className="text-3xl font-semibold tracking-tight">Cycle Validation</h3>
+                            <p className="text-[10px] font-bold opacity-40 uppercase tracking-widest">Batch Registry #{selectedBatch?.id}</p>
+                        </div>
                     </div>
 
-                    <div className="p-8 space-y-8 bg-white">
-                        <div className="space-y-4">
+                    <div className="p-10 space-y-10 bg-slate-950">
+                        <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Temp: {temp}°C</Label>
-                                <span className="text-[10px] font-black text-indigo-600">Goal: 134°C</span>
+                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/20">Terminal Temp: {temp}°C</Label>
+                                <span className="text-[10px] font-bold text-emerald-400/60 uppercase tracking-widest">Target 134°C</span>
                             </div>
                             <Slider
                                 value={[temp]}
@@ -341,13 +359,14 @@ export function SterilizationHub() {
                                 min={100}
                                 max={150}
                                 step={1}
+                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
                             />
                         </div>
 
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-400">Pressure: {pressure} bar</Label>
-                                <span className="text-[10px] font-black text-indigo-600">Goal: 2.1 bar</span>
+                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white/20">Atmospheric Pressure: {pressure} bar</Label>
+                                <span className="text-[10px] font-bold text-emerald-400/60 uppercase tracking-widest">Target 2.1 bar</span>
                             </div>
                             <Slider
                                 value={[pressure]}
@@ -355,22 +374,23 @@ export function SterilizationHub() {
                                 min={0}
                                 max={4}
                                 step={0.1}
+                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
                             />
                         </div>
 
-                        <div className="flex items-center justify-between p-4 bg-slate-50 rounded-2xl">
-                            <div className="space-y-0.5">
-                                <Label className="text-[10px] font-black uppercase tracking-widest text-slate-800">Indicator Tape</Label>
-                                <p className="text-[9px] font-bold text-slate-400">Color changed to Black?</p>
+                        <div className="flex items-center justify-between p-6 bg-white/[0.02] rounded-[2rem] border border-white/5">
+                            <div className="space-y-1">
+                                <Label className="text-[10px] font-bold uppercase tracking-widest text-white/40">Visual Indicator</Label>
+                                <p className="text-[9px] font-bold text-white/10 uppercase tracking-tighter">Has the chemical tape transformed?</p>
                             </div>
-                            <Switch checked={indicatorPassed} onCheckedChange={setIndicatorPassed} />
+                            <Switch checked={indicatorPassed} onCheckedChange={setIndicatorPassed} className="data-[state=checked]:bg-emerald-500" />
                         </div>
 
                         <Button
                             onClick={handleVerifyBatch}
-                            className="w-full h-14 rounded-2xl bg-slate-900 text-white font-black tracking-widest uppercase text-[10px] hover:bg-black"
+                            className="w-full h-16 rounded-[2rem] bg-white text-slate-950 font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-white/90 shadow-xl transition-all"
                         >
-                            Authorize Batch
+                            Authorize Batch Release
                         </Button>
                     </div>
                 </DialogContent>
