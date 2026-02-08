@@ -55,16 +55,16 @@ export function ActiveQueue() {
     }, [queryClient, clinicId])
 
     return (
-        <PanzeCard className="h-full flex flex-col p-8 border-white/5 bg-white/[0.01] overflow-hidden relative group glass-neo">
+        <PanzeCard className="h-full flex flex-col p-8 border-white/40 bg-white/60 overflow-hidden relative group glass-white">
             <div className="flex items-center justify-between mb-8 relative z-10">
                 <div className="space-y-1">
-                    <h3 className="text-2xl font-black italic tracking-tighter text-white uppercase">Clinical Queue</h3>
+                    <h3 className="text-3xl font-serif italic tracking-tighter text-slate-900">Clinical Queue</h3>
                     <div className="flex items-center gap-2">
-                        <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
-                        <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Global Sync Active</span>
+                        <Activity className="w-3 h-3 text-neo-emerald animate-pulse" />
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Global Sync Active</span>
                     </div>
                 </div>
-                <button className="w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xl border border-white/10 backdrop-blur-md">
+                <button className="w-12 h-12 rounded-2xl bg-slate-900/5 text-slate-900 flex items-center justify-center hover:scale-110 transition-all shadow-xl border border-slate-200 backdrop-blur-md">
                     <Plus className="w-6 h-6" />
                 </button>
             </div>
@@ -80,52 +80,52 @@ export function ActiveQueue() {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 key={item.id}
                                 className={cn(
-                                    "p-5 rounded-[2rem] flex items-center gap-5 transition-all cursor-pointer border relative overflow-hidden group/item",
+                                    "p-6 rounded-[2.5rem] flex items-center gap-5 transition-all cursor-pointer border relative overflow-hidden group/item",
                                     i === 0
-                                        ? "bg-white/10 text-white border-white/20 shadow-2xl shadow-neo-vibrant-blue/20"
-                                        : "bg-white/[0.02] border-white/5 hover:border-white/20 hover:bg-white/[0.05] text-white"
+                                        ? "bg-slate-900/5 text-slate-900 border-slate-200 shadow-xl"
+                                        : "bg-white/20 border-white/40 hover:border-slate-300 hover:bg-white/40 text-slate-600"
                                 )}
                             >
                                 <div className={cn(
                                     "w-14 h-14 rounded-2xl flex items-center justify-center text-lg shadow-sm transition-colors",
-                                    i === 0 ? "bg-white/20 text-white" : "bg-white/5 text-white/40"
+                                    i === 0 ? "bg-neo-vibrant-blue text-white shadow-lg shadow-neo-vibrant-blue/20" : "bg-white/40 text-slate-400"
                                 )}>
                                     <User className="w-6 h-6" />
                                 </div>
 
                                 <div className="flex-1 space-y-1">
                                     <div className="flex items-center gap-2">
-                                        <h4 className="font-black italic tracking-tight text-base">{item.patient.user.full_name}</h4>
+                                        <h4 className="font-serif italic tracking-tight text-xl text-slate-900">{item.patient.user.full_name}</h4>
                                         {item.is_emergency && (
-                                            <Badge className="bg-rose-500 hover:bg-rose-600 border-none font-black text-[8px] uppercase tracking-widest px-2 py-0.5">SOS</Badge>
+                                            <Badge className="bg-rose-500 hover:bg-rose-600 border-none font-black text-[8px] uppercase tracking-widest px-2 py-0.5 text-white">SOS</Badge>
                                         )}
                                     </div>
                                     <p className={cn(
                                         "text-[10px] font-bold uppercase tracking-widest",
-                                        i === 0 ? "text-white/60" : "text-white/30"
+                                        i === 0 ? "text-slate-500" : "text-slate-400"
                                     )}>
-                                        {item.visit_type || 'CONSULTATION'} • <span className={i === 0 ? "text-indigo-400" : "text-indigo-600"}>{item.estimated_wait_mins}M WAIT</span>
+                                        {item.visit_type || 'CONSULTATION'} • <span className={i === 0 ? "text-neo-vibrant-blue" : "text-neo-vibrant-blue/60"}>{item.estimated_wait_mins}M WAIT</span>
                                     </p>
                                 </div>
 
                                 <div className="flex flex-col items-end gap-2">
                                     <div className={cn(
                                         "w-8 h-8 rounded-full flex items-center justify-center transition-all",
-                                        i === 0 ? "bg-indigo-500" : "bg-slate-200 group-hover/item:bg-indigo-600 group-hover/item:text-white"
+                                        i === 0 ? "bg-neo-vibrant-blue text-white" : "bg-slate-100 text-slate-400 group-hover/item:bg-neo-vibrant-blue group-hover/item:text-white"
                                     )}>
-                                        <Zap className={cn("w-4 h-4", i === 0 ? "fill-white" : "text-slate-500 group-hover/item:fill-white")} />
+                                        <Zap className={cn("w-4 h-4", i === 0 ? "fill-white" : "group-hover/item:fill-white")} />
                                     </div>
                                 </div>
 
                                 {/* Progress bar for top item */}
                                 {i === 0 && (
-                                    <div className="absolute bottom-0 left-0 h-1 bg-indigo-500 w-full" />
+                                    <div className="absolute bottom-0 left-0 h-1.5 bg-neo-vibrant-blue w-full" />
                                 )}
                             </motion.div>
                         ))
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center py-10 space-y-4 opacity-50">
-                            <Activity className="w-12 h-12 text-slate-200" />
+                            <Activity className="w-12 h-12 text-slate-300" />
                             <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">No Active Sessions</p>
                         </div>
                     )}
@@ -133,7 +133,7 @@ export function ActiveQueue() {
             </div>
 
             {/* Background Aesthetic */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[100px] rounded-full pointer-events-none group-hover:bg-indigo-500/10 transition-all duration-700" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-neo-vibrant-blue/5 blur-[100px] rounded-full pointer-events-none group-hover:bg-neo-vibrant-blue/10 transition-all duration-700" />
         </PanzeCard>
     )
 }

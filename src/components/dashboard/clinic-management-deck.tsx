@@ -101,7 +101,7 @@ export function ClinicManagementDeck() {
             {MANAGEMENT_FEATURES.map((feature, i) => {
                 const CardContent = (
                     <PanzeCard
-                        className={`cursor-pointer transition-all duration-700 group flex flex-col items-start gap-4 border-white/5 bg-white/[0.01] hover:bg-white/[0.03] glass-neo h-full relative ${feature.component ? "p-0 overflow-hidden" : "p-6"}`}
+                        className={`cursor-pointer transition-all duration-700 group flex flex-col items-start gap-4 border-white/40 bg-white/60 hover:bg-white/80 glass-white h-full relative ${feature.component ? "p-0 overflow-hidden" : "p-8"}`}
                     >
                         {feature.component ? (
                             feature.component
@@ -109,36 +109,36 @@ export function ClinicManagementDeck() {
                             <>
                                 {feature.locked && (
                                     <div className="absolute top-4 right-4">
-                                        <Lock className="w-4 h-4 text-slate-400" />
+                                        <Lock className="w-4 h-4 text-slate-300" />
                                     </div>
                                 )}
                                 <div className="w-full flex justify-between items-start">
-                                    <div className={`w-12 h-12 rounded-2xl ${feature.bg} flex items-center justify-center ${feature.accent}`}>
+                                    <div className={`w-14 h-14 rounded-2xl bg-slate-900/5 flex items-center justify-center text-slate-900 border border-slate-200 transition-all duration-500 group-hover:scale-105 group-hover:bg-neo-vibrant-blue group-hover:text-white group-hover:border-neo-vibrant-blue`}>
                                         <feature.icon className="w-6 h-6" />
                                     </div>
                                     {feature.badge && (
-                                        <Badge className="bg-amber-100 text-amber-700 hover:bg-amber-200 border-none">
+                                        <Badge className="bg-neo-emerald/10 text-neo-emerald hover:bg-neo-emerald/20 border-neo-emerald/20 text-[10px] uppercase font-black tracking-widest px-3 py-1">
                                             {feature.badge}
                                         </Badge>
                                     )}
                                 </div>
 
-                                <div className="space-y-1">
-                                    <h3 className="font-black italic tracking-tighter text-lg text-white group-hover:text-neo-vibrant-blue transition-colors">
+                                <div className="space-y-1 mt-2">
+                                    <h3 className="font-serif italic tracking-tighter text-2xl text-slate-900 group-hover:text-neo-vibrant-blue transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] text-white/40 font-black uppercase tracking-widest">
+                                    <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">
                                         {feature.subtitle}
                                     </p>
                                 </div>
 
-                                <div className="w-full mt-auto pt-4 flex items-center justify-between">
-                                    <Badge variant="outline" className={`border-0 ${feature.bg} ${feature.accent} font-bold`}>
+                                <div className="w-full mt-auto pt-6 flex items-center justify-between">
+                                    <Badge variant="outline" className={`border-slate-200 bg-white/50 text-slate-500 font-bold uppercase tracking-widest text-[9px] px-3 py-1`}>
                                         {feature.chip}
                                     </Badge>
                                     {!feature.locked && (
-                                        <div className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <ChevronRight className="w-4 h-4 text-slate-400" />
+                                        <div className="w-10 h-10 rounded-full bg-slate-900/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-neo-vibrant-blue hover:text-white">
+                                            <ChevronRight className="w-5 h-5" />
                                         </div>
                                     )}
                                 </div>

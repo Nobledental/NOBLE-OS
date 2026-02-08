@@ -30,79 +30,82 @@ export function LedgerWidget() {
     const [selectedPeriod, setSelectedPeriod] = useState("today");
 
     return (
-        <div className="flex flex-col h-full bg-white dark:bg-slate-900">
+        <div className="flex flex-col h-full bg-transparent">
             {/* Header */}
-            <div className="p-4 border-b border-purple-100 dark:border-slate-800 bg-purple-50/30 dark:bg-slate-900/50 flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
-                        <Briefcase className="w-4 h-4 text-purple-600" />
+            <div className="p-6 border-b border-white/20 bg-white/40 flex items-center justify-between backdrop-blur-md">
+                <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-neo-electric-blue/10 rounded-xl border border-neo-electric-blue/20">
+                        <Briefcase className="w-5 h-5 text-neo-electric-blue" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-black uppercase text-purple-950 dark:text-purple-200 tracking-wide">Specialist Ledger</h3>
-                        <p className="text-[10px] text-slate-500 font-medium">Track payables & settlements</p>
+                        <h3 className="text-xl font-serif italic tracking-tighter text-slate-900">Specialist Ledger</h3>
+                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">Financial Node Tracking</p>
                     </div>
                 </div>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                     <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                        <SelectTrigger className="h-7 w-20 text-[10px] border-none bg-transparent focus:ring-0 font-bold text-slate-600">
+                        <SelectTrigger className="h-8 w-24 text-[10px] border-slate-200 bg-white/40 focus:ring-1 focus:ring-neo-vibrant-blue font-black uppercase tracking-wider text-slate-600 rounded-lg">
                             <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="today">Today</SelectItem>
-                            <SelectItem value="week">Week</SelectItem>
-                            <SelectItem value="month">Month</SelectItem>
+                        <SelectContent className="glass-white border-slate-200">
+                            <SelectItem value="today" className="text-[10px] font-bold">TODAY</SelectItem>
+                            <SelectItem value="week" className="text-[10px] font-bold">THIS WEEK</SelectItem>
+                            <SelectItem value="month" className="text-[10px] font-bold">THIS MONTH</SelectItem>
                         </SelectContent>
                     </Select>
                     <Link href="/dashboard/settlement">
-                        <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-white dark:hover:bg-slate-800">
-                            <ChevronRight className="w-4 h-4 text-slate-400" />
+                        <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-slate-900/5 transition-all">
+                            <ChevronRight className="w-5 h-5 text-slate-400" />
                         </Button>
                     </Link>
                 </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="p-4 grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Gross Revenue</span>
-                    <div className="text-lg font-black text-slate-700 dark:text-white mt-1">
+            <div className="p-6 grid grid-cols-2 gap-4">
+                <div className="p-5 rounded-3xl bg-white/40 border border-white/60 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Gross Revenue</span>
+                    <div className="text-2xl font-black text-slate-900 mt-2 tracking-tighter">
                         ₹{mockStats.gross.toLocaleString()}
                     </div>
                 </div>
-                <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800 flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-emerald-600/70 uppercase tracking-wider">Payable</span>
-                    <div className="text-lg font-black text-emerald-600 mt-1">
+                <div className="p-5 rounded-3xl bg-neo-emerald/5 border border-neo-emerald/20 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
+                    <span className="text-[9px] font-black text-neo-emerald uppercase tracking-widest">Payable</span>
+                    <div className="text-2xl font-black text-neo-emerald mt-2 tracking-tighter">
                         ₹{mockStats.payable.toLocaleString()}
                     </div>
                 </div>
-                <div className="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-blue-600/70 uppercase tracking-wider">Commission</span>
-                    <div className="text-lg font-black text-blue-600 mt-1">
+                <div className="p-5 rounded-3xl bg-neo-vibrant-blue/5 border border-neo-vibrant-blue/20 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
+                    <span className="text-[9px] font-black text-neo-vibrant-blue uppercase tracking-widest">Commission</span>
+                    <div className="text-2xl font-black text-neo-vibrant-blue mt-2 tracking-tighter">
                         ₹{mockStats.commission.toLocaleString()}
                     </div>
                 </div>
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 flex flex-col justify-between">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Procedures</span>
-                    <div className="flex items-baseline gap-1 mt-1">
-                        <span className="text-lg font-black text-slate-700 dark:text-white">{mockStats.completed}</span>
-                        <span className="text-xs font-bold text-slate-400">/ {mockStats.total}</span>
+                <div className="p-5 rounded-3xl bg-white/40 border border-white/60 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Procedures</span>
+                    <div className="flex items-baseline gap-1 mt-2">
+                        <span className="text-2xl font-black text-slate-900 tracking-tighter">{mockStats.completed}</span>
+                        <span className="text-[10px] font-bold text-slate-400 uppercase">/ {mockStats.total}</span>
                     </div>
                 </div>
             </div>
 
             {/* EOD Settlement Footer */}
-            <div className="mt-auto px-4 pb-4">
-                <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border-l-4 border-amber-500">
-                    <div className="flex items-start gap-3">
-                        <Lock className="w-4 h-4 text-amber-500 mt-0.5" />
-                        <div>
-                            <h4 className="text-xs font-black uppercase text-amber-900 dark:text-amber-100 tracking-wide mb-1">
+            <div className="mt-auto px-6 pb-6">
+                <div className="p-6 rounded-[2.5rem] bg-white/60 border border-white/80 shadow-lg relative overflow-hidden group/footer">
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-400/5 to-transparent pointer-events-none" />
+                    <div className="flex items-start gap-4 relative z-10">
+                        <div className="w-10 h-10 rounded-2xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-600">
+                            <Lock className="w-5 h-5 shadow-sm" />
+                        </div>
+                        <div className="flex-1">
+                            <h4 className="text-[10px] font-black uppercase text-amber-900 tracking-[0.2em] mb-1">
                                 EOD Consultant Payouts
                             </h4>
-                            <div className="h-px w-full bg-amber-200/50 my-2" />
-                            <div className="flex items-center justify-between w-full gap-8">
-                                <span className="text-[10px] font-bold text-amber-700">Total Payable:</span>
-                                <span className="text-lg font-black text-amber-600">₹0</span>
+                            <div className="h-px w-full bg-amber-200/40 my-3" />
+                            <div className="flex items-center justify-between w-full">
+                                <span className="text-[10px] font-bold text-amber-700/60 uppercase tracking-widest">Total Active Payable:</span>
+                                <span className="text-xl font-black text-amber-600">₹0</span>
                             </div>
                         </div>
                     </div>
