@@ -28,44 +28,44 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
                             data={data}
                             cx="50%"
                             cy="45%"
-                            innerRadius={60}
-                            outerRadius={85}
-                            paddingAngle={10}
+                            innerRadius={65}
+                            outerRadius={90}
+                            paddingAngle={12}
                             dataKey="value"
                             stroke="none"
                         >
                             {data.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} opacity={0.8} />
+                                <Cell key={`cell-${index}`} fill={entry.color} opacity={0.7} />
                             ))}
                         </Pie>
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: "rgba(0, 0, 0, 0.9)",
-                                backdropFilter: "blur(25px)",
-                                borderRadius: "20px",
-                                border: "1px solid rgba(59,130,246,0.1)",
-                                boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+                                backgroundColor: "rgba(0, 0, 0, 0.95)",
+                                backdropFilter: "blur(40px)",
+                                borderRadius: "24px",
+                                border: "1px solid rgba(255,255,255,0.05)",
+                                boxShadow: "0 40px 100px rgba(0,0,0,0.8)",
                                 color: "#fff",
-                                padding: "10px 14px"
+                                padding: "12px 16px"
                             }}
-                            itemStyle={{ color: "#fff", fontSize: "11px", fontWeight: "600" }}
+                            itemStyle={{ color: "#fff", fontSize: "10px", fontWeight: "700", textTransform: "uppercase" }}
                         />
                     </PieChart>
                 </ResponsiveContainer>
 
                 {(totalLabel || totalValue) && (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%] md:translate-y-[-5%]">
-                        <span className="text-[8px] md:text-[9px] text-white/20 font-bold uppercase tracking-[0.2em] mb-1">{totalLabel}</span>
-                        <span className="text-2xl md:text-3xl font-bold tracking-tight text-white">{totalValue}</span>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%]">
+                        <span className="text-[7px] md:text-[8px] text-white/10 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
+                        <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{totalValue}</span>
                     </div>
                 )}
             </div>
 
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 mt-4">
+            <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-6">
                 {data.map((item, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full border border-white/10 shadow-lg" style={{ backgroundColor: item.color }} />
-                        <span className="text-[8px] md:text-[9px] font-bold text-white/30 uppercase tracking-widest">{item.name}</span>
+                    <div key={i} className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ring-4 ring-white/[0.02]" style={{ backgroundColor: item.color }} />
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em]">{item.name}</span>
                     </div>
                 ))}
             </div>

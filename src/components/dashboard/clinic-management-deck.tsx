@@ -40,8 +40,8 @@ interface ManagementFeature {
     icon: any;
     chip: string;
     accent: string;
+    category: 'Operations' | 'Finance' | 'Growth' | 'Security';
     glow?: string;
-    bg: string;
     href?: string;
     action?: string;
     badge?: string;
@@ -49,125 +49,132 @@ interface ManagementFeature {
 }
 
 const MANAGEMENT_FEATURES: ManagementFeature[] = [
+    // 1. Operations Workstream (Arctic Blue)
     {
-        title: "Clinical Queue",
-        subtitle: "Live Patient Flow",
+        title: "Patient Queue",
+        subtitle: "Live Clinic Flow",
         icon: Activity,
         chip: "Queue",
         accent: "text-blue-400",
         glow: "blue-500",
-        bg: "bg-blue-400/10",
+        category: "Operations",
         href: "/dashboard/appointments"
     },
     {
         title: "Scheduling",
-        subtitle: "Clinic Hours & Slots",
+        subtitle: "Hours & Sessions",
         icon: Calendar,
         chip: "Time",
-        accent: "text-indigo-400",
-        glow: "indigo-500",
-        bg: "bg-indigo-400/10",
+        accent: "text-blue-400",
+        glow: "blue-400",
+        category: "Operations",
         href: "/dashboard/settings/scheduling"
     },
     {
         title: "Departments",
-        subtitle: "Units & Groups",
+        subtitle: "Clinical Units",
         icon: Stethoscope,
         chip: "Structure",
-        accent: "text-slate-400",
-        glow: "slate-400",
-        bg: "bg-slate-400/10",
+        accent: "text-blue-400",
+        glow: "blue-500",
+        category: "Operations",
         href: "/dashboard/clinical"
     },
     {
         title: "Dental Chairs",
-        subtitle: "Operatory Management",
+        subtitle: "Chair Utilization",
         icon: Armchair,
         chip: "Assets",
-        accent: "text-emerald-400",
-        glow: "emerald-400",
-        bg: "bg-emerald-400/10",
+        accent: "text-blue-400",
+        glow: "blue-400",
+        category: "Operations",
         href: "/dashboard/admin/chairs"
     },
+
+    // 2. Finance Workstream (Champagne Gold)
     {
         title: "Tariff Master",
-        subtitle: "Clinical Cost Matrix",
+        subtitle: "Cost Architecture",
         icon: Receipt,
         chip: "Price",
-        accent: "text-blue-400",
-        glow: "blue-500",
-        bg: "bg-blue-400/10",
+        accent: "text-amber-200",
+        glow: "amber-500",
+        category: "Finance",
         href: "/dashboard/tariff"
     },
     {
         title: "Specialists",
-        subtitle: "Ledger & Settlements",
+        subtitle: "Settlement Ledger",
         icon: Briefcase,
         chip: "Finance",
-        accent: "text-blue-400",
-        glow: "blue-500",
-        bg: "bg-blue-400/10",
+        accent: "text-amber-200",
+        glow: "amber-500",
+        category: "Finance",
         href: "/dashboard/settlement"
     },
     {
+        title: "Billing Hub",
+        subtitle: "UPI & Statements",
+        icon: CreditCard,
+        chip: "Gateway",
+        accent: "text-amber-200",
+        glow: "amber-500",
+        category: "Finance",
+        action: "BILLING"
+    },
+
+    // 3. Growth & Intelligence (Soft Emerald)
+    {
         title: "Clinic Identity",
-        subtitle: "Branding & Socials",
+        subtitle: "Branding & SEO",
         icon: Building2,
         chip: "Brand",
-        accent: "text-slate-400",
-        glow: "slate-400",
-        bg: "bg-slate-400/10",
+        accent: "text-emerald-400",
+        glow: "emerald-500",
+        category: "Growth",
         action: "IDENTITY",
-        badge: "New"
-    },
-    {
-        title: "Staff Access",
-        subtitle: "Roles & Permissions",
-        icon: Users,
-        chip: "Security",
-        accent: "text-blue-400",
-        glow: "blue-500",
-        bg: "bg-blue-400/10",
-        action: "STAFF"
+        badge: "V2"
     },
     {
         title: "Integration Hub",
-        subtitle: "Scanners & Cloud",
+        subtitle: "Radiology & Sync",
         icon: Cpu,
         chip: "Cloud",
-        accent: "text-blue-400",
-        glow: "blue-500",
-        bg: "bg-blue-400/10",
-        action: "INTEGRATIONS"
-    },
-    {
-        title: "Billing & Account",
-        subtitle: "UPI & Gateway",
-        icon: CreditCard,
-        chip: "Gateway",
         accent: "text-emerald-400",
         glow: "emerald-500",
-        bg: "bg-emerald-400/10",
-        action: "BILLING"
+        category: "Growth",
+        action: "INTEGRATIONS"
+    },
+
+    // 4. Infrastructure & Security (Silver Silk)
+    {
+        title: "Staff Access",
+        subtitle: "Roles & Security",
+        icon: Users,
+        chip: "Security",
+        accent: "text-slate-400",
+        glow: "white",
+        category: "Security",
+        action: "STAFF"
     },
     {
         title: "Workflow Config",
-        subtitle: "Access Controls",
+        subtitle: "Global Controls",
         icon: ShieldCheck,
         chip: "Workflow",
-        accent: "text-indigo-400",
-        glow: "indigo-500",
-        bg: "bg-indigo-400/10",
+        accent: "text-slate-400",
+        glow: "white",
+        category: "Security",
         action: "WORKFLOW"
     },
     {
         title: "Inventory",
-        subtitle: "Stocks & Supplies",
+        subtitle: "Supply Chain",
         icon: Package,
         chip: "Storage",
         accent: "text-slate-400",
-        glow: "slate-400",
-        bg: "bg-slate-400/10",
+        glow: "white",
+        category: "Security",
         action: "INVENTORY",
         locked: true
     }
@@ -178,65 +185,69 @@ export function ClinicManagementDeck() {
 
     return (
         <div className="space-y-6">
-            {/* Dedicated Responsive Grid Layouts */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5 pb-20">
+            {/* Premium Uniform Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 md:gap-10 pb-20">
                 {MANAGEMENT_FEATURES.map((feature, i) => {
                     const CardContent = (
                         <motion.div
-                            whileHover={{ y: -6, scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                            whileHover={{ y: -8, scale: 1.01 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 25 }}
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Color-Coded Hover Glow */}
-                            <div className={`absolute -inset-[1px] bg-${feature.glow || 'white'}/[0.1] rounded-[2rem] md:rounded-[2.2rem] opacity-0 group-hover:opacity-100 blur-md transition-all duration-700 -z-10`} />
-                            <div className={`absolute -inset-4 bg-${feature.glow || 'white'}/[0.05] rounded-[2.5rem] md:rounded-[3rem] opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-1000 -z-10`} />
+                            {/* Silk Edge Ambient Glow (Workstream Specific) */}
+                            <div className={`absolute -inset-[2px] bg-${feature.glow || 'white'}/[0.08] rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10`} />
+                            <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
-                            {/* High-Fidelity Obsidian Glass Card */}
-                            <div className="bg-slate-950/60 backdrop-blur-3xl rounded-[2rem] md:rounded-[2.2rem] overflow-hidden relative p-5 md:p-8 h-full flex flex-col min-h-[160px] md:min-h-[185px] border border-white/5 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:border-white/20 group-hover:bg-black/80">
-                                {/* Glossy Reflection Highlight */}
-                                <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-
-                                {/* Header Section */}
-                                <div className="flex justify-between items-start relative z-10 mb-6 md:mb-8">
+                            {/* UX Architect Obsidian Glass Layer */}
+                            <div className="bg-slate-950/40 backdrop-blur-[40px] rounded-[2.2rem] md:rounded-[2.8rem] overflow-hidden relative p-8 md:p-10 h-full flex flex-col min-h-[190px] md:min-h-[220px] border border-white/5 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.7)] transition-all duration-1000 group-hover:border-white/20 group-hover:bg-black/40">
+                                {/* Editorial Header Section */}
+                                <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
                                     <div className={cn(
-                                        "w-10 h-10 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 transition-all duration-500",
-                                        feature.accent || "text-white/50",
-                                        `group-hover:bg-${feature.glow || 'white'} group-hover:text-black group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]`
+                                        "w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-[1.2rem] bg-white/[0.03] flex items-center justify-center border border-white/5 transition-all duration-700",
+                                        feature.accent || "text-white/30",
+                                        `group-hover:bg-white/[0.08] group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]`
                                     )}>
-                                        <feature.icon className="w-4.5 h-4.5 md:w-5 md:h-5" />
+                                        <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    {feature.locked ? (
-                                        <div className="w-6 h-6 md:w-7 md:h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
-                                            <Lock className="w-2.5 h-2.5 md:w-3 md:h-3" />
-                                        </div>
-                                    ) : feature.badge && (
-                                        <div className="bg-white/5 border border-white/10 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.25em] px-2 md:px-3 py-1 rounded-full text-white/40 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
-                                            {feature.badge}
-                                        </div>
-                                    )}
+
+                                    <div className="flex flex-col items-end gap-2">
+                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white/10">{feature.category}</span>
+                                        {feature.locked ? (
+                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/10">
+                                                <Lock className="w-2.5 h-2.5" />
+                                            </div>
+                                        ) : feature.badge && (
+                                            <div className="bg-white/5 border border-white/5 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white/20">
+                                                {feature.badge}
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
-                                {/* Content Section */}
+                                {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10">
-                                    <h3 className="text-lg md:text-xl font-semibold tracking-tight text-white mb-1 md:mb-1.5 leading-none transition-transform duration-500 group-hover:translate-x-1">
+                                    <div className="flex items-center gap-2 mb-2 opacity-20 group-hover:opacity-40 transition-opacity duration-1000">
+                                        <div className="w-4 h-[1px] bg-white" />
+                                        <span className="text-[7px] font-bold uppercase tracking-widest">{feature.chip}</span>
+                                    </div>
+                                    <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] md:text-[11px] text-white/30 font-medium leading-tight group-hover:text-white/50 transition-all duration-500 group-hover:translate-x-1">
+                                    <p className="text-[11px] md:text-[12px] text-white/30 font-medium leading-normal group-hover:text-white/60 transition-all duration-700 group-hover:translate-x-1">
                                         {feature.subtitle}
                                     </p>
                                 </div>
 
-                                {/* Refined Interaction Pulse (Bottom Line) */}
+                                {/* Premium Silk Trail Animation */}
                                 {!feature.locked && (
-                                    <div className="absolute bottom-4 md:bottom-5 left-5 md:left-8 right-5 md:right-8 h-[1px] md:h-[1.5px] bg-white/5 rounded-full overflow-hidden">
+                                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent overflow-hidden">
                                         <motion.div
                                             initial={{ x: '-100%' }}
-                                            whileHover={{ x: '0%' }}
-                                            transition={{ type: "spring", stiffness: 100, damping: 25 }}
+                                            whileHover={{ x: '100%' }}
+                                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                                             className={cn(
-                                                "w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent",
-                                                feature.glow && `via-${feature.glow}/40`
+                                                "w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]",
                                             )}
                                         />
                                     </div>

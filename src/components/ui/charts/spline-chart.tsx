@@ -25,35 +25,35 @@ export function SplineChart({ data, title, color = "#3b82f6", className }: Splin
                     <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
                             <linearGradient id={`gradient-${title}`} x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={color} stopOpacity={0.15} />
+                                <stop offset="5%" stopColor={color} stopOpacity={0.12} />
                                 <stop offset="95%" stopColor={color} stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="rgba(255,255,255,0.02)" />
+                        <CartesianGrid vertical={false} strokeDasharray="0" stroke="rgba(255,255,255,0.01)" />
                         <XAxis
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.15)", fontSize: 8, fontWeight: "600", letterSpacing: "0.1em" }}
-                            dy={10}
+                            tick={{ fill: "rgba(255,255,255,0.1)", fontSize: 8, fontWeight: "700", letterSpacing: "0.2em" }}
+                            dy={15}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.15)", fontSize: 8 }}
+                            tick={{ fill: "rgba(255,255,255,0.05)", fontSize: 8 }}
                         />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: "rgba(0, 0, 0, 0.9)",
-                                backdropFilter: "blur(25px)",
-                                borderRadius: "20px",
-                                border: "1px solid rgba(59,130,246,0.1)",
-                                boxShadow: "0 20px 50px rgba(0,0,0,0.6)",
+                                backgroundColor: "rgba(0, 0, 0, 0.95)",
+                                backdropFilter: "blur(40px)",
+                                borderRadius: "24px",
+                                border: "1px solid rgba(255,255,255,0.05)",
+                                boxShadow: "0 40px 100px rgba(0,0,0,0.8)",
                                 color: "#fff",
-                                padding: "12px 16px"
+                                padding: "16px 20px"
                             }}
-                            itemStyle={{ color: "#60a5fa", fontSize: "11px", fontWeight: "700", textTransform: "uppercase" }}
-                            cursor={{ stroke: "rgba(59,130,246,0.2)", strokeWidth: 1 }}
+                            itemStyle={{ color: color, fontSize: "10px", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.1em" }}
+                            cursor={{ stroke: "rgba(255,255,255,0.05)", strokeWidth: 1 }}
                         />
                         <Area
                             type="monotone"
