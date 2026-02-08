@@ -45,7 +45,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
     const componentRef = useRef<HTMLDivElement>(null);
 
     const handlePrint = useReactToPrint({
-        contentRef: componentRef,
+        content: () => componentRef.current,
         documentTitle: `Rx_${patientId}_${new Date().toISOString().split('T')[0]}`,
         onAfterPrint: () => toast.success('Prescription printed successfully'),
     });

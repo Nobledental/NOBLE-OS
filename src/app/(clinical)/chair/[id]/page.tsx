@@ -8,8 +8,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mic, Check, Wand2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { use } from "react";
 
-export default function ChairPage({ params }: { params: { id: string } }) {
+export default function ChairPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
     const { selectedTeeth, applyTreatment, resetSelection } = useChairStore();
     const [note, setNote] = useState("");
     const [isListening, setIsListening] = useState(false);
