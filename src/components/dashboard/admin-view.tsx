@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ActiveQueue } from "./active-queue";
 import { ProjectsOverview } from "./projects-overview";
 import { RevenueChart } from "./revenue-chart";
 import { PatientTracker } from "./patient-tracker";
@@ -125,12 +124,12 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <Activity className="w-5 h-5 animate-pulse" />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-bold tracking-tight">System Status</div>
-                                    <div className="text-[9px] text-neo-emerald font-black uppercase tracking-widest">Global Optima</div>
+                                    <div className="text-sm font-bold tracking-tight">Growth Catalyst</div>
+                                    <div className="text-[9px] text-neo-emerald font-black uppercase tracking-widest">3:1 New vs Returning</div>
                                 </div>
                             </div>
                             <p className="text-[11px] text-slate-500 font-medium leading-relaxed italic">
-                                "Analyzing clinical trends for {activeFilter.toLowerCase()}. Efficiency remains in the 80th percentile..."
+                                "Analysis of {activeFilter.toLowerCase()} flow shows 75% practice growth through new acquisition. Retention remains stable..."
                             </p>
                         </div>
                     </div>
@@ -147,7 +146,10 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     <div className="p-10 border-b border-white/20 flex items-center justify-between bg-white/40">
                         <div>
                             <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">PRACTICE REVENUE ANALYSIS</h3>
-                            <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">High-Performance Financial Tracking</p>
+                            <div className="flex items-center gap-3">
+                                <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">High-Performance Financial Tracking</p>
+                                <Badge variant="outline" className="text-[8px] border-neo-emerald/20 text-neo-emerald bg-neo-emerald/5 h-4 flex items-center px-1 font-black">+14.2% VS PREV</Badge>
+                            </div>
                         </div>
                         <div className="flex gap-4 tabular-nums">
                             <Badge variant="secondary" className="rounded-2xl px-6 py-2 bg-neo-vibrant-blue text-white border-neo-vibrant-blue/20 hover:scale-105 transition-all text-[10px] font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(0,122,255,0.2)]">
@@ -185,40 +187,40 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
 
                 <PanzeCard className="flex flex-col p-10 glass-white border-white/40 bg-white/60 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)]">
                     <div className="mb-12">
-                        <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">CASE LOAD DISTRIBUTION</h3>
-                        <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">Departmental Allocation Analysis</p>
+                        <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">FINANCIAL HEALTH HUB</h3>
+                        <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">Outstanding & Revenue Leakage</p>
                     </div>
                     <div className="flex-1 flex items-center justify-center relative scale-110">
                         <DonutChart
                             title=""
-                            totalLabel="VITAL"
-                            totalValue="86%"
+                            totalLabel="COLLECTED"
+                            totalValue="₹2.4L"
                             data={[
-                                { name: 'General', value: 35, color: '#007AFF' },
-                                { name: 'Ortho', value: 25, color: '#A78BFA' },
-                                { name: 'Surgery', value: 15, color: '#FF6B6B' },
-                                { name: 'Pedo', value: 11, color: '#059669' },
+                                { name: 'Collected', value: 70, color: '#007AFF' },
+                                { name: 'Outstanding', value: 20, color: '#FF6B6B' },
+                                { name: 'Leakage', value: 10, color: '#A78BFA' },
                             ]}
                         />
+                    </div>
+                    <div className="mt-8 pt-8 border-t border-slate-100 flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Action Needed</span>
+                        </div>
+                        <span className="text-sm font-black text-rose-500">₹42,000 PENDING</span>
                     </div>
                 </PanzeCard>
             </motion.div>
 
             {/* 3. Clinical Operations Center */}
-            <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-32">
-                <div className="space-y-8">
-                    <ActiveQueue />
+            <motion.div variants={itemVariants} className="space-y-10 pb-32">
+                <div className="flex items-center gap-6 p-4">
+                    <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+                    <h2 className="text-[12px] font-black tracking-[0.5em] text-slate-400 uppercase whitespace-nowrap">Clinical Operations Center</h2>
+                    <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
                 </div>
-
-                <div className="lg:col-span-2 space-y-10">
-                    <div className="flex items-center gap-6 p-4">
-                        <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-                        <h2 className="text-[12px] font-black tracking-[0.5em] text-slate-400 uppercase whitespace-nowrap">Clinical Operations Center</h2>
-                        <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-                    </div>
-                    <div className="glass-white px-2 py-6 border-white/40 bg-white/60 rounded-[4rem] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.05)]">
-                        <ClinicManagementDeck />
-                    </div>
+                <div className="glass-white px-6 py-10 border-white/40 bg-white/60 rounded-[4rem] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.05)]">
+                    <ClinicManagementDeck />
                 </div>
             </motion.div>
         </div>
