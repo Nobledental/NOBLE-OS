@@ -11,10 +11,7 @@ export default function DashboardLayout({
 }) {
     return (
         <AuthProvider>
-            <div className="flex h-screen overflow-hidden bg-[#020617] text-slate-100">
-                {/* Global Deep Mesh Layer */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.05)_0%,_transparent_50%)] pointer-events-none" />
-                <div className="absolute inset-0 bg-mesh-gradient opacity-[0.03] pointer-events-none" />
+            <div className="flex h-screen overflow-hidden bg-aurora">
                 {/* Floating Sidebar (Pill Dock) */}
                 <FloatingSidebar />
 

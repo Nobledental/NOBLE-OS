@@ -211,81 +211,23 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-[2px] bg-${feature.glow || 'white'}/[0.08] rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10`} />
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
-                            {/* UX Architect Obsidian Glass Layer */}
-                            <div className="bg-[#0f172a]/95 backdrop-blur-[40px] rounded-[2.2rem] md:rounded-[2.8rem] overflow-hidden relative p-8 md:p-10 h-full flex flex-col min-h-[190px] md:min-h-[220px] border border-white/10 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.7)] transition-all duration-1000 group-hover:border-white/30 group-hover:bg-[#1e293b]/90">
-                                {/* Editorial Header Section */}
-                                <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
-                                    <div className={cn(
-                                        "w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-[1.2rem] bg-white/10 flex items-center justify-center border border-white/10 transition-all duration-700",
-                                        feature.accent || "text-white",
-                                        `group-hover:bg-white/20 group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.1)]`
-                                    )}>
-                                        <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
+                            <PanzeCard
+                                className="relative p-8 md:p-10 rounded-[2.2rem] md:rounded-[2.8rem] bg-slate-900 border-white/10 hover:border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.3)] h-full flex flex-col min-h-[190px] md:min-h-[220px]"
+                            >
+                                <div className="relative z-10 h-full flex flex-col">
+                                    <div className="flex items-start justify-between mb-auto">
+                                        <div className="flex flex-col gap-3">
+                                            <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white underline underline-offset-4 decoration-white/20">{feature.category}</span>
+                                            <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight group-hover:scale-[1.02] transition-transform duration-700">{feature.title}</h3>
+                                        </div>
+                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white scale-90 group-hover:scale-100 group-hover:rotate-[360deg] transition-all duration-1000">
+                                            <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                        </div>
                                     </div>
 
-                                    <div className="flex flex-col items-end gap-2">
-                                        <span className={cn(
-                                            "text-[7px] md:text-[8px] font-black uppercase tracking-[0.3em] underline underline-offset-4 decoration-white/20",
-                                            feature.category === "Operations" && "text-blue-400",
-                                            feature.category === "Finance" && "text-amber-200",
-                                            feature.category === "Growth" && "text-emerald-400",
-                                            feature.category === "Security" && "text-slate-300",
-                                            feature.category === "Safety" && "text-emerald-400"
-                                        )}>
-                                            {feature.category}
-                                        </span>
-                                        {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/20">
-                                                <Lock className="w-2.5 h-2.5" />
-                                            </div>
-                                        ) : feature.badge && (
-                                            <div className="bg-white/10 border border-white/20 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white">
-                                                {feature.badge}
-                                            </div>
-                                        )}
-                                    </div>
+                                    <p className="text-[11px] md:text-[12px] text-white font-medium leading-normal transition-all duration-700 group-hover:translate-x-1 mt-6">{feature.subtitle}</p>
                                 </div>
-
-                                {/* Typography Unified Content */}
-                                <div className="mt-auto relative z-10">
-                                    <div className="flex items-center gap-2 mb-2 opacity-80 group-hover:opacity-100 transition-opacity duration-1000">
-                                        <div className={cn(
-                                            "w-4 h-[1px]",
-                                            feature.category === "Operations" && "bg-blue-400",
-                                            feature.category === "Finance" && "bg-amber-200",
-                                            feature.category === "Growth" && "bg-emerald-400",
-                                            feature.category === "Security" && "bg-slate-300"
-                                        )} />
-                                        <span className={cn(
-                                            "text-[7px] font-black uppercase tracking-widest",
-                                            feature.category === "Operations" && "text-blue-400",
-                                            feature.category === "Finance" && "text-amber-200",
-                                            feature.category === "Growth" && "text-emerald-400",
-                                            feature.category === "Security" && "text-slate-300"
-                                        )}>{feature.chip}</span>
-                                    </div>
-                                    <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-[11px] md:text-[12px] text-white font-medium leading-normal transition-all duration-700 group-hover:translate-x-1">
-                                        {feature.subtitle}
-                                    </p>
-                                </div>
-
-                                {/* Premium Silk Trail Animation */}
-                                {!feature.locked && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent overflow-hidden">
-                                        <motion.div
-                                            initial={{ x: '-100%' }}
-                                            whileHover={{ x: '100%' }}
-                                            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                                            className={cn(
-                                                "w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]",
-                                            )}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                            </PanzeCard>
                         </motion.div>
                     );
 
@@ -347,9 +289,9 @@ export function ClinicManagementDeck() {
                                         </div>
                                     </div>
                                     <div className="space-y-4 relative z-10">
-                                        <div className="flex items-center justify-center gap-4">
-                                            <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
+                                        <div className="flex items-center gap-4 mb-8 md:mb-12">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-950 shadow-[0_0_10px_rgba(2,6,23,0.3)] animate-pulse" />
+                                            <h2 className="text-[10px] font-black tracking-[0.6em] text-slate-950 uppercase border-b border-slate-200 pb-1">Precision Controls</h2>
                                         </div>
                                         <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight italic">Workflow <span className="text-white font-light border-b border-white/20">Optimization</span></h3>
                                         <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
