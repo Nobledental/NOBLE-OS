@@ -11,14 +11,29 @@ import {
     ShieldCheck,
     Settings2,
     ChevronRight,
-    Lock
+    Lock,
+    Briefcase
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 import { TariffWidget } from "./widgets/tariff-widget";
 import { LedgerWidget } from "./widgets/ledger-widget";
 
-const MANAGEMENT_FEATURES = [
+interface ManagementFeature {
+    title: string;
+    subtitle: string;
+    icon: any;
+    chip: string;
+    accent: string;
+    bg: string;
+    href: string;
+    badge?: string;
+    component?: React.ReactNode;
+    colSpan?: string;
+    locked?: boolean;
+}
+
+const MANAGEMENT_FEATURES: ManagementFeature[] = [
     {
         title: "Hospital Profile",
         subtitle: "Name, address, contact, branding",

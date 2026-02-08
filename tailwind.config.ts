@@ -12,9 +12,9 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['var(--font-geist-sans)'],
-                mono: ['var(--font-geist-mono)'],
-                display: ['var(--font-playfair)'],
+                sans: ['var(--font-outfit)'],
+                mono: ['var(--font-outfit)'], // Consolidated for cleaner look
+                display: ['var(--font-outfit)'],
             },
             colors: {
                 background: 'var(--background)',
