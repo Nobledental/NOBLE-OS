@@ -36,6 +36,10 @@ export interface SterilizationBatch {
     id: string;
     name: string;
     machineId: string;
+    action?: string;
+    badge?: string;
+    locked?: boolean;
+    description?: string;
     status: SterilizationStatus;
     kits: string[];
     startTime?: Date;
@@ -125,12 +129,12 @@ export function SterilizationHub() {
             {/* Editorial Header */}
             <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-slate-950 shadow-[0_0_10px_rgba(2,6,23,0.2)] animate-pulse" />
-                    <span className="text-[10px] font-black tracking-[0.6em] text-slate-950 uppercase border-b border-slate-200 pb-1">Armamentarium Safety</span>
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)] animate-pulse" />
+                    <span className="text-[10px] font-black tracking-[0.6em] text-white uppercase border-b border-white/10 pb-1">Armamentarium Safety</span>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-950 flex items-center gap-6">
-                        Sterilization <span className="text-slate-500 font-light border-b border-slate-200">Management</span>
+                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white flex items-center gap-6">
+                        Sterilization <span className="text-slate-400 font-light border-b border-white/10">Management</span>
                     </h1>
 
                     <div className="flex gap-4">
@@ -183,7 +187,7 @@ export function SterilizationHub() {
                                     >
                                         <PanzeCard
                                             key={batch.id}
-                                            className="relative group p-6 rounded-[2rem] bg-slate-900 border-white/10 hover:border-white/20 transition-all duration-700 shadow-[0_20px_50px_rgba(0,0,0,0.3)]"
+                                            className="glass-neo relative p-6 rounded-[2rem] transition-all duration-700"
                                         >
                                             {/* Silk Glow */}
                                             <div className={cn(
@@ -198,7 +202,7 @@ export function SterilizationHub() {
                                                     <div className="flex items-start justify-between">
                                                         <div className="space-y-3">
                                                             <div className="flex items-center gap-3">
-                                                                <div className={cn("w-2 h-2 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]", Config.color)} />
+                                                                <div className="w-2 h-2 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
                                                                 <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white">{Config.label}</span>
                                                                 <span className="text-[9px] font-bold text-white/80 tracking-widest border-l border-white/20 pl-2">#{batch.id}</span>
                                                             </div>
@@ -316,7 +320,7 @@ export function SterilizationHub() {
                         </div>
                     </PanzeCard>
 
-                    <PanzeCard className="p-8 rounded-[3rem] bg-slate-900 border border-white/10 space-y-8">
+                    <PanzeCard className="glass-neo p-8 rounded-[3rem] space-y-8">
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-white/10" />
                             <h4 className="text-[10px] font-bold text-white/40 uppercase tracking-[0.4em]">Protocol Guidelines</h4>

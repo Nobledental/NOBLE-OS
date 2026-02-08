@@ -48,6 +48,8 @@ interface ManagementFeature {
     action?: string;
     badge?: string;
     locked?: boolean;
+    description?: string;
+    color?: string;
 }
 
 const MANAGEMENT_FEATURES: ManagementFeature[] = [
@@ -212,7 +214,7 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
                             <PanzeCard
-                                className="relative p-8 md:p-10 rounded-[2.2rem] md:rounded-[2.8rem] bg-slate-900 border-white/10 hover:border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.3)] h-full flex flex-col min-h-[190px] md:min-h-[220px]"
+                                className="glass-neo relative p-8 md:p-10 rounded-[2.2rem] md:rounded-[2.8rem] h-full flex flex-col min-h-[190px] md:min-h-[220px]"
                             >
                                 <div className="relative z-10 h-full flex flex-col">
                                     <div className="flex items-start justify-between mb-auto">

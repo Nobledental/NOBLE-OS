@@ -55,23 +55,23 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 md:mb-14">
                             <div className="flex items-center gap-4 md:gap-6">
                                 <Link href="/dashboard">
-                                    <Button variant="ghost" className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-slate-950/10 hover:bg-slate-950/20 p-0 text-slate-950 hover:text-amber-600 border border-slate-950/20 transition-all duration-700 backdrop-blur-3xl shadow-sm">
+                                    <Button variant="ghost" className="w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/5 hover:bg-white/10 p-0 text-white hover:text-amber-400 border border-white/10 transition-all duration-700 backdrop-blur-3xl shadow-2xl">
                                         <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
                                     </Button>
                                 </Link>
                                 <div>
                                     <div className="flex items-center gap-3 mb-1.5 md:mb-2">
-                                        <div className="w-6 md:w-8 h-[1px] bg-amber-600 shadow-[0_0_8px_rgba(217,119,6,0.2)]" />
-                                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.5em] font-black text-amber-700 leading-none underline decoration-amber-600/20 underline-offset-4">Financial Perspective</span>
+                                        <div className="w-6 md:w-8 h-[1px] bg-amber-400/60 shadow-[0_0_8px_rgba(251,191,36,0.2)]" />
+                                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.5em] font-black text-amber-500/80 leading-none">Financial Perspective</span>
                                     </div>
-                                    <h2 className="text-2xl md:text-5xl font-black tracking-tight text-slate-950 leading-tight">
-                                        Operations <span className="text-slate-500 font-light translate-x-1 inline-block border-b border-slate-200">Analysis</span>
+                                    <h2 className="text-2xl md:text-5xl font-black tracking-tight text-white leading-tight">
+                                        Operations <span className="text-slate-400 font-light translate-x-1 inline-block border-b border-white/10">Analysis</span>
                                     </h2>
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <div className="bg-slate-950/10 border border-slate-950/20 px-6 py-2.5 rounded-2xl text-[9px] font-black uppercase tracking-[0.3em] text-slate-950 backdrop-blur-3xl shadow-sm">
-                                    {activeFilter} MATRIC
+                                <div className="bg-white/5 border border-white/10 px-6 py-2.5 rounded-2xl text-[9px] font-black uppercase tracking-[0.3em] text-white backdrop-blur-3xl shadow-2xl">
+                                    {activeFilter} METRIC
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     whileHover={{ y: -8 }}
                                     className="relative group/pod flex flex-col items-center text-center"
                                 >
-                                    <PanzeCard className="bg-slate-900 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 rounded-[2.5rem] w-full h-full flex flex-col items-center">
+                                    <PanzeCard className="glass-neo p-6 rounded-[2.5rem] w-full h-full flex flex-col items-center">
                                         <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white mb-5 md:mb-6 group-hover/pod:border-${pod.accent}/60 group-hover/pod:text-${pod.accent} transition-all duration-700 shadow-xl`}>
                                             <pod.icon className="w-5 h-5 md:w-6 md:h-6" />
                                         </div>
@@ -209,9 +209,14 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
             <motion.div variants={itemVariants} className="space-y-16 pb-32">
                 <div className="flex items-center gap-12 px-6">
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-                    <div className="flex flex-col items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.4)]" />
-                        <h2 className="text-[10px] font-black tracking-[0.6em] text-slate-950 uppercase whitespace-nowrap border-b border-slate-200 pb-1">Clinical Operations Hub</h2>
+                    <div className="flex flex-col gap-6 md:gap-8 absolute top-[120%] left-0 w-full lg:top-[-100px] lg:left-[calc(100%+80px)] lg:w-[480px]">
+                        <div className="flex flex-col gap-2">
+                            <h2 className="text-[10px] font-black tracking-[0.6em] text-white uppercase whitespace-nowrap border-b border-white/10 pb-1">Clinical Operations Hub</h2>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-3">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.4)]" />
+                                Real-time clinical throughput & revenue data
+                            </p>
+                        </div>
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>

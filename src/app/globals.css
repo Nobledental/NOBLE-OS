@@ -82,11 +82,17 @@
 
 @layer utilities {
   .glass-neo {
-    @apply backdrop-blur-3xl border border-white/20 rounded-[2.5rem] saturate-[1.8];
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    @apply backdrop-blur-[60px] border-t border-white/20 border-x border-white/5 border-b border-white/[0.02] rounded-[2.5rem] saturate-[1.8];
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
     box-shadow:
-      0 8px 32px 0 rgba(31, 38, 135, 0.07),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+      0 40px 100px -20px rgba(0, 0, 0, 0.5),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-obsidian {
+    @apply backdrop-blur-[80px] border border-white/10 rounded-[3rem] saturate-[1.5];
+    background: rgba(2, 6, 23, 0.6);
+    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
   }
 
   /* Refined Glass White for Medical Studio blend */
@@ -106,7 +112,17 @@
       inset 0 0 80px rgba(255, 255, 255, 0.1);
   }
 
-  /* Medical Studio Background */
+  /* Premium Obsidian Sage Gradient */
+  .bg-noble-sage {
+    background: #020617;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(66, 9%, 23%, 0.15) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(222, 47%, 5%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 50%, hsla(220, 30%, 8%, 1) 0, transparent 100%);
+    background-attachment: fixed;
+  }
+
+  /* Medical Studio Background (Light - Keeping for fallback) */
   .bg-aurora {
     background: #f8fafc;
     background-image:
