@@ -29,6 +29,10 @@ export function AdminDashboardView() {
     return (
         <div className="space-y-12 min-h-[800px] pb-32 px-4 lg:px-0">
             {/* 1. Admin Header & Quick Stats (Apple Refined Style) */}
+            <div className="flex flex-col mb-4">
+                <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-white">Practice Overview</h2>
+                <p className="text-white/40 font-black uppercase tracking-[0.2em] text-[10px] mt-1 ml-1">Logged in as ADMIN</p>
+            </div>
             <motion.div
                 initial="hidden"
                 animate="visible"
@@ -45,8 +49,8 @@ export function AdminDashboardView() {
                             </div>
                             <span className="text-[11px] uppercase tracking-[0.4em] font-black text-neo-vibrant-blue/80">CORE COMMAND SERVER</span>
                         </div>
-                        <h2 className="text-5xl font-black tracking-tighter mb-2 text-ios-gradient leading-none">
-                            Operational <span className="text-white italic font-serif">Flux</span>
+                        <h2 className="text-5xl font-serif tracking-tighter mb-2 text-white leading-none">
+                            Operational <span className="italic">Flux</span>
                         </h2>
                     </div>
 

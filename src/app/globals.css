@@ -125,6 +125,14 @@
     @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-200 to-white font-black;
   }
 
+  .font-serif {
+    font-family: var(--font-playfair), serif;
+  }
+
+  .font-sans {
+    font-family: var(--font-outfit), sans-serif;
+  }
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }

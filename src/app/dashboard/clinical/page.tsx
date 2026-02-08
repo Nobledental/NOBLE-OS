@@ -26,8 +26,8 @@ export default function ClinicalPage() {
         <div className="flex-1 space-y-4 h-[calc(100vh-100px)] flex flex-col">
             <div className="flex items-center justify-between shrink-0">
                 <div>
-                    <h2 className="text-2xl font-bold tracking-tight">Clinical Master</h2>
-                    <p className="text-sm text-muted-foreground">Digital Tooth Map & Procedural Charting.</p>
+                    <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-white">Clinical Master</h2>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mt-1">Digital Tooth Map & Procedural Charting.</p>
                 </div>
                 <Button className="bg-indigo-600 hover:bg-indigo-700">
                     <CalendarPlus className="w-4 h-4 mr-2" />
@@ -51,7 +51,7 @@ export default function ClinicalPage() {
             >
                 <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 flex-1 min-h-0">
                     {/* Left: Interactive 3D/2D Map - Always Visible */}
-                    <div className="xl:col-span-2 overflow-y-auto border rounded-xl bg-white shadow-sm p-4 space-y-4">
+                    <div className="xl:col-span-2 overflow-y-auto border-white/5 rounded-[2.5rem] bg-white/[0.01] glass-neo p-8 space-y-8">
                         {/* Eka Care Style Digital Health ID */}
                         <div className="mb-4">
                             <AbhaCard />
@@ -59,9 +59,9 @@ export default function ClinicalPage() {
 
                         <CaseQueue />
 
-                        <div className="border-t pt-4">
-                            <h3 className="font-bold mb-4 flex items-center gap-2">
-                                <Skull className="w-5 h-5 text-slate-500" />
+                        <div className="border-t border-white/5 pt-8">
+                            <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-white/40 mb-6 flex items-center gap-3">
+                                <Skull className="w-4 h-4" />
                                 Visual Charting
                             </h3>
                             <ToothMap patientId={MOCK_PATIENT_ID} />
@@ -69,9 +69,9 @@ export default function ClinicalPage() {
                     </div>
 
                     {/* Right: Tabbed Clinical Workflow */}
-                    <div className="xl:col-span-2 bg-white dark:bg-slate-900 border rounded-xl p-4 shadow-sm flex flex-col">
-                        <Tabs defaultValue="notes" className="flex-1 flex flex-col">
-                            <TabsList className="flex flex-wrap h-auto gap-1 mb-4 bg-slate-100 p-1 rounded-xl">
+                    <div className="xl:col-span-2 bg-white/[0.01] border-white/5 rounded-[2.5rem] glass-frost p-8 flex flex-col overflow-hidden relative">
+                        <Tabs defaultValue="notes" className="flex-1 flex flex-col min-h-0">
+                            <TabsList className="flex flex-wrap h-auto gap-2 mb-8 bg-white/5 p-2 rounded-2xl border border-white/5 max-w-fit">
                                 <TabsTrigger value="history">History</TabsTrigger>
                                 <TabsTrigger value="notes">Case Sheet</TabsTrigger>
                                 <TabsTrigger value="rx">Rx</TabsTrigger>

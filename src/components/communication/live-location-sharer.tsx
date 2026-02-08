@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PanzeCard } from "@/components/ui/panze-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, Navigation, Share2, Copy, Radio, Loader2 } from "lucide-react";
@@ -74,13 +74,13 @@ export function LiveLocationSharer() {
     }, [watchId]);
 
     return (
-        <Card className="border-none shadow-md bg-white overflow-hidden relative">
+        <PanzeCard className="border-white/5 bg-white/[0.01] overflow-hidden relative glass-neo p-0">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-rose-500" />
 
-            <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-bold flex items-center justify-between">
+            <div className="p-6 pb-2">
+                <div className="text-[11px] font-black uppercase tracking-[0.3em] flex items-center justify-between text-white/40">
                     <span className="flex items-center gap-2">
-                        <Navigation className="w-4 h-4 text-orange-500" />
+                        <Navigation className="w-3 h-3 text-orange-500" />
                         Location Command
                     </span>
                     {isLive && (
@@ -89,12 +89,12 @@ export function LiveLocationSharer() {
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
                         </span>
                     )}
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+                </div>
+            </div>
+            <div className="p-6 pt-2 space-y-4">
                 {/* Visual Map Placeholder (Swiggy Style) */}
-                <div className="h-32 bg-slate-100 rounded-lg relative overflow-hidden group">
-                    <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/80.2117,13.0827,15,0/400x200?access_token=pk.mock')] bg-cover bg-center opacity-50 grayscale group-hover:grayscale-0 transition-all" />
+                <div className="h-32 bg-white/5 rounded-2xl relative overflow-hidden group border border-white/5">
+                    <div className="absolute inset-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/80.2117,13.0827,15,0/400x200?access_token=pk.mock')] bg-cover bg-center opacity-40 grayscale group-hover:grayscale-0 transition-all" />
 
                     {/* Radar Effect */}
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -104,7 +104,7 @@ export function LiveLocationSharer() {
                     </div>
 
                     {/* Floating Label */}
-                    <div className="absolute bottom-2 left-2 bg-white/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold shadow-sm">
+                    <div className="absolute bottom-2 left-2 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest text-white/80 border border-white/10 shadow-xl">
                         {isLive ? "📍 Staff Active Beacon" : "🏥 Anna Nagar Branch"}
                     </div>
                 </div>
@@ -154,7 +154,7 @@ export function LiveLocationSharer() {
                         </p>
                     </div>
                 )}
-            </CardContent>
-        </Card>
+            </div>
+        </PanzeCard>
     );
 }

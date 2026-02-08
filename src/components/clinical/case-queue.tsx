@@ -1,7 +1,7 @@
 "use client";
 
 import { useSchedulingStore } from "@/lib/scheduling-store";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PanzeCard } from "@/components/ui/panze-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Users, UserPlus, Clock, ArrowRight } from "lucide-react";
@@ -37,62 +37,62 @@ export function CaseQueue() {
     return (
         <div className="space-y-6">
             {/* My Active Queue */}
-            <Card className="border-indigo-100 bg-indigo-50/30">
-                <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-bold text-indigo-900 flex items-center justify-between">
-                        <span className="flex items-center gap-2">
-                            <UserPlus className="w-4 h-4" />
-                            Assigned to {currentDoctorName}
-                        </span>
-                        <Badge variant="secondary" className="bg-indigo-100 text-indigo-700">{myCases.length}</Badge>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
+            <PanzeCard className="border-white/10 bg-white/[0.05] glass-neo p-6 transition-all duration-500 hover:shadow-neo-vibrant-blue/10">
+                <div className="pb-6 flex items-center justify-between border-b border-white/5 mb-6">
+                    <div className="text-[11px] font-black uppercase tracking-[0.3em] text-white/50 flex items-center gap-3">
+                        <UserPlus className="w-4 h-4 text-neo-vibrant-blue" />
+                        Assigned to {currentDoctorName}
+                    </div>
+                    <Badge variant="outline" className="bg-white/5 text-white border-white/10 px-3 py-1 text-[10px] font-black">
+                        {myCases.length} ACTIVE
+                    </Badge>
+                </div>
+                <div className="space-y-4">
                     {myCases.length === 0 ? (
-                        <p className="text-xs text-muted-foreground italic">No cases specifically assigned to you.</p>
+                        <p className="text-xs text-white/20 italic font-medium px-2">No cases specifically assigned to you.</p>
                     ) : (
                         myCases.map(appt => (
-                            <div key={appt.id} className="bg-white p-3 rounded-lg border shadow-sm flex items-center justify-between">
+                            <div key={appt.id} className="bg-white/5 p-4 rounded-2xl border border-white/5 flex items-center justify-between hover:bg-white/10 transition-all group">
                                 <div>
-                                    <div className="font-bold text-sm">{getPatientName(appt.patientId)}</div>
-                                    <div className="text-xs text-muted-foreground">{appt.reason} • {appt.slot}</div>
+                                    <div className="font-bold text-sm text-white">{getPatientName(appt.patientId)}</div>
+                                    <div className="text-[10px] text-white/30 font-black uppercase tracking-widest mt-1">{appt.reason} • {appt.slot}</div>
                                 </div>
-                                <Button size="sm" className="h-7 text-xs bg-indigo-600 hover:bg-indigo-700">
-                                    Start Consult <ArrowRight className="ml-1 w-3 h-3" />
+                                <Button size="sm" className="h-9 px-4 rounded-xl text-xs bg-white text-black hover:bg-white/90 font-black uppercase tracking-widest">
+                                    Consult <ArrowRight className="ml-2 w-3 h-3 text-neo-vibrant-blue" />
                                 </Button>
                             </div>
                         ))
                     )}
-                </CardContent>
-            </Card>
+                </div>
+            </PanzeCard>
 
             {/* General Queue */}
-            <Card>
-                <CardHeader className="pb-2">
-                    <CardTitle className="text-sm font-bold text-slate-700 flex items-center justify-between">
-                        <span className="flex items-center gap-2">
-                            <Users className="w-4 h-4" />
-                            General Clinic Queue
-                        </span>
-                        <Badge variant="outline">{generalQueue.length}</Badge>
-                    </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
+            <PanzeCard className="border-white/5 bg-white/[0.02] glass-neo p-6">
+                <div className="pb-6 flex items-center justify-between border-b border-white/5 mb-6">
+                    <div className="text-[11px] font-black uppercase tracking-[0.3em] text-white/30 flex items-center gap-3">
+                        <Users className="w-4 h-4" />
+                        General Clinic Queue
+                    </div>
+                    <Badge variant="outline" className="bg-white/5 text-white/40 border-white/10 text-[10px] font-black">
+                        {generalQueue.length} WAITING
+                    </Badge>
+                </div>
+                <div className="space-y-3">
                     {generalQueue.length === 0 ? (
-                        <p className="text-xs text-muted-foreground italic">Clinic queue is empty.</p>
+                        <p className="text-xs text-white/10 italic font-medium px-2">Clinic queue is empty.</p>
                     ) : (
                         generalQueue.map(appt => (
-                            <div key={appt.id} className="bg-slate-50 p-3 rounded-lg border flex items-center justify-between hover:bg-slate-100 transition-colors">
+                            <div key={appt.id} className="bg-white/[0.01] p-4 rounded-2xl border border-white/5 flex items-center justify-between hover:bg-white/5 transition-all">
                                 <div>
-                                    <div className="font-bold text-sm">{getPatientName(appt.patientId)}</div>
-                                    <div className="text-xs text-muted-foreground flex items-center gap-1">
+                                    <div className="font-bold text-sm text-white/70">{getPatientName(appt.patientId)}</div>
+                                    <div className="text-[10px] text-white/30 font-black uppercase tracking-widest flex items-center gap-2 mt-1">
                                         <Clock className="w-3 h-3" /> {appt.slot} • {appt.reason}
                                     </div>
                                 </div>
                                 <Button
                                     size="sm"
                                     variant="outline"
-                                    className="h-7 text-xs border-indigo-200 text-indigo-700 hover:bg-indigo-50"
+                                    className="h-9 px-4 rounded-xl text-xs border-white/10 text-white/60 hover:bg-white/10 hover:text-white font-black uppercase tracking-widest"
                                     onClick={() => handleTakeCase(appt.id)}
                                 >
                                     Take Case
@@ -100,8 +100,8 @@ export function CaseQueue() {
                             </div>
                         ))
                     )}
-                </CardContent>
-            </Card>
+                </div>
+            </PanzeCard>
         </div>
     );
 }
