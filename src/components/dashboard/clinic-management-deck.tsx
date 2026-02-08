@@ -42,7 +42,7 @@ interface ManagementFeature {
     icon: any;
     chip: string;
     accent: string;
-    category: 'Operations' | 'Finance' | 'Growth' | 'Security';
+    category: 'Operations' | 'Finance' | 'Growth' | 'Security' | 'Safety';
     glow?: string;
     href?: string;
     action?: string;

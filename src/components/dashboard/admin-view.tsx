@@ -83,28 +83,30 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 { label: "Case Load", value: activeFilter === "Today" ? "08" : "156", icon: Users, accent: "white", sub: "Growth Stable" },
                                 { label: "Performance", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, accent: "blue-400", trend: "Elite" }
                             ].map((pod, idx) => (
-                                <PanzeCard
+                                <motion.div
                                     key={idx}
                                     whileHover={{ y: -8 }}
-                                    className="relative group/pod flex flex-col items-center text-center bg-slate-900 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 rounded-[2.5rem]"
+                                    className="relative group/pod flex flex-col items-center text-center"
                                 >
-                                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white mb-5 md:mb-6 group-hover/pod:border-${pod.accent}/60 group-hover/pod:text-${pod.accent} transition-all duration-700 shadow-xl`}>
-                                        <pod.icon className="w-5 h-5 md:w-6 md:h-6" />
-                                    </div>
-                                    <span className="text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white font-black mb-2">{pod.label}</span>
-                                    <div className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-4">
-                                        {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
-                                    </div>
-                                    {pod.trend ? (
-                                        <div className={`text-[8px] md:text-[9px] font-black px-4 py-1.5 rounded-full bg-white/20 border border-white/30 uppercase tracking-[0.2em] flex items-center gap-2 group-hover/pod:bg-${pod.accent}/20 group-hover/pod:text-${pod.accent} transition-all duration-500 shadow-lg`}>
-                                            <TrendingUp className="w-3 h-3 opacity-100" /> {pod.trend}
+                                    <PanzeCard className="bg-slate-900 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-6 rounded-[2.5rem] w-full h-full flex flex-col items-center">
+                                        <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white mb-5 md:mb-6 group-hover/pod:border-${pod.accent}/60 group-hover/pod:text-${pod.accent} transition-all duration-700 shadow-xl`}>
+                                            <pod.icon className="w-5 h-5 md:w-6 md:h-6" />
                                         </div>
-                                    ) : (
-                                        <span className="text-[9px] text-white font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
-                                    )}
-                                    {/* Silk Glow On Hover */}
-                                    <div className={`absolute -inset-6 bg-${pod.accent}/[0.03] rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10`} />
-                                </PanzeCard>
+                                        <span className="text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white font-black mb-2">{pod.label}</span>
+                                        <div className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-4">
+                                            {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
+                                        </div>
+                                        {pod.trend ? (
+                                            <div className={`text-[8px] md:text-[9px] font-black px-4 py-1.5 rounded-full bg-white/20 border border-white/30 uppercase tracking-[0.2em] flex items-center gap-2 group-hover/pod:bg-${pod.accent}/20 group-hover/pod:text-${pod.accent} transition-all duration-500 shadow-lg`}>
+                                                <TrendingUp className="w-3 h-3 opacity-100" /> {pod.trend}
+                                            </div>
+                                        ) : (
+                                            <span className="text-[9px] text-white font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
+                                        )}
+                                        {/* Silk Glow On Hover */}
+                                        <div className={`absolute -inset-6 bg-${pod.accent}/[0.03] rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10`} />
+                                    </PanzeCard>
+                                </motion.div>
                             ))}
                         </div>
                     </div>
