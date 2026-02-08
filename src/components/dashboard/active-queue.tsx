@@ -55,16 +55,16 @@ export function ActiveQueue() {
     }, [queryClient, clinicId])
 
     return (
-        <PanzeCard className="h-full flex flex-col p-8 border-none shadow-2xl bg-white dark:bg-slate-900 overflow-hidden relative group">
+        <PanzeCard className="h-full flex flex-col p-8 border-white/5 bg-white/[0.01] overflow-hidden relative group glass-neo">
             <div className="flex items-center justify-between mb-8 relative z-10">
                 <div className="space-y-1">
-                    <h3 className="text-2xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">Clinical Queue</h3>
+                    <h3 className="text-2xl font-black italic tracking-tighter text-white uppercase">Clinical Queue</h3>
                     <div className="flex items-center gap-2">
                         <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Global Sync Active</span>
+                        <span className="text-[9px] font-black text-white/40 uppercase tracking-widest">Global Sync Active</span>
                     </div>
                 </div>
-                <button className="w-12 h-12 rounded-2xl bg-slate-900 dark:bg-white dark:text-slate-900 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xl">
+                <button className="w-12 h-12 rounded-2xl bg-white/10 text-white flex items-center justify-center hover:scale-110 transition-transform shadow-xl border border-white/10 backdrop-blur-md">
                     <Plus className="w-6 h-6" />
                 </button>
             </div>
@@ -82,13 +82,13 @@ export function ActiveQueue() {
                                 className={cn(
                                     "p-5 rounded-[2rem] flex items-center gap-5 transition-all cursor-pointer border relative overflow-hidden group/item",
                                     i === 0
-                                        ? "bg-slate-900 text-white border-transparent shadow-2xl shadow-slate-200"
-                                        : "bg-slate-50 border-slate-100 hover:border-indigo-400/30 hover:bg-white text-slate-900"
+                                        ? "bg-white/10 text-white border-white/20 shadow-2xl shadow-neo-vibrant-blue/20"
+                                        : "bg-white/[0.02] border-white/5 hover:border-white/20 hover:bg-white/[0.05] text-white"
                                 )}
                             >
                                 <div className={cn(
                                     "w-14 h-14 rounded-2xl flex items-center justify-center text-lg shadow-sm transition-colors",
-                                    i === 0 ? "bg-white/10 text-white" : "bg-white text-slate-400"
+                                    i === 0 ? "bg-white/20 text-white" : "bg-white/5 text-white/40"
                                 )}>
                                     <User className="w-6 h-6" />
                                 </div>
@@ -102,7 +102,7 @@ export function ActiveQueue() {
                                     </div>
                                     <p className={cn(
                                         "text-[10px] font-bold uppercase tracking-widest",
-                                        i === 0 ? "text-white/60" : "text-slate-400"
+                                        i === 0 ? "text-white/60" : "text-white/30"
                                     )}>
                                         {item.visit_type || 'CONSULTATION'} • <span className={i === 0 ? "text-indigo-400" : "text-indigo-600"}>{item.estimated_wait_mins}M WAIT</span>
                                     </p>

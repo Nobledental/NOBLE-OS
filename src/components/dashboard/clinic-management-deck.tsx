@@ -39,8 +39,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Name, address, contact, branding",
         icon: Building2,
         chip: "General",
-        accent: "text-blue-600",
-        bg: "bg-blue-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/settings",
         badge: "Recommended"
     },
@@ -49,8 +49,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Endo, Ortho, Surgery, Pedo, Radio",
         icon: Stethoscope,
         chip: "Departments",
-        accent: "text-emerald-600",
-        bg: "bg-emerald-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/clinical"
     },
     {
@@ -58,8 +58,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Consultation, procedures, room rents",
         icon: Receipt,
         chip: "Billing",
-        accent: "text-pink-600",
-        bg: "bg-pink-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/tariff",
         component: <div className="h-full w-full -m-6 w-[calc(100%+3rem)] h-[calc(100%+3rem)]"><TariffWidget /></div>,
         colSpan: "row-span-2"
@@ -69,8 +69,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Operatory management, chair allocation",
         icon: Armchair,
         chip: "Chairs",
-        accent: "text-amber-500",
-        bg: "bg-amber-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/admin/chairs"
     },
     {
@@ -78,8 +78,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Track payables & settlements",
         icon: Briefcase,
         chip: "Finance",
-        accent: "text-violet-600",
-        bg: "bg-violet-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/settlement",
         component: <div className="h-full w-full -m-6 w-[calc(100%+3rem)] h-[calc(100%+3rem)]"><LedgerWidget /></div>,
         colSpan: "row-span-2"
@@ -89,8 +89,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         subtitle: "Enable/Disable specific dashboards",
         icon: Settings2,
         chip: "Workflow",
-        accent: "text-slate-600",
-        bg: "bg-slate-50",
+        accent: "text-white",
+        bg: "bg-white/10",
         href: "/dashboard/settings"
     }
 ];
@@ -101,7 +101,7 @@ export function ClinicManagementDeck() {
             {MANAGEMENT_FEATURES.map((feature, i) => {
                 const CardContent = (
                     <PanzeCard
-                        className={`cursor-pointer hover:shadow-md transition-shadow group flex flex-col items-start gap-4 border-none shadow-sm h-full relative ${feature.component ? "p-0 overflow-hidden" : "p-6"}`}
+                        className={`cursor-pointer transition-all duration-700 group flex flex-col items-start gap-4 border-white/5 bg-white/[0.01] hover:bg-white/[0.03] glass-neo h-full relative ${feature.component ? "p-0 overflow-hidden" : "p-6"}`}
                     >
                         {feature.component ? (
                             feature.component
@@ -124,10 +124,10 @@ export function ClinicManagementDeck() {
                                 </div>
 
                                 <div className="space-y-1">
-                                    <h3 className="font-bold text-lg text-slate-800 group-hover:text-indigo-600 transition-colors">
+                                    <h3 className="font-black italic tracking-tighter text-lg text-white group-hover:text-neo-vibrant-blue transition-colors">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-sm text-slate-500 font-medium">
+                                    <p className="text-[10px] text-white/40 font-black uppercase tracking-widest">
                                         {feature.subtitle}
                                     </p>
                                 </div>

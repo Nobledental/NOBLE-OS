@@ -37,7 +37,7 @@ export function AdminDashboardView() {
                 }}
                 className="grid grid-cols-1 md:grid-cols-4 gap-10"
             >
-                <PanzeCard className="md:col-span-2 group glass-neo border-white/10 bg-white/[0.03] text-white relative overflow-hidden flex flex-col justify-between min-h-[250px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-neo-vibrant-blue/20">
+                <PanzeCard className="md:col-span-2 group glass-neo border-white/5 bg-white/[0.02] text-white relative overflow-hidden flex flex-col justify-between min-h-[280px] transition-all duration-700 hover:shadow-neo-vibrant-blue/20">
                     <div className="relative z-10 p-4">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-8 h-8 rounded-lg bg-neo-vibrant-blue/20 flex items-center justify-center border border-neo-vibrant-blue/30">
@@ -70,7 +70,7 @@ export function AdminDashboardView() {
                     <ZapIcon className="absolute right-8 top-8 w-16 h-16 text-white/5 rotate-12 group-hover:scale-110 transition-transform duration-1000" />
                 </PanzeCard>
 
-                <PanzeCard className="flex flex-col justify-between p-10 min-h-[250px] glass-neo border-white/10 bg-white/[0.02] rounded-[3rem] animate-float">
+                <PanzeCard className="flex flex-col justify-between p-10 min-h-[280px] glass-neo border-white/5 bg-white/[0.01] rounded-[3rem] animate-float relative overflow-hidden">
                     <div className="flex items-start justify-between">
                         <div className="w-16 h-16 rounded-[2rem] bg-gradient-to-br from-neo-emerald/30 to-transparent border border-neo-emerald/30 flex items-center justify-center text-neo-emerald shadow-2xl shadow-neo-emerald/20">
                             <Activity className="w-8 h-8" />
@@ -97,7 +97,7 @@ export function AdminDashboardView() {
                     </div>
                 </PanzeCard>
 
-                <PanzeCard className="flex flex-col justify-between p-10 min-h-[250px] glass-neo border-white/10 bg-white/[0.02] rounded-[3rem] hover:bg-white/[0.05] transition-all duration-500">
+                <PanzeCard className="flex flex-col justify-between p-10 min-h-[280px] glass-neo border-white/5 bg-white/[0.01] rounded-[3rem] hover:bg-white/[0.03] transition-all duration-500 relative overflow-hidden">
                     <div className="space-y-2">
                         <h3 className="text-[11px] font-black uppercase text-white/30 tracking-[0.4em] mb-6">NEO SYNAPSE</h3>
                         <Button variant="outline" className="w-full justify-between px-8 h-20 rounded-[2rem] border-white/10 bg-white/[0.03] text-white hover:bg-white/10 group transition-all duration-700">
@@ -119,7 +119,7 @@ export function AdminDashboardView() {
 
             {/* 2. Main Analytics Grid (Neo-Trinity Bento) */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PanzeCard className="lg:col-span-2 p-0 overflow-hidden flex flex-col glass-neo border-white/10 bg-white/[0.02] rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-neo-vibrant-blue/10">
+                <PanzeCard className="lg:col-span-2 p-0 overflow-hidden flex flex-col glass-neo border-white/5 bg-white/[0.01] rounded-[3.5rem] transition-all duration-700 hover:shadow-neo-vibrant-blue/5">
                     <div className="p-10 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
                         <div>
                             <h3 className="text-[11px] font-black text-white tracking-[0.4em] uppercase mb-2">FINANCIAL REVENUE VELOCITY</h3>

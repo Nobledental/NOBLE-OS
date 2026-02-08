@@ -9,8 +9,8 @@ export function PanzeCard({ children, className, flat = false, ...props }: Panze
     return (
         <div
             className={cn(
-                "glass-dream p-6 lg:p-8 transition-all duration-300 hover:shadow-dream hover:-translate-y-1",
-                !flat && "shadow-sm",
+                "p-6 lg:p-8 transition-all duration-700 hover:-translate-y-1",
+                !flat && "shadow-2xl",
                 className
             )}
             {...props}
