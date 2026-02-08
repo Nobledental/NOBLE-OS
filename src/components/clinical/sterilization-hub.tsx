@@ -184,7 +184,7 @@ export function SterilizationHub() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         className="group"
                                     >
-                                        <PanzeCard className="relative overflow-hidden bg-slate-950/40 backdrop-blur-[60px] border border-white/5 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 transition-all duration-1000 hover:border-white/20 shadow-2xl">
+                                        <PanzeCard className="relative overflow-hidden bg-[#0f172a]/95 backdrop-blur-[60px] border border-white/10 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 transition-all duration-1000 hover:border-white/20 shadow-2xl">
                                             {/* Silk Glow */}
                                             <div className={cn(
                                                 "absolute top-0 right-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000",
@@ -199,8 +199,8 @@ export function SterilizationHub() {
                                                         <div className="space-y-3">
                                                             <div className="flex items-center gap-3">
                                                                 <div className={cn("w-2 h-2 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]", Config.color)} />
-                                                                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white">{Config.label}</span>
-                                                                <span className="text-[9px] font-bold text-white/80 tracking-widest border-l border-white/20 pl-2">#{batch.id}</span>
+                                                                <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white underline decoration-white/10 underline-offset-4">{Config.label}</span>
+                                                                <span className="text-[9px] font-bold text-amber-200 tracking-widest border-l border-white/20 pl-2">#{batch.id}</span>
                                                             </div>
                                                             <h4 className="text-2xl font-semibold text-white tracking-tight">{batch.name}</h4>
                                                         </div>
@@ -223,24 +223,24 @@ export function SterilizationHub() {
 
                                                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-4 border-t border-white/5">
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Equipment</p>
+                                                            <p className="text-[8px] font-bold text-blue-400 uppercase tracking-[0.2em]">Equipment</p>
                                                             <p className="text-[10px] font-black text-white tracking-tight uppercase">{batch.machineId}</p>
                                                         </div>
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Start Time</p>
+                                                            <p className="text-[8px] font-bold text-blue-400 uppercase tracking-[0.2em]">Start Time</p>
                                                             <p className="text-[10px] font-black text-white tracking-tight">
                                                                 {batch.startTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '--:--'}
                                                             </p>
                                                         </div>
                                                         {batch.temperature && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Vitals</p>
+                                                                <p className="text-[8px] font-bold text-emerald-400 uppercase tracking-[0.2em]">Vitals</p>
                                                                 <p className="text-[10px] font-black text-white tracking-tight">{batch.temperature}°C • {batch.pressure} bar</p>
                                                             </div>
                                                         )}
                                                         {batch.verifiedBy && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Verifier</p>
+                                                                <p className="text-[8px] font-bold text-amber-200 uppercase tracking-[0.2em]">Verifier</p>
                                                                 <p className="text-[10px] font-black text-white tracking-tight uppercase">{batch.verifiedBy}</p>
                                                             </div>
                                                         )}
@@ -288,7 +288,7 @@ export function SterilizationHub() {
                 </div>
 
                 <div className="lg:col-span-4 space-y-8">
-                    <PanzeCard className="p-10 rounded-[3rem] bg-indigo-950/40 border border-indigo-500/10 shadow-2xl">
+                    <PanzeCard className="p-10 rounded-[3rem] bg-indigo-950/90 border border-indigo-500/20 shadow-2xl">
                         <div className="space-y-8">
                             <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
                                 <ShieldCheck className="w-7 h-7 text-indigo-400/60" />
@@ -315,8 +315,8 @@ export function SterilizationHub() {
 
                     <div className="p-8 rounded-[3rem] bg-white/[0.02] border border-white/5 space-y-8">
                         <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-white/10" />
-                            <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
+                            <div className="w-2 h-2 rounded-full bg-emerald-500/40" />
+                            <h4 className="text-[10px] font-black text-emerald-400 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
                         </div>
                         <div className="space-y-6">
                             {[

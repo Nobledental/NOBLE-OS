@@ -46,7 +46,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8"
             >
                 {/* Operations Summary (Editorial Champagne Gold) */}
-                <PanzeCard className="lg:col-span-2 group bg-slate-950/40 backdrop-blur-[60px] border border-white/5 text-white relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 rounded-[3rem] md:rounded-[4rem] shadow-[0_60px_100px_-30px_rgba(0,0,0,0.9)]">
+                <PanzeCard className="lg:col-span-2 group bg-[#0f172a]/95 backdrop-blur-[60px] border border-white/10 text-white relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 rounded-[3rem] md:rounded-[4rem] shadow-[0_60px_100px_-30px_rgba(0,0,0,0.9)]">
                     {/* Champagne Gold & Silver Silk Glows */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none" />
@@ -111,7 +111,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 </PanzeCard>
 
                 {/* Intelligence Layer (Editorial Soft Emerald) */}
-                <PanzeCard className="flex flex-col bg-slate-950/30 backdrop-blur-[60px] border border-white/5 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.9)] transition-all duration-1000 min-h-[380px]">
+                <PanzeCard className="flex flex-col bg-[#0f172a]/90 backdrop-blur-[60px] border border-white/10 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.9)] transition-all duration-1000 min-h-[380px]">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none" />
                     <div className="p-8 md:p-10 space-y-10 md:space-y-14 flex-1 relative z-10">
                         <div className="flex items-center gap-5">
@@ -130,15 +130,15 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                         <div className="relative group/insight pt-4">
                             <div className="relative bg-white/[0.01] rounded-[2.5rem] md:rounded-[2.8rem] p-8 md:p-10 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
                                 <div className="flex items-center gap-5 mb-8">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-2xl flex items-center justify-center text-emerald-400/40 border border-white/5 group-hover/insight:text-emerald-400 transition-all duration-700">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/10 rounded-2xl flex items-center justify-center text-emerald-400 border border-white/10 group-hover/insight:bg-emerald-500 group-hover/insight:text-black transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div>
                                         <div className="text-lg font-bold tracking-tight text-white mb-1 uppercase">Growth Index</div>
-                                        <div className="text-[9px] text-white font-black uppercase tracking-widest opacity-80 underline decoration-white/20 underline-offset-4">Standard Sync</div>
+                                        <div className="text-[9px] text-emerald-400 font-black uppercase tracking-widest opacity-90 underline decoration-emerald-500/20 underline-offset-4">Standard Sync</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-white font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl">
+                                <p className="text-[11px] md:text-[12px] text-white font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/10 py-4 rounded-r-2xl">
                                     "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
                                 </p>
                             </div>
@@ -213,7 +213,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>
-                <div className="bg-slate-950/20 backdrop-blur-[80px] px-8 md:px-16 py-12 md:py-20 border border-white/5 rounded-[4rem] md:rounded-[6rem] shadow-[0_100px_150px_-50px_rgba(0,0,0,0.6)] relative overflow-hidden group transition-all duration-1000">
+                <div className="bg-[#020617]/80 backdrop-blur-[80px] px-8 md:px-16 py-12 md:py-20 border border-white/10 rounded-[4rem] md:rounded-[6rem] shadow-[0_100px_150px_-50px_rgba(0,0,0,0.6)] relative overflow-hidden group transition-all duration-1000">
                     {/* Background Arctic Surface Glow */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.03)_0%,_transparent_60%)] pointer-events-none" />
                     <div className="relative z-10">
