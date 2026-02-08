@@ -11,18 +11,19 @@ export default function StaffPage() {
     const [selectedIdCard, setSelectedIdCard] = useState<any>(null);
 
     return (
-        <div className="space-y-6 pb-20">
-            {/* Header */}
-            <div className="flex flex-col gap-2">
-                <h1 className="text-3xl font-black tracking-tight text-slate-900 flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600">
-                        <Users className="w-6 h-6" />
+        <div className="space-y-12 pb-32">
+            {/* Editorial Dark Header */}
+            <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500/40" />
+                    <span className="text-[10px] font-bold tracking-[0.6em] text-white/20 uppercase">Personnel Command</span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white flex items-center gap-6">
+                    <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.8rem] bg-white/[0.03] border border-white/5 flex items-center justify-center text-blue-400/40 group-hover:bg-blue-500 group-hover:text-black transition-all duration-700 shadow-inner">
+                        <Users className="w-7 h-7 md:w-8 md:h-8" />
                     </div>
-                    Staff Management
+                    Staff <span className="text-white/10 font-light translate-x-1">Management</span>
                 </h1>
-                <p className="text-slate-500 font-medium ml-14">
-                    Manage clinic staff, onboarding, and generate official ID cards.
-                </p>
             </div>
 
             {/* Main Directory */}

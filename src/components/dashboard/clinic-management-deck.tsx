@@ -32,6 +32,7 @@ import { StaffSettings } from "@/components/settings/staff-settings";
 import { BillingSettings } from "@/components/settings/billing-settings";
 import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import { ClinicBrandingSettings } from "@/components/settings/clinic-branding-settings";
+import { InventoryHub } from "@/components/inventory/inventory-hub";
 import { cn } from "@/lib/utils";
 
 interface ManagementFeature {
@@ -176,7 +177,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         glow: "white",
         category: "Security",
         action: "INVENTORY",
-        locked: true
+        locked: false
     }
 ];
 
@@ -297,9 +298,10 @@ export function ClinicManagementDeck() {
                             {activeAction === "BILLING" && <BillingSettings />}
                             {activeAction === "INTEGRATIONS" && <UniversalBridgeHub />}
                             {activeAction === "IDENTITY" && <ClinicBrandingSettings onSave={() => setActiveAction(null)} />}
+                            {activeAction === "INVENTORY" && <InventoryHub />}
 
                             {/* Fallback */}
-                            {["WORKFLOW", "INVENTORY"].includes(activeAction!) && (
+                            {["WORKFLOW"].includes(activeAction!) && (
                                 <div className="flex flex-col items-center justify-center h-[50vh] text-center space-y-6">
                                     <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-100 rounded-full flex items-center justify-center">
                                         <Settings2 className="w-8 h-8 md:w-10 md:h-10 text-slate-300" />

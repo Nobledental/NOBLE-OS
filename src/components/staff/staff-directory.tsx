@@ -92,25 +92,25 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
 
     return (
         <div className="space-y-6">
-            {/* Header / Toolbar */}
-            <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+            {/* Editorial Header / Toolbar */}
+            <div className="flex flex-col md:flex-row gap-6 justify-between items-center bg-slate-950/40 backdrop-blur-[40px] p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 shadow-2xl">
                 <div className="relative w-full md:w-96">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20" />
                     <Input
-                        placeholder="Search staff by name or ID..."
-                        className="pl-10 border-slate-200 bg-slate-50 focus:bg-white transition-colors"
+                        placeholder="Search personnel..."
+                        className="pl-12 h-14 border-white/5 bg-white/[0.02] text-white placeholder:text-white/20 rounded-2xl focus:bg-white/[0.05] transition-all duration-500"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
-                <div className="flex gap-2 w-full md:w-auto">
-                    <Button variant="outline" className="gap-2 border-slate-200 text-slate-600">
+                <div className="flex gap-4 w-full md:w-auto">
+                    <Button variant="ghost" className="h-14 px-8 rounded-2xl bg-white/[0.02] border border-white/5 text-white/40 hover:text-white hover:bg-white/5 gap-3 transition-all duration-700">
                         <Filter className="w-4 h-4" />
-                        <span className="hidden sm:inline">Filter</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Filters</span>
                     </Button>
-                    <Button onClick={onAddStaff} className="gap-2 bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20">
+                    <Button onClick={onAddStaff} className="h-14 px-8 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 gap-3 shadow-[0_0_40px_rgba(255,255,255,0.02)] transition-all duration-700">
                         <Plus className="w-4 h-4" />
-                        Add Staff
+                        <span className="text-[10px] font-bold uppercase tracking-widest">Onboard Staff</span>
                     </Button>
                 </div>
             </div>
@@ -126,48 +126,60 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
                             exit={{ opacity: 0, scale: 0.9 }}
                             layout
                         >
-                            <PanzeCard className="relative overflow-hidden group hover:shadow-md transition-all duration-300 border-slate-200">
-                                <div className={`absolute top-0 left-0 w-full h-1 ${staff.bg.replace('bg-', 'bg-gradient-to-r from-transparent via-')}`} />
+                            <PanzeCard className="relative overflow-hidden group bg-slate-950/40 backdrop-blur-[60px] border border-white/5 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 min-h-[420px] flex flex-col transition-all duration-1000 hover:border-white/20 hover:bg-black/40 shadow-2xl">
+                                {/* Silk Glow Effects */}
+                                <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(59,130,246,0.03)_0%,_transparent_75%)] pointer-events-none" />
 
-                                <div className="flex justify-between items-start mb-4">
-                                    <Badge variant="outline" className={`${staff.bg} ${staff.color} border-0 font-semibold`}>
-                                        {staff.role}
-                                    </Badge>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 -mr-2 text-slate-400 hover:text-slate-600">
+                                <div className="flex justify-between items-start mb-10 relative z-10">
+                                    <div className="flex flex-col gap-1.5">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-3 h-[1px] bg-blue-500/40" />
+                                            <span className="text-[8px] font-bold uppercase tracking-[0.4em] text-white/30">{staff.dept}</span>
+                                        </div>
+                                        <span className="text-[10px] font-bold text-blue-400/60 uppercase tracking-widest">{staff.role}</span>
+                                    </div>
+                                    <Button variant="ghost" size="icon" className="h-10 w-10 text-white/10 hover:text-white/40 hover:bg-white/5 rounded-xl transition-all">
                                         <MoreVertical className="w-4 h-4" />
                                     </Button>
                                 </div>
 
-                                <div className="flex flex-col items-center text-center mb-6">
-                                    <div className="relative mb-3">
-                                        <Avatar className={`w-20 h-20 border-4 ${staff.border} shadow-sm`}>
+                                <div className="flex flex-col items-center text-center mb-10 relative z-10">
+                                    <div className="relative mb-6">
+                                        <div className="absolute -inset-4 bg-blue-500/10 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                                        <Avatar className="w-24 h-24 md:w-28 md:h-28 border border-white/10 shadow-2xl relative z-10">
                                             <AvatarImage src={staff.image} />
-                                            <AvatarFallback>{staff.name.substring(0, 2)}</AvatarFallback>
+                                            <AvatarFallback className="bg-white/5 text-white/40">{staff.name.substring(0, 2)}</AvatarFallback>
                                         </Avatar>
-                                        <div className={`absolute bottom-0 right-0 w-5 h-5 rounded-full border-2 border-white ${staff.status === 'Active' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                                        <div className={`absolute bottom-2 right-2 w-4 h-4 rounded-full border-4 border-slate-950 z-20 ${staff.status === 'Active' ? 'bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]' : 'bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`} />
                                     </div>
-                                    <h3 className="font-bold text-lg text-slate-800">{staff.name}</h3>
-                                    <p className="text-xs font-medium text-slate-500 uppercase tracking-wide">{staff.id} • {staff.dept}</p>
+                                    <h3 className="font-semibold text-2xl text-white tracking-tight mb-2">{staff.name}</h3>
+                                    <div className="px-4 py-1.5 rounded-full bg-white/5 border border-white/5 text-[9px] font-bold text-white/30 uppercase tracking-[0.3em]">
+                                        {staff.id}
+                                    </div>
                                 </div>
 
-                                <div className="space-y-2 mb-6">
-                                    <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-2 rounded-lg">
-                                        <Phone className="w-4 h-4 text-slate-400" />
-                                        <span>{staff.phone}</span>
+                                <div className="mt-auto space-y-3 relative z-10">
+                                    <div className="flex items-center justify-between text-[11px] text-white/40 font-medium p-4 rounded-2xl bg-white/[0.02] border border-white/5 group-hover:border-white/10 transition-all duration-700">
+                                        <div className="flex items-center gap-3">
+                                            <Phone className="w-3.5 h-3.5 opacity-40" />
+                                            <span>{staff.phone}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center gap-3 text-sm text-slate-600 bg-slate-50 p-2 rounded-lg">
-                                        <Mail className="w-4 h-4 text-slate-400" />
-                                        <span className="truncate">{staff.email}</span>
+                                    <div className="flex items-center justify-between text-[11px] text-white/40 font-medium p-4 rounded-2xl bg-white/[0.02] border border-white/5 group-hover:border-white/10 transition-all duration-700">
+                                        <div className="flex items-center gap-3">
+                                            <Mail className="w-3.5 h-3.5 opacity-40" />
+                                            <span className="truncate">{staff.email}</span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <Button
-                                    variant="outline"
-                                    className="w-full gap-2 border-indigo-100 text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700"
+                                    variant="ghost"
+                                    className="w-full h-14 mt-8 rounded-2xl bg-blue-500/[0.03] hover:bg-blue-500/[0.08] text-blue-400/60 hover:text-blue-400 text-[10px] font-bold uppercase tracking-[0.3em] gap-3 border border-blue-500/10 transition-all duration-700"
                                     onClick={() => onViewId(staff)}
                                 >
                                     <IdCard className="w-4 h-4" />
-                                    View ID Card
+                                    Access Identity
                                 </Button>
                             </PanzeCard>
                         </motion.div>

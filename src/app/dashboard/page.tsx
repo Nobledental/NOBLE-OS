@@ -106,16 +106,16 @@ export default function DashboardPage() {
             {/* Filters (Visible in Overview Mode) */}
             {viewMode === 'overview' && (
                 <div className="flex items-center gap-4 flex-wrap animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
-                    <div className="flex items-center bg-white rounded-full p-1.5 shadow-sm border border-slate-100">
+                    <div className="flex items-center bg-white/40 backdrop-blur-md rounded-full p-1 shadow-sm border border-white/20">
                         {filters.map(filter => (
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
                                 className={cn(
-                                    "px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300",
+                                    "px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-500",
                                     activeFilter === filter
-                                        ? "bg-slate-900 text-white shadow-md"
-                                        : "text-slate-500 hover:text-slate-800 hover:bg-slate-50"
+                                        ? "bg-slate-950 text-white shadow-[0_10px_20px_-5px_rgba(0,0,0,0.3)] scale-105"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                                 )}
                             >
                                 {filter}
