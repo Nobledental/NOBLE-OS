@@ -124,60 +124,20 @@ export function AdminDashboardView() {
                 </PanzeCard>
             </motion.div>
 
-            {/* 3. Operations & Queue (3 Columns) */}
-            <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-[500px]">
-                {/* Column 1: Live Queue */}
-                <div className="space-y-6 lg:h-full">
+            {/* 3. Operations & Queue */}
+            <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Column 1: Live Queue (1/3 width) */}
+                <div className="space-y-6">
                     <ActiveQueue />
                 </div>
 
-                {/* Column 2: Operations Deck (Tabs styled as cards) */}
-                <div className="grid grid-rows-2 gap-6 h-full">
-                    <PanzeCard className="p-0 overflow-hidden border-none shadow-sm flex flex-col h-full bg-white dark:bg-slate-900 group relative">
-                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">
-                            <ScrollText className="w-12 h-12 text-indigo-900" />
-                        </div>
-                        <div className="p-4 bg-indigo-50/50 border-b border-indigo-100 flex items-center gap-2">
-                            <ScrollText className="w-4 h-4 text-indigo-600" />
-                            <span className="text-xs font-black uppercase text-indigo-900 tracking-widest">Tariff Master</span>
-                        </div>
-                        <div className="flex-1 overflow-auto p-2">
-                            <TariffPage />
-                        </div>
-                    </PanzeCard>
-
-                    <PanzeCard className="p-0 overflow-hidden border-none shadow-sm flex flex-col h-full bg-white dark:bg-slate-900">
-                        <div className="p-4 bg-emerald-50/50 border-b border-emerald-100 flex items-center gap-2">
-                            <Wallet className="w-4 h-4 text-emerald-600" />
-                            <span className="text-xs font-black uppercase text-emerald-900 tracking-widest">EOD Settlement</span>
-                        </div>
-                        <div className="flex-1 overflow-auto p-2">
-                            <SettlementPage />
-                        </div>
-                    </PanzeCard>
+                {/* Column 2 & 3: Clinic Management Deck (2/3 width) */}
+                <div className="lg:col-span-2 space-y-4">
+                    <div className="flex items-center justify-between mb-4">
+                        <h2 className="text-lg font-black italic tracking-tight text-slate-400 uppercase">Clinic Configuration</h2>
+                    </div>
+                    <ClinicManagementDeck />
                 </div>
-
-                {/* Column 3: Ledger & Specialist */}
-                <div className="h-full">
-                    <PanzeCard className="h-full p-0 overflow-hidden border-none shadow-sm flex flex-col bg-white dark:bg-slate-900">
-                        <div className="p-4 bg-purple-50/50 border-b border-purple-100 flex items-center gap-2">
-                            <Briefcase className="w-4 h-4 text-purple-600" />
-                            <span className="text-xs font-black uppercase text-purple-900 tracking-widest">Specialist Ledger</span>
-                        </div>
-                        <div className="flex-1 overflow-auto p-4">
-                            <ConsultantLedgerPanel isAdmin={true} />
-                        </div>
-                    </PanzeCard>
-                </div>
-            </motion.div>
-
-            {/* 4. Clinic Management Deck (Reference Features) *NEW* */}
-            <motion.div variants={itemVariants} className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <h2 className="text-lg font-black italic tracking-tight text-slate-400 uppercase">Clinic Configuration</h2>
-                    <Badge variant="outline" className="border-indigo-100 text-indigo-400">Admin Only</Badge>
-                </div>
-                <ClinicManagementDeck />
             </motion.div>
         </div>
     );
