@@ -224,13 +224,13 @@ export function ClinicManagementDeck() {
                                     </div>
 
                                     <div className="flex flex-col items-end gap-2">
-                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white/40">{feature.category}</span>
+                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white/70">{feature.category}</span>
                                         {feature.locked ? (
                                             <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/20">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-white/5 border border-white/5 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white/30">
+                                            <div className="bg-white/5 border border-white/5 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white/60">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -246,7 +246,7 @@ export function ClinicManagementDeck() {
                                     <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[11px] md:text-[12px] text-white/50 font-medium leading-normal group-hover:text-white/80 transition-all duration-700 group-hover:translate-x-1">
+                                    <p className="text-[11px] md:text-[12px] text-white/70 font-medium leading-normal group-hover:text-white transition-all duration-700 group-hover:translate-x-1">
                                         {feature.subtitle}
                                     </p>
                                 </div>
@@ -327,15 +327,15 @@ export function ClinicManagementDeck() {
                                     </div>
                                     <div className="space-y-4 relative z-10">
                                         <div className="flex items-center justify-center gap-4">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500/40" />
-                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white/20 uppercase">Core Logic Layer</span>
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500/60" />
+                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white/60 uppercase">Core Logic Layer</span>
                                         </div>
-                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight italic">Workflow <span className="text-white/10 font-light">Optimization</span></h3>
-                                        <p className="text-white/30 text-[11px] font-medium max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight italic">Workflow <span className="text-white/30 font-light">Optimization</span></h3>
+                                        <p className="text-white/60 text-[11px] font-medium max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
                                             Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle.
                                         </p>
                                     </div>
-                                    <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/5 bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/5 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
+                                    <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/10 bg-white/[0.05] text-white/70 hover:text-white hover:bg-white/10 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
                                         View Documentation
                                     </Button>
                                 </div>
