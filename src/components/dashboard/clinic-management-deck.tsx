@@ -174,14 +174,15 @@ export function ClinicManagementDeck() {
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Warm Orange Hover Glow (Image Matched) */}
-                            <div className="absolute -inset-[1px] bg-gradient-to-br from-orange-600/60 to-red-600/40 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 -z-10" />
+                            {/* Pure White Hover Glow */}
+                            <div className="absolute -inset-[1px] bg-white/30 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-500 -z-10" />
+                            <div className="absolute -inset-[2px] bg-white/10 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-md transition-all duration-500 -z-10" />
 
                             {/* Compact Dark Node Card */}
-                            <div className="bg-[#05060f] rounded-[1.8rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[170px] border border-white/5 shadow-2xl transition-all duration-500 group-hover:border-orange-500/30 group-hover:bg-[#0a0b14]">
+                            <div className="bg-[#05060f] rounded-[1.8rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[170px] border border-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#0a0b14]">
                                 {/* Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-6">
-                                    <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10 group-hover:bg-orange-600 group-hover:border-orange-500 group-hover:shadow-[0_0_20px_rgba(234,88,12,0.4)] transition-all duration-500">
+                                    <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10 group-hover:bg-white group-hover:border-white group-hover:text-black group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-500">
                                         <feature.icon className="w-4.5 h-4.5" />
                                     </div>
                                     {feature.locked ? (
@@ -195,22 +196,22 @@ export function ClinicManagementDeck() {
 
                                 {/* Content Section */}
                                 <div className="mt-auto relative z-10">
-                                    <h3 className="text-xl font-black tracking-tight text-white mb-1 leading-none group-hover:text-orange-500 transition-colors duration-500">
+                                    <h3 className="text-xl font-black tracking-tight text-white mb-1 leading-none group-hover:text-white transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] text-white/30 font-medium leading-tight">
+                                    <p className="text-[10px] text-white/30 font-medium leading-tight group-hover:text-white/50 transition-colors duration-500">
                                         {feature.subtitle}
                                     </p>
                                 </div>
 
-                                {/* Refined Action Line (Orange) */}
+                                {/* Refined Action Line (Silver/White) */}
                                 {!feature.locked && (
                                     <div className="absolute bottom-4 left-6 right-6 h-[1.5px] bg-white/5 rounded-full overflow-hidden">
                                         <motion.div
                                             initial={{ x: '-100%' }}
                                             whileHover={{ x: '0%' }}
                                             transition={{ duration: 0.4 }}
-                                            className="w-full h-full bg-gradient-to-r from-orange-600 to-red-600"
+                                            className="w-full h-full bg-gradient-to-r from-white/20 via-white/80 to-white/20"
                                         />
                                     </div>
                                 )}
