@@ -105,7 +105,7 @@ export function TariffWidget() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="text-base font-black text-slate-900 group-hover:text-neo-vibrant-blue transition-all">
+                            <div className="text-base font-black text-slate-900 group-hover:text-neo-vibrant-blue transition-all tabular-nums">
                                 ₹{item.cost.toLocaleString()}
                             </div>
                         </div>

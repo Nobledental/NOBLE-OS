@@ -47,7 +47,7 @@ export default function DashboardPage() {
                 return <AssistantDashboardView />;
             case "ADMIN":
             default:
-                return <AdminDashboardView />;
+                return <AdminDashboardView activeFilter={activeFilter} />;
         }
     };
 

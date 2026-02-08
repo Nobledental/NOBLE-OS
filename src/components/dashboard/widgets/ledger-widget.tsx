@@ -65,19 +65,19 @@ export function LedgerWidget() {
             <div className="p-6 grid grid-cols-2 gap-4">
                 <div className="p-5 rounded-3xl bg-white/40 border border-white/60 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
                     <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Gross Revenue</span>
-                    <div className="text-2xl font-black text-slate-900 mt-2 tracking-tighter">
+                    <div className="text-2xl font-black text-slate-900 mt-2 tracking-tighter tabular-nums">
                         ₹{mockStats.gross.toLocaleString()}
                     </div>
                 </div>
                 <div className="p-5 rounded-3xl bg-neo-emerald/5 border border-neo-emerald/20 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
                     <span className="text-[9px] font-black text-neo-emerald uppercase tracking-widest">Payable</span>
-                    <div className="text-2xl font-black text-neo-emerald mt-2 tracking-tighter">
+                    <div className="text-2xl font-black text-neo-emerald mt-2 tracking-tighter tabular-nums">
                         ₹{mockStats.payable.toLocaleString()}
                     </div>
                 </div>
                 <div className="p-5 rounded-3xl bg-neo-vibrant-blue/5 border border-neo-vibrant-blue/20 flex flex-col justify-between shadow-sm hover:shadow-md transition-all">
                     <span className="text-[9px] font-black text-neo-vibrant-blue uppercase tracking-widest">Commission</span>
-                    <div className="text-2xl font-black text-neo-vibrant-blue mt-2 tracking-tighter">
+                    <div className="text-2xl font-black text-neo-vibrant-blue mt-2 tracking-tighter tabular-nums">
                         ₹{mockStats.commission.toLocaleString()}
                     </div>
                 </div>
