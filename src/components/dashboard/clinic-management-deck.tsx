@@ -169,26 +169,31 @@ export function ClinicManagementDeck() {
                 {MANAGEMENT_FEATURES.map((feature, i) => {
                     const CardContent = (
                         <motion.div
-                            whileHover={{ y: -5, scale: 1.02 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                            whileHover={{ y: -8, scale: 1.04 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 15 }}
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Pure White Hover Glow */}
-                            <div className="absolute -inset-[1px] bg-white/30 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-500 -z-10" />
-                            <div className="absolute -inset-[2px] bg-white/10 rounded-[1.8rem] opacity-0 group-hover:opacity-100 blur-md transition-all duration-500 -z-10" />
+                            {/* Vision Pro Multi-Color Aura Glow */}
+                            <div className="absolute -inset-[2px] bg-white/10 rounded-[2.2rem] opacity-0 group-hover:opacity-100 blur-md transition-all duration-700 -z-10" />
+                            <div className="absolute -inset-4 bg-[radial-gradient(circle_at_center,_#007AFF_0%,_#A78BFA_40%,_#00CFFF_70%,_transparent_100%)] rounded-[3rem] opacity-0 group-hover:opacity-30 blur-2xl transition-all duration-1000 -z-10" />
 
-                            {/* Compact Dark Node Card */}
-                            <div className="bg-[#05060f] rounded-[1.8rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[170px] border border-white/5 shadow-2xl transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#0a0b14]">
+                            {/* High-Fidelity Glass Card */}
+                            <div className="bg-slate-950/40 backdrop-blur-2xl rounded-[2.2rem] overflow-hidden relative p-7 h-full flex flex-col min-h-[185px] border border-white/10 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-700 group-hover:border-white/20 group-hover:bg-slate-900/60">
+                                {/* Glossy Reflection */}
+                                <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+
                                 {/* Header Section */}
-                                <div className="flex justify-between items-start relative z-10 mb-6">
-                                    <div className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white border border-white/10 group-hover:bg-white group-hover:border-white group-hover:text-black group-hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-500">
-                                        <feature.icon className="w-4.5 h-4.5" />
+                                <div className="flex justify-between items-start relative z-10 mb-8">
+                                    <div className="w-11 h-11 rounded-2xl bg-white/5 flex items-center justify-center text-white border border-white/10 group-hover:bg-white group-hover:text-black group-hover:scale-110 group-hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] transition-all duration-500">
+                                        <feature.icon className="w-5 h-5" />
                                     </div>
                                     {feature.locked ? (
-                                        <Lock className="w-3.5 h-3.5 text-white/10" />
+                                        <div className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
+                                            <Lock className="w-3 h-3" />
+                                        </div>
                                     ) : feature.badge && (
-                                        <div className="bg-white/5 border border-white/10 text-[7px] uppercase font-black tracking-widest px-2 py-0.5 rounded-md text-white/40">
+                                        <div className="bg-cyan-400/10 border border-cyan-400/20 text-[8px] uppercase font-black tracking-[0.2em] px-3 py-1 rounded-full text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
                                             {feature.badge}
                                         </div>
                                     )}
@@ -196,22 +201,22 @@ export function ClinicManagementDeck() {
 
                                 {/* Content Section */}
                                 <div className="mt-auto relative z-10">
-                                    <h3 className="text-xl font-black tracking-tight text-white mb-1 leading-none group-hover:text-white transition-colors duration-500">
+                                    <h3 className="text-[22px] font-black tracking-tight text-white mb-1.5 leading-none transition-transform duration-500 group-hover:translate-x-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] text-white/30 font-medium leading-tight group-hover:text-white/50 transition-colors duration-500">
+                                    <p className="text-[11px] text-white/40 font-medium leading-tight group-hover:text-white/60 transition-all duration-500 group-hover:translate-x-1">
                                         {feature.subtitle}
                                     </p>
                                 </div>
 
-                                {/* Refined Action Line (Silver/White) */}
+                                {/* Vision Pro Interactive Indicator */}
                                 {!feature.locked && (
-                                    <div className="absolute bottom-4 left-6 right-6 h-[1.5px] bg-white/5 rounded-full overflow-hidden">
+                                    <div className="absolute bottom-5 left-7 right-7 h-[2px] bg-white/5 rounded-full overflow-hidden">
                                         <motion.div
                                             initial={{ x: '-100%' }}
                                             whileHover={{ x: '0%' }}
-                                            transition={{ duration: 0.4 }}
-                                            className="w-full h-full bg-gradient-to-r from-white/20 via-white/80 to-white/20"
+                                            transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                                            className="w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent"
                                         />
                                     </div>
                                 )}
