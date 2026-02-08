@@ -32,6 +32,15 @@ interface AdminDashboardViewProps {
 }
 
 export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboardViewProps) {
+    const revenueVal = activeFilter === "Today" ? "₹12,500" : activeFilter === "This Week" ? "₹84,000" : "₹3,42,500";
+    const patientVal = activeFilter === "Today" ? "08" : activeFilter === "This Week" ? "42" : "156";
+    const utilizationVal = activeFilter === "Today" ? "72%" : activeFilter === "This Week" ? "78%" : "84%";
+    const sentimentMsg = activeFilter === "Today"
+        ? "3 arrivals pending. Analysis shows high retention potential."
+        : activeFilter === "This Week"
+            ? "12 new registrants. Growth trend is holding strong."
+            : "75% practice growth through new acquisition. Retention stable.";
+
     return (
         <div className="space-y-12 min-h-[800px] pb-32 px-4 lg:px-0 bg-slate-50/10">
             {/* 1. Soft Glass Operations Summary */}
@@ -42,7 +51,13 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     visible: { transition: { staggerChildren: 0.12 } }
                 }}
             >
-                <OperationsSummaryGlass activeFilter={activeFilter} />
+                <OperationsSummaryGlass
+                    activeFilter={activeFilter}
+                    revenue={revenueVal}
+                    patients={patientVal}
+                    utilization={utilizationVal}
+                    sentiment={sentimentMsg}
+                />
             </motion.div>
 
             {/* 2. Analytics Grid */}

@@ -100,7 +100,8 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
     // - **Frosted Light Cards**: Replaced dark cards in the `ClinicManagementDeck` with light frosted glass pods (`bg-slate-200/50`) with deep backdrop blurs and high-radius corners.
     // - **High-Contrast Typography**: Switched all dashboard text to black (`text-slate-900`) for a modern, clean, and highly legible look.
     // - **Bento Operations Summary**: Replaced the old banner with a `OperationsSummaryGlass` component, featuring a large digital clock, "Happy Stats" widgets, and vibrant glow-blobs for depth.
-    // - **Vibrant Interactive Polish**: Added soft shadow transitions and pure white hover halos to the light-glass pods.
+    // - **Dynamic KPI Restoration**: Restored the logical mapping for Net Revenue, Patient Flow, and Clinical Utilization, ensuring data updates in real-time when switching between "Today", "This Week", and "This Month".
+    // - **Practice Sentiment integration**: Integrated the context-aware sentiment analysis into the glass bento grid.
     {
         title: "Specialists",
         subtitle: "Ledger & Settlements",

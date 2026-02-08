@@ -1,33 +1,45 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Plus, MoreVertical, Folder, Clock, Calendar, Search } from "lucide-react";
+import { Plus, MoreVertical, Folder, Clock, Calendar, Search, Users } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
 interface OperationsSummaryGlassProps {
     activeFilter: string;
+    revenue: string;
+    patients: string;
+    utilization: string;
+    sentiment?: string;
 }
 
-export function OperationsSummaryGlass({ activeFilter }: OperationsSummaryGlassProps) {
+export function OperationsSummaryGlass({
+    activeFilter,
+    revenue,
+    patients,
+    utilization,
+    sentiment = "Flow is optimizing, 3 new registrations verified."
+}: OperationsSummaryGlassProps) {
     return (
         <div className="relative w-full max-w-5xl mx-auto p-8 rounded-[4rem] bg-slate-50/50 backdrop-blur-2xl border border-white/80 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] overflow-hidden">
             {/* Background Decorative Glows */}
-            <div className="absolute -top-40 -left-40 w-96 h-96 bg-pink-400/20 blur-[120px] rounded-full animate-pulse" />
-            <div className="absolute top-20 -right-40 w-80 h-80 bg-blue-400/20 blur-[120px] rounded-full animate-pulse delay-700" />
-            <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-400/20 blur-[120px] rounded-full animate-pulse delay-1000" />
+            <div className="absolute -inset-0 overflow-hidden rounded-[4rem] pointer-events-none">
+                <div className="absolute -top-40 -left-40 w-96 h-96 bg-pink-400/20 blur-[120px] rounded-full animate-pulse" />
+                <div className="absolute top-20 -right-40 w-80 h-80 bg-blue-400/20 blur-[120px] rounded-full animate-pulse delay-700" />
+                <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 w-96 h-96 bg-orange-400/20 blur-[120px] rounded-full animate-pulse delay-1000" />
+            </div>
 
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Column 1: Top Actions & Clock */}
                 <div className="md:col-span-2 space-y-6">
                     <div className="flex gap-4 items-center">
-                        {/* 30 Mins Pill */}
+                        {/* Utilization Pill */}
                         <motion.div
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             className="bg-white/80 backdrop-blur-md border border-white px-8 py-6 rounded-[2.5rem] flex items-center gap-4 shadow-sm"
                         >
-                            <div className="text-3xl font-black text-slate-900 tracking-tighter">30 <span className="text-slate-400 font-bold tracking-normal text-xl">mins</span></div>
+                            <div className="text-3xl font-black text-slate-900 tracking-tighter">{utilization} <span className="text-slate-400 font-bold tracking-normal text-xl">util</span></div>
                             <div className="flex flex-col text-slate-300">
                                 <span className="h-2 leading-none">▲</span>
                                 <span className="h-2 leading-none">▼</span>
@@ -64,10 +76,10 @@ export function OperationsSummaryGlass({ activeFilter }: OperationsSummaryGlassP
                             <div className="bg-white/90 backdrop-blur-md p-6 rounded-[2.5rem] border border-white shadow-xl max-w-sm">
                                 <div className="flex items-center gap-2 mb-1">
                                     <span className="text-orange-500">☀️</span>
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Clinical Flow Peak</span>
+                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">{activeFilter} Insight</span>
                                 </div>
                                 <p className="text-slate-900 font-medium leading-tight">
-                                    Patient flow is <span className="font-black">optimizing</span>, 3 new registrations verified. Go carpe diem :)
+                                    {sentiment} <span className="opacity-60 italic">Go carpe diem :)</span>
                                 </p>
                             </div>
                         </div>
@@ -90,7 +102,7 @@ export function OperationsSummaryGlass({ activeFilter }: OperationsSummaryGlassP
                         </motion.div>
                     </div>
 
-                    {/* Happy Files Square */}
+                    {/* Happy Stats Square */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -102,15 +114,15 @@ export function OperationsSummaryGlass({ activeFilter }: OperationsSummaryGlassP
                                 whileHover={{ rotate: -10 }}
                                 className="w-16 h-16 bg-gradient-to-br from-indigo-500/80 to-purple-600/80 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/30"
                             >
-                                <Folder className="w-8 h-8 fill-white/20" />
+                                <Users className="w-8 h-8 fill-white/20" />
                             </motion.div>
                             <button className="p-2 hover:bg-slate-50 rounded-full transition-colors">
                                 <MoreVertical className="w-5 h-5 text-slate-300" />
                             </button>
                         </div>
                         <div className="mt-auto">
-                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Inventory</span>
-                            <h3 className="text-3xl font-black text-slate-900 tracking-tight leading-none mt-1 mb-4">Stock Ledger</h3>
+                            <span className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Patients Treated</span>
+                            <h3 className="text-5xl font-black text-slate-900 tracking-tighter leading-none mt-1 mb-4">{patients}</h3>
                             <div className="flex gap-4 border-t border-slate-50 pt-4 overflow-x-auto no-scrollbar">
                                 {[
                                     { icon: Folder, count: 88, color: "text-blue-500" },
@@ -141,20 +153,20 @@ export function OperationsSummaryGlass({ activeFilter }: OperationsSummaryGlassP
                         </div>
                     </motion.div>
 
-                    {/* Long Status Pill */}
+                    {/* Revenue Pill */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
                         className="md:col-span-3 bg-white/90 backdrop-blur-md border border-white rounded-[2.5rem] p-8 shadow-xl flex items-center gap-6"
                     >
-                        <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-500 shrink-0">
-                            ☀️
+                        <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-500 shrink-0">
+                            ₹
                         </div>
                         <div>
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Practice Sentiment</span>
-                            <p className="text-xl font-medium text-slate-600 leading-tight mt-1">
-                                Revenue is <span className="font-black text-slate-900 tracking-tight">₹3.42L</span> this month. You're doing great!
+                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Net Revenue ({activeFilter})</span>
+                            <p className="text-3xl font-black text-slate-900 tracking-tighter mt-1">
+                                {revenue}
                             </p>
                         </div>
                     </motion.div>
