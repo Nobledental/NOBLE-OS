@@ -164,68 +164,79 @@ export function ClinicManagementDeck() {
 
     return (
         <div className="space-y-6">
-            {/* Horizontal Scroll on Mobile, Grid on Desktop */}
-            <div className="flex overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 auto-rows-min pb-4 md:pb-0 scroll-smooth snap-x snap-mandatory">
+            {/* Wrapping Grid (Rows not Columns, No Scroll) */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 auto-rows-min pb-20">
                 {MANAGEMENT_FEATURES.map((feature, i) => {
                     const CardContent = (
                         <motion.div
-                            whileHover={{ y: -5, scale: 1.01 }}
-                            transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                            className="h-full shrink-0 w-[240px] md:w-auto snap-center"
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                            className="h-full cursor-pointer relative"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            <PanzeCard
-                                className="cursor-pointer group flex flex-col items-start gap-4 border-white/40 bg-white/60 hover:bg-white/80 glass-white h-full relative p-5 md:p-6 transition-all duration-500 shadow-sm hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)]"
-                            >
-                                {feature.locked && (
-                                    <div className="absolute top-4 right-4 animate-in fade-in zoom-in duration-500">
-                                        <Lock className="w-3.5 h-3.5 text-slate-300" />
-                                    </div>
-                                )}
-                                <div className="w-full flex justify-between items-start">
-                                    <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-900 border border-slate-200 transition-all duration-500 group-hover:bg-neo-vibrant-blue group-hover:text-white group-hover:border-neo-vibrant-blue group-hover:shadow-[0_6px_15px_rgba(0,122,255,0.2)]">
-                                        <feature.icon className="w-5 h-5 text-current" />
-                                    </div>
-                                    {feature.badge && (
-                                        <Badge className="bg-neo-emerald/10 text-neo-emerald hover:bg-neo-emerald/20 border-neo-emerald/20 text-[9px] uppercase font-black tracking-widest px-2 py-0.5">
-                                            {feature.badge}
-                                        </Badge>
-                                    )}
-                                </div>
+                            {/* Thick White Frame */}
+                            <div className="p-2 bg-white rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] h-full transition-shadow duration-500 hover:shadow-[0_40px_80px_-20px_rgba(0,0,0,0.15)]">
+                                {/* Dark Core */}
+                                <div className="bg-slate-950 rounded-[2.5rem] overflow-hidden relative p-8 h-full flex flex-col min-h-[280px]">
+                                    {/* Subtle Texture Pattern */}
+                                    <div className="absolute inset-0 opacity-10 pointer-events-none"
+                                        style={{ backgroundImage: 'linear-gradient(45deg, #ffffff 12.5%, transparent 12.5%, transparent 50%, #ffffff 50%, #ffffff 62.5%, transparent 62.5%, transparent 100%)', backgroundSize: '4px 4px' }} />
 
-                                <div className="space-y-0.5 mt-1">
-                                    <h3 className="font-bold tracking-tight text-lg text-slate-900 group-hover:text-neo-vibrant-blue transition-colors duration-500 leading-tight">
-                                        {feature.title}
-                                    </h3>
-                                    <p className="text-[9px] text-slate-400 font-black uppercase tracking-[0.1em] line-clamp-1">
-                                        {feature.subtitle}
-                                    </p>
-                                </div>
+                                    {/* Accent Glow */}
+                                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-neo-vibrant-blue/20 blur-[60px] rounded-full group-hover:bg-neo-vibrant-blue/30 transition-all duration-700" />
 
-                                <div className="w-full mt-auto pt-4 flex items-center justify-between border-t border-slate-100/50 group-hover:border-neo-vibrant-blue/20 transition-colors duration-500">
-                                    <Badge variant="outline" className="border-slate-200 bg-white/50 text-slate-500 font-bold uppercase tracking-widest text-[8px] px-2 py-0.5">
-                                        {feature.chip}
-                                    </Badge>
+                                    {/* Header Section */}
+                                    <div className="flex justify-between items-start relative z-10 mb-auto">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white border border-white/10 backdrop-blur-sm">
+                                                <feature.icon className="w-5 h-5" />
+                                            </div>
+                                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40">
+                                                {feature.chip}
+                                            </span>
+                                        </div>
+                                        {feature.locked ? (
+                                            <Lock className="w-4 h-4 text-white/20" />
+                                        ) : feature.badge && (
+                                            <Badge className="bg-neo-vibrant-blue text-white border-none text-[8px] uppercase font-black tracking-widest px-2 py-0.5 rounded-full">
+                                                {feature.badge}
+                                            </Badge>
+                                        )}
+                                    </div>
+
+                                    {/* Content Section */}
+                                    <div className="mt-8 relative z-10">
+                                        <h3 className="text-3xl font-black tracking-tight text-white mb-2 leading-none">
+                                            {feature.title}
+                                        </h3>
+                                        <p className="text-[11px] text-white/50 font-medium leading-relaxed max-w-[80%]">
+                                            {feature.subtitle}
+                                        </p>
+                                    </div>
+
+                                    {/* Action Indicator (Editorial Style) */}
                                     {!feature.locked && (
-                                        <div className="w-7 h-7 rounded-full bg-neo-vibrant-blue/5 text-neo-vibrant-blue flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-neo-vibrant-blue hover:text-white">
-                                            <ChevronRight className="w-4 h-4" />
+                                        <div className="mt-8 flex items-center gap-2 group-hover:gap-4 transition-all duration-500 relative z-10">
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-neo-vibrant-blue">Configure Node</span>
+                                            <div className="h-[1px] w-8 bg-neo-vibrant-blue/30 flex-1" />
+                                            <ChevronRight className="w-4 h-4 text-neo-vibrant-blue" />
                                         </div>
                                     )}
                                 </div>
-                            </PanzeCard>
+                            </div>
                         </motion.div>
                     );
 
                     if (feature.href && !feature.action) {
                         return (
-                            <Link key={i} href={feature.locked ? "#" : feature.href} className={feature.locked ? "cursor-not-allowed opacity-60 shrink-0 w-[240px] md:w-auto" : "shrink-0 w-[240px] md:w-auto"}>
+                            <Link key={i} href={feature.locked ? "#" : feature.href} className={feature.locked ? "cursor-not-allowed opacity-60" : ""}>
                                 {CardContent}
                             </Link>
                         );
                     }
 
                     return (
-                        <div key={i} className={feature.locked ? "cursor-not-allowed opacity-60 shrink-0 w-[240px] md:w-auto" : "shrink-0 w-[240px] md:w-auto"}>
+                        <div key={i} className={feature.locked ? "cursor-not-allowed opacity-60" : ""}>
                             {CardContent}
                         </div>
                     );
