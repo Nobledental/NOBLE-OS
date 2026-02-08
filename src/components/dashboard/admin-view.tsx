@@ -9,7 +9,7 @@ import { ChiefPulse } from "./chief-pulse";
 import { SplineChart } from "@/components/ui/charts/spline-chart";
 import { DonutChart } from "@/components/ui/charts/donut-chart";
 import { PanzeCard } from "@/components/ui/panze-card";
-import { Mic, Search, ShieldCheck, Zap as ZapIcon, ScrollText, Wallet, Activity, Briefcase } from "lucide-react";
+import { Mic, Search, ShieldCheck, Zap as ZapIcon, ScrollText, Wallet, Activity, Briefcase, ArrowUpRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
 import { useState } from "react";
@@ -27,103 +27,110 @@ const itemVariants = {
 
 export function AdminDashboardView() {
     return (
-        <div className="space-y-10 min-h-[800px] pb-24 px-4 lg:px-0">
-            {/* 1. Admin Header & Quick Stats (Neo-Trinity Style) */}
+        <div className="space-y-12 min-h-[800px] pb-32 px-4 lg:px-0">
+            {/* 1. Admin Header & Quick Stats (Apple Refined Style) */}
             <motion.div
                 initial="hidden"
                 animate="visible"
                 variants={{
-                    visible: { transition: { staggerChildren: 0.1 } }
+                    visible: { transition: { staggerChildren: 0.12 } }
                 }}
-                className="grid grid-cols-1 md:grid-cols-4 gap-8"
+                className="grid grid-cols-1 md:grid-cols-4 gap-10"
             >
-                <PanzeCard className="md:col-span-2 bg-gradient-to-br from-[#0A1128] via-[#001D3D] to-black text-white border-white/5 relative overflow-hidden flex flex-col justify-between min-h-[220px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] rounded-[3rem]">
-                    <div className="relative z-10 p-2">
-                        <div className="flex items-center gap-2 mb-2 opacity-60">
-                            <ShieldCheck className="w-4 h-4 text-neo-vibrant-blue" />
-                            <span className="text-[10px] uppercase tracking-[0.3em] font-bold">Secure Terminal</span>
+                <PanzeCard className="md:col-span-2 group glass-neo border-white/10 bg-white/[0.03] text-white relative overflow-hidden flex flex-col justify-between min-h-[250px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-neo-vibrant-blue/20">
+                    <div className="relative z-10 p-4">
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-8 h-8 rounded-lg bg-neo-vibrant-blue/20 flex items-center justify-center border border-neo-vibrant-blue/30">
+                                <ShieldCheck className="w-4 h-4 text-neo-vibrant-blue" />
+                            </div>
+                            <span className="text-[11px] uppercase tracking-[0.4em] font-black text-neo-vibrant-blue/80">CORE COMMAND SERVER</span>
                         </div>
-                        <h2 className="text-4xl font-black tracking-tighter mb-1 bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/40">
-                            Command <span className="text-neo-vibrant-blue italic text-2xl font-light ml-2">Center</span>
+                        <h2 className="text-5xl font-black tracking-tighter mb-2 text-ios-gradient leading-none">
+                            Operational <span className="text-white italic font-serif">Flux</span>
                         </h2>
                     </div>
 
-                    <div className="relative z-10 flex gap-6 mt-4 p-2">
-                        <div className="glass-neo px-6 py-4 flex-1 border-white/5 bg-white/[0.02]">
-                            <div className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1 font-black">Gross Revenue</div>
-                            <div className="text-3xl font-black tracking-tighter">₹ 42,500</div>
-                            <div className="text-[9px] text-neo-emerald font-bold mt-1">+12.5% vs yesterday</div>
+                    <div className="relative z-10 flex gap-8 p-4">
+                        <div className="glass-frost flex-1 px-8 py-6 border-white/5 bg-white/[0.02] flex flex-col justify-center">
+                            <div className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 font-black">Revenue Velocity</div>
+                            <div className="text-4xl font-black tracking-tighter text-white">₹ 42,500</div>
+                            <div className="text-[10px] text-neo-emerald font-bold mt-2 flex items-center gap-1">
+                                <ArrowUpRight className="w-3 h-3" /> +12.5% VITALITY
+                            </div>
                         </div>
-                        <div className="glass-neo px-6 py-4 flex-1 border-white/5 bg-white/[0.02]">
-                            <div className="text-[9px] uppercase tracking-[0.2em] text-white/40 mb-1 font-black">Capacity</div>
-                            <div className="text-3xl font-black tracking-tighter">12<span className="text-white/20">/15</span></div>
-                            <div className="text-[9px] text-neo-lavender font-bold mt-1">3 slots available</div>
+                        <div className="glass-frost flex-1 px-8 py-6 border-white/5 bg-white/[0.02] flex flex-col justify-center">
+                            <div className="text-[10px] uppercase tracking-[0.3em] text-white/40 mb-2 font-black">Node Capacity</div>
+                            <div className="text-4xl font-black tracking-tighter text-white">12<span className="text-white/20">/15</span></div>
+                            <div className="text-[10px] text-neo-lavender font-bold mt-2">3 SLOTS SYNCHED</div>
                         </div>
                     </div>
 
-                    {/* Decorative Elements */}
-                    <div className="absolute -right-10 -bottom-10 w-64 h-64 bg-neo-vibrant-blue/10 blur-[100px] rounded-full" />
-                    <ZapIcon className="absolute right-6 top-6 w-12 h-12 text-white/5 rotate-12" />
+                    {/* Decorative Elements - Dynamic Aura */}
+                    <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-neo-vibrant-blue/20 blur-[120px] rounded-full group-hover:bg-neo-vibrant-blue/30 transition-all duration-1000" />
+                    <ZapIcon className="absolute right-8 top-8 w-16 h-16 text-white/5 rotate-12 group-hover:scale-110 transition-transform duration-1000" />
                 </PanzeCard>
 
-                <PanzeCard className="flex flex-col justify-between p-8 min-h-[220px] glass-neo border-white/5 bg-white/[0.01] rounded-[3rem]">
+                <PanzeCard className="flex flex-col justify-between p-10 min-h-[250px] glass-neo border-white/10 bg-white/[0.02] rounded-[3rem] animate-float">
                     <div className="flex items-start justify-between">
-                        <div className="w-14 h-14 rounded-[1.5rem] bg-gradient-to-br from-neo-emerald/20 to-transparent border border-neo-emerald/20 flex items-center justify-center text-neo-emerald shadow-lg shadow-emerald-500/10">
-                            <Activity className="w-7 h-7" />
+                        <div className="w-16 h-16 rounded-[2rem] bg-gradient-to-br from-neo-emerald/30 to-transparent border border-neo-emerald/30 flex items-center justify-center text-neo-emerald shadow-2xl shadow-neo-emerald/20">
+                            <Activity className="w-8 h-8" />
                         </div>
                         <div className="text-right">
-                            <div className="text-[10px] font-black uppercase text-slate-500 tracking-widest mb-1">Clinic Pulse</div>
-                            <Badge variant="outline" className="bg-neo-emerald/10 text-neo-emerald border-neo-emerald/20 px-2 py-0 text-[9px] font-bold">OPTIMAL</Badge>
+                            <div className="text-[11px] font-black uppercase text-white/30 tracking-[0.3em] mb-2">SYSTEM PULSE</div>
+                            <Badge variant="outline" className="bg-neo-emerald/20 text-neo-emerald border-neo-emerald/30 px-3 py-1 text-[10px] font-black">STEADY</Badge>
                         </div>
                     </div>
 
-                    <div className="space-y-3">
-                        <div className="flex justify-between text-[11px] font-bold text-slate-400 uppercase tracking-tighter">
-                            <span>Efficiency</span>
-                            <span>85%</span>
+                    <div className="space-y-4">
+                        <div className="flex justify-between text-[11px] font-black text-white/40 uppercase tracking-widest">
+                            <span>Biometric Load</span>
+                            <span className="text-neo-emerald">85%</span>
                         </div>
-                        <div className="w-full bg-white/5 h-2.5 rounded-full overflow-hidden border border-white/5">
+                        <div className="w-full bg-white/5 h-3 rounded-full overflow-hidden border border-white/10 p-0.5">
                             <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: "85%" }}
-                                transition={{ duration: 1, ease: [0.32, 0.72, 0, 1] }}
-                                className="bg-gradient-to-r from-neo-emerald to-emerald-400 h-full rounded-full shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                                transition={{ duration: 1.5, ease: [0.32, 0.72, 0, 1] }}
+                                className="bg-gradient-to-r from-neo-emerald via-emerald-400 to-neo-emerald h-full rounded-full shadow-[0_0_25px_rgba(16,185,129,0.4)]"
                             />
                         </div>
                     </div>
                 </PanzeCard>
 
-                <PanzeCard className="flex flex-col justify-between p-8 min-h-[220px] glass-neo border-white/5 bg-white/[0.01] rounded-[3rem]">
-                    <div className="space-y-1">
-                        <h3 className="text-[10px] font-black uppercase text-slate-500 tracking-[0.2em] mb-4">NEO Intelligence</h3>
-                        <Button variant="outline" className="w-full justify-between px-6 h-16 rounded-2xl border-white/5 bg-white/[0.02] text-slate-300 hover:text-white hover:bg-white/5 group transition-all duration-500">
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-xl bg-neo-vibrant-blue/10 text-neo-vibrant-blue flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                                    <Mic className="w-5 h-5" />
+                <PanzeCard className="flex flex-col justify-between p-10 min-h-[250px] glass-neo border-white/10 bg-white/[0.02] rounded-[3rem] hover:bg-white/[0.05] transition-all duration-500">
+                    <div className="space-y-2">
+                        <h3 className="text-[11px] font-black uppercase text-white/30 tracking-[0.4em] mb-6">NEO SYNAPSE</h3>
+                        <Button variant="outline" className="w-full justify-between px-8 h-20 rounded-[2rem] border-white/10 bg-white/[0.03] text-white hover:bg-white/10 group transition-all duration-700">
+                            <div className="flex items-center gap-5">
+                                <div className="w-12 h-12 rounded-2xl bg-neo-vibrant-blue/20 text-neo-vibrant-blue flex items-center justify-center group-hover:scale-110 transition-all duration-500 group-hover:shadow-[0_0_20px_rgba(0,122,255,0.3)]">
+                                    <Mic className="w-6 h-6" />
                                 </div>
-                                <span className="text-xs font-bold tracking-tight">Voice Action</span>
+                                <div className="text-left">
+                                    <div className="text-sm font-black tracking-tight">Active Matrix</div>
+                                    <div className="text-[9px] text-white/40 font-bold uppercase tracking-widest">Listening...</div>
+                                </div>
                             </div>
-                            <div className="w-2 h-2 rounded-full bg-neo-vibrant-blue animate-pulse" />
+                            <div className="w-3 h-3 rounded-full bg-neo-vibrant-blue animate-pulse shadow-[0_0_10px_var(--neo-vibrant-blue)]" />
                         </Button>
                     </div>
-                    <p className="text-[10px] text-slate-500 font-medium italic mt-2">Try: "Summarize today's revenue"</p>
+                    <p className="text-[11px] text-white/20 font-black italic mt-4 tracking-tight">"Protocol: Initialize Daily Summary"</p>
                 </PanzeCard>
             </motion.div>
 
             {/* 2. Main Analytics Grid (Neo-Trinity Bento) */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PanzeCard className="lg:col-span-2 p-0 overflow-hidden flex flex-col glass-neo border-white/5 bg-white/[0.01] rounded-[3rem] min-h-[450px]">
-                    <div className="p-8 border-b border-white/5 flex items-center justify-between">
+                <PanzeCard className="lg:col-span-2 p-0 overflow-hidden flex flex-col glass-neo border-white/10 bg-white/[0.02] rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-700 hover:shadow-neo-vibrant-blue/10">
+                    <div className="p-10 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
                         <div>
-                            <h3 className="font-black text-white tracking-widest uppercase text-xs">Financial Ecosystem</h3>
-                            <p className="text-[10px] text-slate-500 font-medium mt-1">Real-time revenue stream analysis</p>
+                            <h3 className="text-[11px] font-black text-white tracking-[0.4em] uppercase mb-2">FINANCIAL REVENUE VELOCITY</h3>
+                            <p className="text-[10px] text-white/40 font-bold italic tracking-tight uppercase">Proprietary Node Analysis Layer</p>
                         </div>
-                        <div className="flex gap-3">
-                            <Badge variant="secondary" className="rounded-xl px-4 py-1.5 bg-white/5 text-white border-white/10 hover:bg-white/10 transition-colors">Weekly</Badge>
-                            <Badge variant="outline" className="rounded-xl px-4 py-1.5 text-slate-500 border-white/5">Monthly</Badge>
+                        <div className="flex gap-4">
+                            <Badge variant="secondary" className="rounded-2xl px-6 py-2 bg-neo-vibrant-blue text-white border-neo-vibrant-blue/20 hover:scale-105 transition-all text-[10px] font-black uppercase tracking-widest shadow-[0_0_20px_rgba(0,122,255,0.4)]">WEEKLY OPS</Badge>
+                            <Badge variant="outline" className="rounded-2xl px-6 py-2 text-white/40 border-white/10 hover:bg-white/5 transition-all text-[10px] font-black uppercase tracking-widest">MONTHLY NODE</Badge>
                         </div>
                     </div>
-                    <div className="flex-1 p-6">
+                    <div className="flex-1 p-10 bg-gradient-to-b from-transparent to-white/[0.01]">
                         <SplineChart
                             title=""
                             data={[
@@ -140,16 +147,16 @@ export function AdminDashboardView() {
                     </div>
                 </PanzeCard>
 
-                <PanzeCard className="flex flex-col p-8 glass-neo border-white/5 bg-white/[0.01] rounded-[3rem] min-h-[450px]">
-                    <div className="mb-10">
-                        <h3 className="font-black text-white tracking-widest uppercase text-xs">Department Distribution</h3>
-                        <p className="text-[10px] text-slate-500 font-medium mt-1">Load balance across specialties</p>
+                <PanzeCard className="flex flex-col p-10 glass-neo border-white/10 bg-white/[0.02] rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)]">
+                    <div className="mb-12">
+                        <h3 className="text-[11px] font-black text-white tracking-[0.4em] uppercase mb-2">NEO LOAD DISTRIBUTION</h3>
+                        <p className="text-[10px] text-white/40 font-bold italic tracking-tight uppercase">Cross-Department Synergetic Matrix</p>
                     </div>
-                    <div className="flex-1 flex items-center justify-center relative">
+                    <div className="flex-1 flex items-center justify-center relative scale-110">
                         <DonutChart
                             title=""
-                            totalLabel="Active"
-                            totalValue="86"
+                            totalLabel="VITAL"
+                            totalValue="86%"
                             data={[
                                 { name: 'General', value: 35, color: '#007AFF' },
                                 { name: 'Ortho', value: 25, color: '#A78BFA' },
@@ -159,7 +166,7 @@ export function AdminDashboardView() {
                         />
                         {/* Center decoration */}
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div className="w-32 h-32 bg-neo-vibrant-blue/5 blur-[40px] rounded-full" />
+                            <div className="w-40 h-40 bg-neo-vibrant-blue/10 blur-[60px] rounded-full" />
                         </div>
                     </div>
                 </PanzeCard>
@@ -173,13 +180,13 @@ export function AdminDashboardView() {
                 </div>
 
                 {/* Column 2 & 3: Clinic Management Deck (Neo-Integrated) */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="flex items-center gap-4 mb-2">
-                        <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/10" />
-                        <h2 className="text-[10px] font-black italic tracking-[0.3em] text-white/30 uppercase">Operational Architecture</h2>
-                        <div className="h-px flex-1 bg-gradient-to-l from-transparent to-white/10" />
+                <div className="lg:col-span-2 space-y-10">
+                    <div className="flex items-center gap-6 p-4">
+                        <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                        <h2 className="text-[12px] font-black italic tracking-[0.5em] text-white/50 uppercase whitespace-nowrap">Core Synergetic Deck</h2>
+                        <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                     </div>
-                    <div className="glass-neo p-2 border-white/5 bg-white/[0.01] rounded-[3.5rem]">
+                    <div className="glass-frost px-4 py-8 border-white/10 bg-white/[0.02] rounded-[4rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.6)]">
                         <ClinicManagementDeck />
                     </div>
                 </div>

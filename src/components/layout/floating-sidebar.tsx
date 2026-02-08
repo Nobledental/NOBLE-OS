@@ -20,8 +20,7 @@ import {
     LogOut,
     ShieldCheck,
     Grid,
-    FlaskConical,
-    TrendingUp
+    FlaskConical
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -62,45 +61,54 @@ export function FloatingSidebar() {
 
     return (
         <TooltipProvider>
-            {/* Desktop Sidebar (Fixed Left) */}
+            {/* Desktop Sidebar (Apple Organic Dock) */}
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center"
+                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-6 p-5 glass-frost border-white/20 bg-white/[0.05] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] rounded-[3.5rem]"
             >
-                <div className="glass-neo p-4 flex flex-col gap-4 shadow-[0_30px_60px_-12px_rgba(0,0,0,0.5)] border-white/10">
-                    <div className="w-12 h-12 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-blue-500/20 rotate-3">
-                        <Activity className="w-6 h-6 text-white" />
+                <div className="flex flex-col items-center">
+                    <div className="mb-6 group relative">
+                        <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-2xl shadow-neo-vibrant-blue/40 group-hover:scale-110 transition-all duration-700 cursor-pointer">
+                            <Activity className="w-8 h-8 drop-shadow-lg" />
+                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-5">
                         {filteredItems.map((item) => {
-                            const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                             const Icon = item.icon;
+                            const isActive = pathname === item.href;
 
                             return (
-                                <Tooltip key={item.href}>
+                                <Tooltip key={item.id}>
                                     <TooltipTrigger asChild>
                                         <Link href={item.href}>
                                             <motion.div
-                                                whileHover={{ scale: 1.1, x: 5 }}
+                                                whileHover={{ scale: 1.15, x: 4 }}
+                                                whileTap={{ scale: 0.9 }}
                                                 className={cn(
-                                                    "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 relative group",
+                                                    "relative w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-500",
                                                     isActive
-                                                        ? "bg-white/10 text-neo-vibrant-blue shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
-                                                        : "text-slate-400 hover:text-white"
-                                                )}>
-                                                <Icon className={cn("w-5 h-5 transition-transform duration-500", isActive && "scale-110")} />
+                                                        ? "bg-white/[0.1] text-white shadow-xl border border-white/20"
+                                                        : "text-white/40 hover:text-white hover:bg-white/[0.05]"
+                                                )}
+                                            >
+                                                <Icon className={cn(
+                                                    "w-6 h-6 transition-all duration-500",
+                                                    isActive ? "scale-110 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]" : ""
+                                                )} />
+
                                                 {isActive && (
                                                     <motion.div
                                                         layoutId="sidebar-active"
-                                                        className="absolute -left-1 w-1 h-6 bg-neo-vibrant-blue rounded-full shadow-[0_0_15px_rgba(0,122,255,0.8)]"
+                                                        className="absolute -left-6 w-1.5 h-8 bg-neo-vibrant-blue rounded-full shadow-[4px_0_15px_rgba(0,122,255,0.8)]"
+                                                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
                                                     />
                                                 )}
                                             </motion.div>
                                         </Link>
                                     </TooltipTrigger>
-                                    <TooltipContent side="right" className="font-bold bg-neo-midnight text-white border-white/10 ml-4 px-4 py-2 rounded-xl">
+                                    <TooltipContent side="right" className="glass-frost border-white/10 text-[10px] font-black uppercase tracking-widest text-white px-4 py-2">
                                         {item.label}
                                     </TooltipContent>
                                 </Tooltip>
@@ -108,29 +116,29 @@ export function FloatingSidebar() {
                         })}
                     </div>
 
-                    <div className="h-px w-8 bg-white/10 mx-auto my-2" />
+                    <div className="h-px w-8 bg-white/10 mx-auto my-4" />
 
-                    <button className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-500 hover:bg-red-500/10 hover:text-red-400 transition-all group">
-                        <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+                    <button className="w-14 h-14 rounded-2xl flex items-center justify-center text-white/30 hover:bg-red-500/20 hover:text-red-400 transition-all duration-500 group">
+                        <LogOut className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
                     </button>
                 </div>
             </motion.div>
 
-            {/* Mobile/Tablet Bottom Bar (Wavy Organic Style) */}
+            {/* Mobile/Tablet Bottom Bar (Wavy Apple Style) */}
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[90%] max-w-md h-20 glass-neo rounded-[2.5rem] items-center justify-around px-4 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6)] border-white/10 overflow-visible"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-frost rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-white/20 overflow-visible"
             >
                 {/* Active Shape Indicator (Organic Blob) */}
                 <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">
-                    {topBarItems.map((item, idx) => {
+                    {topBarItems.map((item) => {
                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                         return isActive && (
                             <motion.div
                                 key="blob"
                                 layoutId="mobile-blob"
-                                className="w-16 h-16 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-[2rem] blur-xl opacity-20 absolute"
+                                className="w-20 h-20 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-[2.5rem] blur-2xl opacity-30 absolute"
                             />
                         );
                     })}

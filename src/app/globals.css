@@ -172,82 +172,75 @@
   }
 
   body {
-    @apply bg-background text-foreground antialiased selection:bg-teal-100 selection:text-teal-900;
+    @apply antialiased selection:bg-neo-vibrant-blue/30;
+    background: fixed;
+    background-image:
+      radial-gradient(at 0% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(225, 39%, 20%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(225, 39%, 15%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 50%, hsla(225, 39%, 10%, 1) 0, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(225, 39%, 5%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 100%, hsla(180, 100%, 10%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(225, 39%, 0%, 1) 0, transparent 50%);
+    background-color: #000;
+    color: #fff;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
 
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-      font-family: var(--font-display);
-      @apply tracking-tight font-light;
-      /* Dream Design: Light weights for headers */
-    }
+  .dark body {
+    background-image:
+      radial-gradient(at 10% 20%, rgba(10, 17, 40, 1) 0%, transparent 60%),
+      radial-gradient(at 80% 10%, rgba(0, 29, 61, 1) 0%, transparent 60%),
+      radial-gradient(at 40% 90%, rgba(0, 53, 102, 1) 0%, transparent 60%),
+      radial-gradient(at 90% 80%, rgba(0, 8, 20, 1) 0%, transparent 60%);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply tracking-tight font-semibold;
   }
 }
 
-/* Dream Design Utilities */
-@utility bg-dream-mesh {
-  background-color: var(--background);
+/* Neo-Trinity High-Density Glass Utility */
+@utility glass-neo {
+  @apply backdrop-blur-2xl border border-white/10 rounded-[2.5rem];
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+@utility glass-frost {
+  @apply backdrop-blur-[40px] border border-white/20 rounded-[3rem];
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@utility glass-thick {
+  @apply backdrop-blur-[32px] border border-white/10 rounded-[2.5rem];
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Design Tokens Polish */
+@utility bg-apple-mesh {
+  background: #000;
   background-image:
-    radial-gradient(at 40% 20%, rgba(165, 243, 252, 0.1) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(221, 214, 254, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(253, 164, 175, 0.05) 0px, transparent 50%);
+    radial-gradient(circle at 0% 0%, hsla(225, 39%, 20%, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 100% 0%, hsla(339, 49%, 20%, 0.8) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, hsla(210, 100%, 15%, 0.8) 0%, transparent 50%);
   background-attachment: fixed;
 }
 
-@utility shadow-dream {
-  box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.03),
-    0 0 15px -3px rgba(0, 0, 0, 0.02);
-}
-
-@utility glass-neo {
-  @apply backdrop-blur-[40px] border rounded-[2.5rem];
-  background: linear-gradient(135deg, var(--neo-glass-bg), transparent);
-  border-color: var(--neo-glass-border);
-  box-shadow:
-    0 25px 50px -12px rgba(0, 0, 0, 0.5),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-@utility glass-dream {
-  @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-white/40 dark:border-white/5 rounded-[1.5rem];
-  box-shadow:
-    0 20px 40px -10px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
-}
-
-/* Legacy Glass Utilities (Keeping for backward compat, but mapped to new aesthetic where possible) */
-@utility bg-mesh-gradient {
-  @apply bg-dream-mesh;
-}
-
-@utility glass {
-  @apply glass-dream;
-}
-
-@utility glass-premium {
-  @apply glass-dream;
-}
-
-@utility glass-panze {
-  @apply glass-neo;
-}
-
 @utility text-ios-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-800 to-slate-500 dark:from-white dark:to-slate-400;
+  @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-200 to-white font-black;
 }
 
-/* Fluid Motion - Dream Animations */
-@utility animate-fade-in-up {
-  animation: dream-fade-in-up 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@utility animate-scale-in {
-  animation: dream-scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+/* Animations */
+@utility animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
 @keyframes dream-fade-in-up {
