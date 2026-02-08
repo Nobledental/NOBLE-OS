@@ -41,81 +41,67 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 }}
                 className="grid grid-cols-1 lg:grid-cols-3 gap-8"
             >
-                {/* Main Operations Summary (Vision Pro Glass) */}
-                <PanzeCard className="lg:col-span-2 group bg-slate-950/40 backdrop-blur-3xl border border-white/10 text-white relative overflow-hidden flex flex-col min-h-[380px] transition-all duration-700 p-10 rounded-[4rem] shadow-[0_40px_120px_-20px_rgba(0,0,0,0.6)]">
-                    {/* Animated Mesh Gradient Background (Vision Pro Style) */}
-                    <div className="absolute inset-0 z-0 overflow-hidden opacity-30">
-                        <motion.div
-                            animate={{
-                                scale: [1, 1.2, 1],
-                                rotate: [0, 90, 180, 270, 0],
-                                x: ['-10%', '10%', '-10%'],
-                                y: ['-10%', '10%', '-10%']
-                            }}
-                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(circle_at_center,_#007AFF_0%,_#A78BFA_30%,_#00CFFF_60%,_transparent_100%)] blur-[120px]"
-                        />
-                    </div>
+                {/* Main Operations Summary (Obsidian Glass) */}
+                <PanzeCard className="lg:col-span-2 group bg-black/40 backdrop-blur-[40px] border border-white/5 text-white relative overflow-hidden flex flex-col min-h-[380px] transition-all duration-700 p-10 rounded-[4rem] shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
+                    {/* Professional High-Fidelity Glass Reflection */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-white/[0.01] z-0 pointer-events-none" />
+                    <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_75%_0%,_rgba(255,255,255,0.03)_0%,_transparent_70%)] pointer-events-none" />
 
-                    {/* Glossy Reflection Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent z-0 pointer-events-none" />
-
-                    {/* Border Beam (Animated Light Edge) */}
-                    <div className="absolute inset-0 rounded-[4rem] border-[1.5px] border-transparent [mask-image:linear-gradient(white,white),linear-gradient(white,white)] [mask-clip:padding-box,border-box] [mask-composite:intersect] group-hover:bg-gradient-to-r group-hover:from-cyan-400 group-hover:via-purple-500 group-hover:to-cyan-400 transition-colors duration-1000 z-10" />
+                    {/* Smooth Subtle Gloss Overlay */}
+                    <div className="absolute inset-0 bg-white/[0.01] pointer-events-none" />
 
                     <div className="relative z-20 flex flex-col h-full">
                         <div className="flex items-center justify-between mb-12">
                             <div className="flex items-center gap-6">
                                 <Link href="/dashboard">
-                                    <Button variant="ghost" className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 p-0 text-white/50 hover:text-white border border-white/10 transition-all duration-500 backdrop-blur-md">
+                                    <Button variant="ghost" className="w-12 h-12 rounded-2xl bg-white/5 hover:bg-white/10 p-0 text-white/50 hover:text-white border border-white/10 transition-all duration-500 backdrop-blur-3xl">
                                         <ArrowLeft className="w-6 h-6" />
                                     </Button>
                                 </Link>
                                 <div>
                                     <div className="flex items-center gap-3 mb-1">
-                                        <motion.div
-                                            animate={{ width: [0, 40, 32] }}
-                                            className="h-[1.5px] bg-gradient-to-r from-cyan-400 to-purple-500"
-                                        />
-                                        <span className="text-[10px] uppercase tracking-[0.5em] font-black text-cyan-400/80 leading-none">Management Core</span>
+                                        <div className="w-6 h-[1.5px] bg-white/20" />
+                                        <span className="text-[10px] uppercase tracking-[0.4em] font-bold text-white/40 leading-none">Management Core</span>
                                     </div>
-                                    <h2 className="text-4xl font-black tracking-tighter text-white">
-                                        Operations <span className="text-white/30 italic">Perspective</span>
+                                    <h2 className="text-4xl font-semibold tracking-tight text-white">
+                                        Operations <span className="text-white/20 font-medium">Perspective</span>
                                     </h2>
                                 </div>
                             </div>
                             <div className="text-right">
-                                <div className="bg-white/10 border border-white/20 px-6 py-2.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] text-white/80 backdrop-blur-xl shadow-xl">
+                                <div className="bg-white/5 border border-white/10 px-6 py-2.5 rounded-2xl text-[10px] font-bold uppercase tracking-[0.2em] text-white/60 backdrop-blur-3xl shadow-[0_0_20px_rgba(255,255,255,0.02)]">
                                     {activeFilter} REVIEW
                                 </div>
                             </div>
                         </div>
 
-                        {/* Glossy KPI Pods (Vision Pro Style) */}
+                        {/* Professional KPI Pods (Pure White Design) */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-auto px-2 pb-2">
                             {[
-                                { label: "Net Revenue", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, color: "cyan-400", trend: "+8.2%" },
-                                { label: "Total Patients", value: activeFilter === "Today" ? "08" : "156", icon: Users, color: "purple-400", sub: "Growth Steady" },
-                                { label: "Utilization", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, color: "indigo-400", trend: "Peak" }
+                                { label: "Net Revenue", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, trend: "+8.2%" },
+                                { label: "Total Patients", value: activeFilter === "Today" ? "08" : "156", icon: Users, sub: "Growth Steady" },
+                                { label: "Utilization", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, trend: "Peak" }
                             ].map((pod, idx) => (
                                 <motion.div
                                     key={idx}
-                                    whileHover={{ y: -8, scale: 1.05 }}
-                                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                                    whileHover={{ y: -5 }}
                                     className="relative group/pod"
                                 >
-                                    <div className={`absolute -inset-4 bg-${pod.color}/20 rounded-[2.5rem] opacity-0 group-hover/pod:opacity-100 transition-opacity duration-700 blur-2xl`} />
-                                    <div className="relative bg-white/5 backdrop-blur-md border border-white/10 px-8 py-7 rounded-[2.5rem] transition-all duration-500 group-hover/pod:bg-white/10 group-hover/pod:border-white/20 flex flex-col items-center text-center">
-                                        <div className={`w-10 h-10 rounded-2xl bg-${pod.color}/10 border border-${pod.color}/20 flex items-center justify-center text-${pod.color} mb-4 group-hover/pod:scale-110 transition-transform duration-500`}>
+                                    {/* Pure White Hover Glow Effect */}
+                                    <div className="absolute -inset-4 bg-white/[0.04] rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-700 blur-2xl" />
+
+                                    <div className="relative bg-white/[0.02] backdrop-blur-3xl border border-white/5 px-8 py-8 rounded-[2.8rem] transition-all duration-500 group-hover/pod:bg-white/[0.05] group-hover/pod:border-white/20 flex flex-col items-center text-center">
+                                        {/* Icon Container with Inner Glow */}
+                                        <div className="w-11 h-11 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/60 mb-5 group-hover/pod:text-white transition-all duration-500 shadow-[inset_0_0_10px_rgba(255,255,255,0.05)]">
                                             <pod.icon className="w-5 h-5" />
                                         </div>
-                                        <span className="text-[9px] uppercase tracking-[0.3em] text-white/40 font-black mb-1">{pod.label}</span>
-                                        <div className="text-3xl font-black tracking-tighter text-white tabular-nums mb-3 group-hover/pod:scale-105 transition-transform duration-500">
+                                        <span className="text-[9px] uppercase tracking-[0.3em] text-white/30 font-bold mb-1.5">{pod.label}</span>
+                                        <div className="text-3xl font-bold tracking-tight text-white mb-4">
                                             {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                         </div>
                                         {pod.trend ? (
-                                            <div className="text-[9px] text-cyan-400 font-black px-3 py-1 rounded-full bg-cyan-400/10 uppercase tracking-widest flex items-center gap-1.5">
-                                                <TrendingUp className="w-3 h-3" /> {pod.trend}
+                                            <div className="text-[10px] text-white/50 font-bold px-3 py-1 rounded-full bg-white/5 border border-white/10 uppercase tracking-widest flex items-center gap-1.5 group-hover/pod:bg-white/10 group-hover/pod:text-white transition-all">
+                                                <TrendingUp className="w-3.5 h-3.5 opacity-50" /> {pod.trend}
                                             </div>
                                         ) : (
                                             <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">{pod.sub}</span>
@@ -127,50 +113,49 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                 </PanzeCard>
 
-                {/* Intelligence Core (Vision Pro Glass) */}
-                <PanzeCard className="flex flex-col bg-slate-900/60 backdrop-blur-3xl border border-white/10 rounded-[4rem] relative overflow-hidden group shadow-2xl p-0">
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
-                    <div className="p-8 space-y-10 flex-1 relative z-10">
+                {/* Intelligence Core (Obsidian Glass) */}
+                <PanzeCard className="flex flex-col bg-slate-950/20 backdrop-blur-[40px] border border-white/5 rounded-[4rem] relative overflow-hidden group shadow-2xl p-0 transition-all duration-700">
+                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.03] to-transparent pointer-events-none" />
+                    <div className="p-10 space-y-12 flex-1 relative z-10">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-5">
-                                <motion.div
-                                    whileHover={{ rotate: 180 }}
-                                    className="w-14 h-14 bg-white/5 flex items-center justify-center text-cyan-400 rounded-[1.5rem] border border-white/10 group-hover:bg-cyan-400 group-hover:text-black transition-all duration-700 shadow-xl"
-                                >
+                                <div className="w-14 h-14 bg-white/5 flex items-center justify-center text-white/40 rounded-[1.5rem] border border-white/10 group-hover:bg-white group-hover:text-black group-hover:scale-105 transition-all duration-700 shadow-xl">
                                     <ZapIcon className="w-7 h-7" />
-                                </motion.div>
+                                </div>
                                 <div>
-                                    <h3 className="text-[11px] font-black uppercase text-white/40 tracking-[0.5em] mb-1">Intelligence</h3>
+                                    <h3 className="text-[11px] font-bold uppercase text-white/30 tracking-[0.4em] mb-1">Intelligence</h3>
                                     <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                                        <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Active Pulse</span>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Active Pulse</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div className="relative group/insight">
-                            <div className="absolute -inset-4 bg-purple-500/10 rounded-[3rem] opacity-0 group-hover/insight:opacity-100 blur-2xl transition-all duration-700" />
-                            <div className="relative bg-white/5 rounded-[2.8rem] p-8 border border-white/10 backdrop-blur-md group-hover/insight:bg-white/10 transition-all duration-500">
+                            {/* Pure White Hover Glow */}
+                            <div className="absolute -inset-4 bg-white/[0.04] rounded-[3rem] opacity-0 group-hover/insight:opacity-100 blur-2xl transition-all duration-700" />
+
+                            <div className="relative bg-white/[0.01] rounded-[2.8rem] p-8 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/5 group-hover/insight:border-white/20 transition-all duration-500 shadow-[inset_0_0_20px_rgba(255,255,255,0.02)]">
                                 <div className="flex items-center gap-5 mb-6">
-                                    <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-400/20 group-hover/insight:border-purple-400 transition-colors duration-500">
+                                    <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-white/30 border border-white/10 group-hover/insight:text-white transition-all duration-500">
                                         <BarChart3 className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-lg font-black tracking-tight text-white leading-none mb-1">Growth Index</div>
-                                        <div className="text-[9px] text-purple-400 font-black uppercase tracking-[0.2em]">Audit Successful</div>
+                                        <div className="text-lg font-semibold tracking-tight text-white leading-none mb-1">Practice Velocity</div>
+                                        <div className="text-[10px] text-white/30 font-bold uppercase tracking-[0.15em]">Registry Updated</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] text-white/50 font-medium leading-[1.8] italic px-2">
-                                    "Our behavioral analysis suggests a 14% increase in high-value case conversions. Operationally, staff velocity is consistent with peak benchmarks."
+                                <p className="text-[11px] text-white/40 font-medium leading-[1.8] italic px-2">
+                                    "Our behavioral analysis suggests a consistent increase in high-value case conversions. Operationally, staff velocity remains at peak benchmarks."
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="p-6 bg-white/5 border-t border-white/10 relative z-10">
-                        <Button variant="ghost" className="w-full h-14 rounded-[2rem] bg-white/5 hover:bg-white/10 border border-white/10 text-white/40 hover:text-white text-[10px] font-black uppercase tracking-[0.3em] gap-3 transition-all duration-500 shadow-lg">
-                            <ScrollText className="w-4.5 h-4.5" /> Registry Insights
+                    <div className="p-6 bg-white/[0.02] border-t border-white/5 relative z-10">
+                        <Button variant="ghost" className="w-full h-14 rounded-[2rem] bg-white/5 hover:bg-white/10 border border-white/10 text-white/30 hover:text-white text-[10px] font-bold uppercase tracking-[0.3em] gap-3 transition-all duration-500">
+                            <ScrollText className="w-4.5 h-4.5 opacity-50" /> System Registry
                         </Button>
                     </div>
                 </PanzeCard>
@@ -220,13 +205,15 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
             </motion.div>
 
             {/* 3. Clinical Operations Center */}
-            <motion.div variants={itemVariants} className="space-y-10 pb-32">
-                <div className="flex items-center gap-6 p-4">
-                    <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-                    <h2 className="text-[12px] font-black tracking-[0.5em] text-slate-400 uppercase whitespace-nowrap">Clinical Operations Center</h2>
-                    <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
+            <motion.div variants={itemVariants} className="space-y-12 pb-32">
+                <div className="flex items-center gap-8 px-6">
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    <h2 className="text-[10px] font-bold tracking-[0.4em] text-white/30 uppercase whitespace-nowrap">Clinical Operations Center</h2>
+                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                 </div>
-                <div className="glass-white px-6 py-10 border-white/40 bg-white/60 rounded-[4rem] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.05)]">
+                <div className="bg-slate-950/10 backdrop-blur-3xl px-12 py-16 border border-white/5 rounded-[5rem] shadow-[0_60px_120px_-30px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+                    {/* Background Surface Glow */}
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(255,255,255,0.02)_0%,_transparent_50%)] pointer-events-none" />
                     <ClinicManagementDeck />
                 </div>
             </motion.div>
