@@ -13,12 +13,16 @@ interface SplineChartProps {
 
 export function SplineChart({ data, title, color = "#6366f1", className }: SplineChartProps) {
     return (
-        <PanzeCard className={cn("h-[300px] flex flex-col w-full", className)}>
-            <div className="mb-4 flex justify-between items-center">
-                <h3 className="text-lg font-bold text-slate-800">{title}</h3>
+        <PanzeCard className={cn("h-[400px] flex flex-col w-full bg-slate-950/20 backdrop-blur-3xl border border-white/5 rounded-[3rem] p-10 shadow-2xl transition-all duration-700 hover:border-white/10", className)}>
+            <div className="mb-8 flex justify-between items-center">
+                <div className="flex flex-col gap-1">
+                    <h3 className="text-[10px] font-bold text-white/30 uppercase tracking-[0.4em] mb-1">Analytics</h3>
+                    <h2 className="text-xl font-semibold tracking-tight text-white">{title}</h2>
+                </div>
                 <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-slate-100" />
-                    <div className="w-3 h-3 rounded-full bg-slate-100" />
+                    <div className="w-8 h-8 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40">
+                        <div className="w-1.5 h-1.5 rounded-full bg-white/40 animate-pulse" />
+                    </div>
                 </div>
             </div>
 
@@ -27,39 +31,43 @@ export function SplineChart({ data, title, color = "#6366f1", className }: Splin
                     <AreaChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                         <defs>
                             <linearGradient id={`gradient-${title}`} x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor={color} stopOpacity={0.4} />
+                                <stop offset="5%" stopColor={color} stopOpacity={0.2} />
                                 <stop offset="95%" stopColor={color} stopOpacity={0} />
                             </linearGradient>
                         </defs>
-                        <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="#f1f5f9" />
+                        <CartesianGrid vertical={false} strokeDasharray="3 3" stroke="rgba(255,255,255,0.03)" />
                         <XAxis
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "#94a3b8", fontSize: 10, fontWeight: "bold" }}
+                            tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 9, fontWeight: "600", letterSpacing: "0.1em" }}
                             dy={10}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "#94a3b8", fontSize: 10 }}
+                            tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 9 }}
                         />
                         <Tooltip
                             contentStyle={{
-                                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                                borderRadius: "12px",
-                                border: "none",
-                                boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
+                                backgroundColor: "rgba(0, 0, 0, 0.8)",
+                                backdropFilter: "blur(20px)",
+                                borderRadius: "16px",
+                                border: "1px solid rgba(255,255,255,0.1)",
+                                boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                                color: "#fff"
                             }}
-                            cursor={{ stroke: color, strokeWidth: 2, strokeDasharray: "5 5" }}
+                            itemStyle={{ color: "#fff", fontSize: "12px", fontWeight: "600" }}
+                            cursor={{ stroke: "rgba(255,255,255,0.2)", strokeWidth: 1 }}
                         />
                         <Area
                             type="monotone"
                             dataKey="value"
                             stroke={color}
-                            strokeWidth={3}
+                            strokeWidth={2.5}
                             fillOpacity={1}
                             fill={`url(#gradient-${title})`}
+                            animationDuration={2000}
                         />
                     </AreaChart>
                 </ResponsiveContainer>
