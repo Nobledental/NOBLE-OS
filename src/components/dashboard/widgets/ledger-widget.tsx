@@ -38,7 +38,7 @@ export function LedgerWidget() {
                         <Briefcase className="w-5 h-5 text-neo-electric-blue" />
                     </div>
                     <div>
-                        <h3 className="text-xl font-serif italic tracking-tighter text-slate-900">Specialist Ledger</h3>
+                        <h3 className="text-xl font-bold tracking-tight text-slate-900">Specialist Ledger</h3>
                         <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">Financial Node Tracking</p>
                     </div>
                 </div>

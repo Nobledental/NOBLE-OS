@@ -58,7 +58,7 @@ export function ActiveQueue() {
         <PanzeCard className="h-full flex flex-col p-8 border-white/40 bg-white/60 overflow-hidden relative group glass-white">
             <div className="flex items-center justify-between mb-8 relative z-10">
                 <div className="space-y-1">
-                    <h3 className="text-3xl font-serif italic tracking-tighter text-slate-900">Clinical Queue</h3>
+                    <h3 className="text-3xl font-bold tracking-tight text-slate-900">Clinical Queue</h3>
                     <div className="flex items-center gap-2">
                         <Activity className="w-3 h-3 text-neo-emerald animate-pulse" />
                         <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Global Sync Active</span>
@@ -95,7 +95,7 @@ export function ActiveQueue() {
 
                                 <div className="flex-1 space-y-1">
                                     <div className="flex items-center gap-2">
-                                        <h4 className="font-serif italic tracking-tight text-xl text-slate-900">{item.patient.user.full_name}</h4>
+                                        <h4 className="font-bold tracking-tight text-xl text-slate-900">{item.patient.user.full_name}</h4>
                                         {item.is_emergency && (
                                             <Badge className="bg-rose-500 hover:bg-rose-600 border-none font-black text-[8px] uppercase tracking-widest px-2 py-0.5 text-white">SOS</Badge>
                                         )}
@@ -126,7 +126,7 @@ export function ActiveQueue() {
                     ) : (
                         <div className="h-full flex flex-col items-center justify-center py-10 space-y-4 opacity-50">
                             <Activity className="w-12 h-12 text-slate-300" />
-                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 italic">No Active Sessions</p>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">No Active Sessions</p>
                         </div>
                     )}
                 </AnimatePresence>

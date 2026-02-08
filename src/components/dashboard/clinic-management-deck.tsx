@@ -124,7 +124,7 @@ export function ClinicManagementDeck() {
                                 </div>
 
                                 <div className="space-y-1 mt-2">
-                                    <h3 className="font-serif italic tracking-tighter text-2xl text-slate-900 group-hover:text-neo-vibrant-blue transition-colors duration-500">
+                                    <h3 className="font-bold tracking-tight text-2xl text-slate-900 group-hover:text-neo-vibrant-blue transition-colors duration-500">
                                         {feature.title}
                                     </h3>
                                     <p className="text-[10px] text-slate-400 font-black uppercase tracking-[0.2em]">

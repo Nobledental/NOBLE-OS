@@ -30,7 +30,7 @@ export function AdminDashboardView() {
         <div className="space-y-12 min-h-[800px] pb-32 px-4 lg:px-0">
             {/* 1. Admin Header & Quick Stats (Apple Refined Style) */}
             <div className="flex flex-col mb-4">
-                <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-slate-900">Practice Overview</h2>
+                <h2 className="text-4xl lg:text-5xl font-bold tracking-tight text-slate-900">Practice Overview</h2>
                 <p className="text-slate-500 font-black uppercase tracking-[0.2em] text-[10px] mt-1 ml-1">Logged in as ADMIN</p>
             </div>
             <motion.div
@@ -49,8 +49,8 @@ export function AdminDashboardView() {
                             </div>
                             <span className="text-[11px] uppercase tracking-[0.4em] font-black text-neo-vibrant-blue/60">CORE COMMAND SERVER</span>
                         </div>
-                        <h2 className="text-5xl font-serif tracking-tighter mb-2 text-slate-900 leading-none">
-                            Operational <span className="italic uppercase text-neo-vibrant-blue/80">Flux</span>
+                        <h2 className="text-5xl font-bold tracking-tight mb-2 text-slate-900 leading-none">
+                            Operational <span className="uppercase text-neo-vibrant-blue/80">Flux</span>
                         </h2>
                     </div>
 
@@ -117,7 +117,7 @@ export function AdminDashboardView() {
                             <div className="w-3 h-3 rounded-full bg-neo-vibrant-blue animate-pulse shadow-[0_0_10px_var(--neo-vibrant-blue)]" />
                         </Button>
                     </div>
-                    <p className="text-[11px] text-slate-400 font-black italic mt-4 tracking-tight">"Protocol: Initialize Daily Summary"</p>
+                    <p className="text-[11px] text-slate-400 font-black mt-4 tracking-tight">"Protocol: Initialize Daily Summary"</p>
                 </PanzeCard>
             </motion.div>
 
@@ -127,7 +127,7 @@ export function AdminDashboardView() {
                     <div className="p-10 border-b border-white/20 flex items-center justify-between bg-white/40">
                         <div>
                             <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">FINANCIAL REVENUE VELOCITY</h3>
-                            <p className="text-[10px] text-slate-400 font-bold italic tracking-tight uppercase">Proprietary Node Analysis Layer</p>
+                            <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">Proprietary Node Analysis Layer</p>
                         </div>
                         <div className="flex gap-4">
                             <Badge variant="secondary" className="rounded-2xl px-6 py-2 bg-neo-vibrant-blue text-white border-neo-vibrant-blue/20 hover:scale-105 transition-all text-[10px] font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(0,122,255,0.2)]">WEEKLY OPS</Badge>
@@ -154,7 +154,7 @@ export function AdminDashboardView() {
                 <PanzeCard className="flex flex-col p-10 glass-white border-white/40 bg-white/60 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)]">
                     <div className="mb-12">
                         <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">NEO LOAD DISTRIBUTION</h3>
-                        <p className="text-[10px] text-slate-400 font-bold italic tracking-tight uppercase">Cross-Department Synergetic Matrix</p>
+                        <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">Cross-Department Synergetic Matrix</p>
                     </div>
                     <div className="flex-1 flex items-center justify-center relative scale-110">
                         <DonutChart
@@ -187,7 +187,7 @@ export function AdminDashboardView() {
                 <div className="lg:col-span-2 space-y-10">
                     <div className="flex items-center gap-6 p-4">
                         <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
-                        <h2 className="text-[12px] font-black italic tracking-[0.5em] text-slate-400 uppercase whitespace-nowrap">Core Synergetic Deck</h2>
+                        <h2 className="text-[12px] font-black tracking-[0.5em] text-slate-400 uppercase whitespace-nowrap">Core Synergetic Deck</h2>
                         <div className="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
                     </div>
                     <div className="glass-white px-2 py-6 border-white/40 bg-white/60 rounded-[4rem] shadow-[0_50px_100px_-30px_rgba(0,0,0,0.05)]">

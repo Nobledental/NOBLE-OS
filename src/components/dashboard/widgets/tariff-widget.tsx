@@ -41,7 +41,7 @@ export function TariffWidget() {
                         <FileText className="w-5 h-5 text-neo-vibrant-blue" />
                     </div>
                     <div>
-                        <h3 className="text-xl font-serif italic tracking-tighter text-slate-900">Tariff Master</h3>
+                        <h3 className="text-xl font-bold tracking-tight text-slate-900">Tariff Master</h3>
                         <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">Clinical Cost Matrix</p>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ export function TariffWidget() {
                             <div className="flex items-center gap-4">
                                 <span className="text-[10px] font-mono text-slate-400 opacity-60">#{item.id}</span>
                                 <div>
-                                    <div className="text-sm font-serif italic text-slate-800 group-hover:text-neo-vibrant-blue transition-colors">
+                                    <div className="text-sm font-bold text-slate-800 group-hover:text-neo-vibrant-blue transition-colors">
                                         {item.name}
                                     </div>
                                     <div className="flex items-center gap-2 mt-1">

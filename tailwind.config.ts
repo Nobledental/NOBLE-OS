@@ -12,9 +12,10 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['var(--font-outfit)'],
-                mono: ['var(--font-outfit)'], // Consolidated for cleaner look
-                display: ['var(--font-outfit)'],
+                sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', '"San Francisco"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                serif: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"San Francisco"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
+                display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"San Francisco"', 'sans-serif'],
             },
             colors: {
                 background: 'var(--background)',
