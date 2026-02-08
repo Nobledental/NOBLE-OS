@@ -95,13 +95,13 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         bg: "bg-white/10",
         href: "/dashboard/tariff"
     },
-    // ### 4. Dashboard "Soft Glass" Overhaul
-    // Shifted the entire Management Dashboard to a premium light-mode "Soft Glass" aesthetic:
-    // - **Frosted Light Cards**: Replaced dark cards in the `ClinicManagementDeck` with light frosted glass pods (`bg-slate-200/50`) with deep backdrop blurs and high-radius corners.
-    // - **High-Contrast Typography**: Switched all dashboard text to black (`text-slate-900`) for a modern, clean, and highly legible look.
-    // - **Bento Operations Summary**: Replaced the old banner with a `OperationsSummaryGlass` component, featuring a large digital clock, "Happy Stats" widgets, and vibrant glow-blobs for depth.
-    // - **Dynamic KPI Restoration**: Restored the logical mapping for Net Revenue, Patient Flow, and Clinical Utilization, ensuring data updates in real-time when switching between "Today", "This Week", and "This Month".
-    // - **Practice Sentiment integration**: Integrated the context-aware sentiment analysis into the glass bento grid.
+    /* ### 4. Dashboard "Soft Glass" Overhaul
+    Shifted the entire Management Dashboard to a premium light-mode "Soft Glass" aesthetic:
+    - **Frosted Light Cards**: Replaced dark cards in the `ClinicManagementDeck` with light frosted glass pods (`bg-slate-200/50`) with deep backdrop blurs and high-radius corners.
+    - **Bento Operations Summary**: Replaced the old banner with a `OperationsSummaryGlass` component, featuring a premium grid layout.
+    - **Content Recovery**: Restored all previous dashboard data fields—Net Revenue, Patient Flow, and Clinical Utilization—into the glass bento nodes.
+    - **Intelligence Core Integration**: Re-implemented the "Intelligence Core" suite, featuring the "Growth Catalyst" stat and dynamic Analyst Quote within a dedicated glass block.
+    - **Dynamic Filter Support**: Full restoration of real-time mapping for "Today", "This Week", and "This Month" filters. */
     {
         title: "Specialists",
         subtitle: "Ledger & Settlements",
