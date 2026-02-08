@@ -34,13 +34,13 @@ export function SplineChart({ data, title, color = "#3b82f6", className }: Splin
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.1)", fontSize: 8, fontWeight: "700", letterSpacing: "0.2em" }}
+                            tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 8, fontWeight: "700", letterSpacing: "0.2em" }}
                             dy={15}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.05)", fontSize: 8 }}
+                            tick={{ fill: "rgba(255,255,255,0.2)", fontSize: 8 }}
                         />
                         <Tooltip
                             contentStyle={{

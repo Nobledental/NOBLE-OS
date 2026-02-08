@@ -212,13 +212,13 @@ export function ClinicManagementDeck() {
                                     </div>
 
                                     <div className="flex flex-col items-end gap-2">
-                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white/10">{feature.category}</span>
+                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white/40">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/10">
+                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/20">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-white/5 border border-white/5 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white/20">
+                                            <div className="bg-white/5 border border-white/5 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white/30">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -227,14 +227,14 @@ export function ClinicManagementDeck() {
 
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10">
-                                    <div className="flex items-center gap-2 mb-2 opacity-20 group-hover:opacity-40 transition-opacity duration-1000">
+                                    <div className="flex items-center gap-2 mb-2 opacity-50 group-hover:opacity-70 transition-opacity duration-1000">
                                         <div className="w-4 h-[1px] bg-white" />
                                         <span className="text-[7px] font-bold uppercase tracking-widest">{feature.chip}</span>
                                     </div>
                                     <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[11px] md:text-[12px] text-white/30 font-medium leading-normal group-hover:text-white/60 transition-all duration-700 group-hover:translate-x-1">
+                                    <p className="text-[11px] md:text-[12px] text-white/50 font-medium leading-normal group-hover:text-white/80 transition-all duration-700 group-hover:translate-x-1">
                                         {feature.subtitle}
                                     </p>
                                 </div>

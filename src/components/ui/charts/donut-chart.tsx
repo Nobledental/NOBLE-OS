@@ -55,7 +55,7 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
 
                 {(totalLabel || totalValue) && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%]">
-                        <span className="text-[7px] md:text-[8px] text-white/10 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
+                        <span className="text-[7px] md:text-[8px] text-white/40 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
                         <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{totalValue}</span>
                     </div>
                 )}
@@ -65,7 +65,7 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
                 {data.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                         <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ring-4 ring-white/[0.02]" style={{ backgroundColor: item.color }} />
-                        <span className="text-[8px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.2em]">{item.name}</span>
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/50 uppercase tracking-[0.2em]">{item.name}</span>
                     </div>
                 ))}
             </div>
