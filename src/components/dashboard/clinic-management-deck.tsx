@@ -12,9 +12,24 @@ import {
     Settings2,
     ChevronRight,
     Lock,
-    Briefcase
+    Briefcase,
+    Activity
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+interface ManagementFeature {
+    title: string;
+    subtitle: string;
+    icon: any;
+    chip: string;
+    accent: string;
+    bg: string;
+    href: string;
+    badge?: string;
+    component?: React.ReactNode;
+    colSpan?: string;
+    locked?: boolean;
+}
 
 const MANAGEMENT_FEATURES: ManagementFeature[] = [
     {

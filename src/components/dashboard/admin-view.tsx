@@ -142,74 +142,45 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
 
             {/* 2. Analytics Grid */}
             <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <PanzeCard className="lg:col-span-2 p-0 overflow-hidden flex flex-col glass-white border-white/40 bg-white/60 rounded-[3.5rem] transition-all duration-700">
-                    <div className="p-10 border-b border-white/20 flex items-center justify-between bg-white/40">
-                        <div>
-                            <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">PRACTICE REVENUE ANALYSIS</h3>
-                            <div className="flex items-center gap-3">
-                                <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">High-Performance Financial Tracking</p>
-                                <Badge variant="outline" className="text-[8px] border-neo-emerald/20 text-neo-emerald bg-neo-emerald/5 h-4 flex items-center px-1 font-black">+14.2% VS PREV</Badge>
-                            </div>
-                        </div>
-                        <div className="flex gap-4 tabular-nums">
-                            <Badge variant="secondary" className="rounded-2xl px-6 py-2 bg-neo-vibrant-blue text-white border-neo-vibrant-blue/20 hover:scale-105 transition-all text-[10px] font-black uppercase tracking-widest shadow-[0_10px_20px_rgba(0,122,255,0.2)]">
-                                {activeFilter} OPS
-                            </Badge>
-                        </div>
-                    </div>
-                    <div className="flex-1 p-10 bg-gradient-to-b from-transparent to-white/40">
-                        <SplineChart
-                            title=""
-                            data={
-                                activeFilter === "Today" ? [
-                                    { name: '8am', value: 400 },
-                                    { name: '10am', value: 1200 },
-                                    { name: '12pm', value: 3000 },
-                                    { name: '2pm', value: 1800 },
-                                    { name: '4pm', value: 4500 },
-                                ] : activeFilter === "This Week" ? [
-                                    { name: 'Mon', value: 14000 },
-                                    { name: 'Tue', value: 13000 },
-                                    { name: 'Wed', value: 15000 },
-                                    { name: 'Thu', value: 12780 },
-                                    { name: 'Fri', value: 11890 },
-                                ] : [
-                                    { name: 'Week 1', value: 40000 },
-                                    { name: 'Week 2', value: 30000 },
-                                    { name: 'Week 3', value: 50000 },
-                                    { name: 'Week 4', value: 27800 },
-                                ]
-                            }
-                            className="h-full w-full"
-                        />
-                    </div>
-                </PanzeCard>
+                <div className="lg:col-span-2">
+                    <SplineChart
+                        title="PRACTICE REVENUE ANALYSIS"
+                        color="#007AFF"
+                        data={
+                            activeFilter === "Today" ? [
+                                { name: '8am', value: 400 },
+                                { name: '10am', value: 1200 },
+                                { name: '12pm', value: 3000 },
+                                { name: '2pm', value: 1800 },
+                                { name: '4pm', value: 4500 },
+                            ] : activeFilter === "This Week" ? [
+                                { name: 'Mon', value: 14000 },
+                                { name: 'Tue', value: 13000 },
+                                { name: 'Wed', value: 15000 },
+                                { name: 'Thu', value: 12780 },
+                                { name: 'Fri', value: 11890 },
+                            ] : [
+                                { name: 'Week 1', value: 40000 },
+                                { name: 'Week 2', value: 30000 },
+                                { name: 'Week 3', value: 50000 },
+                                { name: 'Week 4', value: 27800 },
+                            ]
+                        }
+                    />
+                </div>
 
-                <PanzeCard className="flex flex-col p-10 glass-white border-white/40 bg-white/60 rounded-[3.5rem] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)]">
-                    <div className="mb-12">
-                        <h3 className="text-[11px] font-black text-slate-800 tracking-[0.4em] uppercase mb-2">FINANCIAL HEALTH HUB</h3>
-                        <p className="text-[10px] text-slate-400 font-bold tracking-tight uppercase">Outstanding & Revenue Leakage</p>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center relative scale-110">
-                        <DonutChart
-                            title=""
-                            totalLabel="COLLECTED"
-                            totalValue="₹2.4L"
-                            data={[
-                                { name: 'Collected', value: 70, color: '#007AFF' },
-                                { name: 'Outstanding', value: 20, color: '#FF6B6B' },
-                                { name: 'Leakage', value: 10, color: '#A78BFA' },
-                            ]}
-                        />
-                    </div>
-                    <div className="mt-8 pt-8 border-t border-slate-100 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
-                            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Action Needed</span>
-                        </div>
-                        <span className="text-sm font-black text-rose-500">₹42,000 PENDING</span>
-                    </div>
-                </PanzeCard>
+                <div>
+                    <DonutChart
+                        title="FINANCIAL HEALTH HUB"
+                        totalLabel="COLLECTED"
+                        totalValue="₹2.4L"
+                        data={[
+                            { name: 'Collected', value: 70, color: '#007AFF' },
+                            { name: 'Outstanding', value: 20, color: '#FF6B6B' },
+                            { name: 'Leakage', value: 10, color: '#A78BFA' },
+                        ]}
+                    />
+                </div>
             </motion.div>
 
             {/* 3. Clinical Operations Center */}
