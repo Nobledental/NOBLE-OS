@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { ProjectsOverview } from "./projects-overview";
 import { RevenueChart } from "./revenue-chart";
@@ -8,7 +9,7 @@ import { ChiefPulse } from "./chief-pulse";
 import { SplineChart } from "@/components/ui/charts/spline-chart";
 import { DonutChart } from "@/components/ui/charts/donut-chart";
 import { PanzeCard } from "@/components/ui/panze-card";
-import { BarChart3, Search, LayoutDashboard, Zap as ZapIcon, ScrollText, Wallet, Activity, Briefcase, ArrowUpRight, TrendingUp, Users, Calendar } from "lucide-react";
+import { BarChart3, Search, LayoutDashboard, Zap as ZapIcon, ScrollText, Wallet, Activity, Briefcase, ArrowUpRight, TrendingUp, Users, Calendar, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
 import { useState } from "react";
