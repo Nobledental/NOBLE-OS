@@ -61,7 +61,7 @@ export function ActiveQueue() {
                     <h3 className="text-3xl font-bold tracking-tight text-slate-900">Clinical Queue</h3>
                     <div className="flex items-center gap-2">
                         <Activity className="w-3 h-3 text-neo-emerald animate-pulse" />
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Global Sync Active</span>
+                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Live Queue Synchronized</span>
                     </div>
                 </div>
                 <button className="w-12 h-12 rounded-2xl bg-slate-900/5 text-slate-900 flex items-center justify-center hover:scale-110 transition-all shadow-xl border border-slate-200 backdrop-blur-md">
