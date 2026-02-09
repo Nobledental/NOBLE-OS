@@ -198,8 +198,8 @@ export function ClinicManagementDeck() {
 
     return (
         <div className="space-y-6">
-            {/* Premium Uniform Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 md:gap-10 pb-20">
+            {/* Premium Uniform Grid - Mobile Optimized */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 pb-20">
                 {MANAGEMENT_FEATURES.map((feature, i) => {
                     const CardContent = (
                         <motion.div
@@ -208,9 +208,19 @@ export function ClinicManagementDeck() {
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Silk Edge Ambient Glow (Workstream Specific) */}
-                            <div className={`absolute -inset-[2px] bg-${feature.glow || 'white'}/[0.08] rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10`} />
-                            <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
+                            {/* Silk Edge Ambient Glow (Performance Reactive) */}
+                            <div className={cn(
+                                "absolute -inset-[2px] rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10",
+                                feature.category === 'Finance' ? "bg-amber-500/20" :
+                                    feature.category === 'Growth' ? "bg-emerald-500/20" :
+                                        "bg-[#0A84FF]/20"
+                            )} />
+                            <div className={cn(
+                                "absolute -inset-10 rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10",
+                                feature.category === 'Finance' ? "bg-amber-500/5" :
+                                    feature.category === 'Growth' ? "bg-emerald-500/5" :
+                                        "bg-[#0A84FF]/5"
+                            )} />
 
                             {/* Medizinisch Dark Glass Layer */}
                             <div className="glass-frost rounded-[2.5rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[220px] mb-4 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">

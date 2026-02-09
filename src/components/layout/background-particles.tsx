@@ -9,7 +9,13 @@ export function BackgroundParticles() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#506176_0%,#1a1f2b_55%,#0E121B_100%)]" />
 
             {/* Subtle Noise Texture Overlay (Premium Matte Finish) */}
-            <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+            {/* Premium Scanner Line Overlay */}
+            <div className="absolute inset-x-0 top-0 h-screen pointer-events-none overflow-hidden z-0">
+                <div className="scanner-line w-full" />
+            </div>
+
+            <div className="absolute inset-0 bg-[#0E121B] grid-bg opacity-[0.03] pointer-events-none" />
+            <div className="absolute inset-0 noise-texture opacity-[0.02] pointer-events-none" />
 
             {/* Medizinisch Floor Mist / Bottom Glow - Precision Subtlety */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] h-[40vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.01)_40%,transparent_70%)] blur-[100px]" />

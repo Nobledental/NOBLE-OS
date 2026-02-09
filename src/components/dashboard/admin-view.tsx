@@ -76,19 +76,21 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                             </div>
                         </div>
 
-                        {/* Uniform Editorial KPI Grid (Champagne Gold focus) */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 md:gap-14 mt-auto py-10">
                             {[
-                                { label: "Net Yield", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, accent: "amber-400", trend: "+8.2%" },
-                                { label: "Case Load", value: activeFilter === "Today" ? "08" : "156", icon: Users, accent: "white", sub: "Growth Stable" },
-                                { label: "Performance", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, accent: "blue-400", trend: "Elite" }
+                                { label: "Net Yield", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, trend: "+8.2%", positive: true },
+                                { label: "Case Load", value: activeFilter === "Today" ? "08" : "156", icon: Users, sub: "Growth Stable", positive: true },
+                                { label: "Performance", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, trend: "Elite", positive: false }
                             ].map((pod, idx) => (
                                 <motion.div
                                     key={idx}
                                     whileHover={{ y: -8 }}
                                     className="relative group/pod flex flex-col items-center text-center"
                                 >
-                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-4 transition-all duration-700 shadow-xl`}>
+                                    <div className={cn(
+                                        "w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-700 shadow-xl",
+                                        pod.positive ? "text-emerald-400 group-hover/pod:bg-emerald-500/20" : "text-blue-400 group-hover/pod:bg-blue-500/20"
+                                    )}>
                                         <pod.icon className="w-5 h-5" />
                                     </div>
                                     <span className="text-[9px] uppercase tracking-[0.3em] text-slate-400 font-black mb-1.5">{pod.label}</span>
@@ -96,14 +98,20 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
-                                        <div className={`text-[10px] font-black px-6 py-2.5 rounded-full bg-white/5 border border-white/5 uppercase tracking-[0.4em] flex items-center gap-2 group-hover/pod:bg-[#0A84FF] group-hover/pod:text-white transition-all duration-500 shadow-2xl text-slate-400`}>
-                                            <TrendingUp className="w-4 h-4 text-white/50 group-hover:text-white" /> {pod.trend}
+                                        <div className={cn(
+                                            "text-[10px] font-black px-6 py-2.5 rounded-full border border-white/5 uppercase tracking-[0.4em] flex items-center gap-2 transition-all duration-500 shadow-2xl",
+                                            pod.positive ? "bg-emerald-500/10 text-emerald-400 group-hover/pod:bg-emerald-500 group-hover/pod:text-white" : "bg-blue-500/10 text-blue-400 group-hover/pod:bg-blue-500 group-hover/pod:text-white"
+                                        )}>
+                                            <TrendingUp className="w-4 h-4 opacity-50" /> {pod.trend}
                                         </div>
                                     ) : (
                                         <span className="text-[9px] text-slate-400 font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
                                     )}
                                     {/* Silk Glow On Hover */}
-                                    <div className={`absolute -inset-6 bg-${pod.accent}/[0.03] rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10`} />
+                                    <div className={cn(
+                                        "absolute -inset-6 rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10",
+                                        pod.positive ? "bg-emerald-500/[0.05]" : "bg-blue-500/[0.05]"
+                                    )} />
                                 </motion.div>
                             ))}
                         </div>
@@ -139,7 +147,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     </div>
                                 </div>
                                 <p className="text-[11px] md:text-[12px] text-slate-400 font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
-                                    "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
+                                    &quot;Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks.&quot;
                                 </p>
                             </div>
                             {/* Emerald Ambient Glow */}

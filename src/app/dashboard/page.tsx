@@ -12,10 +12,24 @@ import { AdminDashboardView } from "@/components/dashboard/admin-view";
 import { DoctorDashboardView } from "@/components/dashboard/doctor-view";
 import { ReceptionistDashboardView } from "@/components/dashboard/receptionist-view";
 import { AssistantDashboardView } from "@/components/dashboard/assistant-view";
+import { MobileBottomDock } from "@/components/layout/mobile-bottom-dock";
 
-// Mock NEO Orb 
+// Enhanced NEO Orb with Layered Rings
 const NEOOrb = ({ status, className }: { status: string, className?: string }) => (
-    <div className={cn("w-8 h-8 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse shadow-lg", className)} />
+    <div className={cn("relative w-10 h-10 flex items-center justify-center", className)}>
+        {/* Layered Bouncing Rings */}
+        <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.1, 0.3] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute inset-0 rounded-full border border-blue-400/30"
+        />
+        <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+            className="absolute -inset-1 rounded-full border border-dashed border-purple-500/20"
+        />
+        <div className="w-4 h-4 rounded-full bg-gradient-to-r from-[#0A84FF] to-[#5AC8FA] animate-pulse shadow-[0_0_15px_rgba(10,132,255,0.5)] z-10" />
+    </div>
 );
 
 // Staggered Animation Variants
@@ -163,6 +177,7 @@ export default function DashboardPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
+            <MobileBottomDock />
         </div>
     );
 }

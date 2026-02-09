@@ -50,7 +50,7 @@ export function AppSidebar() {
     const { user, updatePermissions } = useAuth();
 
     return (
-        <div className="flex flex-col h-screen w-64 border-r border-white/5 glass-frost md:flex relative overflow-hidden backdrop-blur-[100px]">
+        <div className="hidden md:flex flex-col h-screen w-64 border-r border-white/5 glass-frost relative overflow-hidden backdrop-blur-[100px]">
             {/* Ambient Shadow Overlay */}
             <div className="absolute inset-0 bg-slate-950/40 pointer-events-none" />
 
