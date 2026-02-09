@@ -349,7 +349,7 @@ export const ClinicBrandingSettings: React.FC<{
                                         <p className="text-slate-500 text-sm mt-2">Customize the visual appearance of the Noble OS command center.</p>
                                     </div>
 
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <AppThemePreview
                                             id="dark"
                                             name="Noble Dark"
@@ -361,12 +361,6 @@ export const ClinicBrandingSettings: React.FC<{
                                             name="Clinical White"
                                             colors={["from-slate-50 to-white", "bg-white", "bg-indigo-500"]}
                                             isActive={theme === 'light'}
-                                        />
-                                        <AppThemePreview
-                                            id="neo-rose"
-                                            name="Neo Rose"
-                                            colors={["from-rose-50 to-white", "bg-white", "bg-rose-500"]}
-                                            isActive={theme === 'neo-rose'}
                                         />
                                     </div>
                                 </div>
