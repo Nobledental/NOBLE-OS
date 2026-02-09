@@ -12,12 +12,12 @@ export function BackgroundParticles() {
             {/* Ambient Top Glow - Darkened */}
             <div className="absolute top-0 left-0 right-0 h-[50vh] bg-gradient-to-b from-black via-slate-950/20 to-transparent" />
 
-            {/* Medizinisch Floor Mist / Bottom Glow - Final Intensification */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180%] h-[60vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0.06)_35%,transparent_70%)] blur-[120px]" />
-            <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-white/25 to-transparent shadow-[0_0_20px_rgba(255,255,255,0.1)]" />
+            {/* Medizinisch Floor Mist / Bottom Glow - Subtlety Pass */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] h-[40vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.06)_0%,rgba(255,255,255,0.02)_40%,transparent_70%)] blur-[100px]" />
+            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-            {/* Room Framing (Final Depth) */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_20%,rgba(0,0,0,0.6)_100%)] pointer-events-none" />
+            {/* Room Framing (Natural Depth) */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.01)_0%,rgba(0,0,0,0.4)_100%)] pointer-events-none" />
 
             {/* Subtle Deep Particles */}
             <motion.div

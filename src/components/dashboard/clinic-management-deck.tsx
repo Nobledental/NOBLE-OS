@@ -224,14 +224,14 @@ export function ClinicManagementDeck() {
                                         <feature.icon className="w-4 h-4 md:w-5 md:h-5 opacity-70 group-hover:opacity-100" />
                                     </div>
 
-                                    <div className="flex flex-col items-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
-                                        <span className="text-[7px] font-black uppercase tracking-[0.6em] text-slate-400">{feature.category}</span>
+                                    <div className="flex flex-col items-end gap-1.5 opacity-60">
+                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
-                                                <Lock className="w-2 h-2" />
+                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
+                                                <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-indigo-600 border border-indigo-500 text-[7px] uppercase font-black tracking-[0.5em] px-2 py-0.5 rounded-full text-white shadow-xl shadow-indigo-600/20 scale-75 origin-right">
+                                            <div className="bg-indigo-600 border border-indigo-500 text-[8px] uppercase font-black tracking-[0.3em] px-3 py-1 rounded-full text-white shadow-xl shadow-indigo-600/20">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -240,25 +240,25 @@ export function ClinicManagementDeck() {
 
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10 flex flex-col gap-1.5">
-                                    <div className="flex items-center gap-3 opacity-100 mb-2">
-                                        <div className="w-10 h-[2px] bg-indigo-500" />
-                                        <span className="text-[8px] font-black uppercase tracking-[0.5em] text-slate-500">{feature.chip}</span>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-black tracking-tighter text-white leading-none group-hover:translate-x-1 transition-transform duration-700 uppercase">
+                                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white mb-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.4em] leading-none group-hover:translate-x-1 transition-transform duration-700 opacity-40">
+                                    <p className="text-sm text-slate-400 font-medium">
                                         {feature.subtitle}
                                     </p>
 
                                     {/* Medical Mini-Chart Indicator (Refined) */}
-                                    <div className="mt-8 flex items-end gap-1 h-6 opacity-20 group-hover:opacity-100 transition-all duration-1000">
-                                        {[0.2, 0.4, 0.2, 0.7, 0.3, 0.5, 0.2].map((h, idx) => (
+                                    <div className="mt-6 flex items-end gap-1 h-6 opacity-30 group-hover:opacity-100 transition-all duration-1000">
+                                        {[0.3, 0.5, 0.3, 0.8, 0.4, 0.6, 0.3].map((h, idx) => (
                                             <div
                                                 key={idx}
                                                 className={cn(
-                                                    "w-[2px] rounded-full",
-                                                    idx === 3 ? "bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.8)]" : "bg-white/40"
+                                                    "w-[3px] rounded-full",
+                                                    idx === 3 ? "bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.6)]" : "bg-white/20"
                                                 )}
                                                 style={{ height: `${h * 100}%` }}
                                             />

@@ -61,12 +61,11 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 </Link>
                                 <div>
                                     <div className="flex items-center gap-3 mb-4">
-                                        <div className="w-12 h-[2px] bg-indigo-500" />
-                                        <span className="text-[10px] md:text-[11px] uppercase tracking-[0.7em] font-black text-indigo-400 leading-none">Perspective</span>
+                                        <div className="w-8 h-[2px] bg-indigo-500" />
+                                        <span className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-400">Perspective</span>
                                     </div>
-                                    <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.85] uppercase">
-                                        Operations <br />
-                                        <span className="text-slate-500/20">Analysis</span>
+                                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+                                        Operations <span className="text-slate-500">Analysis</span>
                                     </h2>
                                 </div>
                             </div>
@@ -89,11 +88,11 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     whileHover={{ y: -8 }}
                                     className="relative group/pod flex flex-col items-center text-center"
                                 >
-                                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white mb-5 md:mb-6 group-hover/pod:border-${pod.accent}/60 group-hover/pod:text-${pod.accent} transition-all duration-700 shadow-xl`}>
-                                        <pod.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                    <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white mb-4 transition-all duration-700 shadow-xl`}>
+                                        <pod.icon className="w-5 h-5" />
                                     </div>
-                                    <span className="text-[8px] md:text-[9px] uppercase tracking-[0.4em] text-white font-black mb-2">{pod.label}</span>
-                                    <div className="text-2xl md:text-3xl font-semibold tracking-tight text-white mb-4">
+                                    <span className="text-[9px] uppercase tracking-[0.3em] text-slate-400 font-black mb-1.5">{pod.label}</span>
+                                    <div className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-4">
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
