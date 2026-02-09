@@ -55,17 +55,17 @@ export function ActiveQueue() {
     }, [queryClient, clinicId])
 
     return (
-        <PanzeCard className="h-full flex flex-col p-8 border-white/40 bg-white/60 overflow-hidden relative group glass-white">
-            <div className="flex items-center justify-between mb-8 relative z-10">
-                <div className="space-y-1">
-                    <h3 className="text-3xl font-bold tracking-tight text-slate-900">Clinical Queue</h3>
+        <PanzeCard className="h-full flex flex-col p-5 border-white/40 bg-white/60 overflow-hidden relative group glass-white">
+            <div className="flex items-center justify-between mb-5 relative z-10">
+                <div className="space-y-0.5">
+                    <h3 className="text-xl font-bold tracking-tight text-slate-900">Clinical Queue</h3>
                     <div className="flex items-center gap-2">
                         <Activity className="w-3 h-3 text-neo-emerald animate-pulse" />
-                        <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest">Live Queue Synchronized</span>
+                        <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Live Queue Synchronized</span>
                     </div>
                 </div>
-                <button className="w-12 h-12 rounded-2xl bg-slate-900/5 text-slate-900 flex items-center justify-center hover:scale-110 transition-all shadow-xl border border-slate-200 backdrop-blur-md">
-                    <Plus className="w-6 h-6" />
+                <button className="w-10 h-10 rounded-xl bg-slate-900/5 text-slate-900 flex items-center justify-center hover:scale-110 transition-all shadow-xl border border-slate-200 backdrop-blur-md">
+                    <Plus className="w-5 h-5" />
                 </button>
             </div>
 
@@ -80,22 +80,22 @@ export function ActiveQueue() {
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 key={item.id}
                                 className={cn(
-                                    "p-6 rounded-[2.5rem] flex items-center gap-5 transition-all cursor-pointer border relative overflow-hidden group/item",
+                                    "p-4 rounded-2xl flex items-center gap-4 transition-all cursor-pointer border relative overflow-hidden group/item",
                                     i === 0
                                         ? "bg-slate-900/5 text-slate-900 border-slate-200 shadow-xl"
                                         : "bg-white/20 border-white/40 hover:border-slate-300 hover:bg-white/40 text-slate-600"
                                 )}
                             >
                                 <div className={cn(
-                                    "w-14 h-14 rounded-2xl flex items-center justify-center text-lg shadow-sm transition-colors",
+                                    "w-10 h-10 rounded-xl flex items-center justify-center text-lg shadow-sm transition-colors",
                                     i === 0 ? "bg-neo-vibrant-blue text-white shadow-lg shadow-neo-vibrant-blue/20" : "bg-white/40 text-slate-400"
                                 )}>
-                                    <User className="w-6 h-6" />
+                                    <User className="w-5 h-5" />
                                 </div>
 
                                 <div className="flex-1 space-y-1">
                                     <div className="flex items-center gap-2">
-                                        <h4 className="font-bold tracking-tight text-xl text-slate-900">{item.patient.user.full_name}</h4>
+                                        <h4 className="font-bold tracking-tight text-base text-slate-900">{item.patient.user.full_name}</h4>
                                         {item.is_emergency && (
                                             <Badge className="bg-rose-500 hover:bg-rose-600 border-none font-black text-[8px] uppercase tracking-widest px-2 py-0.5 text-white">SOS</Badge>
                                         )}

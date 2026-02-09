@@ -199,7 +199,7 @@ export function ClinicManagementDeck() {
     return (
         <div className="space-y-6">
             {/* Premium Uniform Grid - Mobile Optimized */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5 pb-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-3 pb-6">
                 {MANAGEMENT_FEATURES.map((feature, i) => {
                     const CardContent = (
                         <motion.div
@@ -210,24 +210,24 @@ export function ClinicManagementDeck() {
                         >
                             {/* Silk Edge Ambient Glow (Performance Reactive) */}
                             <div className={cn(
-                                "absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10",
+                                "absolute -inset-[2px] rounded-xl opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10",
                                 feature.category === 'Finance' ? "bg-amber-500/20" :
                                     feature.category === 'Growth' ? "bg-emerald-500/20" :
                                         "bg-[#0A84FF]/20"
                             )} />
                             <div className={cn(
-                                "absolute -inset-6 rounded-3xl opacity-0 group-hover:opacity-100 blur-[60px] transition-all duration-1000 -z-10",
+                                "absolute -inset-6 rounded-2xl opacity-0 group-hover:opacity-100 blur-[60px] transition-all duration-1000 -z-10",
                                 feature.category === 'Finance' ? "bg-amber-500/5" :
                                     feature.category === 'Growth' ? "bg-emerald-500/5" :
                                         "bg-[#0A84FF]/5"
                             )} />
 
                             {/* Medizinisch Dark Glass Layer */}
-                            <div className="glass-frost rounded-2xl overflow-hidden relative p-4 h-full flex flex-col min-h-[160px] mb-0 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
+                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
-                                <div className="flex justify-between items-start relative z-10 mb-6">
+                                <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
-                                        "w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10 transition-all duration-700 shadow-inner",
+                                        "w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10 transition-all duration-700 shadow-inner",
                                         feature.accent || "text-white/30",
                                         `group-hover:scale-110 group-hover:bg-indigo-500/30 group-hover:text-white`
                                     )}>
@@ -254,7 +254,7 @@ export function ClinicManagementDeck() {
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
                                         <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-[16px] font-bold tracking-tight text-white mb-0.5">
+                                    <h3 className="text-[14px] font-bold tracking-tight text-white mb-0.5">
                                         {feature.title}
                                     </h3>
                                     <p className="text-[13px] text-slate-400 font-medium">

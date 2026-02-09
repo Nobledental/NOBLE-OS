@@ -56,10 +56,10 @@ export function AppSidebar() {
 
             <div className="flex-1 space-y-4 py-4 overflow-y-auto relative z-10">
                 <div className="px-3 py-2">
-                    <h2 className="mb-2 px-4 text-lg font-black tracking-tighter text-white uppercase italic">
+                    <h2 className="mb-1 px-4 text-base font-black tracking-tighter text-white uppercase italic">
                         HealthFlo
                     </h2>
-                    <p className="px-4 text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-8">
+                    <p className="px-4 text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-4">
                         Clinic Manager v2.0
                     </p>
                     <div className="space-y-1 animate-ios-reveal">
@@ -70,8 +70,8 @@ export function AppSidebar() {
                                     variant={pathname === item.href ? "secondary" : "ghost"}
                                     style={{ animationDelay: `${index * 50}ms` }}
                                     className={cn(
-                                        "w-full justify-start rounded-xl px-4 py-6 transition-all duration-300 font-black uppercase text-[10px] tracking-widest",
-                                        pathname === item.href ? "bg-white text-black shadow-xl" : "text-slate-400 hover:text-white hover:bg-white/5"
+                                        "w-full justify-start rounded-lg px-3 py-3 transition-all duration-300 font-black uppercase text-[10px] tracking-widest",
+                                        pathname === item.href ? "bg-white text-black shadow-lg" : "text-slate-400 hover:text-white hover:bg-white/5"
                                     )}
                                     asChild
                                 >

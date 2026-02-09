@@ -129,26 +129,26 @@ export function SterilizationHub() {
                     <span className="text-[10px] font-bold tracking-[0.6em] text-slate-600 uppercase border-b border-slate-200">Armamentarium Safety</span>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-slate-900 flex items-center gap-6">
-                        <div className="w-14 h-14 md:w-16 md:h-16 rounded-[1.8rem] bg-slate-100 border border-slate-200 flex items-center justify-center text-emerald-600 shadow-sm">
-                            <ShieldCheck className="w-7 h-7 md:w-8 md:h-8" />
+                    <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 flex items-center gap-4">
+                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-emerald-600 shadow-sm">
+                            <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
-                        Sterilization <span className="text-slate-500 font-light translate-x-1 underline underline-offset-8 decoration-slate-200">Center</span>
+                        Sterilization <span className="text-slate-500 font-light translate-x-1 underline underline-offset-4 decoration-slate-200">Center</span>
                     </h1>
 
                     <div className="flex gap-4">
-                        <div className="h-16 px-6 bg-slate-100 border border-slate-200 rounded-2xl flex items-center gap-4 shadow-sm">
+                        <div className="h-12 px-4 bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-3 shadow-sm">
                             <div className="text-right">
-                                <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active Cycles</p>
-                                <p className="text-xl font-bold text-amber-600 tracking-tight">{activeCycles}</p>
+                                <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active</p>
+                                <p className="text-lg font-bold text-amber-600 tracking-tight">{activeCycles}</p>
                             </div>
-                            <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                                <Flame className="w-4 h-4 text-amber-600/60" />
+                            <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                                <Flame className="w-3.5 h-3.5 text-amber-600/60" />
                             </div>
                         </div>
                         <Button
                             onClick={() => setIsCreating(true)}
-                            className="h-16 px-8 rounded-2xl bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 gap-3 transition-all duration-700 shadow-sm"
+                            className="h-12 px-6 rounded-xl bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 gap-2 transition-all duration-700 shadow-sm"
                         >
                             <Plus className="w-4 h-4 text-emerald-600" />
                             <span className="text-[10px] font-bold uppercase tracking-widest">New Cycle</span>
@@ -184,7 +184,7 @@ export function SterilizationHub() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         className="group"
                                     >
-                                        <PanzeCard className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 transition-all duration-1000 hover:border-slate-700 shadow-2xl">
+                                        <PanzeCard className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-1000 hover:border-slate-700 shadow-2xl">
                                             {/* Silk Glow */}
                                             <div className={cn(
                                                 "absolute top-0 right-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000",
@@ -202,13 +202,13 @@ export function SterilizationHub() {
                                                                 <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white">{Config.label}</span>
                                                                 <span className="text-[9px] font-bold text-white/80 tracking-widest border-l border-white/20 pl-2">#{batch.id}</span>
                                                             </div>
-                                                            <h4 className="text-2xl font-semibold text-white tracking-tight">{batch.name}</h4>
+                                                            <h4 className="text-xl font-semibold text-white tracking-tight">{batch.name}</h4>
                                                         </div>
                                                         <div className={cn(
-                                                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border border-white/20 bg-white/10 shadow-lg",
+                                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all border border-white/20 bg-white/10 shadow-lg",
                                                             batch.status === 'PROCESSING' && "animate-pulse border-amber-500/60 shadow-amber-500/20"
                                                         )}>
-                                                            <Icon className={cn("w-5 h-5", batch.status === 'PROCESSING' ? "text-amber-400" : "text-white")} />
+                                                            <Icon className={cn("w-4 h-4", batch.status === 'PROCESSING' ? "text-amber-400" : "text-white")} />
                                                         </div>
                                                     </div>
 
@@ -287,15 +287,15 @@ export function SterilizationHub() {
                     </div>
                 </div>
 
-                <div className="lg:col-span-4 space-y-8">
-                    <PanzeCard className="p-10 rounded-[3rem] bg-slate-900 border border-slate-800 shadow-2xl">
-                        <div className="space-y-8">
-                            <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                                <ShieldCheck className="w-7 h-7 text-indigo-400/60" />
+                <div className="lg:col-span-4 space-y-6">
+                    <PanzeCard className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl">
+                        <div className="space-y-6">
+                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
+                                <ShieldCheck className="w-5 h-5 text-indigo-400/60" />
                             </div>
-                            <div className="space-y-3">
-                                <h4 className="text-2xl font-bold text-white tracking-tight">Compliance Score</h4>
-                                <p className="text-xs font-semibold text-white leading-relaxed uppercase tracking-widest opacity-90">
+                            <div className="space-y-2">
+                                <h4 className="text-xl font-bold text-white tracking-tight">Compliance Score</h4>
+                                <p className="text-[10px] font-semibold text-white leading-relaxed uppercase tracking-widest opacity-90">
                                     Armamentarium protocols are 98.4% compliant with NABH standards.
                                 </p>
                             </div>
@@ -303,17 +303,17 @@ export function SterilizationHub() {
                             <div className="flex items-center justify-between">
                                 <div className="space-y-1">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white">Cycles Processed</p>
-                                    <p className="text-3xl font-black text-white tracking-tighter">142</p>
+                                    <p className="text-2xl font-black text-white tracking-tighter">142</p>
                                 </div>
                                 <div className="text-right space-y-1">
                                     <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white">Safety Alerts</p>
-                                    <p className="text-3xl font-black text-rose-500 tracking-tighter">02</p>
+                                    <p className="text-2xl font-black text-rose-500 tracking-tighter">02</p>
                                 </div>
                             </div>
                         </div>
                     </PanzeCard>
 
-                    <div className="p-8 rounded-[3rem] bg-white/[0.02] border border-white/5 space-y-8">
+                    <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6">
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-white/10" />
                             <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
