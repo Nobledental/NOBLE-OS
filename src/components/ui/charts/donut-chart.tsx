@@ -12,7 +12,7 @@ interface DonutChartProps {
 
 export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartProps) {
     return (
-        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full glass-frost border-slate-100 dark:border-white/10 shadow-2xl backdrop-blur-[40px] p-6 md:p-10 transition-all duration-700 hover:border-slate-200 dark:hover:border-white/20">
+        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full bg-white dark:glass-frost border-slate-200 dark:border-white/10 shadow-sm dark:shadow-2xl backdrop-blur-[40px] p-6 md:p-10 transition-all duration-700 hover:border-slate-300 dark:hover:border-white/20 dark:bg-transparent">
             <div className="flex items-center gap-3 mb-1">
                 <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/40" />
                 <h3 className="text-[9px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-[0.4em]">Financials</h3>
