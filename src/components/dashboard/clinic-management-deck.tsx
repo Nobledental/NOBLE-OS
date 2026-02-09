@@ -213,25 +213,25 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
                             {/* Medizinisch Dark Glass Layer */}
-                            <div className="glass-frost rounded-[2.8rem] md:rounded-[3.2rem] overflow-hidden relative p-7 md:p-9 h-full flex flex-col min-h-[220px] mb-4 md:mb-6 border-white/5 shadow-2xl transition-all duration-1000 group-hover:border-white/20 group-hover:bg-white/[0.03]">
+                            <div className="glass-frost rounded-[3rem] md:rounded-[3.5rem] overflow-hidden relative p-8 h-full flex flex-col min-h-[240px] mb-4 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
                                     <div className={cn(
-                                        "w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-[1rem] bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 transition-all duration-700 shadow-inner",
+                                        "w-8 h-8 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10 transition-all duration-700 shadow-inner",
                                         feature.accent || "text-white/30",
-                                        `group-hover:scale-110 group-hover:bg-indigo-500/20 group-hover:text-white`
+                                        `group-hover:scale-110 group-hover:bg-indigo-500/30 group-hover:text-white`
                                     )}>
-                                        <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                        <feature.icon className="w-4 h-4 md:w-5 md:h-5 opacity-70 group-hover:opacity-100" />
                                     </div>
 
-                                    <div className="flex flex-col items-end gap-1.5">
-                                        <span className="text-[8px] font-black uppercase tracking-[0.4em] text-slate-500">{feature.category}</span>
+                                    <div className="flex flex-col items-end gap-1.5 opacity-40 group-hover:opacity-100 transition-opacity">
+                                        <span className="text-[7px] font-black uppercase tracking-[0.6em] text-slate-400">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
-                                                <Lock className="w-2.5 h-2.5" />
+                                            <div className="w-5 h-5 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
+                                                <Lock className="w-2 h-2" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-indigo-600 border border-indigo-500 text-[8px] uppercase font-black tracking-[0.4em] px-3 py-1 rounded-full text-white shadow-xl shadow-indigo-600/20 scale-90">
+                                            <div className="bg-indigo-600 border border-indigo-500 text-[7px] uppercase font-black tracking-[0.5em] px-2 py-0.5 rounded-full text-white shadow-xl shadow-indigo-600/20 scale-75 origin-right">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -239,27 +239,30 @@ export function ClinicManagementDeck() {
                                 </div>
 
                                 {/* Typography Unified Content */}
-                                <div className="mt-auto relative z-10 flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 opacity-100 mb-2">
-                                        <div className="w-8 h-[1px] bg-indigo-500" />
-                                        <span className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-500">{feature.chip}</span>
+                                <div className="mt-auto relative z-10 flex flex-col gap-1.5">
+                                    <div className="flex items-center gap-3 opacity-100 mb-2">
+                                        <div className="w-10 h-[2px] bg-indigo-500" />
+                                        <span className="text-[8px] font-black uppercase tracking-[0.5em] text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-white leading-[0.9] transition-all duration-700 group-hover:translate-x-1 uppercase">
+                                    <h3 className="text-xl md:text-2xl font-black tracking-tighter text-white leading-none group-hover:translate-x-1 transition-transform duration-700 uppercase">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[12px] text-slate-500 font-black uppercase tracking-[0.3em] leading-none transition-all duration-700 group-hover:translate-x-1 opacity-50">
+                                    <p className="text-[10px] text-slate-500 font-black uppercase tracking-[0.4em] leading-none group-hover:translate-x-1 transition-transform duration-700 opacity-40">
                                         {feature.subtitle}
                                     </p>
 
-                                    {/* Medical Mini-Chart Indicator (Simulated) */}
-                                    <div className="mt-8 flex items-end gap-1.5 h-8 opacity-30 group-hover:opacity-100 transition-all duration-1000">
-                                        <div className="w-1 h-3 bg-white/10 rounded-full" />
-                                        <div className="w-1 h-5 bg-white/20 rounded-full" />
-                                        <div className="w-1 h-4 bg-white/10 rounded-full" />
-                                        <div className="w-1 h-7 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.6)]" />
-                                        <div className="w-1 h-3 bg-white/10 rounded-full" />
-                                        <div className="w-1 h-4 bg-white/10 rounded-full" />
-                                        <div className="w-1 h-5 bg-white/10 rounded-full" />
+                                    {/* Medical Mini-Chart Indicator (Refined) */}
+                                    <div className="mt-8 flex items-end gap-1 h-6 opacity-20 group-hover:opacity-100 transition-all duration-1000">
+                                        {[0.2, 0.4, 0.2, 0.7, 0.3, 0.5, 0.2].map((h, idx) => (
+                                            <div
+                                                key={idx}
+                                                className={cn(
+                                                    "w-[2px] rounded-full",
+                                                    idx === 3 ? "bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.8)]" : "bg-white/40"
+                                                )}
+                                                style={{ height: `${h * 100}%` }}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
 

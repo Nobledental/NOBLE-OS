@@ -5,8 +5,12 @@ import { motion } from "framer-motion";
 export function BackgroundParticles() {
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0f1115]">
-            {/* Ambient Top Glow */}
-            <div className="absolute top-0 left-0 right-0 h-[60vh] bg-gradient-to-b from-slate-900/20 to-transparent" />
+            {/* Subtle Noise Texture Overlay */}
+            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"
+                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} />
+
+            {/* Ambient Top Glow - Darkened */}
+            <div className="absolute top-0 left-0 right-0 h-[50vh] bg-gradient-to-b from-black via-slate-950/20 to-transparent" />
 
             {/* Medizinisch Floor Mist / Bottom Glow - Final Intensification */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[180%] h-[60vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0.06)_35%,transparent_70%)] blur-[120px]" />
