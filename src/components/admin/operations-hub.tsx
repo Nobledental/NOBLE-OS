@@ -48,7 +48,7 @@ export default function OperationsHub() {
                                 <ShieldCheck className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-4xl font-black tracking-tighter text-slate-900 italic uppercase">Operations Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tighter text-white italic uppercase">Operations Hub</h1>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Unified Command Center</p>
                             </div>
                         </div>
@@ -66,10 +66,10 @@ export default function OperationsHub() {
 
                 {/* Main Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-                    <TabsList className="bg-white/40 backdrop-blur-3xl p-2 rounded-[2rem] border border-white/60 shadow-xl inline-flex h-auto w-full justify-start overflow-x-auto scrollbar-hide">
+                    <TabsList className="bg-white/5 backdrop-blur-3xl p-2 rounded-[2rem] border border-white/10 shadow-2xl inline-flex h-auto w-full justify-start overflow-x-auto scrollbar-hide">
                         <TabsTrigger
                             value="settlement"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap text-slate-600"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-white data-[state=active]:text-black transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap text-slate-400 hover:text-white"
                         >
                             <Wallet size={16} /> EOD Settlement
                         </TabsTrigger>

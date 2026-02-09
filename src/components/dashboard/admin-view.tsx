@@ -46,7 +46,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 text-slate-900 relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
                     {/* Champagne Gold & Silver Silk Glows */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none" />
@@ -64,8 +64,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         <div className="w-6 md:w-8 h-[1px] bg-amber-600" />
                                         <span className="text-[8px] md:text-[9px] uppercase tracking-[0.5em] font-bold text-amber-700 leading-none underline decoration-amber-600/20 underline-offset-4">Financial Perspective</span>
                                     </div>
-                                    <h2 className="text-2xl md:text-5xl font-semibold tracking-tight text-slate-900 leading-tight">
-                                        Operations <span className="text-slate-500 font-light translate-x-1 inline-block border-b border-slate-200">Analysis</span>
+                                    <h2 className="text-2xl md:text-5xl font-semibold tracking-tight text-white leading-tight">
+                                        Operations <span className="text-slate-400 font-light translate-x-1 inline-block border-b border-slate-200">Analysis</span>
                                     </h2>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <div className="w-4 h-[1px] bg-emerald-500" />
                                     <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-600">AI Pulse</span>
                                 </div>
-                                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-900 leading-none">Intelligence</h3>
+                                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white leading-none">Intelligence</h3>
                             </div>
                         </div>
 
@@ -134,11 +134,11 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-lg font-bold tracking-tight text-slate-900 mb-1 uppercase">Growth Index</div>
+                                        <div className="text-lg font-bold tracking-tight text-white mb-1 uppercase">Growth Index</div>
                                         <div className="text-[9px] text-emerald-600 font-black uppercase tracking-widest opacity-100 underline decoration-emerald-200 underline-offset-4">Standard Sync</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-slate-800 font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
+                                <p className="text-[11px] md:text-[12px] text-slate-400 font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
                                     "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
                                 </p>
                             </div>
@@ -209,7 +209,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                     <div className="flex flex-col items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.4)]" />
-                        <h2 className="text-[10px] font-black tracking-[0.6em] text-slate-900 uppercase whitespace-nowrap border-b border-slate-300 pb-1">Clinical Operations Hub</h2>
+                        <h2 className="text-[10px] font-black tracking-[0.6em] text-white uppercase whitespace-nowrap border-b border-slate-300 pb-1">Clinical Operations Hub</h2>
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>

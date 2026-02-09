@@ -50,16 +50,16 @@ export function AppSidebar() {
     const { user, updatePermissions } = useAuth();
 
     return (
-        <div className="flex flex-col h-screen w-64 border-r glass dark:bg-slate-900/40 hidden md:flex relative overflow-hidden">
-            {/* Mesh Background Overlay */}
-            <div className="absolute inset-0 bg-mesh-gradient opacity-30 pointer-events-none" />
+        <div className="flex flex-col h-screen w-64 border-r border-white/5 glass-frost md:flex relative overflow-hidden backdrop-blur-[100px]">
+            {/* Ambient Shadow Overlay */}
+            <div className="absolute inset-0 bg-slate-950/40 pointer-events-none" />
 
             <div className="flex-1 space-y-4 py-4 overflow-y-auto relative z-10">
                 <div className="px-3 py-2">
-                    <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                    <h2 className="mb-2 px-4 text-lg font-black tracking-tighter text-white uppercase italic">
                         HealthFlo
                     </h2>
-                    <p className="px-4 text-xs text-muted-foreground mb-4">
+                    <p className="px-4 text-[10px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-8">
                         Clinic Manager v2.0
                     </p>
                     <div className="space-y-1 animate-ios-reveal">
@@ -70,8 +70,8 @@ export function AppSidebar() {
                                     variant={pathname === item.href ? "secondary" : "ghost"}
                                     style={{ animationDelay: `${index * 50}ms` }}
                                     className={cn(
-                                        "w-full justify-start rounded-xl px-4 py-6 transition-all duration-300",
-                                        pathname === item.href ? "bg-white/80 dark:bg-slate-800/80 shadow-sm" : "hover:bg-white/40 dark:hover:bg-slate-800/40"
+                                        "w-full justify-start rounded-xl px-4 py-6 transition-all duration-300 font-black uppercase text-[10px] tracking-widest",
+                                        pathname === item.href ? "bg-white text-black shadow-xl" : "text-slate-400 hover:text-white hover:bg-white/5"
                                     )}
                                     asChild
                                 >
@@ -97,15 +97,15 @@ export function AppSidebar() {
             </div>
 
             {/* Sidebar Footer: Solo Mode Toggle */}
-            <div className="p-4 border-t bg-white dark:bg-slate-950">
-                <div className="flex items-center justify-between p-3 rounded-2xl bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-900/50">
+            <div className="p-4 border-t border-white/5 bg-slate-950/20 backdrop-blur-3xl">
+                <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 border border-white/10 transition-all duration-700">
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center">
                             <Zap className="w-4 h-4 fill-white" />
                         </div>
                         <div>
-                            <div className="text-[10px] font-bold text-indigo-900 dark:text-indigo-100 uppercase tracking-tighter">Solo Mode</div>
-                            <div className="text-[9px] text-indigo-600 dark:text-indigo-400">Admin Bypass</div>
+                            <div className="text-[10px] font-black text-white uppercase tracking-tighter">Solo Mode</div>
+                            <div className="text-[9px] text-slate-500 font-bold uppercase tracking-widest">Admin Bypass</div>
                         </div>
                     </div>
                     <Switch

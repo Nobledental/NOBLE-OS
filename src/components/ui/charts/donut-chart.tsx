@@ -12,12 +12,12 @@ interface DonutChartProps {
 
 export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartProps) {
     return (
-        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full glass-frost border-white/40 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] backdrop-blur-[40px] p-6 md:p-10 shadow-2xl transition-all duration-700 hover:border-blue-500/20">
+        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full glass-frost border-white/5 shadow-2xl backdrop-blur-[40px] p-6 md:p-10 transition-all duration-700 hover:border-white/10">
             <div className="flex items-center gap-3 mb-1">
-                <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/60" />
+                <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/40" />
                 <h3 className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Financials</h3>
             </div>
-            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-slate-900 mb-6 md:mb-8">{title}</h2>
+            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-white mb-6 md:mb-8">{title}</h2>
 
             <div className="flex-1 w-full min-h-0 relative group">
                 <div className="absolute inset-0 bg-blue-400/[0.01] rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-1000 p-20" />
@@ -56,7 +56,7 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
                 {(totalLabel || totalValue) && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%]">
                         <span className="text-[7px] md:text-[8px] text-slate-400 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
-                        <span className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900">{totalValue}</span>
+                        <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{totalValue}</span>
                     </div>
                 )}
             </div>
