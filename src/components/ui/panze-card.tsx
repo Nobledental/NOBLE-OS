@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import React from "react";
 
 interface PanzeCardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
@@ -10,8 +9,8 @@ export function PanzeCard({ children, className, flat = false, ...props }: Panze
     return (
         <div
             className={cn(
-                "relative overflow-hidden rounded-3xl bg-card border border-border shadow-sm transition-all duration-300 hover:shadow-md",
-                !flat && "shadow-sm",
+                "p-6 lg:p-8 transition-all duration-700 hover:-translate-y-1",
+                !flat && "shadow-2xl",
                 className
             )}
             {...props}

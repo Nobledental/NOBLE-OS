@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Eye, EyeOff, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { maskPhone } from "@/lib/security";
 
 interface PatientResult {
     id: string;
@@ -92,7 +93,7 @@ export function UnifiedPatientSearch() {
                                             {showSensitive[patient.id] ? (
                                                 <span className="font-mono text-indigo-600">{patient.phone}</span>
                                             ) : (
-                                                <span className="font-mono blur-[2px] select-none">9999999999</span>
+                                                <span className="font-mono select-none">{maskPhone(patient.phone)}</span>
                                             )}
                                             <Button
                                                 variant="ghost"

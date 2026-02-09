@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { maskPhone, maskEmail } from "@/lib/security";
 
 // Mock Data (will be replaced with real data later)
 const MOCK_STAFF = [
@@ -162,13 +163,13 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
                                     <div className="flex items-center justify-between text-[11px] text-white/60 font-bold p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-700">
                                         <div className="flex items-center gap-3">
                                             <Phone className="w-3.5 h-3.5" />
-                                            <span>{staff.phone}</span>
+                                            <span>{maskPhone(staff.phone)}</span>
                                         </div>
                                     </div>
                                     <div className="flex items-center justify-between text-[11px] text-white/60 font-bold p-4 rounded-2xl bg-white/5 border border-white/10 transition-all duration-700">
                                         <div className="flex items-center gap-3">
                                             <Mail className="w-3.5 h-3.5" />
-                                            <span className="truncate">{staff.email}</span>
+                                            <span className="truncate">{maskEmail(staff.email)}</span>
                                         </div>
                                     </div>
                                 </div>
