@@ -129,11 +129,11 @@ export function SterilizationHub() {
                     <span className="text-[10px] font-bold tracking-[0.6em] text-slate-600 uppercase border-b border-slate-200">Armamentarium Safety</span>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-black flex items-center gap-4">
+                    <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-black dark:text-black flex items-center gap-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-emerald-600 shadow-sm">
                             <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
-                        Sterilization <span className="text-black font-light translate-x-1 underline underline-offset-4 decoration-slate-200">Center</span>
+                        <span className="text-black dark:text-black">Sterilization</span> <span className="text-black dark:text-black font-light translate-x-1 underline underline-offset-4 decoration-slate-200">Center</span>
                     </h1>
 
                     <div className="flex gap-4">
