@@ -12,12 +12,12 @@ interface DonutChartProps {
 
 export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartProps) {
     return (
-        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full bg-slate-900 border border-slate-800 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl transition-all duration-700 hover:border-blue-500/20">
+        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full glass-frost border-white/40 shadow-[0_40px_100px_-20px_rgba(0,0,0,0.05)] backdrop-blur-[40px] p-6 md:p-10 shadow-2xl transition-all duration-700 hover:border-blue-500/20">
             <div className="flex items-center gap-3 mb-1">
-                <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/40" />
-                <h3 className="text-[9px] md:text-[10px] font-bold text-white/30 uppercase tracking-[0.4em]">Financials</h3>
+                <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/60" />
+                <h3 className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Financials</h3>
             </div>
-            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-white mb-6 md:mb-8">{title}</h2>
+            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-slate-900 mb-6 md:mb-8">{title}</h2>
 
             <div className="flex-1 w-full min-h-0 relative group">
                 <div className="absolute inset-0 bg-blue-400/[0.01] rounded-full opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-1000 p-20" />
@@ -55,8 +55,8 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
 
                 {(totalLabel || totalValue) && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%]">
-                        <span className="text-[7px] md:text-[8px] text-white/80 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
-                        <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{totalValue}</span>
+                        <span className="text-[7px] md:text-[8px] text-slate-400 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
+                        <span className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900">{totalValue}</span>
                     </div>
                 )}
             </div>
@@ -64,8 +64,8 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
             <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-6">
                 {data.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
-                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ring-4 ring-white/[0.02]" style={{ backgroundColor: item.color }} />
-                        <span className="text-[8px] md:text-[9px] font-bold text-white/95 uppercase tracking-[0.2em]">{item.name}</span>
+                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ring-4 ring-slate-100/50" style={{ backgroundColor: item.color }} />
+                        <span className="text-[8px] md:text-[9px] font-bold text-slate-500 uppercase tracking-[0.2em]">{item.name}</span>
                     </div>
                 ))}
             </div>

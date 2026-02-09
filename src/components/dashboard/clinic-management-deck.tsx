@@ -42,7 +42,7 @@ interface ManagementFeature {
     icon: any;
     chip: string;
     accent: string;
-    category: 'Operations' | 'Finance' | 'Growth' | 'Security';
+    category: 'Operations' | 'Finance' | 'Growth' | 'Security' | 'Safety';
     glow?: string;
     href?: string;
     action?: string;
@@ -211,26 +211,26 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-[2px] bg-${feature.glow || 'white'}/[0.08] rounded-[2.5rem] opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10`} />
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
-                            {/* UX Architect Obsidian Glass Layer */}
-                            <div className="bg-slate-900 rounded-[2.2rem] md:rounded-[2.8rem] overflow-hidden relative p-8 md:p-10 h-full flex flex-col min-h-[190px] md:min-h-[220px] border border-slate-800 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-slate-700 group-hover:bg-[#111827]">
+                            {/* Vision Glass Card Layer */}
+                            <div className="glass-frost rounded-[2.2rem] md:rounded-[2.8rem] overflow-hidden relative p-8 md:p-10 h-full flex flex-col min-h-[190px] md:min-h-[220px] border-white/40 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.05)] transition-all duration-1000 group-hover:border-blue-500/20 group-hover:bg-white/60">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
                                     <div className={cn(
-                                        "w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-[1.2rem] bg-white/[0.03] flex items-center justify-center border border-white/5 transition-all duration-700",
-                                        feature.accent || "text-white/30",
-                                        `group-hover:bg-white/[0.08] group-hover:text-white group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.05)]`
+                                        "w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-[1.2rem] bg-indigo-50 flex items-center justify-center border border-indigo-100/50 transition-all duration-700 shadow-sm",
+                                        feature.accent.replace('text-', 'bg-').replace('-400', '-500/10').replace('-200', '-500/10'),
+                                        `group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]`
                                     )}>
-                                        <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
+                                        <feature.icon className={cn("w-5 h-5 md:w-6 md:h-6", feature.accent.replace('-400', '-600').replace('-200', '-600'))} />
                                     </div>
 
                                     <div className="flex flex-col items-end gap-2">
-                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white underline underline-offset-4 decoration-white/20">{feature.category}</span>
+                                        <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-slate-400 underline underline-offset-4 decoration-slate-200">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-white/20">
+                                            <div className="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-white/10 border border-white/20 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white">
+                                            <div className="bg-emerald-500 border border-emerald-400 text-[7px] md:text-[8px] uppercase font-bold tracking-[0.4em] px-3 py-1 rounded-full text-white shadow-lg shadow-emerald-500/20">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -239,14 +239,14 @@ export function ClinicManagementDeck() {
 
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10">
-                                    <div className="flex items-center gap-2 mb-2 opacity-80 group-hover:opacity-100 transition-opacity duration-1000">
-                                        <div className="w-4 h-[1px] bg-white" />
-                                        <span className="text-[7px] font-bold uppercase tracking-widest">{feature.chip}</span>
+                                    <div className="flex items-center gap-2 mb-2 opacity-60 group-hover:opacity-100 transition-opacity duration-1000">
+                                        <div className="w-4 h-[1px] bg-slate-300" />
+                                        <span className="text-[7px] font-bold uppercase tracking-widest text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
+                                    <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-900 mb-2 leading-none transition-all duration-700 group-hover:translate-x-1">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[11px] md:text-[12px] text-white font-medium leading-normal transition-all duration-700 group-hover:translate-x-1">
+                                    <p className="text-[11px] md:text-[12px] text-slate-500 font-medium leading-normal transition-all duration-700 group-hover:translate-x-1">
                                         {feature.subtitle}
                                     </p>
                                 </div>
@@ -259,7 +259,7 @@ export function ClinicManagementDeck() {
                                             whileHover={{ x: '100%' }}
                                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                                             className={cn(
-                                                "w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent shadow-[0_0_10px_rgba(255,255,255,0.2)]",
+                                                "w-1/2 h-full bg-gradient-to-r from-transparent via-blue-500/20 to-transparent shadow-[0_0_10px_rgba(59,130,246,0.1)]",
                                             )}
                                         />
                                     </div>

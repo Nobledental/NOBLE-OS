@@ -32,7 +32,8 @@ export default function OperationsHub() {
     const [activeTab, setActiveTab] = useState("settlement");
 
     return (
-        <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950/50 p-6 md:p-10 font-sans">
+        <div className="min-h-screen p-6 md:p-10 font-sans relative overflow-hidden">
+            {/* Ambient Background Content already provided by DashboardLayout */}
             <div className="max-w-7xl mx-auto space-y-10">
 
                 {/* Header with Animation */}
@@ -47,7 +48,7 @@ export default function OperationsHub() {
                                 <ShieldCheck className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white italic uppercase">Operations Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tighter text-slate-900 italic uppercase">Operations Hub</h1>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Unified Command Center</p>
                             </div>
                         </div>
@@ -65,10 +66,10 @@ export default function OperationsHub() {
 
                 {/* Main Navigation Tabs */}
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-                    <TabsList className="bg-white dark:bg-slate-900 p-2 rounded-[2rem] border border-slate-100 shadow-xl inline-flex h-auto w-full justify-start overflow-x-auto scrollbar-hide">
+                    <TabsList className="bg-white/40 backdrop-blur-3xl p-2 rounded-[2rem] border border-white/60 shadow-xl inline-flex h-auto w-full justify-start overflow-x-auto scrollbar-hide">
                         <TabsTrigger
                             value="settlement"
-                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap"
+                            className="rounded-2xl px-8 py-4 gap-3 data-[state=active]:bg-slate-900 data-[state=active]:text-white transition-all font-black uppercase text-[10px] tracking-widest whitespace-nowrap text-slate-600"
                         >
                             <Wallet size={16} /> EOD Settlement
                         </TabsTrigger>
@@ -101,14 +102,14 @@ export default function OperationsHub() {
                             </TabsContent>
 
                             <TabsContent value="tariff" className="mt-0 outline-none">
-                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
+                                <PanzeCard className="p-8 border-none shadow-2xl glass-frost">
                                     <TariffPage />
                                 </PanzeCard>
                             </TabsContent>
 
 
                             <TabsContent value="ledger" className="mt-0 outline-none">
-                                <PanzeCard className="p-8 border-none shadow-2xl bg-white dark:bg-slate-900">
+                                <PanzeCard className="p-8 border-none shadow-2xl glass-frost">
                                     <ConsultantLedgerPanel isAdmin={true} />
                                 </PanzeCard>
                             </TabsContent>

@@ -45,8 +45,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 animate="visible"
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8"
             >
-                {/* Operations Summary (Editorial Champagne Gold) */}
-                <PanzeCard className="lg:col-span-2 group bg-slate-900 border border-slate-800 text-white relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 rounded-[3rem] md:rounded-[4rem] shadow-[0_60px_100px_-30px_rgba(0,0,0,0.5)]">
+                {/* Operations Summary (Frosty White Glass) */}
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 text-slate-900 relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
                     {/* Champagne Gold & Silver Silk Glows */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none" />
@@ -96,11 +96,11 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
-                                        <div className={`text-[8px] md:text-[9px] font-black px-4 py-1.5 rounded-full bg-white/20 border border-white/30 uppercase tracking-[0.2em] flex items-center gap-2 group-hover/pod:bg-${pod.accent}/20 group-hover/pod:text-${pod.accent} transition-all duration-500 shadow-lg`}>
+                                        <div className={`text-[8px] md:text-[9px] font-black px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 uppercase tracking-[0.2em] flex items-center gap-2 group-hover/pod:bg-${pod.accent.split('-')[0]}-50 group-hover/pod:text-${pod.accent} transition-all duration-500 shadow-sm text-slate-600`}>
                                             <TrendingUp className="w-3 h-3 opacity-100" /> {pod.trend}
                                         </div>
                                     ) : (
-                                        <span className="text-[9px] text-white font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
+                                        <span className="text-[9px] text-slate-400 font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
                                     )}
                                     {/* Silk Glow On Hover */}
                                     <div className={`absolute -inset-6 bg-${pod.accent}/[0.03] rounded-[3rem] opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10`} />
@@ -110,35 +110,35 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                 </PanzeCard>
 
-                {/* Intelligence Layer (Editorial Soft Emerald) */}
-                <PanzeCard className="flex flex-col bg-slate-900 border border-slate-800 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.5)] transition-all duration-1000 min-h-[380px]">
+                {/* Intelligence Layer (Frosty White Glass) */}
+                <PanzeCard className="flex flex-col glass-frost border-white/40 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[380px]">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none" />
                     <div className="p-8 md:p-10 space-y-10 md:space-y-14 flex-1 relative z-10">
                         <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 md:w-16 md:h-16 bg-white/[0.03] flex items-center justify-center text-emerald-400/60 rounded-2xl md:rounded-[1.8rem] border border-white/5 group-hover:bg-emerald-500 group-hover:text-black group-hover:scale-105 transition-all duration-700 shadow-inner">
+                            <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-500 flex items-center justify-center text-white rounded-2xl md:rounded-[1.8rem] border border-emerald-400 group-hover:scale-105 transition-all duration-700 shadow-lg shadow-emerald-500/20">
                                 <ZapIcon className="w-7 h-7 md:w-8 md:h-8" />
                             </div>
                             <div>
                                 <div className="flex items-center gap-3 mb-1.5">
                                     <div className="w-4 h-[1px] bg-emerald-500" />
-                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-400">AI Pulse</span>
+                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-600">AI Pulse</span>
                                 </div>
-                                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white leading-none">Intelligence</h3>
+                                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-slate-900 leading-none">Intelligence</h3>
                             </div>
                         </div>
 
                         <div className="relative group/insight pt-4">
                             <div className="relative bg-white/[0.01] rounded-[2.5rem] md:rounded-[2.8rem] p-8 md:p-10 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
                                 <div className="flex items-center gap-5 mb-8">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-2xl flex items-center justify-center text-emerald-400/40 border border-white/5 group-hover/insight:text-emerald-400 transition-all duration-700">
+                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-lg font-bold tracking-tight text-white mb-1 uppercase">Growth Index</div>
-                                        <div className="text-[9px] text-white font-black uppercase tracking-widest opacity-100 underline decoration-white/30 underline-offset-4">Standard Sync</div>
+                                        <div className="text-lg font-bold tracking-tight text-slate-900 mb-1 uppercase">Growth Index</div>
+                                        <div className="text-[9px] text-emerald-600 font-black uppercase tracking-widest opacity-100 underline decoration-emerald-200 underline-offset-4">Standard Sync</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-white font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl">
+                                <p className="text-[11px] md:text-[12px] text-slate-800 font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
                                     "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
                                 </p>
                             </div>
@@ -148,7 +148,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
 
                     <div className="p-6 md:p-8 bg-white/[0.05] border-t border-white/10">
-                        <Button variant="ghost" className="w-full h-14 md:h-16 rounded-[2rem] md:rounded-[2.5rem] bg-white/10 hover:bg-white/20 border border-white/30 text-white hover:text-emerald-400 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-xl">
+                        <Button variant="ghost" className="w-full h-14 md:h-16 rounded-[2rem] md:rounded-[2.5rem] bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 hover:text-emerald-600 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-xl shadow-slate-200/50">
                             <ScrollText className="w-5 h-5 opacity-100" /> System Registry
                         </Button>
                     </div>
@@ -213,7 +213,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>
-                <div className="bg-slate-900 px-8 md:px-16 py-12 md:py-20 border border-slate-800 rounded-[4rem] md:rounded-[6rem] shadow-[0_100px_150px_-50px_rgba(0,0,0,0.4)] relative overflow-hidden group transition-all duration-1000">
+                <div className="glass-frost px-8 md:px-16 py-12 md:py-20 border-white/40 rounded-[4rem] md:rounded-[6rem] shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden group transition-all duration-1000">
                     {/* Background Arctic Surface Glow */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.03)_0%,_transparent_60%)] pointer-events-none" />
                     <div className="relative z-10">

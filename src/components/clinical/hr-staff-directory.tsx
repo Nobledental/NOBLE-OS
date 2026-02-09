@@ -90,7 +90,7 @@ export function HRStaffDirectory() {
                             <Users className="w-6 h-6 text-indigo-600" />
                         </div>
                         <div>
-                            <h2 className="text-3xl font-black tracking-tighter text-slate-800 italic">Staff Directory</h2>
+                            <h2 className="text-3xl font-black tracking-tighter text-slate-900 italic uppercase">Staff Directory</h2>
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Human Resources & Identity</p>
                         </div>
                     </div>
@@ -129,10 +129,10 @@ export function HRStaffDirectory() {
                                     animate={{ opacity: 1, scale: 1 }}
                                     onClick={() => setSelectedStaff(member)}
                                     className={cn(
-                                        "group cursor-pointer rounded-[2.5rem] border-2 transition-all p-6 bg-white overflow-hidden relative shadow-sm",
+                                        "group cursor-pointer glass-frost transition-all p-6 overflow-hidden relative shadow-sm border-white/40",
                                         selectedStaff?.id === member.id
-                                            ? "border-indigo-500 shadow-xl shadow-indigo-500/5"
-                                            : "border-slate-50 hover:border-slate-200"
+                                            ? "border-indigo-500 shadow-xl shadow-indigo-500/10 ring-2 ring-indigo-500/20"
+                                            : "hover:border-indigo-200"
                                     )}
                                 >
                                     <div className="space-y-6 relative z-10">
@@ -149,8 +149,8 @@ export function HRStaffDirectory() {
                                         </div>
 
                                         <div className="space-y-1">
-                                            <h4 className="text-xl font-black text-slate-800 italic">{member.name}</h4>
-                                            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                            <h4 className="text-xl font-black text-slate-900 italic uppercase">{member.name}</h4>
+                                            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
                                                 <Briefcase className="w-3 h-3" /> {member.role}
                                             </p>
                                         </div>
