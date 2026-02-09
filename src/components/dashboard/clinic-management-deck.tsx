@@ -239,7 +239,7 @@ export function ClinicManagementDeck() {
 
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10">
-                                    <div className="flex items-center gap-2 mb-2 opacity-50 group-hover:opacity-70 transition-opacity duration-1000">
+                                    <div className="flex items-center gap-2 mb-2 opacity-80 group-hover:opacity-100 transition-opacity duration-1000">
                                         <div className="w-4 h-[1px] bg-white" />
                                         <span className="text-[7px] font-bold uppercase tracking-widest">{feature.chip}</span>
                                     </div>

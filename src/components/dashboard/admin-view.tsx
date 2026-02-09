@@ -120,8 +120,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                             </div>
                             <div>
                                 <div className="flex items-center gap-3 mb-1.5">
-                                    <div className="w-4 h-[1px] bg-emerald-500/60" />
-                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-400/60">AI Pulse</span>
+                                    <div className="w-4 h-[1px] bg-emerald-500" />
+                                    <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-400">AI Pulse</span>
                                 </div>
                                 <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white leading-none">Intelligence</h3>
                             </div>
@@ -135,7 +135,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     </div>
                                     <div>
                                         <div className="text-lg font-bold tracking-tight text-white mb-1 uppercase">Growth Index</div>
-                                        <div className="text-[9px] text-white font-black uppercase tracking-widest opacity-80 underline decoration-white/20 underline-offset-4">Standard Sync</div>
+                                        <div className="text-[9px] text-white font-black uppercase tracking-widest opacity-100 underline decoration-white/30 underline-offset-4">Standard Sync</div>
                                     </div>
                                 </div>
                                 <p className="text-[11px] md:text-[12px] text-white font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl">
@@ -209,7 +209,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                     <div className="flex flex-col items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.4)]" />
-                        <h2 className="text-[10px] font-black tracking-[0.6em] text-slate-600 uppercase whitespace-nowrap border-b border-slate-200 pb-1">Clinical Operations Hub</h2>
+                        <h2 className="text-[10px] font-black tracking-[0.6em] text-slate-900 uppercase whitespace-nowrap border-b border-slate-300 pb-1">Clinical Operations Hub</h2>
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>

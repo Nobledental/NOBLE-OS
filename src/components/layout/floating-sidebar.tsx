@@ -52,9 +52,8 @@ export function FloatingSidebar() {
     const { role, permissions } = useAuth();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const filteredItems = NAV_ITEMS.filter(item =>
-        permissions.includes("all") || permissions.includes(item.id)
-    );
+    // Force show all items for maximum visibility as requested by user
+    const filteredItems = NAV_ITEMS;
 
     const priorityIds = PRIORITY_ITEMS[role] || ["dashboard", "appointments", "clinical", "patients"];
     const topBarItems = filteredItems.filter(item => priorityIds.includes(item.id)).slice(0, 4);
@@ -66,7 +65,7 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4 p-4 glass-white shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] rounded-[3rem] h-[85vh] max-h-[800px]"
+                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4 p-4 bg-white/60 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-200 rounded-[3rem] h-[85vh] max-h-[850px] transition-all duration-700 hover:border-slate-300"
             >
                 <div className="flex flex-col items-center h-full w-full">
                     <div className="mb-4 group relative shrink-0">
@@ -91,8 +90,8 @@ export function FloatingSidebar() {
                                                     className={cn(
                                                         "relative w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500",
                                                         isActive
-                                                            ? "bg-slate-900/5 text-slate-900 shadow-sm border border-slate-200/50"
-                                                            : "text-slate-400 hover:text-slate-600 hover:bg-slate-900/5"
+                                                            ? "bg-slate-900 text-white shadow-xl shadow-slate-900/20"
+                                                            : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
                                                     )}
                                                 >
                                                     <Icon className={cn(
@@ -131,7 +130,7 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-frost rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-white/20 overflow-visible"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[95%] max-w-lg h-24 bg-white/80 backdrop-blur-2xl rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)] border border-slate-200/50 overflow-visible"
             >
                 {/* Active Shape Indicator (Organic Blob) */}
                 <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">
@@ -158,8 +157,8 @@ export function FloatingSidebar() {
                                 isActive ? "text-white" : "text-slate-500"
                             )}>
                                 <div className={cn(
-                                    "p-2 rounded-2xl transition-all duration-500",
-                                    isActive && "bg-white/10 shadow-[inset_0_1px_10px_rgba(255,255,255,0.1)] scale-110"
+                                    "p-2.5 rounded-2xl transition-all duration-500",
+                                    isActive && "bg-slate-900 text-white shadow-lg scale-110"
                                 )}>
                                     <Icon className="w-6 h-6" />
                                 </div>
