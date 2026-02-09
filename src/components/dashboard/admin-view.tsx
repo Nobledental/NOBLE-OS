@@ -2,22 +2,11 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ProjectsOverview } from "./projects-overview";
-import { RevenueChart } from "./revenue-chart";
-import { PatientTracker } from "./patient-tracker";
-import { ChiefPulse } from "./chief-pulse";
 import { SplineChart } from "@/components/ui/charts/spline-chart";
 import { DonutChart } from "@/components/ui/charts/donut-chart";
 import { PanzeCard } from "@/components/ui/panze-card";
-import { BarChart3, Search, LayoutDashboard, Zap as ZapIcon, ScrollText, Wallet, Activity, Briefcase, ArrowUpRight, TrendingUp, Users, Calendar, ArrowLeft } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { TARIFF_MASTER_DATA } from "@/lib/data/tariff-data";
-import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
+import { BarChart3, Zap as ZapIcon, ScrollText, Wallet, Activity, TrendingUp, Users, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SettlementPage from "@/app/dashboard/settlement/page";
-import TariffPage from "@/app/dashboard/tariff/page";
-import ConsultantLedgerPanel from "@/components/collaboration/consultant-ledger";
 import { ClinicManagementDeck } from "./clinic-management-deck";
 import { cn } from "@/lib/utils";
 
@@ -113,7 +102,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                             <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
                                         </div>
                                     </div>
-                                ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </PanzeCard>
@@ -226,6 +216,6 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                 </div>
             </motion.div>
-        </div >
+        </div>
     );
 }
