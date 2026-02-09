@@ -4,17 +4,17 @@ import { motion } from "framer-motion";
 
 export function BackgroundParticles() {
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-[#0f1115]">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-background transition-colors duration-500">
             {/* Medizinisch Core Radial Gradient (Ported from Reference) */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,#506176_0%,#1a1f2b_55%,#0E121B_100%)]" />
+            <div className="absolute inset-0 bg-aurora opacity-100" />
 
             {/* Subtle Noise Texture Overlay (Premium Matte Finish) */}
             {/* Premium Scanner Line Overlay */}
             <div className="absolute inset-x-0 top-0 h-screen pointer-events-none overflow-hidden z-0">
-                <div className="scanner-line w-full" />
+                <div className="scanner-line w-full opacity-0 dark:opacity-100" />
             </div>
 
-            <div className="absolute inset-0 bg-[#0E121B] grid-bg opacity-[0.03] pointer-events-none" />
+            <div className="absolute inset-0 bg-grid-bg opacity-[0.03] pointer-events-none" />
             <div className="absolute inset-0 noise-texture opacity-[0.02] pointer-events-none" />
 
             {/* Medizinisch Floor Mist / Bottom Glow - Precision Subtlety */}

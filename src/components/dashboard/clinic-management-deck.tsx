@@ -208,36 +208,24 @@ export function ClinicManagementDeck() {
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Silk Edge Ambient Glow (Performance Reactive) */}
-                            <div className={cn(
-                                "absolute -inset-[2px] rounded-xl opacity-0 group-hover:opacity-100 blur-[2px] transition-all duration-1000 -z-10",
-                                feature.category === 'Finance' ? "bg-amber-500/20" :
-                                    feature.category === 'Growth' ? "bg-emerald-500/20" :
-                                        "bg-[#0A84FF]/20"
-                            )} />
-                            <div className={cn(
-                                "absolute -inset-6 rounded-2xl opacity-0 group-hover:opacity-100 blur-[60px] transition-all duration-1000 -z-10",
-                                feature.category === 'Finance' ? "bg-amber-500/5" :
-                                    feature.category === 'Growth' ? "bg-emerald-500/5" :
-                                        "bg-[#0A84FF]/5"
-                            )} />
+                            {/* Removed Glows as per user request */}
 
-                            {/* Medizinisch Dark Glass Layer */}
-                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
+                            {/* Medizinisch Glass Layer */}
+                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 dark:border-white/5 border-slate-200/50 shadow-sm transition-all duration-1000 group-hover:bg-slate-50/50 dark:group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
                                         "w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10 transition-all duration-700 shadow-inner",
-                                        feature.accent || "text-white/30",
-                                        `group-hover:scale-110 group-hover:bg-indigo-500/30 group-hover:text-white`
+                                        feature.accent || "text-slate-400",
+                                        `group-hover:scale-110 group-hover:bg-indigo-500/30 group-hover:text-indigo-600 dark:group-hover:text-white`
                                     )}>
                                         <feature.icon className="w-4 h-4 md:w-5 md:h-5 opacity-70 group-hover:opacity-100" />
                                     </div>
 
                                     <div className="flex flex-col items-end gap-1.5 opacity-60">
-                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">{feature.category}</span>
+                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20">
+                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-white/20">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
@@ -252,12 +240,12 @@ export function ClinicManagementDeck() {
                                 <div className="mt-auto relative z-10 flex flex-col gap-1">
                                     <div className="flex items-center gap-2 mb-1.5">
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
-                                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-500">{feature.chip}</span>
+                                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-400">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-[14px] font-bold tracking-tight text-white mb-0.5">
+                                    <h3 className="text-[14px] font-bold tracking-tight text-slate-900 dark:text-white mb-0.5">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[13px] text-slate-400 font-medium">
+                                    <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium">
                                         {feature.subtitle}
                                     </p>
 
