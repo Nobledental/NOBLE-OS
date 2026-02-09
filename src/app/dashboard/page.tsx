@@ -57,10 +57,10 @@ export default function DashboardPage() {
             {/* Header Area with View Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
-                    <p className="text-white/40 text-[10px] mb-2 font-bold uppercase tracking-[0.4em]">
-                        {viewMode === 'overview' ? `Noble Identity: ${role}` : 'Clinical Focus: Active Session'}
+                    <p className="text-[#007AFF] text-[10px] mb-2 font-black uppercase tracking-[0.5em] animate-in fade-in slide-in-from-left-4 duration-1000">
+                        {viewMode === 'overview' ? `Noble Command • ${role}` : 'Clinical Focus • Active Session'}
                     </p>
-                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter font-display uppercase italic">
+                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter font-display uppercase italic leading-none">
                         {viewMode === 'overview' ? 'Practice Overview' : 'Patient Session'}
                     </h1>
                 </div>
@@ -71,35 +71,35 @@ export default function DashboardPage() {
                             variant="ghost"
                             onClick={() => setViewMode('overview')}
                             className={cn(
-                                "rounded-full px-6 py-2 gap-3 transition-all h-11",
+                                "rounded-[1.5rem] px-8 py-2 gap-3 transition-all h-12",
                                 viewMode === 'overview'
-                                    ? "bg-white text-slate-950 shadow-[0_10px_30px_rgba(255,255,255,0.2)] hover:bg-white/90"
+                                    ? "bg-[#007AFF] text-white shadow-[0_10px_30px_rgba(0,122,255,0.4)] hover:bg-[#007AFF]/90"
                                     : "text-white/60 hover:text-white hover:bg-white/5"
                             )}
                         >
                             <LayoutGrid className="w-4 h-4" />
-                            <span className="hidden md:inline text-[10px] font-black uppercase tracking-[0.2em]">Overview</span>
+                            <span className="hidden md:inline text-[11px] font-black uppercase tracking-[0.2em]">Overview</span>
                         </Button>
                         <Button
                             variant="ghost"
                             onClick={() => setViewMode('treatment')}
                             className={cn(
-                                "rounded-full px-6 py-2 gap-3 transition-all h-11",
+                                "rounded-[1.5rem] px-8 py-2 gap-3 transition-all h-12",
                                 viewMode === 'treatment'
-                                    ? "bg-brand-primary text-white shadow-[0_10px_30px_rgba(249,115,22,0.3)] hover:bg-brand-primary/90"
+                                    ? "bg-[#007AFF] text-white shadow-[0_10px_30px_rgba(0,122,255,0.4)] hover:bg-[#007AFF]/90"
                                     : "text-white/60 hover:text-white hover:bg-white/5"
                             )}
                         >
                             <Armchair className="w-4 h-4" />
-                            <span className="hidden md:inline text-[10px] font-black uppercase tracking-[0.2em]">Treatment</span>
+                            <span className="hidden md:inline text-[11px] font-black uppercase tracking-[0.2em]">Treatment</span>
                         </Button>
                         <div className="w-px h-6 bg-white/10 mx-1" />
                         <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
+                            whileHover={{ scale: 1.15 }}
+                            whileTap={{ scale: 0.85 }}
                             className="px-2 flex items-center justify-center cursor-pointer"
                         >
-                            <NEOOrb status="thinking" className="scale-75" />
+                            <NEOOrb status="thinking" className="scale-75 shadow-[0_0_20px_rgba(167,139,250,0.3)]" />
                         </motion.div>
                     </div>
                     <div className="w-px h-6 bg-slate-200 mx-1 hidden md:block" />
@@ -110,15 +110,15 @@ export default function DashboardPage() {
             {/* Filters (Visible in Overview Mode) */}
             {viewMode === 'overview' && (
                 <div className="flex items-center gap-4 flex-wrap animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
-                    <div className="flex items-center bg-white/[0.03] backdrop-blur-3xl rounded-full p-1.5 shadow-2xl border border-white/10">
+                    <div className="flex items-center bg-black/40 backdrop-blur-2xl rounded-full p-1.5 shadow-2xl border border-white/5">
                         {filters.map(filter => (
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
                                 className={cn(
-                                    "px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all duration-500",
+                                    "px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-700",
                                     activeFilter === filter
-                                        ? "bg-white text-slate-950 shadow-[0_10px_30px_rgba(255,255,255,0.2)] scale-105"
+                                        ? "bg-white text-black shadow-2xl scale-105"
                                         : "text-white/40 hover:text-white hover:bg-white/5"
                                 )}
                             >

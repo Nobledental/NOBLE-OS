@@ -66,11 +66,11 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ x: -100, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4 p-4 glass-white shadow-[0_40px_80px_-20px_rgba(0,0,0,0.1)] rounded-[3rem] h-[85vh] max-h-[800px]"
+                className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden lg:flex flex-col items-center gap-4 p-4 glass-obsidian shadow-[0_40px_80px_-20px_rgba(0,0,0,0.9)] rounded-[3rem] h-[85vh] max-h-[800px] border border-white/5"
             >
                 <div className="flex flex-col items-center h-full w-full">
                     <div className="mb-4 group relative shrink-0">
-                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-xl shadow-neo-vibrant-blue/20 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+                        <div className="w-12 h-12 rounded-2xl bg-[#007AFF] flex items-center justify-center text-white shadow-[0_10px_20px_rgba(0,122,255,0.4)] group-hover:scale-105 transition-all duration-700 cursor-pointer">
                             <Activity className="w-6 h-6 drop-shadow-md" />
                         </div>
                     </div>
@@ -103,14 +103,14 @@ export function FloatingSidebar() {
                                                     {isActive && (
                                                         <motion.div
                                                             layoutId="sidebar-active"
-                                                            className="absolute -left-5 w-1 h-6 bg-neo-vibrant-blue rounded-full"
+                                                            className="absolute -left-5 w-1.5 h-6 bg-[#007AFF] rounded-full shadow-[0_0_15px_rgba(0,122,255,0.8)]"
                                                             transition={{ type: "spring", stiffness: 400, damping: 30 }}
                                                         />
                                                     )}
                                                 </motion.div>
                                             </Link>
                                         </TooltipTrigger>
-                                        <TooltipContent side="right" className="glass-white border-white/40 text-[9px] font-black uppercase tracking-widest text-slate-900 px-3 py-1.5 ml-2">
+                                        <TooltipContent side="right" className="glass-obsidian border-white/10 text-[9px] font-black uppercase tracking-widest text-white px-3 py-1.5 ml-2 shadow-2xl">
                                             {item.label}
                                         </TooltipContent>
                                     </Tooltip>
@@ -119,9 +119,9 @@ export function FloatingSidebar() {
                         </div>
                     </ScrollArea>
 
-                    <div className="h-px w-6 bg-slate-200 mx-auto my-3 shrink-0" />
+                    <div className="h-px w-6 bg-white/5 mx-auto my-3 shrink-0" />
 
-                    <button className="w-12 h-12 rounded-xl flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-all duration-500 group shrink-0">
+                    <button className="w-12 h-12 rounded-xl flex items-center justify-center text-white/40 hover:bg-rose-500/10 hover:text-rose-500 transition-all duration-500 group shrink-0">
                         <LogOut className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
                     </button>
                 </div>
@@ -131,7 +131,7 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-neo rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] border-white/10 overflow-visible"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex lg:hidden w-[92%] max-w-lg h-24 glass-obsidian rounded-[3.5rem] items-center justify-around px-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.9)] border-white/5 overflow-visible"
             >
                 {/* Active Shape Indicator (Organic Blob) */}
                 <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">
@@ -141,7 +141,7 @@ export function FloatingSidebar() {
                             <motion.div
                                 key="blob"
                                 layoutId="mobile-blob"
-                                className="w-20 h-20 bg-gradient-to-tr from-neo-vibrant-blue to-neo-electric-blue rounded-[2.5rem] blur-2xl opacity-30 absolute"
+                                className="w-20 h-20 bg-[#007AFF] rounded-[2.5rem] blur-2xl opacity-40 absolute"
                             />
                         );
                     })}
@@ -207,7 +207,7 @@ export function FloatingSidebar() {
                                                 onClick={() => setIsMenuOpen(false)}
                                                 className={cn(
                                                     "flex flex-col items-center gap-3 p-5 rounded-[2rem] transition-all duration-500",
-                                                    isActive ? "bg-white/10 text-neo-vibrant-blue shadow-inner" : "bg-black/20 hover:bg-black/40 text-slate-400"
+                                                    isActive ? "bg-[#007AFF]/10 text-[#007AFF] shadow-inner" : "bg-black/20 hover:bg-black/40 text-white/40"
                                                 )}
                                             >
                                                 <Icon className="w-6 h-6" />

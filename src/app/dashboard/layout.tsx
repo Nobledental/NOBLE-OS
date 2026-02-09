@@ -11,7 +11,7 @@ export default function DashboardLayout({
 }) {
     return (
         <AuthProvider>
-            <div className="flex h-screen overflow-hidden bg-noble-sage">
+            <div className="flex h-screen overflow-hidden bg-medex-obsidian">
                 {/* Floating Sidebar (Pill Dock) */}
                 <FloatingSidebar />
 

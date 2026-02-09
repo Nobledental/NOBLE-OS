@@ -115,8 +115,8 @@ export function SterilizationHub() {
 
     const statusConfig: Record<SterilizationStatus, { color: string, label: string, icon: any }> = {
         COLLECTING: { color: "bg-slate-500", label: "Collecting", icon: Layers },
-        PROCESSING: { color: "bg-amber-500", label: "Sterilizing", icon: Flame },
-        COMPLETED: { color: "bg-blue-500", label: "Verifying", icon: Clock },
+        PROCESSING: { color: "bg-[#007AFF]", label: "Sterilizing", icon: Flame },
+        COMPLETED: { color: "bg-[#007AFF]/60", label: "Verifying", icon: Clock },
         APPROVED: { color: "bg-emerald-500", label: "Ready / Sterile", icon: ShieldCheck },
         FAILED: { color: "bg-rose-500", label: "Failed", icon: AlertTriangle },
     };
@@ -133,26 +133,26 @@ export function SterilizationHub() {
                     <span className="text-[10px] font-black tracking-[0.6em] text-white uppercase border-b border-white/10 pb-1">Armamentarium Safety</span>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-white flex items-center gap-6">
-                        Sterilization <span className="text-slate-400 font-light border-b border-white/10">Management</span>
+                    <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-white flex items-center gap-6 uppercase italic leading-none">
+                        Sterilization <span className="text-white/20 font-light underline decoration-[#007AFF]/40 underline-offset-8">Management</span>
                     </h1>
 
                     <div className="flex gap-4">
-                        <div className="h-16 px-6 bg-white/[0.08] border border-white/20 rounded-2xl flex items-center gap-4 shadow-xl">
+                        <div className="h-16 px-6 bg-black/40 border border-white/5 rounded-2xl flex items-center gap-4 shadow-2xl backdrop-blur-2xl">
                             <div className="text-right">
-                                <p className="text-[8px] font-bold text-white uppercase tracking-widest">Active Cycles</p>
-                                <p className="text-xl font-bold text-amber-400 tracking-tight">{activeCycles}</p>
+                                <p className="text-[8px] font-black text-[#007AFF] uppercase tracking-[0.3em]">Active Cycles</p>
+                                <p className="text-xl font-black text-white tracking-tight">{activeCycles}</p>
                             </div>
-                            <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                                <Flame className="w-4 h-4 text-amber-500/60" />
+                            <div className="w-8 h-8 rounded-lg bg-[#007AFF]/20 flex items-center justify-center border border-[#007AFF]/30">
+                                <Flame className="w-4 h-4 text-[#007AFF]" />
                             </div>
                         </div>
                         <Button
                             onClick={() => setIsCreating(true)}
-                            className="h-16 px-8 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 gap-3 transition-all duration-700 shadow-xl"
+                            className="h-16 px-8 rounded-2xl bg-[#007AFF] text-white hover:bg-[#007AFF]/90 gap-3 transition-all duration-700 shadow-[0_10px_30px_rgba(0,122,255,0.4)] font-black uppercase tracking-[0.2em] text-[10px]"
                         >
                             <Plus className="w-4 h-4" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest">New Cycle</span>
+                            <span>New Cycle</span>
                         </Button>
                     </div>
                 </div>
@@ -209,10 +209,10 @@ export function SterilizationHub() {
                                                             <h4 className="text-2xl font-semibold text-white tracking-tight">{batch.name}</h4>
                                                         </div>
                                                         <div className={cn(
-                                                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border border-white/20 bg-white/10 shadow-lg",
-                                                            batch.status === 'PROCESSING' && "animate-pulse border-amber-500/60 shadow-amber-500/20"
+                                                            "w-12 h-12 rounded-2xl flex items-center justify-center transition-all border border-[#007AFF]/30 bg-[#007AFF]/10 shadow-lg",
+                                                            batch.status === 'PROCESSING' && "animate-pulse border-[#007AFF] shadow-[#007AFF]/20"
                                                         )}>
-                                                            <Icon className={cn("w-5 h-5", batch.status === 'PROCESSING' ? "text-amber-400" : "text-white")} />
+                                                            <Icon className={cn("w-5 h-5", batch.status === 'PROCESSING' ? "text-[#007AFF]" : "text-white")} />
                                                         </div>
                                                     </div>
 
@@ -346,21 +346,21 @@ export function SterilizationHub() {
 
             {/* Verification Modal */}
             <Dialog open={isVerifying} onOpenChange={setIsVerifying}>
-                <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border border-white/10 bg-slate-950 shadow-2xl">
-                    <div className="bg-blue-600 p-10 text-white relative overflow-hidden">
+                <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border border-white/5 bg-[#05070a] shadow-[0_50px_100px_-20px_rgba(0,0,0,1)]">
+                    <div className="bg-[#007AFF] p-10 text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -mr-24 -mt-24 blur-3xl opacity-50" />
                         <div className="relative z-10 space-y-2">
-                            <span className="text-[10px] font-bold uppercase tracking-[0.6em] text-white">Manual Override</span>
-                            <h3 className="text-3xl font-bold tracking-tight text-white mb-2">Cycle Validation</h3>
-                            <p className="text-[10px] font-black text-white uppercase tracking-widest border-t border-white/20 pt-2 inline-block">Batch Registry #{selectedBatch?.id}</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.5em] text-white/60">Manual Override</p>
+                            <h3 className="text-3xl font-black tracking-tighter text-white mb-2 uppercase italic">Cycle Validation</h3>
+                            <p className="text-[10px] font-black text-white/40 uppercase tracking-[0.3em] border-t border-white/10 pt-4 inline-block">Batch Registry • #{selectedBatch?.id}</p>
                         </div>
                     </div>
 
-                    <div className="p-10 space-y-10 bg-slate-950">
+                    <div className="p-10 space-y-10 bg-[#05070a]">
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white">Terminal Temp: {temp}°C</Label>
-                                <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Target 134°C</span>
+                                <Label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Terminal Temp: <span className="text-white text-lg ml-2">{temp}°C</span></Label>
+                                <span className="text-[10px] font-black text-[#007AFF] uppercase tracking-widest">Target 134°C</span>
                             </div>
                             <Slider
                                 value={[temp]}
@@ -368,14 +368,14 @@ export function SterilizationHub() {
                                 min={100}
                                 max={150}
                                 step={1}
-                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
+                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-[#007AFF]"
                             />
                         </div>
 
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white">Atmospheric Pressure: {pressure} bar</Label>
-                                <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Target 2.1 bar</span>
+                                <Label className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40">Atmospheric Pressure: <span className="text-white text-lg ml-2">{pressure} bar</span></Label>
+                                <span className="text-[10px] font-black text-[#007AFF] uppercase tracking-widest">Target 2.1 bar</span>
                             </div>
                             <Slider
                                 value={[pressure]}
@@ -383,21 +383,21 @@ export function SterilizationHub() {
                                 min={0}
                                 max={4}
                                 step={0.1}
-                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
+                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-[#007AFF]"
                             />
                         </div>
 
-                        <div className="flex items-center justify-between p-6 bg-white/10 rounded-[2rem] border border-white/20 shadow-xl">
-                            <div className="space-y-1">
-                                <Label className="text-[10px] font-bold uppercase tracking-widest text-white">Visual Indicator</Label>
-                                <p className="text-[9px] font-bold text-white/60 uppercase tracking-tighter">Has the chemical tape transformed?</p>
+                        <div className="flex items-center justify-between p-8 bg-white/[0.02] rounded-[2rem] border border-white/5 shadow-2xl">
+                            <div className="space-y-2">
+                                <Label className="text-[10px] font-black uppercase tracking-[0.3em] text-white">Visual Indicator</Label>
+                                <p className="text-[9px] font-medium text-white/40 uppercase tracking-tighter">Has the chemical tape transformed?</p>
                             </div>
-                            <Switch checked={indicatorPassed} onCheckedChange={setIndicatorPassed} className="data-[state=checked]:bg-emerald-500 scale-125" />
+                            <Switch checked={indicatorPassed} onCheckedChange={setIndicatorPassed} className="data-[state=checked]:bg-[#007AFF] scale-125" />
                         </div>
 
                         <Button
                             onClick={handleVerifyBatch}
-                            className="w-full h-16 rounded-[2rem] bg-white text-slate-950 font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-white/90 shadow-xl transition-all"
+                            className="w-full h-18 py-6 rounded-[2rem] bg-[#007AFF] text-white font-black tracking-[0.5em] uppercase text-[10px] hover:bg-[#007AFF]/90 shadow-[0_20px_40px_rgba(0,122,255,0.4)] transition-all italic"
                         >
                             Authorize Batch Release
                         </Button>

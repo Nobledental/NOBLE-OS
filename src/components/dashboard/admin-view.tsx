@@ -64,8 +64,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         <div className="w-6 md:w-8 h-[1px] bg-amber-400/60 shadow-[0_0_8px_rgba(251,191,36,0.2)]" />
                                         <span className="text-[8px] md:text-[9px] uppercase tracking-[0.5em] font-black text-amber-500/80 leading-none">Financial Perspective</span>
                                     </div>
-                                    <h2 className="text-2xl md:text-5xl font-black tracking-tight text-white leading-tight">
-                                        Operations <span className="text-slate-400 font-light translate-x-1 inline-block border-b border-white/10">Analysis</span>
+                                    <h2 className="text-2xl md:text-5xl font-black tracking-tighter text-white leading-tight uppercase italic">
+                                        Operations <span className="text-white/20 font-light underline decoration-[#007AFF]/40 underline-offset-8">Analysis</span>
                                     </h2>
                                 </div>
                             </div>
@@ -131,28 +131,26 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                         </div>
 
                         <div className="relative group/insight pt-4">
-                            <div className="relative glass-obsidian p-8 md:p-10 border border-white/10 group-hover/insight:bg-white/[0.05] group-hover/insight:border-emerald-500/20 transition-all duration-700 shadow-2xl">
-                                <div className="flex items-center gap-5 mb-8">
-                                    <div className="w-10 h-10 md:w-12 md:h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center text-emerald-400 border border-emerald-500/20 group-hover/insight:scale-110 transition-all duration-700">
-                                        <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
+                            <div className="relative glass-neo p-8 md:p-12 border border-white/5 transition-all duration-1000">
+                                <div className="flex items-center gap-6 mb-10">
+                                    <div className="w-12 h-12 bg-[#007AFF]/20 rounded-2xl flex items-center justify-center text-[#007AFF] border border-[#007AFF]/30 group-hover/insight:scale-110 transition-all duration-700">
+                                        <BarChart3 className="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <div className="text-lg font-black tracking-tight text-white mb-1 uppercase italic">Growth Index</div>
-                                        <div className="text-[9px] text-emerald-400 font-bold uppercase tracking-widest opacity-80 border-b border-emerald-500/20 pb-1 inline-block">Standard Sync</div>
+                                        <div className="text-xl font-black tracking-tight text-white mb-1 uppercase">Growth Index</div>
+                                        <div className="text-[10px] text-[#007AFF] font-black uppercase tracking-[0.3em]">Live Clinical Analytics</div>
                                     </div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-white/90 font-bold leading-relaxed italic border-l-2 border-emerald-400/60 pl-6 py-4">
+                                <p className="text-[12px] md:text-[14px] text-white/90 font-medium leading-relaxed italic border-l-4 border-[#007AFF] pl-8 py-6 bg-white/[0.02] rounded-r-[2rem]">
                                     "Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks."
                                 </p>
                             </div>
-                            {/* Emerald Ambient Glow */}
-                            <div className="absolute -inset-10 bg-emerald-500/[0.05] rounded-[4rem] opacity-0 group-hover/insight:opacity-100 blur-[80px] transition-all duration-1000 -z-10" />
                         </div>
                     </div>
 
-                    <div className="p-6 md:p-8 bg-white/[0.05] border-t border-white/10">
-                        <Button variant="ghost" className="w-full h-14 md:h-16 rounded-[2rem] md:rounded-[2.5rem] bg-white/10 hover:bg-white/20 border border-white/30 text-white hover:text-emerald-400 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-xl">
-                            <ScrollText className="w-5 h-5 opacity-100" /> System Registry
+                    <div className="p-8 bg-black/20 border-t border-white/5">
+                        <Button variant="ghost" className="w-full h-16 rounded-[1.8rem] bg-[#007AFF] hover:bg-[#007AFF]/90 text-white text-[11px] font-black uppercase tracking-[0.4em] gap-5 shadow-[0_20px_40px_rgba(0,122,255,0.3)] transition-all duration-700">
+                            <ScrollText className="w-5 h-5" /> View System Registry
                         </Button>
                     </div>
                 </PanzeCard>

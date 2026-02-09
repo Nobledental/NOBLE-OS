@@ -184,10 +184,11 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
     },
     {
         title: "Sterilization",
-        description: "Safety registry for surgical instrument cycles.",
+        subtitle: "Safety registry for surgical instrument cycles.",
         icon: ShieldCheck,
-        color: "text-emerald-400",
-        glow: "emerald",
+        chip: "Safety",
+        accent: "text-[#007AFF]",
+        glow: "blue",
         category: "Safety",
         action: "STERILIZATION",
         locked: false
@@ -214,20 +215,20 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
                             <PanzeCard
-                                className="glass-neo relative p-8 md:p-10 rounded-[2.2rem] md:rounded-[2.8rem] h-full flex flex-col min-h-[190px] md:min-h-[220px]"
+                                className="glass-neo relative p-8 md:p-10 rounded-[2.2rem] md:rounded-[2.8rem] h-full flex flex-col min-h-[190px] md:min-h-[220px] bg-black/20 border-white/5 hover:bg-black/40 transition-all duration-700"
                             >
                                 <div className="relative z-10 h-full flex flex-col">
                                     <div className="flex items-start justify-between mb-auto">
                                         <div className="flex flex-col gap-3">
-                                            <span className="text-[7px] md:text-[8px] font-bold uppercase tracking-[0.3em] text-white underline underline-offset-4 decoration-white/20">{feature.category}</span>
-                                            <h3 className="text-xl md:text-2xl font-semibold text-white tracking-tight group-hover:scale-[1.02] transition-transform duration-700">{feature.title}</h3>
+                                            <span className="text-[7px] md:text-[8px] font-black uppercase tracking-[0.4em] text-[#007AFF] underline underline-offset-8 decoration-[#007AFF]/20">{feature.category}</span>
+                                            <h3 className="text-xl md:text-2xl font-black text-white tracking-tight group-hover:scale-[1.02] transition-transform duration-700 uppercase">{feature.title}</h3>
                                         </div>
-                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-white scale-90 group-hover:scale-100 group-hover:rotate-[360deg] transition-all duration-1000">
+                                        <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-3xl bg-black/40 border border-white/10 flex items-center justify-center text-white scale-90 group-hover:scale-100 group-hover:rotate-[360deg] transition-all duration-1000 shadow-2xl">
                                             <feature.icon className="w-5 h-5 md:w-6 md:h-6" />
                                         </div>
                                     </div>
 
-                                    <p className="text-[11px] md:text-[12px] text-white font-medium leading-normal transition-all duration-700 group-hover:translate-x-1 mt-6">{feature.subtitle}</p>
+                                    <p className="text-[11px] md:text-[12px] text-white/60 font-medium leading-normal transition-all duration-700 group-hover:translate-x-1 mt-6">{feature.subtitle}</p>
                                 </div>
                             </PanzeCard>
                         </motion.div>
