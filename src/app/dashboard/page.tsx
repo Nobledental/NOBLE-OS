@@ -57,49 +57,45 @@ export default function DashboardPage() {
             {/* Header Area with View Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
-                    <p className="text-[#007AFF] text-[10px] mb-2 font-black uppercase tracking-[0.5em] animate-in fade-in slide-in-from-left-4 duration-1000">
-                        {viewMode === 'overview' ? `Noble Command • ${role}` : 'Clinical Focus • Active Session'}
+                    <p className="text-slate-500 text-sm mb-1 font-medium italic">
+                        {viewMode === 'overview' ? `Logged in as ${role}` : 'Active Treatment Focus'}
                     </p>
-                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter font-display uppercase italic leading-none">
+                    <h1 className="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight font-display">
                         {viewMode === 'overview' ? 'Practice Overview' : 'Patient Session'}
                     </h1>
                 </div>
 
                 <div className="flex items-center gap-4 flex-wrap">
-                    <div className="flex items-center space-x-1 bg-white/[0.03] p-1.5 rounded-full shadow-2xl border border-white/10 backdrop-blur-3xl">
+                    <div className="flex items-center space-x-1 bg-white p-1 rounded-full shadow-sm border border-slate-200">
                         <Button
                             variant="ghost"
                             onClick={() => setViewMode('overview')}
                             className={cn(
-                                "rounded-[1.5rem] px-8 py-2 gap-3 transition-all h-12",
-                                viewMode === 'overview'
-                                    ? "bg-[#007AFF] text-white shadow-[0_10px_30px_rgba(0,122,255,0.4)] hover:bg-[#007AFF]/90"
-                                    : "text-white/60 hover:text-white hover:bg-white/5"
+                                "rounded-full px-4 py-2 gap-2 transition-all h-10",
+                                viewMode === 'overview' ? "bg-slate-900 text-white shadow-md hover:bg-slate-800" : "text-slate-500 hover:bg-slate-50"
                             )}
                         >
                             <LayoutGrid className="w-4 h-4" />
-                            <span className="hidden md:inline text-[11px] font-black uppercase tracking-[0.2em]">Overview</span>
+                            <span className="hidden md:inline text-xs font-bold uppercase tracking-wider">Overview</span>
                         </Button>
                         <Button
                             variant="ghost"
                             onClick={() => setViewMode('treatment')}
                             className={cn(
-                                "rounded-[1.5rem] px-8 py-2 gap-3 transition-all h-12",
-                                viewMode === 'treatment'
-                                    ? "bg-[#007AFF] text-white shadow-[0_10px_30px_rgba(0,122,255,0.4)] hover:bg-[#007AFF]/90"
-                                    : "text-white/60 hover:text-white hover:bg-white/5"
+                                "rounded-full px-4 py-2 gap-2 transition-all h-10",
+                                viewMode === 'treatment' ? "bg-brand-primary text-white shadow-md hover:bg-orange-600" : "text-slate-500 hover:bg-slate-50"
                             )}
                         >
                             <Armchair className="w-4 h-4" />
-                            <span className="hidden md:inline text-[11px] font-black uppercase tracking-[0.2em]">Treatment</span>
+                            <span className="hidden md:inline text-xs font-bold uppercase tracking-wider">Treatment</span>
                         </Button>
-                        <div className="w-px h-6 bg-white/10 mx-1" />
+                        <div className="w-px h-6 bg-slate-200 mx-1" />
                         <motion.div
-                            whileHover={{ scale: 1.15 }}
-                            whileTap={{ scale: 0.85 }}
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             className="px-2 flex items-center justify-center cursor-pointer"
                         >
-                            <NEOOrb status="thinking" className="scale-75 shadow-[0_0_20px_rgba(167,139,250,0.3)]" />
+                            <NEOOrb status="thinking" className="scale-75" />
                         </motion.div>
                     </div>
                     <div className="w-px h-6 bg-slate-200 mx-1 hidden md:block" />
@@ -110,16 +106,16 @@ export default function DashboardPage() {
             {/* Filters (Visible in Overview Mode) */}
             {viewMode === 'overview' && (
                 <div className="flex items-center gap-4 flex-wrap animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
-                    <div className="flex items-center bg-black/40 backdrop-blur-2xl rounded-full p-1.5 shadow-2xl border border-white/5">
+                    <div className="flex items-center bg-white/40 backdrop-blur-md rounded-full p-1 shadow-sm border border-white/20">
                         {filters.map(filter => (
                             <button
                                 key={filter}
                                 onClick={() => setActiveFilter(filter)}
                                 className={cn(
-                                    "px-8 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-700",
+                                    "px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-500",
                                     activeFilter === filter
-                                        ? "bg-white text-black shadow-2xl scale-105"
-                                        : "text-white/40 hover:text-white hover:bg-white/5"
+                                        ? "bg-slate-950 text-white shadow-[0_10px_20px_-5px_rgba(0,0,0,0.3)] scale-105"
+                                        : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
                                 )}
                             >
                                 {filter}
@@ -148,21 +144,18 @@ export default function DashboardPage() {
                         exit={{ opacity: 0, y: -10 }}
                         className="min-h-[600px] flex items-center justify-center"
                     >
-                        <PanzeCard className="w-full max-w-2xl h-[400px] flex items-center justify-center border-dashed border-white/10 glass-neo">
-                            <div className="text-center space-y-8 relative">
-                                <div className="w-24 h-24 bg-brand-primary/20 rounded-full flex items-center justify-center mx-auto animate-pulse shadow-[0_0_40px_rgba(249,115,22,0.2)]">
-                                    <Armchair className="w-12 h-12 text-brand-primary" />
+                        <PanzeCard className="w-full max-w-2xl h-[400px] flex items-center justify-center border-dashed border-2 bg-slate-50/50">
+                            <div className="text-center space-y-6">
+                                <div className="w-20 h-20 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto animate-pulse">
+                                    <Armchair className="w-10 h-10 text-brand-primary" />
                                 </div>
-                                <div className="space-y-3">
-                                    <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase italic">Treatment Focus Zone</h3>
-                                    <p className="text-white/40 max-w-xs mx-auto text-[10px] font-bold uppercase tracking-[0.2em] leading-relaxed">
-                                        Active surgical context. Select a patient from your clinical queue to initialize the medical digital twin.
+                                <div className="space-y-2">
+                                    <h3 className="text-2xl font-black italic tracking-tighter text-slate-900 uppercase">Treatment Mode</h3>
+                                    <p className="text-slate-500 max-w-xs mx-auto text-sm">
+                                        You are currently in the treatment focus zone. Select a patient from your queue to open the full surgical chair view.
                                     </p>
                                 </div>
-                                <Button
-                                    className="bg-white text-slate-950 hover:bg-white/90 rounded-full px-10 h-14 font-black uppercase tracking-[0.3em] text-[10px] shadow-2xl transition-all duration-500"
-                                    onClick={() => setViewMode('overview')}
-                                >
+                                <Button className="bg-slate-900 text-white rounded-full px-8 h-12 font-bold uppercase tracking-widest text-[10px]" onClick={() => setViewMode('overview')}>
                                     Return to Overview
                                 </Button>
                             </div>

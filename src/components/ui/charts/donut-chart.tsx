@@ -12,7 +12,7 @@ interface DonutChartProps {
 
 export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartProps) {
     return (
-        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full bg-slate-950/20 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl transition-all duration-700 hover:border-blue-500/10">
+        <PanzeCard className="h-[350px] md:h-[400px] flex flex-col relative w-full bg-slate-900 border border-slate-800 rounded-[2.5rem] md:rounded-[3rem] p-6 md:p-10 shadow-2xl transition-all duration-700 hover:border-blue-500/20">
             <div className="flex items-center gap-3 mb-1">
                 <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/40" />
                 <h3 className="text-[9px] md:text-[10px] font-bold text-white/30 uppercase tracking-[0.4em]">Financials</h3>
@@ -55,7 +55,7 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
 
                 {(totalLabel || totalValue) && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none translate-y-[-5%]">
-                        <span className="text-[7px] md:text-[8px] text-white/40 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
+                        <span className="text-[7px] md:text-[8px] text-white/80 font-bold uppercase tracking-[0.4em] mb-2">{totalLabel}</span>
                         <span className="text-3xl md:text-4xl font-semibold tracking-tight text-white">{totalValue}</span>
                     </div>
                 )}
@@ -65,7 +65,7 @@ export function DonutChart({ data, title, totalLabel, totalValue }: DonutChartPr
                 {data.map((item, i) => (
                     <div key={i} className="flex items-center gap-3">
                         <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ring-4 ring-white/[0.02]" style={{ backgroundColor: item.color }} />
-                        <span className="text-[8px] md:text-[9px] font-bold text-white/50 uppercase tracking-[0.2em]">{item.name}</span>
+                        <span className="text-[8px] md:text-[9px] font-bold text-white/95 uppercase tracking-[0.2em]">{item.name}</span>
                     </div>
                 ))}
             </div>

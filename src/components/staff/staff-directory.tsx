@@ -93,22 +93,22 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
     return (
         <div className="space-y-6">
             {/* Editorial Header / Toolbar */}
-            <div className="flex flex-col md:flex-row gap-6 justify-between items-center bg-slate-950/40 backdrop-blur-[40px] p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 shadow-2xl">
+            <div className="flex flex-col md:flex-row gap-6 justify-between items-center bg-slate-900 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-slate-800 shadow-2xl">
                 <div className="relative w-full md:w-96">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
                     <Input
                         placeholder="Search personnel..."
-                        className="pl-12 h-14 border-white/30 bg-white/10 text-white placeholder:text-white/60 rounded-2xl focus:bg-white/20 transition-all duration-500 shadow-xl"
+                        className="pl-12 h-14 border-slate-700 bg-slate-950/50 text-white placeholder:text-white/40 rounded-2xl focus:bg-black transition-all duration-500 shadow-xl"
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />
                 </div>
                 <div className="flex gap-4 w-full md:w-auto">
-                    <Button variant="ghost" className="h-14 px-8 rounded-2xl bg-white/10 border border-white/30 text-white hover:bg-white/20 gap-3 transition-all duration-700 shadow-xl">
+                    <Button variant="ghost" className="h-14 px-8 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 gap-3 transition-all duration-700 shadow-xl">
                         <Filter className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Filters</span>
                     </Button>
-                    <Button onClick={onAddStaff} className="h-14 px-8 rounded-2xl bg-white/5 border border-white/10 text-white hover:bg-white/10 gap-3 shadow-[0_0_40px_rgba(255,255,255,0.02)] transition-all duration-700">
+                    <Button onClick={onAddStaff} className="h-14 px-8 rounded-2xl bg-blue-600 text-white hover:bg-blue-700 gap-3 shadow-lg transition-all duration-700 border-none">
                         <Plus className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Onboard Staff</span>
                     </Button>
@@ -126,7 +126,7 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
                             exit={{ opacity: 0, scale: 0.9 }}
                             layout
                         >
-                            <PanzeCard className="relative overflow-hidden group bg-slate-950/40 backdrop-blur-[60px] border border-white/5 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 min-h-[420px] flex flex-col transition-all duration-1000 hover:border-white/20 hover:bg-black/40 shadow-2xl">
+                            <PanzeCard className="relative overflow-hidden group bg-slate-900 border border-slate-800 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-10 min-h-[420px] flex flex-col transition-all duration-1000 hover:border-slate-700 hover:bg-[#111827] shadow-2xl">
                                 {/* Silk Glow Effects */}
                                 <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(59,130,246,0.03)_0%,_transparent_75%)] pointer-events-none" />
 

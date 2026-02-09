@@ -35,11 +35,11 @@
     --animation-ease-ios: cubic-bezier(0.32, 0.72, 0, 1);
     --animation-duration-ios: 500ms;
 
-    /* MedEx Electric Brand Palette */
-    --brand-primary: #007AFF;
-    --brand-electric: #5AC8FA;
-    --brand-dark: #05070a;
-    --brand-glass: rgba(255, 255, 255, 0.03);
+    /* Medical iOS Palette */
+    --neo-vibrant-blue: #007AFF;
+    --neo-electric-blue: #5AC8FA;
+    --neo-emerald: #34C759;
+    --neo-lavender: #AF52DE;
   }
 
   .dark {
@@ -81,32 +81,32 @@
 }
 
 @layer utilities {
-
-  /* MedEx Standard: Smoked Glass */
   .glass-neo {
-    @apply backdrop-blur-[40px] border border-white/[0.05] rounded-[2rem] saturate-[1.2];
-    background: rgba(255, 255, 255, 0.02);
+    @apply backdrop-blur-3xl border border-white/20 rounded-[2.5rem] saturate-[1.8];
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
     box-shadow:
-      0 20px 40px -10px rgba(0, 0, 0, 0.4),
-      inset 0 1px 1px rgba(255, 255, 255, 0.05);
+      0 8px 32px 0 rgba(31, 38, 135, 0.07),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
 
-  .glass-obsidian {
-    @apply backdrop-blur-[60px] border border-white/[0.08] rounded-[2.5rem];
-    background: rgba(2, 4, 8, 0.85);
-    box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.8);
+  /* Refined Glass White for Medical Studio blend */
+  .glass-white {
+    @apply backdrop-blur-[50px] border border-white/50 rounded-[2.5rem] saturate-[1.2];
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow:
+      0 10px 40px -10px rgba(0, 0, 0, 0.03),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6);
   }
 
-  /* MedEx Obsidian Mastery Background */
-  .bg-medex-obsidian {
-    background: #05070a;
-    background-image:
-      radial-gradient(at 50% -20%, hsla(210, 100%, 15%, 0.1) 0, transparent 80%),
-      linear-gradient(to bottom, #05070a, #020408);
-    background-attachment: fixed;
+  .glass-frost {
+    @apply backdrop-blur-[50px] border border-white/30 rounded-[3rem] saturate-[2];
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow:
+      0 25px 50px -12px rgba(0, 0, 0, 0.08),
+      inset 0 0 80px rgba(255, 255, 255, 0.1);
   }
 
-  /* Medical Studio Background (Light - Keeping for fallback) */
+  /* Medical Studio Background */
   .bg-aurora {
     background: #f8fafc;
     background-image:
