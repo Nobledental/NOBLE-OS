@@ -208,9 +208,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>
-                <div className="glass-frost px-4 py-6 border-slate-100 dark:border-white/10 rounded-2xl shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden transition-all duration-1000">
-                    {/* Background Arctic Surface Glow */}
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.03)_0%,_transparent_60%)] pointer-events-none" />
+                <div className="px-0 py-6 relative overflow-hidden transition-all duration-1000">
                     <div className="relative z-10">
                         <ClinicManagementDeck />
                     </div>
