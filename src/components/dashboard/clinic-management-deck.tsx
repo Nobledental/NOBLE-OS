@@ -182,10 +182,11 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
     },
     {
         title: "Sterilization",
-        description: "Safety registry for surgical instrument cycles.",
+        subtitle: "Safety Registry",
         icon: ShieldCheck,
-        color: "text-emerald-400",
-        glow: "emerald",
+        chip: "Safety",
+        accent: "text-emerald-400",
+        glow: "emerald-500",
         category: "Safety",
         action: "STERILIZATION",
         locked: false
@@ -217,10 +218,10 @@ export function ClinicManagementDeck() {
                                 <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
                                     <div className={cn(
                                         "w-12 h-12 md:w-14 md:h-14 rounded-2xl md:rounded-[1.2rem] bg-indigo-50 flex items-center justify-center border border-indigo-100/50 transition-all duration-700 shadow-sm",
-                                        feature.accent.replace('text-', 'bg-').replace('-400', '-500/10').replace('-200', '-500/10'),
+                                        feature.accent ? feature.accent.replace('text-', 'bg-').replace('-400', '-500/10').replace('-200', '-500/10') : "bg-slate-50",
                                         `group-hover:scale-110 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.1)]`
                                     )}>
-                                        <feature.icon className={cn("w-5 h-5 md:w-6 md:h-6", feature.accent.replace('-400', '-600').replace('-200', '-600'))} />
+                                        <feature.icon className={cn("w-5 h-5 md:w-6 md:h-6", feature.accent ? feature.accent.replace('-400', '-600').replace('-200', '-600') : "text-slate-400")} />
                                     </div>
 
                                     <div className="flex flex-col items-end gap-2">
