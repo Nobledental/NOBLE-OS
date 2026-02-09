@@ -213,7 +213,7 @@ export function ClinicManagementDeck() {
                             <div className={`absolute -inset-10 bg-${feature.glow || 'white'}/[0.03] rounded-[4rem] opacity-0 group-hover:opacity-100 blur-[80px] transition-all duration-1000 -z-10`} />
 
                             {/* Medizinisch Dark Glass Layer */}
-                            <div className="glass-frost rounded-[3rem] md:rounded-[3.5rem] overflow-hidden relative p-8 h-full flex flex-col min-h-[240px] mb-4 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
+                            <div className="glass-frost rounded-[2.5rem] overflow-hidden relative p-6 h-full flex flex-col min-h-[220px] mb-4 border-white/5 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] transition-all duration-1000 group-hover:border-white/15 group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-10 md:mb-14">
                                     <div className={cn(
@@ -239,15 +239,15 @@ export function ClinicManagementDeck() {
                                 </div>
 
                                 {/* Typography Unified Content */}
-                                <div className="mt-auto relative z-10 flex flex-col gap-1.5">
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{feature.chip}</span>
+                                <div className="mt-auto relative z-10 flex flex-col gap-1">
+                                    <div className="flex items-center gap-2 mb-1.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
+                                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-xl md:text-2xl font-bold tracking-tight text-white mb-1">
+                                    <h3 className="text-[20px] font-bold tracking-tight text-white mb-0.5">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-sm text-slate-400 font-medium">
+                                    <p className="text-[13px] text-slate-400 font-medium">
                                         {feature.subtitle}
                                     </p>
 

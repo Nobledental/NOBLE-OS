@@ -57,12 +57,11 @@ export default function DashboardPage() {
             {/* Header Area with View Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
-                    <p className="text-slate-500 text-[10px] mb-2 font-black uppercase tracking-[0.3em] flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                    <h2 className="text-[18px] text-[#0A84FF] font-semibold tracking-[0.05em] mb-1">
                         {viewMode === 'overview' ? `Logged in as ${role}` : 'Active Treatment Focus'}
-                    </p>
-                    <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                        {viewMode === 'overview' ? 'Practice Overview' : 'Patient Session'}
+                    </h2>
+                    <h1 className="text-4xl md:text-[56px] font-bold text-white tracking-[-0.04em] leading-[1.1]">
+                        {viewMode === 'overview' ? <>Practice <span>Overview</span></> : 'Patient Session'}
                     </h1>
                 </div>
 

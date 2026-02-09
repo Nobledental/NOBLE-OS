@@ -46,7 +46,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/5 relative overflow-hidden flex flex-col min-h-[380px] md:min-h-[420px] transition-all duration-1000 p-6 md:p-10 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
                     {/* Champagne Gold & Silver Silk Glows */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none" />
@@ -60,13 +60,13 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     </Button>
                                 </Link>
                                 <div>
-                                    <div className="flex items-center gap-3 mb-4">
+                                    <div className="flex items-center gap-3 mb-1.5">
                                         <div className="w-8 h-[2px] bg-indigo-500" />
                                         <span className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-400">Perspective</span>
                                     </div>
-                                    <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
-                                        Operations <span className="text-slate-500">Analysis</span>
-                                    </h2>
+                                    <h1 className="text-4xl md:text-[56px] font-bold tracking-[-0.04em] text-white leading-[1.1]">
+                                        Operations <span className="opacity-70 font-light">Analysis</span>
+                                    </h1>
                                 </div>
                             </div>
                             <div className="hidden md:block">
@@ -96,7 +96,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
-                                        <div className={`text-[10px] font-black px-6 py-2.5 rounded-full bg-white/5 border border-white/10 uppercase tracking-[0.4em] flex items-center gap-2 group-hover/pod:bg-indigo-500 group-hover/pod:text-white transition-all duration-500 shadow-2xl text-slate-400`}>
+                                        <div className={`text-[10px] font-black px-6 py-2.5 rounded-full bg-white/5 border border-white/5 uppercase tracking-[0.4em] flex items-center gap-2 group-hover/pod:bg-[#0A84FF] group-hover/pod:text-white transition-all duration-500 shadow-2xl text-slate-400`}>
                                             <TrendingUp className="w-4 h-4 text-white/50 group-hover:text-white" /> {pod.trend}
                                         </div>
                                     ) : (
@@ -111,7 +111,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 </PanzeCard>
 
                 {/* Intelligence Layer (Frosty White Glass) */}
-                <PanzeCard className="flex flex-col glass-frost border-white/40 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[380px]">
+                <PanzeCard className="flex flex-col glass-frost border-white/5 rounded-[3rem] md:rounded-[4rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[380px]">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none" />
                     <div className="p-8 md:p-10 space-y-10 md:space-y-14 flex-1 relative z-10">
                         <div className="flex items-center gap-5">

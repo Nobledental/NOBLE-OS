@@ -40,6 +40,14 @@
     --neo-electric-blue: #5AC8FA;
     --neo-emerald: #34C759;
     --neo-lavender: #AF52DE;
+
+    /* Medizinisch Reference Tokens */
+    --medizinisch-blue: #0A84FF;
+    --medizinisch-bg-radial: radial-gradient(circle at 20% 30%, #506176 0%, #1a1f2b 55%, #0E121B 100%);
+    --medizinisch-card-bg: rgba(22, 28, 38, 0.6);
+    --medizinisch-card-border: rgba(255, 255, 255, 0.05);
+    --medizinisch-glass-blur: blur(24px);
+    --medizinisch-active-blue: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
   }
 
   .dark {
@@ -99,11 +107,17 @@
   }
 
   .glass-frost {
-    @apply backdrop-blur-[60px] border border-white/10 rounded-[3.5rem] saturate-[1.5];
-    background: rgba(18, 20, 23, 0.45);
+    @apply backdrop-blur-[24px] border border-white/5 rounded-[2.5rem] saturate-[1.2];
+    background: var(--medizinisch-card-bg);
     box-shadow:
       0 40px 100px -20px rgba(0, 0, 0, 0.6),
       inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .card-active-blue {
+    background: var(--medizinisch-active-blue);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 50px -20px rgba(30, 58, 138, 0.4);
   }
 
   /* Medical Studio Background */
