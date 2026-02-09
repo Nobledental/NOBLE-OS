@@ -240,25 +240,26 @@ export function ClinicManagementDeck() {
 
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10 flex flex-col gap-2">
-                                    <div className="flex items-center gap-2 opacity-100 mb-1">
-                                        <div className="w-6 h-[1px] bg-indigo-500/40" />
-                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400">{feature.chip}</span>
+                                    <div className="flex items-center gap-2 opacity-100 mb-2">
+                                        <div className="w-8 h-[1px] bg-indigo-500" />
+                                        <span className="text-[9px] font-black uppercase tracking-[0.4em] text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-white leading-[0.9] transition-all duration-700 group-hover:translate-x-1 italic uppercase">
+                                    <h3 className="text-2xl md:text-3xl font-black tracking-tighter text-white leading-[0.9] transition-all duration-700 group-hover:translate-x-1 uppercase">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[12px] text-slate-500 font-bold uppercase tracking-widest leading-none transition-all duration-700 group-hover:translate-x-1 opacity-70">
+                                    <p className="text-[12px] text-slate-500 font-black uppercase tracking-[0.3em] leading-none transition-all duration-700 group-hover:translate-x-1 opacity-50">
                                         {feature.subtitle}
                                     </p>
 
                                     {/* Medical Mini-Chart Indicator (Simulated) */}
-                                    <div className="mt-6 flex items-end gap-1 h-6 opacity-40 group-hover:opacity-100 transition-all duration-1000">
-                                        <div className="w-1 h-2 bg-white/20 rounded-full" />
-                                        <div className="w-1 h-4 bg-white/40 rounded-full" />
-                                        <div className="w-1 h-3 bg-white/20 rounded-full" />
-                                        <div className="w-1 h-5 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
-                                        <div className="w-1 h-2 bg-white/20 rounded-full" />
-                                        <div className="w-1 h-3 bg-white/20 rounded-full" />
+                                    <div className="mt-8 flex items-end gap-1.5 h-8 opacity-30 group-hover:opacity-100 transition-all duration-1000">
+                                        <div className="w-1 h-3 bg-white/10 rounded-full" />
+                                        <div className="w-1 h-5 bg-white/20 rounded-full" />
+                                        <div className="w-1 h-4 bg-white/10 rounded-full" />
+                                        <div className="w-1 h-7 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.6)]" />
+                                        <div className="w-1 h-3 bg-white/10 rounded-full" />
+                                        <div className="w-1 h-4 bg-white/10 rounded-full" />
+                                        <div className="w-1 h-5 bg-white/10 rounded-full" />
                                     </div>
                                 </div>
 

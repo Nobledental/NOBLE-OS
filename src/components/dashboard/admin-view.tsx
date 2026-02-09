@@ -60,13 +60,13 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     </Button>
                                 </Link>
                                 <div>
-                                    <div className="flex items-center gap-3 mb-3">
-                                        <div className="w-10 h-[1px] bg-amber-500/60" />
-                                        <span className="text-[9px] md:text-[10px] uppercase tracking-[0.6em] font-black text-amber-500 leading-none">Perspective</span>
+                                    <div className="flex items-center gap-3 mb-4">
+                                        <div className="w-12 h-[2px] bg-indigo-500" />
+                                        <span className="text-[10px] md:text-[11px] uppercase tracking-[0.7em] font-black text-indigo-400 leading-none">Perspective</span>
                                     </div>
-                                    <h2 className="text-4xl md:text-7xl font-black tracking-tighter text-white leading-[0.9] italic uppercase">
+                                    <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-white leading-[0.85] uppercase">
                                         Operations <br />
-                                        <span className="text-slate-500/40">Analysis</span>
+                                        <span className="text-slate-500/20">Analysis</span>
                                     </h2>
                                 </div>
                             </div>
@@ -97,8 +97,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
-                                        <div className={`text-[10px] font-black px-6 py-2.5 rounded-full bg-white/5 border border-white/10 uppercase tracking-[0.4em] flex items-center gap-2 group-hover/pod:bg-white/10 transition-all duration-500 shadow-2xl text-slate-400 italic`}>
-                                            <TrendingUp className="w-4 h-4 text-white/50" /> {pod.trend}
+                                        <div className={`text-[10px] font-black px-6 py-2.5 rounded-full bg-white/5 border border-white/10 uppercase tracking-[0.4em] flex items-center gap-2 group-hover/pod:bg-indigo-500 group-hover/pod:text-white transition-all duration-500 shadow-2xl text-slate-400`}>
+                                            <TrendingUp className="w-4 h-4 text-white/50 group-hover:text-white" /> {pod.trend}
                                         </div>
                                     ) : (
                                         <span className="text-[9px] text-slate-400 font-black uppercase tracking-[0.3em] opacity-90">{pod.sub}</span>
