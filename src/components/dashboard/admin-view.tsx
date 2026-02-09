@@ -37,16 +37,16 @@ interface AdminDashboardViewProps {
 
 export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboardViewProps) {
     return (
-        <div className="space-y-8 min-h-[800px] pb-32 px-4 lg:px-0">
+        <div className="space-y-6 min-h-[700px] pb-24 px-4 lg:px-0">
             {/* 1. Perspective & Intel Layer */}
             <motion.div
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6"
+                className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-5"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-white/5 relative overflow-hidden flex flex-col min-h-[300px] md:min-h-[340px] transition-all duration-1000 p-6 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5]">
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/5 relative overflow-hidden flex flex-col min-h-[260px] md:min-h-[300px] transition-all duration-1000 p-5 shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-2xl">
                     {/* Champagne Gold & Silver Silk Glows */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none" />
@@ -64,7 +64,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         <div className="w-8 h-[2px] bg-indigo-500" />
                                         <span className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-400">Perspective</span>
                                     </div>
-                                    <h1 className="text-3xl font-bold tracking-tight text-white leading-none">
+                                    <h1 className="text-2xl font-bold tracking-tight text-white leading-none">
                                         Operations <span className="opacity-70 font-light">Analysis</span>
                                     </h1>
                                 </div>
@@ -76,7 +76,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-auto py-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mt-auto py-4">
                             {[
                                 { label: "Net Yield", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, trend: "+8.2%", positive: true },
                                 { label: "Case Load", value: activeFilter === "Today" ? "08" : "156", icon: Users, sub: "Growth Stable", positive: true },
@@ -94,7 +94,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         <pod.icon className="w-5 h-5" />
                                     </div>
                                     <span className="text-[9px] uppercase tracking-[0.3em] text-slate-400 font-black mb-1.5">{pod.label}</span>
-                                    <div className="text-2xl md:text-3xl font-bold tracking-tight text-white mb-3">
+                                    <div className="text-xl md:text-2xl font-bold tracking-tight text-white mb-2">
                                         {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                     </div>
                                     {pod.trend ? (
@@ -109,7 +109,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     )}
                                     {/* Silk Glow On Hover */}
                                     <div className={cn(
-                                        "absolute -inset-4 rounded-3xl opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10",
+                                        "absolute -inset-4 rounded-2xl opacity-0 group-hover/pod:opacity-100 transition-all duration-1000 blur-3xl -z-10",
                                         pod.positive ? "bg-emerald-500/[0.05]" : "bg-blue-500/[0.05]"
                                     )} />
                                 </motion.div>
@@ -119,9 +119,9 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 </PanzeCard>
 
                 {/* Intelligence Layer (Frosty White Glass) */}
-                <PanzeCard className="flex flex-col glass-frost border-white/5 rounded-[2rem] relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[340px]">
+                <PanzeCard className="flex flex-col glass-frost border-white/5 rounded-2xl relative overflow-hidden group shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[300px]">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none" />
-                    <div className="p-6 space-y-8 flex-1 relative z-10">
+                    <div className="p-5 space-y-6 flex-1 relative z-10">
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 bg-emerald-500 flex items-center justify-center text-white rounded-xl border border-emerald-400 group-hover:scale-105 transition-all duration-700 shadow-lg shadow-emerald-500/20">
                                 <ZapIcon className="w-6 h-6" />
@@ -131,12 +131,12 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <div className="w-4 h-[1px] bg-emerald-500" />
                                     <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-600">AI Pulse</span>
                                 </div>
-                                <h3 className="text-xl font-semibold tracking-tight text-white leading-none">Intelligence</h3>
+                                <h3 className="text-lg font-semibold tracking-tight text-white leading-none">Intelligence</h3>
                             </div>
                         </div>
 
                         <div className="relative group/insight pt-4">
-                            <div className="relative bg-white/[0.01] rounded-[1.5rem] p-6 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
+                            <div className="relative bg-white/[0.01] rounded-2xl p-5 border border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
                                 <div className="flex items-center gap-4 mb-4">
                                     <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
@@ -166,7 +166,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
             {/* 2. Analytics Hub (Editorial Arctic Blue) */}
             <motion.div
                 variants={containerVariants}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5"
             >
                 <div className="relative group">
                     <div className="absolute -inset-2 bg-blue-500/[0.02] rounded-[3.5rem] blur-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000" />
@@ -212,7 +212,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
             </motion.div>
 
             {/* 3. Clinical Operations Center (Editorial Arctic Blue) */}
-            <motion.div variants={itemVariants} className="space-y-8 pb-32">
+            <motion.div variants={itemVariants} className="space-y-6 pb-24">
                 <div className="flex items-center gap-12 px-6">
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                     <div className="flex flex-col items-center gap-2">
@@ -221,7 +221,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>
-                <div className="glass-frost px-6 py-10 border-white/40 rounded-[3rem] shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden group transition-all duration-1000">
+                <div className="glass-frost px-5 py-8 border-white/40 rounded-3xl shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden group transition-all duration-1000">
                     {/* Background Arctic Surface Glow */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.03)_0%,_transparent_60%)] pointer-events-none" />
                     <div className="relative z-10">
