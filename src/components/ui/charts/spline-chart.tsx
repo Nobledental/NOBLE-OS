@@ -13,12 +13,12 @@ interface SplineChartProps {
 
 export function SplineChart({ data, title, color = "#3b82f6", className }: SplineChartProps) {
     return (
-        <PanzeCard className={cn("h-[350px] md:h-[400px] flex flex-col w-full glass-frost border-white/5 shadow-2xl backdrop-blur-[40px] p-6 md:p-10 transition-all duration-700 hover:border-white/10", className)}>
+        <PanzeCard className={cn("h-[350px] md:h-[400px] flex flex-col w-full glass-frost border-slate-100 dark:border-white/10 shadow-2xl backdrop-blur-[40px] p-6 md:p-10 transition-all duration-700 hover:border-slate-200 dark:hover:border-white/20", className)}>
             <div className="flex items-center gap-3 mb-1">
                 <div className="w-5 md:w-6 h-[1.5px] bg-blue-500/60" />
-                <h3 className="text-[9px] md:text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">{title}</h3>
+                <h3 className="text-[9px] md:text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-[0.4em]">{title}</h3>
             </div>
-            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-white mb-6 md:mb-8">Performance <span className="text-blue-400 font-light border-b border-white/10">Index</span></h2>
+            <h2 className="text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-white mb-6 md:mb-8">Performance <span className="text-blue-500 dark:text-blue-400 font-light border-b border-slate-200 dark:border-white/10">Index</span></h2>
 
             <div className="flex-1 w-full min-h-0">
                 <ResponsiveContainer width="100%" height="100%">
@@ -34,13 +34,13 @@ export function SplineChart({ data, title, color = "#3b82f6", className }: Splin
                             dataKey="name"
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 8, fontWeight: "700", letterSpacing: "0.2em" }}
+                            tick={{ fill: "currentColor", fontSize: 8, fontWeight: "700", letterSpacing: "0.2em", className: "text-slate-400 dark:text-slate-500" }}
                             dy={15}
                         />
                         <YAxis
                             axisLine={false}
                             tickLine={false}
-                            tick={{ fill: "rgba(255,255,255,0.3)", fontSize: 8 }}
+                            tick={{ fill: "currentColor", fontSize: 8, className: "text-slate-400 dark:text-slate-500" }}
                         />
                         <Tooltip
                             contentStyle={{

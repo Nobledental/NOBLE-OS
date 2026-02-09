@@ -211,7 +211,7 @@ export function ClinicManagementDeck() {
                             {/* Removed Glows as per user request */}
 
                             {/* Medizinisch Glass Layer */}
-                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 dark:border-white/5 border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-1000 group-hover:bg-slate-50/80 dark:group-hover:bg-white/[0.04]">
+                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-slate-100 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-1000 group-hover:bg-slate-50/80 dark:group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
@@ -223,9 +223,9 @@ export function ClinicManagementDeck() {
                                     </div>
 
                                     <div className="flex flex-col items-end gap-1.5 opacity-60">
-                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400">{feature.category}</span>
+                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-400 dark:text-white/20">
+                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-white/20">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
@@ -242,10 +242,10 @@ export function ClinicManagementDeck() {
                                         <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
                                         <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-400">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-[14px] font-bold tracking-tight text-slate-900 dark:text-white mb-0.5">
+                                    <h3 className="text-[14px] font-bold tracking-tight text-slate-950 dark:text-white mb-0.5">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium">
+                                    <p className="text-[13px] text-slate-600 dark:text-slate-400 font-medium">
                                         {feature.subtitle}
                                     </p>
 
