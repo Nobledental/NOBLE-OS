@@ -57,22 +57,22 @@ export default function DashboardPage() {
             {/* Header Area with View Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
-                    <p className="text-slate-500 text-sm mb-1 font-medium italic">
+                    <p className="text-slate-400 text-sm mb-1 font-bold uppercase tracking-widest italic opacity-60">
                         {viewMode === 'overview' ? `Logged in as ${role}` : 'Active Treatment Focus'}
                     </p>
-                    <h1 className="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight font-display">
+                    <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter uppercase italic">
                         {viewMode === 'overview' ? 'Practice Overview' : 'Patient Session'}
                     </h1>
                 </div>
 
                 <div className="flex items-center gap-4 flex-wrap">
-                    <div className="flex items-center space-x-1 bg-white p-1 rounded-full shadow-sm border border-slate-200">
+                    <div className="flex items-center space-x-1 glass-frost p-1 rounded-full border-white/5 shadow-2xl">
                         <Button
                             variant="ghost"
                             onClick={() => setViewMode('overview')}
                             className={cn(
-                                "rounded-full px-4 py-2 gap-2 transition-all h-10",
-                                viewMode === 'overview' ? "bg-slate-900 text-white shadow-md hover:bg-slate-800" : "text-slate-500 hover:bg-slate-50"
+                                "rounded-full px-6 py-2 gap-2 transition-all h-10",
+                                viewMode === 'overview' ? "bg-white text-black shadow-xl scale-105" : "text-slate-400 hover:text-white hover:bg-white/5"
                             )}
                         >
                             <LayoutGrid className="w-4 h-4" />
@@ -82,23 +82,23 @@ export default function DashboardPage() {
                             variant="ghost"
                             onClick={() => setViewMode('treatment')}
                             className={cn(
-                                "rounded-full px-4 py-2 gap-2 transition-all h-10",
-                                viewMode === 'treatment' ? "bg-brand-primary text-white shadow-md hover:bg-orange-600" : "text-slate-500 hover:bg-slate-50"
+                                "rounded-full px-6 py-2 gap-2 transition-all h-10",
+                                viewMode === 'treatment' ? "bg-white text-black shadow-xl scale-105" : "text-slate-400 hover:text-white hover:bg-white/5"
                             )}
                         >
                             <Armchair className="w-4 h-4" />
                             <span className="hidden md:inline text-xs font-bold uppercase tracking-wider">Treatment</span>
                         </Button>
-                        <div className="w-px h-6 bg-slate-200 mx-1" />
+                        <div className="w-px h-6 bg-white/10 mx-1" />
                         <motion.div
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="px-2 flex items-center justify-center cursor-pointer"
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            whileTap={{ scale: 0.9 }}
+                            className="px-3 flex items-center justify-center cursor-pointer"
                         >
-                            <NEOOrb status="thinking" className="scale-75" />
+                            <NEOOrb status="thinking" className="scale-90" />
                         </motion.div>
                     </div>
-                    <div className="w-px h-6 bg-slate-200 mx-1 hidden md:block" />
+                    <div className="w-px h-6 bg-white/10 mx-1 hidden md:block" />
                     <RoleSwitcher />
                 </div>
             </div>
@@ -106,7 +106,7 @@ export default function DashboardPage() {
             {/* Filters (Visible in Overview Mode) */}
             {viewMode === 'overview' && (
                 <div className="flex items-center gap-4 flex-wrap animate-in fade-in slide-in-from-left-4 duration-700 delay-100">
-                    <div className="flex items-center bg-white/40 backdrop-blur-md rounded-full p-1 shadow-sm border border-white/20">
+                    <div className="flex items-center glass-frost rounded-full p-1 border-white/5 shadow-2xl">
                         {filters.map(filter => (
                             <button
                                 key={filter}
@@ -114,8 +114,8 @@ export default function DashboardPage() {
                                 className={cn(
                                     "px-6 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-500",
                                     activeFilter === filter
-                                        ? "bg-slate-950 text-white shadow-[0_10px_20px_-5px_rgba(0,0,0,0.3)] scale-105"
-                                        : "text-slate-600 hover:text-slate-900 hover:bg-white/40"
+                                        ? "bg-white text-black shadow-xl scale-105"
+                                        : "text-slate-400 hover:text-white hover:bg-white/5"
                                 )}
                             >
                                 {filter}

@@ -8,9 +8,12 @@ export function BackgroundParticles() {
             {/* Ambient Top Glow */}
             <div className="absolute top-0 left-0 right-0 h-[60vh] bg-gradient-to-b from-slate-900/20 to-transparent" />
 
-            {/* Medizinisch Floor Mist / Bottom Glow */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[140%] h-[40vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.03)_30%,transparent_70%)] blur-[80px]" />
-            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            {/* Medizinisch Floor Mist / Bottom Glow - Intensified */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[160%] h-[50vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.05)_40%,transparent_70%)] blur-[100px]" />
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+
+            {/* Room Framing (Depth) */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.4)_100%)]" />
 
             {/* Subtle Deep Particles */}
             <motion.div
