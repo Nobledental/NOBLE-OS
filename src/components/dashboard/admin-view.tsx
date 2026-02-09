@@ -46,7 +46,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 dark:border-white/5 border-slate-100 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/80 dark:bg-transparent">
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 dark:border-white/[0.02] border-slate-100 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/80 dark:bg-transparent">
                     {/* Champagne Gold & Silver Silk Glows - Dark Mode Only */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none opacity-0 dark:opacity-100" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none opacity-0 dark:opacity-100" />
@@ -85,41 +85,41 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 const isPositive = pod.trend && pod.positive !== false;
                                 return (
                                     <div
-                                key={idx}
-                                className="relative flex flex-col p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/pod shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]"
-                            >
-                                <div className="flex items-center justify-between mb-4">
-                                    <div className={cn(
-                                        "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
-                                        pod.positive ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
-                                    )}>
-                                        <pod.icon className="w-5 h-5" />
-                                    </div>
-                                    {pod.trend && (
-                                        <div className={cn(
-                                            "text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider flex items-center gap-1",
-                                            pod.positive ? "bg-emerald-100/50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : "bg-blue-100/50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
-                                        )}>
-                                            <TrendingUp className="w-3 h-3" /> {pod.trend}
+                                        key={idx}
+                                        className="relative flex flex-col p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/[0.02] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/pod shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]"
+                                    >
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className={cn(
+                                                "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                                                pod.positive ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+                                            )}>
+                                                <pod.icon className="w-5 h-5" />
+                                            </div>
+                                            {pod.trend && (
+                                                <div className={cn(
+                                                    "text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider flex items-center gap-1",
+                                                    pod.positive ? "bg-emerald-100/50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : "bg-blue-100/50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
+                                                )}>
+                                                    <TrendingUp className="w-3 h-3" /> {pod.trend}
+                                                </div>
+                                            )}
                                         </div>
-                                    )}
-                                </div>
 
-                                <div>
-                                    <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
-                                    <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white mb-1">
-                                        {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
+                                        <div>
+                                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
+                                            <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white mb-1">
+                                                {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
+                                            </div>
+                                            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
+                                        </div>
                                     </div>
-                                    <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
-                                </div>
-                            </div>
-                            ))}
+                                ))}
                         </div>
                     </div>
                 </PanzeCard>
 
                 {/* Intelligence Layer (Frosty White Glass) */}
-                <PanzeCard className="flex flex-col glass-frost border-white/40 dark:border-white/5 border-slate-100 rounded-xl relative overflow-hidden group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/80 dark:bg-transparent">
+                <PanzeCard className="flex flex-col glass-frost border-white/40 dark:border-white/[0.02] border-slate-100 rounded-xl relative overflow-hidden group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/80 dark:bg-transparent">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none opacity-0 dark:opacity-100" />
                     <div className="p-4 space-y-4 flex-1 relative z-10">
                         <div className="flex items-center gap-4">
@@ -136,7 +136,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                         </div>
 
                         <div className="relative group/insight pt-4">
-                            <div className="relative bg-white/50 dark:bg-white/[0.01] rounded-xl p-4 border border-slate-100 dark:border-white/5 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-sm dark:shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
+                            <div className="relative bg-white/50 dark:bg-white/[0.01] rounded-xl p-4 border border-slate-100 dark:border-white/[0.02] backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-sm dark:shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
                                 <div className="flex items-center gap-4 mb-4">
                                     <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
@@ -218,7 +218,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                 </div>
-                <div className="glass-frost px-4 py-6 border-white/40 rounded-2xl shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden transition-all duration-1000">
+                <div className="glass-frost px-4 py-6 border-white/40 dark:border-white/[0.02] rounded-2xl shadow-[0_100px_150px_-50px_rgba(0,0,0,0.06)] backdrop-blur-[60px] relative overflow-hidden transition-all duration-1000">
                     {/* Background Arctic Surface Glow */}
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(59,130,246,0.03)_0%,_transparent_60%)] pointer-events-none" />
                     <div className="relative z-10">
