@@ -211,25 +211,25 @@ export function ClinicManagementDeck() {
                             {/* Removed Glows as per user request */}
 
                             {/* Medizinisch Glass Layer */}
-                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-slate-100 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-1000 group-hover:bg-slate-50/80 dark:group-hover:bg-white/[0.04]">
+                            <div className="glass-frost rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border-slate-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-700 group-hover:bg-slate-50/50 dark:group-hover:bg-white/[0.02]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
-                                        "w-7 h-7 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/10 transition-all duration-700 shadow-inner",
+                                        "w-8 h-8 rounded-xl bg-indigo-50 dark:bg-white/5 flex items-center justify-center border border-indigo-100 dark:border-white/5 transition-all duration-700",
                                         feature.accent || "text-slate-400",
-                                        `group-hover:scale-110 group-hover:bg-indigo-500/30 group-hover:text-indigo-600 dark:group-hover:text-white`
+                                        `group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black`
                                     )}>
                                         <feature.icon className="w-4 h-4 md:w-5 md:h-5 opacity-70 group-hover:opacity-100" />
                                     </div>
 
                                     <div className="flex flex-col items-end gap-1.5 opacity-60">
-                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">{feature.category}</span>
+                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-center justify-center text-slate-500 dark:text-white/20">
+                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-white/20">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
-                                            <div className="bg-indigo-600 border border-indigo-500 text-[8px] uppercase font-black tracking-[0.3em] px-3 py-1 rounded-full text-white shadow-xl shadow-indigo-600/20">
+                                            <div className="bg-indigo-600 border border-indigo-500 text-[8px] uppercase font-black tracking-[0.3em] px-3 py-1 rounded-full text-white shadow-lg shadow-indigo-500/20">
                                                 {feature.badge}
                                             </div>
                                         )}
@@ -237,26 +237,26 @@ export function ClinicManagementDeck() {
                                 </div>
 
                                 {/* Typography Unified Content */}
-                                <div className="mt-auto relative z-10 flex flex-col gap-1">
+                                <div className="mt-auto relative z-10 flex flex-col gap-1.5">
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-[#0A84FF]" />
-                                        <span className="text-[11px] font-black uppercase tracking-[0.1em] text-slate-400">{feature.chip}</span>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 ring-2 ring-blue-500/20 dark:ring-blue-400/20" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-[14px] font-bold tracking-tight text-slate-950 dark:text-white mb-0.5">
+                                    <h3 className="text-[16px] font-bold tracking-tight text-slate-900 dark:text-slate-100 mb-0.5 group-hover:text-indigo-600 dark:group-hover:text-white transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[13px] text-slate-600 dark:text-slate-400 font-medium">
+                                    <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
                                         {feature.subtitle}
                                     </p>
 
                                     {/* Medical Mini-Chart Indicator (Refined) */}
-                                    <div className="mt-6 flex items-end gap-1 h-6 opacity-30 group-hover:opacity-100 transition-all duration-1000">
+                                    <div className="mt-6 flex items-end gap-1 h-6 opacity-40 group-hover:opacity-100 transition-all duration-1000">
                                         {[0.3, 0.5, 0.3, 0.8, 0.4, 0.6, 0.3].map((h, idx) => (
                                             <div
                                                 key={idx}
                                                 className={cn(
-                                                    "w-[3px] rounded-full",
-                                                    idx === 3 ? "bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.6)]" : "bg-white/20"
+                                                    "w-[3px] rounded-full transition-all duration-500",
+                                                    idx === 3 ? "bg-indigo-500 dark:bg-indigo-400" : "bg-slate-200 dark:bg-white/10"
                                                 )}
                                                 style={{ height: `${h * 100}%` }}
                                             />
@@ -264,16 +264,14 @@ export function ClinicManagementDeck() {
                                     </div>
                                 </div>
 
-                                {/* Premium Silk Trail Animation */}
+                                {/* Premium Silk Trail Animation (Subtle) */}
                                 {!feature.locked && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent overflow-hidden">
+                                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/10 dark:via-white/5 to-transparent overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                                         <motion.div
                                             initial={{ x: '-100%' }}
                                             whileHover={{ x: '100%' }}
                                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                                            className={cn(
-                                                "w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent shadow-[0_0_10px_rgba(255,255,255,0.1)]",
-                                            )}
+                                            className="w-1/2 h-full bg-gradient-to-r from-transparent via-indigo-500/40 dark:via-white/20 to-transparent"
                                         />
                                     </div>
                                 )}
