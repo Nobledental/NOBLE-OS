@@ -129,18 +129,18 @@ export function SterilizationHub() {
                     <span className="text-[10px] font-bold tracking-[0.6em] text-slate-600 uppercase border-b border-slate-200">Armamentarium Safety</span>
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 flex items-center gap-4">
+                    <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-emerald-600 shadow-sm">
                             <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                         </div>
-                        Sterilization <span className="text-slate-500 font-light translate-x-1 underline underline-offset-4 decoration-slate-200">Center</span>
+                        Sterilization <span className="text-slate-500 dark:text-slate-400 font-light translate-x-1 underline underline-offset-4 decoration-slate-200 dark:decoration-slate-700">Center</span>
                     </h1>
 
                     <div className="flex gap-4">
                         <div className="h-12 px-4 bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-3 shadow-sm">
                             <div className="text-right">
-                                <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active</p>
-                                <p className="text-lg font-bold text-amber-600 tracking-tight">{activeCycles}</p>
+                                <p className="text-[8px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Active</p>
+                                <p className="text-lg font-bold text-amber-600 dark:text-amber-500 tracking-tight">{activeCycles}</p>
                             </div>
                             <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center">
                                 <Flame className="w-3.5 h-3.5 text-amber-600/60" />
