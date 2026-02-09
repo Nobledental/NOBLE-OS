@@ -79,7 +79,7 @@ export function IDCardGenerator({ name, role, employeeId, photoUrl, clinicName }
                 </PanzeCard>
             </motion.div>
 
-            <p className="text-xs text-slate-400 max-w-[200px] text-center italic">
+            <p className="text-xs text-slate-400 max-w-[200px] text-center">
                 NFC-enabled secure digital card. Tap to verify.
             </p>
         </div>

@@ -90,7 +90,7 @@ export function SuccessCardGenerator({
                                 <Activity className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h4 className="font-black text-xs uppercase tracking-[0.2em] opacity-60 italic">{clinicName}</h4>
+                                <h4 className="font-black text-xs uppercase tracking-[0.2em] opacity-60">{clinicName}</h4>
                                 <div className="flex items-center gap-1 mt-0.5">
                                     <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                                     <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Clinical Milestone</span>
@@ -99,7 +99,7 @@ export function SuccessCardGenerator({
                         </div>
 
                         <div className="mt-16 space-y-4">
-                            <h2 className="text-4xl font-black italic tracking-tighter leading-[0.9]">
+                            <h2 className="text-4xl font-black tracking-tighter leading-[0.9]">
                                 Treatment <br />
                                 <span className={accents[theme]}>Success.</span>
                             </h2>
@@ -113,7 +113,7 @@ export function SuccessCardGenerator({
                             <div className="flex items-end justify-between">
                                 <div className="space-y-1">
                                     <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Procedure</p>
-                                    <p className="text-lg font-black italic tracking-tight">{procedure}</p>
+                                    <p className="text-lg font-black tracking-tight">{procedure}</p>
                                 </div>
                                 <div className="text-right space-y-2">
                                     <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20 ml-auto">

@@ -49,7 +49,7 @@ export default function InstaPharmacyHub() {
                         <div className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-[0.2em] mb-4">
                             <Box size={14} className="animate-pulse" /> Quick-Commerce Inventory
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight italic text-slate-900 dark:text-white">Insta-Pharmacy Hub</h1>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">Insta-Pharmacy Hub</h1>
                         <p className="text-slate-500 dark:text-slate-400 font-medium">Hyper-efficient material tracking with dark-store SKU velocity logic.</p>
                     </div>
 
@@ -65,14 +65,14 @@ export default function InstaPharmacyHub() {
                     {/* Inventory Insights Sidebar */}
                     <div className="lg:col-span-4 space-y-8">
                         <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden group">
-                            <h3 className="text-xl font-black italic uppercase tracking-tighter mb-6 relative z-10">Stock Velocity</h3>
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 relative z-10">Stock Velocity</h3>
                             <div className="space-y-6 relative z-10">
                                 <div className="p-6 bg-white/5 rounded-2xl border border-white/10">
                                     <div className="flex justify-between items-center mb-2">
                                         <span className="text-[10px] font-black uppercase text-slate-400">Restock Efficiency</span>
                                         <span className="text-emerald-400 text-xs font-black">+22%</span>
                                     </div>
-                                    <div className="text-3xl font-black italic">JIT Active</div>
+                                    <div className="text-3xl font-black">JIT Active</div>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest opacity-60">
@@ -90,7 +90,7 @@ export default function InstaPharmacyHub() {
                         <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl">
                             <div className="flex items-center gap-3 mb-6">
                                 <Truck className="text-blue-600" />
-                                <h3 className="font-black italic text-lg uppercase tracking-tighter dark:text-white">Live Intake</h3>
+                                <h3 className="font-black text-lg uppercase tracking-tighter dark:text-white">Live Intake</h3>
                             </div>
                             <div className="space-y-4">
                                 {[
@@ -111,7 +111,7 @@ export default function InstaPharmacyHub() {
                         <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-2xl overflow-hidden">
                             <div className="p-8 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5 flex justify-between items-center">
                                 <div>
-                                    <h3 className="font-black italic uppercase tracking-tighter text-xl dark:text-white">Material SKU Tracking</h3>
+                                    <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Material SKU Tracking</h3>
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Real-time stock velocity monitoring</p>
                                 </div>
                                 <Search className="text-slate-300" size={20} />
@@ -132,7 +132,7 @@ export default function InstaPharmacyHub() {
                                             <tr key={sku.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                                                 <td className="px-8 py-6">
                                                     <div>
-                                                        <div className="font-black text-slate-900 dark:text-white text-sm italic">{sku.name}</div>
+                                                        <div className="font-black text-slate-900 dark:text-white text-sm">{sku.name}</div>
                                                         <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">{sku.category}</div>
                                                     </div>
                                                 </td>
@@ -148,7 +148,7 @@ export default function InstaPharmacyHub() {
                                                 <td className="px-8 py-6 text-right">
                                                     <div className="flex flex-col items-end gap-1">
                                                         <span className={`px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest ${sku.status === 'CRITICAL' ? 'bg-red-100 text-red-600' :
-                                                                sku.status === 'LOW' ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'
+                                                            sku.status === 'LOW' ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'
                                                             }`}>
                                                             {sku.daysLeft} Days Left
                                                         </span>
@@ -168,7 +168,7 @@ export default function InstaPharmacyHub() {
                                     <Zap size={20} className="text-yellow-400" />
                                 </div>
                                 <div>
-                                    <div className="text-sm font-black italic">Auto-Procurement Suggestion</div>
+                                    <div className="text-sm font-black">Auto-Procurement Suggestion</div>
                                     <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Powered by Blinkit Logic</div>
                                 </div>
                             </div>

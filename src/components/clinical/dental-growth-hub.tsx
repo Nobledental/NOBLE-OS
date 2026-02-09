@@ -60,7 +60,7 @@ export function DentalGrowthHub() {
                 </div>
                 <div className="text-right">
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Completion</p>
-                    <p className="text-lg font-black text-pink-600 italic">{Math.round(progress)}%</p>
+                    <p className="text-lg font-black text-pink-600">{Math.round(progress)}%</p>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@ export function DentalGrowthHub() {
                             <div>
                                 <h4 className="text-[10px] font-black uppercase tracking-widest opacity-40 mb-4">Development Status</h4>
                                 <div className="flex items-baseline gap-2">
-                                    <span className="text-5xl font-black italic">{eruptedCount}</span>
+                                    <span className="text-5xl font-black">{eruptedCount}</span>
                                     <span className="text-sm font-bold opacity-60">/ {milestones.length} Teeth</span>
                                 </div>
                             </div>

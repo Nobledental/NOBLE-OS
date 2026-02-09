@@ -101,7 +101,7 @@ export function ClinicalNoteEditor({
             <CardHeader className="px-0 pt-0">
                 <CardTitle className="flex items-center justify-between">
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 text-3xl font-serif italic tracking-tighter text-white">
+                        <div className="flex items-center gap-2 text-3xl font-serif tracking-tighter text-white">
                             <FileText className="w-6 h-6 text-neo-lavender" />
                             Case Sheet
                         </div>

@@ -123,7 +123,7 @@ export default function ConsultantDiscussion({
             <div className="p-4 border-b flex items-center justify-between bg-slate-50/50 dark:bg-white/5">
                 <div className="flex items-center gap-2">
                     <MessageSquare className="w-5 h-5 text-blue-500" />
-                    <h3 className="font-bold italic uppercase tracking-widest text-[10px]">
+                    <h3 className="font-bold uppercase tracking-widest text-[10px]">
                         {isGlobal ? 'Global Peer Forum' : 'Case Discussion'}
                     </h3>
                 </div>
@@ -177,7 +177,7 @@ export default function ConsultantDiscussion({
                                 </div>
 
                                 {/* Content */}
-                                <p className="text-sm italic leading-relaxed">{note.content}</p>
+                                <p className="text-sm leading-relaxed">{note.content}</p>
 
                                 {/* Citations */}
                                 {note.metadata?.citation && (

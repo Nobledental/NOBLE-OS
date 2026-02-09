@@ -176,7 +176,7 @@ export function AttendanceHub() {
                 <PanzeCard title="Recent Activity">
                     <div className="space-y-4">
                         {punchHistory.length === 0 && (
-                            <p className="text-sm text-slate-400 text-center py-10 italic">No logs for today yet.</p>
+                            <p className="text-sm text-slate-400 text-center py-10">No logs for today yet.</p>
                         )}
                         {punchHistory.map((log, i) => (
                             <div key={i} className="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-slate-100">

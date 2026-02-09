@@ -56,7 +56,7 @@ export function AppSidebar() {
 
             <div className="flex-1 space-y-4 py-4 overflow-y-auto relative z-10">
                 <div className="px-3 py-2">
-                    <h2 className="mb-1 px-4 text-base font-black tracking-tighter text-white uppercase italic">
+                    <h2 className="mb-1 px-4 text-base font-black tracking-tighter text-white uppercase">
                         HealthFlo
                     </h2>
                     <p className="px-4 text-[9px] text-slate-500 font-bold uppercase tracking-[0.3em] mb-4">

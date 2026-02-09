@@ -63,8 +63,8 @@ export default function SurgicalPipeline() {
                             <React.Fragment key={stage.id}>
                                 <div className="flex flex-col items-center gap-4 relative group">
                                     <div className={`w-16 h-16 rounded-[1.5rem] flex items-center justify-center transition-all ${selectedPatient && patients.find(p => p.id === selectedPatient)?.stage === stage.id
-                                            ? 'bg-slate-900 text-white scale-110 shadow-2xl ring-4 ring-slate-100 dark:ring-white/5'
-                                            : 'bg-slate-50 dark:bg-white/5 text-slate-400 opacity-50'
+                                        ? 'bg-slate-900 text-white scale-110 shadow-2xl ring-4 ring-slate-100 dark:ring-white/5'
+                                        : 'bg-slate-50 dark:bg-white/5 text-slate-400 opacity-50'
                                         }`}>
                                         <stage.icon size={28} />
                                     </div>
@@ -89,7 +89,7 @@ export default function SurgicalPipeline() {
                     <div className="lg:col-span-4 space-y-6">
                         <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl">
                             <div className="flex items-center justify-between mb-8">
-                                <h3 className="font-black italic uppercase tracking-tighter text-xl dark:text-white">Active Cases</h3>
+                                <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Active Cases</h3>
                                 <Filter size={18} className="text-slate-300" />
                             </div>
                             <div className="space-y-4">
@@ -98,12 +98,12 @@ export default function SurgicalPipeline() {
                                         key={p.id}
                                         onClick={() => setSelectedPatient(p.id)}
                                         className={`w-full p-6 rounded-[2rem] text-left transition-all border ${selectedPatient === p.id
-                                                ? 'bg-slate-50 dark:bg-white/5 border-blue-100 dark:border-blue-900/30'
-                                                : 'border-transparent hover:bg-slate-50 dark:hover:bg-white/5'
+                                            ? 'bg-slate-50 dark:bg-white/5 border-blue-100 dark:border-blue-900/30'
+                                            : 'border-transparent hover:bg-slate-50 dark:hover:bg-white/5'
                                             }`}
                                     >
                                         <div className="flex justify-between items-start mb-2">
-                                            <h4 className="font-black text-slate-900 dark:text-white italic">{p.name}</h4>
+                                            <h4 className="font-black text-slate-900 dark:text-white">{p.name}</h4>
                                             <ArrowUpRight size={14} className="opacity-30" />
                                         </div>
                                         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">{p.procedure}</div>
@@ -129,7 +129,7 @@ export default function SurgicalPipeline() {
                                     <div className="flex justify-between items-start">
                                         <div>
                                             <div className="flex items-center gap-3 mb-2">
-                                                <h2 className="text-3xl font-black italic tracking-tighter dark:text-white">
+                                                <h2 className="text-3xl font-black tracking-tighter dark:text-white">
                                                     {patients.find(p => p.id === selectedPatient)?.name}
                                                 </h2>
                                                 <span className="px-3 py-1 bg-amber-100 text-amber-600 rounded-lg text-[10px] font-black uppercase tracking-widest">
@@ -166,8 +166,8 @@ export default function SurgicalPipeline() {
                                         <div className="bg-slate-900 rounded-[2rem] p-8 text-white flex flex-col justify-between overflow-hidden relative group">
                                             <div className="relative z-10">
                                                 <h4 className="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4">Financial Health</h4>
-                                                <div className="text-3xl font-black italic mb-2">Clearance Pending</div>
-                                                <p className="text-xs font-medium text-slate-400 italic">"Patient insurance approved for 70%. Remaining payment scheduled for admission date."</p>
+                                                <div className="text-3xl font-black mb-2">Clearance Pending</div>
+                                                <p className="text-xs font-medium text-slate-400">"Patient insurance approved for 70%. Remaining payment scheduled for admission date."</p>
                                             </div>
                                             <button className="relative z-10 mt-8 w-full py-4 bg-blue-600 rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center justify-center gap-2">
                                                 Proceed to Checkout <ChevronRight size={14} />

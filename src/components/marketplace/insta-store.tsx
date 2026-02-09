@@ -96,7 +96,7 @@ export function InstaStore() {
 
                     <div className="relative z-10 max-w-[60%]">
                         <Badge className="bg-[#FF3269] hover:bg-[#FF3269] text-white border-0 mb-2 animate-bounce">CRITICAL RESTOCK</Badge>
-                        <h2 className="text-2xl font-black italic">Running Low on LA?</h2>
+                        <h2 className="text-2xl font-black">Running Low on LA?</h2>
                         <p className="text-sm opacity-90 mt-1">Lignox 2% is at 10% stock. Order now for 10-min delivery.</p>
                     </div>
                     <div className="absolute right-4 bottom-0 text-[80px]">💉</div>

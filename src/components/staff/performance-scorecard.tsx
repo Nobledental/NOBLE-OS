@@ -84,7 +84,7 @@ export function PerformanceScorecard() {
                         <div className="w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 mx-auto flex items-center justify-center mb-4 border-4 border-white/10 shadow-2xl">
                             <Award className="w-10 h-10 text-white" />
                         </div>
-                        <h3 className="text-xl font-black italic">Performance Audit</h3>
+                        <h3 className="text-xl font-black">Performance Audit</h3>
                         <p className="text-slate-400 text-xs uppercase tracking-widest font-bold mt-1">Feb 2026 Summary</p>
                     </div>
 

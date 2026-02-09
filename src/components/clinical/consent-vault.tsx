@@ -48,7 +48,7 @@ export const SurgicalConsentVault: React.FC<{
             <div className="bg-indigo-600 px-8 py-10 text-white relative overflow-hidden">
                 <div className="relative z-10 flex items-center justify-between">
                     <div className="space-y-1">
-                        <h2 className="text-3xl font-black italic tracking-tighter">Surgical Consent Vault</h2>
+                        <h2 className="text-3xl font-black tracking-tighter">Surgical Consent Vault</h2>
                         <p className="text-indigo-100/70 text-sm font-medium">Procedural risk disclosure and digital signatures.</p>
                     </div>
                     <div className="w-16 h-16 bg-white/10 rounded-3xl flex items-center justify-center backdrop-blur-md">
@@ -91,7 +91,7 @@ export const SurgicalConsentVault: React.FC<{
                                                 <FileText className="w-6 h-6" />
                                             </div>
                                             <div>
-                                                <h3 className="text-xl font-black italic tracking-tighter text-slate-900">{template.title}</h3>
+                                                <h3 className="text-xl font-black tracking-tighter text-slate-900">{template.title}</h3>
                                                 <p className="text-sm text-slate-400 font-medium leading-relaxed mt-1">{template.description}</p>
                                             </div>
                                             <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-indigo-500 opacity-0 group-hover:opacity-100 transition-all">
@@ -120,7 +120,7 @@ export const SurgicalConsentVault: React.FC<{
                                 {/* Left Side: Terms */}
                                 <div className="space-y-8">
                                     <div className="space-y-2">
-                                        <h3 className="text-3xl font-black italic tracking-tighter text-slate-900">{selectedTemplate.title}</h3>
+                                        <h3 className="text-3xl font-black tracking-tighter text-slate-900">{selectedTemplate.title}</h3>
                                         <div className="px-4 py-1.5 bg-amber-50 text-amber-700 rounded-full text-[10px] font-black uppercase tracking-widest w-fit border border-amber-100 flex items-center gap-2">
                                             <AlertTriangle className="w-3 h-3" /> Potential Surgical Risks
                                         </div>
@@ -151,7 +151,7 @@ export const SurgicalConsentVault: React.FC<{
                                     </div>
 
                                     <div className="p-8 bg-indigo-50 rounded-[2rem] border border-indigo-100">
-                                        <p className="text-sm font-bold text-indigo-900 leading-relaxed italic">
+                                        <p className="text-sm font-bold text-indigo-900 leading-relaxed">
                                             &quot;{selectedTemplate.acknowledgement}&quot;
                                         </p>
                                     </div>

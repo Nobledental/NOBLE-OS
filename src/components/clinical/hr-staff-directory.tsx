@@ -90,7 +90,7 @@ export function HRStaffDirectory() {
                             <Users className="w-6 h-6 text-indigo-600" />
                         </div>
                         <div>
-                            <h2 className="text-3xl font-black tracking-tighter text-white italic uppercase">Staff Directory</h2>
+                            <h2 className="text-3xl font-black tracking-tighter text-white uppercase">Staff Directory</h2>
                             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">Human Resources & Identity</p>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export function HRStaffDirectory() {
                     </div>
                     <Button
                         onClick={() => setIsAddingNew(true)}
-                        className="h-14 px-8 rounded-2xl bg-slate-900 text-white font-black italic uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-200 gap-3"
+                        className="h-14 px-8 rounded-2xl bg-slate-900 text-white font-black uppercase tracking-widest hover:bg-black transition-all shadow-xl shadow-slate-200 gap-3"
                     >
                         <Plus className="w-5 h-5" />
                         Register Staff
@@ -149,7 +149,7 @@ export function HRStaffDirectory() {
                                         </div>
 
                                         <div className="space-y-1">
-                                            <h4 className="text-xl font-black text-white italic uppercase">{member.name}</h4>
+                                            <h4 className="text-xl font-black text-white uppercase">{member.name}</h4>
                                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
                                                 <Briefcase className="w-3 h-3" /> {member.role}
                                             </p>
@@ -196,7 +196,7 @@ export function HRStaffDirectory() {
                                             </div>
                                         </div>
                                         <div className="text-center space-y-2">
-                                            <h3 className="text-2xl font-black italic tracking-tighter text-slate-900">{selectedStaff.name}</h3>
+                                            <h3 className="text-2xl font-black tracking-tighter text-slate-900">{selectedStaff.name}</h3>
                                             <Badge variant="outline" className="rounded-full px-4 text-[9px] font-black uppercase tracking-widest border-indigo-100 text-indigo-600 bg-indigo-50/30">
                                                 {selectedStaff.role}
                                             </Badge>

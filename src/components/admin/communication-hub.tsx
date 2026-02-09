@@ -88,7 +88,7 @@ export default function CommunicationHub() {
                         <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-2xl overflow-hidden">
                             <div className="p-8 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/50 dark:bg-white/5">
                                 <div>
-                                    <h3 className="font-black italic uppercase tracking-tighter text-xl dark:text-white">Active Lead Queue</h3>
+                                    <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Active Lead Queue</h3>
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Priority tracking for clinic reception</p>
                                 </div>
                                 <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center animate-pulse">
@@ -143,7 +143,7 @@ export default function CommunicationHub() {
                     {/* Channel Intelligence Sidebar */}
                     <div className="lg:col-span-4 space-y-8">
                         <div className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden">
-                            <h3 className="text-xl font-black italic uppercase tracking-tighter mb-6 relative z-10">Receptionist Efficiency</h3>
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6 relative z-10">Receptionist Efficiency</h3>
                             <div className="space-y-6 relative z-10">
                                 {[
                                     { label: 'Response Rate', value: 88, color: 'bg-emerald-500' },
@@ -166,7 +166,7 @@ export default function CommunicationHub() {
                                 ))}
                             </div>
                             <div className="mt-10 pt-10 border-t border-white/5">
-                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4 italic">Lead Sources</p>
+                                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-4">Lead Sources</p>
                                 <div className="flex gap-4">
                                     <Globe className="opacity-40" />
                                     <PhoneIncoming className="opacity-40" />
@@ -178,10 +178,10 @@ export default function CommunicationHub() {
                         <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] p-8 border border-slate-200 dark:border-white/5 shadow-xl">
                             <div className="flex items-center gap-3 mb-6">
                                 <AlertTriangle className="text-amber-500" />
-                                <h3 className="font-black italic text-lg dark:text-white uppercase tracking-tighter">Communication Alerts</h3>
+                                <h3 className="font-black text-lg dark:text-white uppercase tracking-tighter">Communication Alerts</h3>
                             </div>
                             <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/20">
-                                <p className="text-xs font-bold text-amber-700 dark:text-amber-500 leading-relaxed italic">
+                                <p className="text-xs font-bold text-amber-700 dark:text-amber-500 leading-relaxed">
                                     "Lead #4 (Meena K.) has been missed twice today. Consider prioritizing this lead in the next 10 minutes to maintain clinical authority."
                                 </p>
                             </div>

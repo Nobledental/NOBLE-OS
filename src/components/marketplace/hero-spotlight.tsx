@@ -31,7 +31,7 @@ export function HeroSpotlight({
                     </div>
                 )}
 
-                <h2 className="text-4xl font-black italic uppercase leading-none mb-2 drop-shadow-lg max-w-md">
+                <h2 className="text-4xl font-black uppercase leading-none mb-2 drop-shadow-lg max-w-md">
                     {title}
                 </h2>
                 <p className="text-white/90 font-medium text-sm max-w-sm leading-relaxed mb-6">

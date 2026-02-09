@@ -54,7 +54,7 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
                 <TableBody>
                     {transactions.length === 0 ? (
                         <TableRow>
-                            <TableCell colSpan={6} className="text-center py-12 text-muted-foreground italic">
+                            <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                                 No transactions found for today.
                             </TableCell>
                         </TableRow>

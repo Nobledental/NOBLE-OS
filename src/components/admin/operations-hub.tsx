@@ -48,7 +48,7 @@ export default function OperationsHub() {
                                 <ShieldCheck className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h1 className="text-4xl font-black tracking-tighter text-white italic uppercase">Operations Hub</h1>
+                                <h1 className="text-4xl font-black tracking-tighter text-white uppercase">Operations Hub</h1>
                                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Unified Command Center</p>
                             </div>
                         </div>
@@ -136,8 +136,8 @@ function ModuleToggleCard({ title, description, icon, status }: { title: string,
                 </Badge>
             </div>
             <div className="space-y-2">
-                <h4 className="text-xl font-black italic tracking-tighter uppercase">{title}</h4>
-                <p className="text-xs font-medium text-slate-400 italic leading-relaxed">{description}</p>
+                <h4 className="text-xl font-black tracking-tighter uppercase">{title}</h4>
+                <p className="text-xs font-medium text-slate-400 leading-relaxed">{description}</p>
             </div>
             <Button className="w-full h-12 rounded-2xl bg-slate-900 text-white font-black uppercase text-[10px] tracking-widest hover:bg-black">
                 {status === "ACTIVE" ? "Disable Module" : "Enable Module"}

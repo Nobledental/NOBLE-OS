@@ -46,7 +46,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-white/5 dark:border-white/5 border-slate-200/50 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-sm dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/50 dark:bg-transparent">
+                <PanzeCard className="lg:col-span-2 group glass-frost border-white/40 dark:border-white/5 border-slate-100 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/80 dark:bg-transparent">
                     {/* Champagne Gold & Silver Silk Glows - Dark Mode Only */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none opacity-0 dark:opacity-100" />
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none opacity-0 dark:opacity-100" />
@@ -81,43 +81,45 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 { label: "Net Yield", value: activeFilter === "Today" ? "12,500" : activeFilter === "This Week" ? "84,000" : "3.4L", icon: Wallet, trend: "+8.2%", positive: true, caption: "vs last period" },
                                 { label: "Case Load", value: activeFilter === "Today" ? "08" : "156", icon: Users, sub: "Growth Stable", positive: true, caption: "visits total" },
                                 { label: "Performance", value: activeFilter === "Today" ? "72%" : "84%", icon: Activity, trend: "Elite", positive: false, caption: "efficiency metric" }
-                            ].map((pod, idx) => (
-                                <div
-                                    key={idx}
-                                    className="relative flex flex-col p-5 rounded-2xl bg-white/5 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10 transition-all duration-300 group/pod"
-                                >
-                                    <div className="flex items-center justify-between mb-4">
+                            ].map((pod, idx) => {
+                                const isPositive = pod.trend && pod.positive !== false;
+                                return (
+                                    <div
+                                key={idx}
+                                className="relative flex flex-col p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/pod shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]"
+                            >
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className={cn(
+                                        "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
+                                        pod.positive ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+                                    )}>
+                                        <pod.icon className="w-5 h-5" />
+                                    </div>
+                                    {pod.trend && (
                                         <div className={cn(
-                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
-                                            pod.positive ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+                                            "text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider flex items-center gap-1",
+                                            pod.positive ? "bg-emerald-100/50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : "bg-blue-100/50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
                                         )}>
-                                            <pod.icon className="w-5 h-5" />
+                                            <TrendingUp className="w-3 h-3" /> {pod.trend}
                                         </div>
-                                        {pod.trend && (
-                                            <div className={cn(
-                                                "text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider flex items-center gap-1",
-                                                pod.positive ? "bg-emerald-100/50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : "bg-blue-100/50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
-                                            )}>
-                                                <TrendingUp className="w-3 h-3" /> {pod.trend}
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div>
-                                        <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
-                                        <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white mb-1">
-                                            {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
-                                        </div>
-                                        <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
-                                    </div>
+                                    )}
                                 </div>
+
+                                <div>
+                                    <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
+                                    <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white mb-1">
+                                        {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
+                                    </div>
+                                    <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
+                                </div>
+                            </div>
                             ))}
                         </div>
                     </div>
                 </PanzeCard>
 
                 {/* Intelligence Layer (Frosty White Glass) */}
-                <PanzeCard className="flex flex-col glass-frost border-white/5 dark:border-white/5 border-slate-200/50 rounded-xl relative overflow-hidden group shadow-sm dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/50 dark:bg-transparent">
+                <PanzeCard className="flex flex-col glass-frost border-white/40 dark:border-white/5 border-slate-100 rounded-xl relative overflow-hidden group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/80 dark:bg-transparent">
                     <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none opacity-0 dark:opacity-100" />
                     <div className="p-4 space-y-4 flex-1 relative z-10">
                         <div className="flex items-center gap-4">
@@ -139,12 +141,9 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <div>
-                                        <div className="text-base font-bold tracking-tight text-slate-900 dark:text-white mb-0.5 uppercase">Growth Index</div>
-                                        <div className="text-[9px] text-emerald-600 font-black uppercase tracking-widest opacity-100 underline decoration-emerald-200 underline-offset-4">Standard Sync</div>
-                                    </div>
+                                    <div className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">98.2%</div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed italic border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
+                                <p className="text-[11px] md:text-[12px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
                                     &quot;Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks.&quot;
                                 </p>
                             </div>
@@ -154,7 +153,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                     </div>
 
                     <div className="p-6 md:p-8 bg-white/[0.05] border-t border-slate-100 dark:border-white/10">
-                        <Button variant="ghost" className="w-full h-12 rounded-[1.5rem] bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 hover:text-emerald-600 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-xl shadow-slate-200/50">
+                        <Button variant="ghost" className="w-full h-12 rounded-[1.5rem] bg-white hover:bg-emerald-50 border border-slate-100 text-slate-900 hover:text-emerald-600 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-lg shadow-slate-100">
                             <ScrollText className="w-5 h-5 opacity-100" /> System Registry
                         </Button>
                     </div>

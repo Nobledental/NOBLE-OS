@@ -72,7 +72,7 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
 
                 <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed">
                     <Info className="h-4 w-4 text-slate-400" />
-                    <p className="text-[10px] text-slate-500 italic">
+                    <p className="text-[10px] text-slate-500">
                         Leapfrog Strategy: Optimization suggested for 3:00 PM slot due to high consistent congestion.
                     </p>
                 </div>

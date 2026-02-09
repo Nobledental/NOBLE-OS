@@ -40,7 +40,7 @@ export function ProviderCard({
 
                 {/* Discount Gradient Overlay */}
                 <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent flex items-end px-5 py-4">
-                    <span className="text-white font-black text-2xl italic tracking-tighter leading-none uppercase">
+                    <span className="text-white font-black text-2xl tracking-tighter leading-none uppercase">
                         {displayOffer}
                     </span>
                 </div>
@@ -48,7 +48,7 @@ export function ProviderCard({
             <div className="p-6 space-y-4">
                 <div className="flex justify-between items-start">
                     <div className="space-y-1">
-                        <h3 className="font-black text-slate-900 text-xl italic tracking-tighter">{name}</h3>
+                        <h3 className="font-black text-slate-900 text-xl tracking-tighter">{name}</h3>
                         <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">{specialties.join(" • ")}</p>
                     </div>
                     <Badge className="bg-emerald-500 text-white border-none font-black text-[10px] px-2 py-1 rounded-lg">

@@ -55,7 +55,7 @@ export function SurgicalSafetyChecklist({
                             <ShieldCheck className="w-6 h-6 text-rose-400" />
                         </div>
                         <div>
-                            <DialogTitle className="text-white text-xl font-black italic tracking-tight">Surgical Safety Checklist</DialogTitle>
+                            <DialogTitle className="text-white text-xl font-black tracking-tight">Surgical Safety Checklist</DialogTitle>
                             <DialogDescription className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">High-Risk Protocol Verification</DialogDescription>
                         </div>
                     </div>

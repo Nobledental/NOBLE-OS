@@ -46,7 +46,7 @@ export default function RankingEngine() {
                         <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-[0.2em] mb-4">
                             <Trophy size={14} className="animate-bounce" /> Marketplace Intelligence
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight italic">Gold Ranking Engine</h1>
+                        <h1 className="text-4xl font-black tracking-tight">Gold Ranking Engine</h1>
                         <p className="text-slate-400 font-medium mt-2">Powering discovery through real-world clinical performance metrics.</p>
                     </div>
 
@@ -54,7 +54,7 @@ export default function RankingEngine() {
                         <div className="flex items-center gap-4">
                             <BarChart3 className="text-amber-400" />
                             <div>
-                                <div className="text-2xl font-black italic">ATR-Aware</div>
+                                <div className="text-2xl font-black">ATR-Aware</div>
                                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Active Ranking Logic</div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@ export default function RankingEngine() {
                     {/* Metrics Sidebar */}
                     <div className="lg:col-span-1 space-y-8">
                         <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl">
-                            <h3 className="font-black italic uppercase tracking-tighter text-xl mb-6 dark:text-white">Ranking Core</h3>
+                            <h3 className="font-black uppercase tracking-tighter text-xl mb-6 dark:text-white">Ranking Core</h3>
                             <div className="space-y-6">
                                 {[
                                     { label: 'Conversion (ATR)', value: '88%', desc: 'Search to Booking ratio', icon: MousePointer2, color: 'text-blue-500' },
@@ -84,7 +84,7 @@ export default function RankingEngine() {
                                         <div>
                                             <div className="text-lg font-black dark:text-white">{stat.value}</div>
                                             <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{stat.label}</div>
-                                            <p className="text-[9px] text-slate-500 mt-1 italic">{stat.desc}</p>
+                                            <p className="text-[9px] text-slate-500 mt-1">{stat.desc}</p>
                                         </div>
                                     </div>
                                 ))}
@@ -92,8 +92,8 @@ export default function RankingEngine() {
                         </div>
 
                         <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-8 rounded-[2.5rem] text-white shadow-2xl relative overflow-hidden group">
-                            <h3 className="text-xl font-black italic uppercase tracking-tighter mb-4 relative z-10">Gold Priority</h3>
-                            <p className="text-xs font-medium text-amber-100 italic relative z-10 leading-relaxed">
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-4 relative z-10">Gold Priority</h3>
+                            <p className="text-xs font-medium text-amber-100 relative z-10 leading-relaxed">
                                 "Clinics with ATR &gt; 85% are automatically granted the 'Priority Clinic' badge, boosting visibility by 2.4x."
                             </p>
                             <button className="mt-8 px-6 py-3 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all relative z-10">
@@ -119,7 +119,7 @@ export default function RankingEngine() {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-3">
-                                            <h4 className="text-xl font-black text-slate-900 dark:text-white italic">{clinic.name}</h4>
+                                            <h4 className="text-xl font-black text-slate-900 dark:text-white">{clinic.name}</h4>
                                             <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-lg text-[8px] font-black uppercase tracking-widest">{clinic.status}</span>
                                         </div>
                                         <div className="flex gap-2 mt-3">
@@ -148,7 +148,7 @@ export default function RankingEngine() {
                             </motion.div>
                         ))}
 
-                        <div className="p-10 text-center opacity-30 italic">
+                        <div className="p-10 text-center opacity-30">
                             <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.4em]">Ranking refreshed every 24 hours based on real-time fulfillment data</p>
                         </div>
                     </div>

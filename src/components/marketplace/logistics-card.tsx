@@ -13,7 +13,7 @@ export function LogisticsCard() {
             <div className="relative z-10">
                 <div className="flex justify-between items-start mb-6">
                     <div>
-                        <h3 className="text-2xl font-black italic tracking-tight">NOBLE LOGISTICS</h3>
+                        <h3 className="text-2xl font-black tracking-tight">NOBLE LOGISTICS</h3>
                         <p className="text-blue-100 text-sm font-medium mt-1">
                             Pickup & Drop for Lab Cases
                         </p>
@@ -39,7 +39,7 @@ export function LogisticsCard() {
                         <div className="flex-1">
                             <p className="text-xs text-white/60 font-black uppercase tracking-widest">Destination Lab</p>
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-bold text-white/90 italic">Select Lab Partner...</span>
+                                <span className="text-sm font-bold text-white/90">Select Lab Partner...</span>
                                 <Button size="sm" variant="ghost" className="h-6 w-6 p-0 hover:bg-white/20 text-white">
                                     <MapPin className="w-4 h-4" />
                                 </Button>

@@ -35,7 +35,7 @@ export default function NobleOnePortal() {
                                 <div className="p-3 bg-white/20 backdrop-blur-md rounded-2xl">
                                     <Crown className="text-amber-400" size={32} />
                                 </div>
-                                <h1 className="text-5xl font-black tracking-tighter italic">Noble One</h1>
+                                <h1 className="text-5xl font-black tracking-tighter">Noble One</h1>
                             </div>
                             <p className="text-lg font-medium text-indigo-100 leading-relaxed">
                                 Beyond just a check-up. Become a priority member for absolute clinical peace of mind.
@@ -53,7 +53,7 @@ export default function NobleOnePortal() {
                         <div className="hidden md:block relative group">
                             <div className="bg-white/10 backdrop-blur-xl p-8 rounded-[2.5rem] border border-white/20 rotate-[5deg] group-hover:rotate-0 transition-all duration-700">
                                 <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Member Status</div>
-                                <div className="text-3xl font-black italic">Active Gold</div>
+                                <div className="text-3xl font-black">Active Gold</div>
                                 <div className="mt-8 space-y-3">
                                     <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
                                         <ShieldCheck size={14} /> ₹1,400 Saved this year
@@ -81,7 +81,7 @@ export default function NobleOnePortal() {
                             <div className={`p-4 rounded-2xl ${benefit.bg} ${benefit.color} w-fit mb-6`}>
                                 <benefit.icon size={24} />
                             </div>
-                            <h3 className="text-xl font-black italic uppercase tracking-tighter mb-2 dark:text-white">{benefit.title}</h3>
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-2 dark:text-white">{benefit.title}</h3>
                             <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">{benefit.desc}</p>
                         </div>
                     ))}
@@ -94,7 +94,7 @@ export default function NobleOnePortal() {
                             <div className="flex items-center gap-2 text-pink-600 font-bold text-xs uppercase tracking-[0.2em] mb-2">
                                 <ShoppingBag size={14} /> Smart Health Reordering
                             </div>
-                            <h2 className="text-3xl font-black italic tracking-tighter dark:text-white">Hygiene Essentials Hub</h2>
+                            <h2 className="text-3xl font-black tracking-tighter dark:text-white">Hygiene Essentials Hub</h2>
                             <p className="text-sm font-medium text-slate-400 mt-2">Personalized reordering based on your clinical plan.</p>
                         </div>
                         <button className="flex items-center gap-2 text-xs font-black uppercase text-blue-600 hover:opacity-75 tracking-widest">
@@ -110,7 +110,7 @@ export default function NobleOnePortal() {
                         ].map((item, i) => (
                             <div key={i} className="p-6 bg-slate-50 dark:bg-white/5 rounded-[2rem] border border-slate-100 dark:border-white/5 group hover:border-pink-200 transition-all">
                                 <div className="text-4xl mb-6">{item.img}</div>
-                                <h4 className="font-black text-slate-900 dark:text-white italic">{item.name}</h4>
+                                <h4 className="font-black text-slate-900 dark:text-white">{item.name}</h4>
                                 <div className="flex justify-between items-center mt-4">
                                     <div className="text-lg font-black text-pink-600">{item.price}</div>
                                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.freq}</div>
@@ -128,13 +128,13 @@ export default function NobleOnePortal() {
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
                             <Gift size={24} className="text-amber-400" />
-                            <h3 className="font-black italic text-xl uppercase tracking-tighter">Your Noble Loyalty</h3>
+                            <h3 className="font-black text-xl uppercase tracking-tighter">Your Noble Loyalty</h3>
                         </div>
-                        <p className="text-xs font-medium text-slate-400 italic">"You are 2 cleanings away from unlocking the 'Platinum Tier'—includes free whitening for life."</p>
+                        <p className="text-xs font-medium text-slate-400">&quot;You are 2 cleanings away from unlocking the &apos;Platinum Tier&apos;—includes free whitening for life.&quot;</p>
                     </div>
                     <div className="flex items-center gap-6 shrink-0">
                         <div className="text-right">
-                            <div className="text-2xl font-black italic">650 Pts</div>
+                            <div className="text-2xl font-black">650 Pts</div>
                             <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest leading-none">Status Points</div>
                         </div>
                         <div className="w-16 h-16 rounded-full border-4 border-amber-400/20 border-t-amber-400 flex items-center justify-center animate-spin-slow">

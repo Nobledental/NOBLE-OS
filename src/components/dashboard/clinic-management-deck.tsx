@@ -211,7 +211,7 @@ export function ClinicManagementDeck() {
                             {/* Removed Glows as per user request */}
 
                             {/* Medizinisch Glass Layer */}
-                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 dark:border-white/5 border-slate-200/50 shadow-sm transition-all duration-1000 group-hover:bg-slate-50/50 dark:group-hover:bg-white/[0.04]">
+                            <div className="glass-frost rounded-xl overflow-hidden relative p-3 h-full flex flex-col min-h-[120px] mb-0 border-white/5 dark:border-white/5 border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-all duration-1000 group-hover:bg-slate-50/80 dark:group-hover:bg-white/[0.04]">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
@@ -343,7 +343,7 @@ export function ClinicManagementDeck() {
                                             <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
                                             <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
                                         </div>
-                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight italic">Workflow <span className="text-white font-light border-b border-white/20">Optimization</span></h3>
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">Workflow <span className="text-white font-light border-b border-white/20">Optimization</span></h3>
                                         <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
                                             Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle.
                                         </p>

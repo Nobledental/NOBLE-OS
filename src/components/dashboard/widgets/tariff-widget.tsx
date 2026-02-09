@@ -112,7 +112,7 @@ export function TariffWidget() {
                     ))}
                     {filteredTariff.length === 0 && (
                         <div className="p-12 text-center">
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 italic">No nodes identified</p>
+                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">No nodes identified</p>
                         </div>
                     )}
                 </div>

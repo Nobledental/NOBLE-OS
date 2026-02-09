@@ -85,7 +85,7 @@ export function LabOrderHub() {
                         <FlaskConical className="w-6 h-6 text-indigo-600" />
                     </div>
                     <div>
-                        <h2 className="text-2xl font-black tracking-tight text-slate-800 italic">Lab Order Tracker</h2>
+                        <h2 className="text-2xl font-black tracking-tight text-slate-800">Lab Order Tracker</h2>
                         <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Digital Prosthetic Logistics</p>
                     </div>
                 </div>

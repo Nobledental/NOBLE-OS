@@ -45,7 +45,7 @@ export function DoctorDashboardView() {
             <motion.div variants={itemVariants} className="lg:col-span-8 flex flex-col gap-8">
                 <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                        <h2 className="text-3xl font-black italic tracking-tighter text-slate-900 dark:text-white">Active Clinical Feed</h2>
+                        <h2 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white">Active Clinical Feed</h2>
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Real-time Procedural Audit Active</p>
@@ -96,7 +96,7 @@ export function DoctorDashboardView() {
 
                 <PanzeCard className="p-8 bg-slate-900 text-white shadow-2xl shadow-slate-200 relative overflow-hidden group">
                     <div className="relative z-10 space-y-6">
-                        <h4 className="font-black italic tracking-tighter uppercase text-sm flex items-center gap-3">
+                        <h4 className="font-black tracking-tighter uppercase text-sm flex items-center gap-3">
                             <ClipboardList className="w-5 h-5 text-indigo-400" />
                             NEO Clinical Auditor
                         </h4>
@@ -133,7 +133,7 @@ function StatCard({ icon, value, label, color, accent }: any) {
                 {icon}
             </div>
             <div className="space-y-0.5">
-                <span className="text-3xl font-black italic tracking-tighter text-slate-900">{value}</span>
+                <span className="text-3xl font-black tracking-tighter text-slate-900">{value}</span>
                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">{label}</p>
             </div>
         </PanzeCard>
@@ -152,7 +152,7 @@ function AuditItem({ title, status, sub }: any) {
                     {status}
                 </Badge>
             </div>
-            <p className="text-[10px] font-medium text-slate-400 italic">{sub}</p>
+            <p className="text-[10px] font-medium text-slate-400">{sub}</p>
         </div>
     );
 }

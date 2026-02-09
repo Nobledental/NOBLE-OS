@@ -49,7 +49,7 @@ export function CaseQueue() {
                 </div>
                 <div className="space-y-4">
                     {myCases.length === 0 ? (
-                        <p className="text-xs text-white/20 italic font-medium px-2">No cases specifically assigned to you.</p>
+                        <p className="text-xs text-white/20 font-medium px-2">No cases specifically assigned to you.</p>
                     ) : (
                         myCases.map(appt => (
                             <div key={appt.id} className="bg-white/5 p-4 rounded-2xl border border-white/5 flex items-center justify-between hover:bg-white/10 transition-all group">
@@ -79,7 +79,7 @@ export function CaseQueue() {
                 </div>
                 <div className="space-y-3">
                     {generalQueue.length === 0 ? (
-                        <p className="text-xs text-white/10 italic font-medium px-2">Clinic queue is empty.</p>
+                        <p className="text-xs text-white/10 font-medium px-2">Clinic queue is empty.</p>
                     ) : (
                         generalQueue.map(appt => (
                             <div key={appt.id} className="bg-white/[0.01] p-4 rounded-2xl border border-white/5 flex items-center justify-between hover:bg-white/5 transition-all">

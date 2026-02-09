@@ -31,7 +31,7 @@ export function IDCardGenerator({ staff, onDownload }: { staff: IDCardData, onDo
     return (
         <div className="space-y-8">
             <div className="text-center space-y-2">
-                <h3 className="text-2xl font-black italic tracking-tighter text-slate-800">Digital ID Card</h3>
+                <h3 className="text-2xl font-black tracking-tighter text-slate-800">Digital ID Card</h3>
                 <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-none">Official Clinical Identity</p>
             </div>
 
@@ -46,7 +46,7 @@ export function IDCardGenerator({ staff, onDownload }: { staff: IDCardData, onDo
                         <Stethoscope className="w-6 h-6 text-white" />
                     </div>
                     <div>
-                        <h4 className="text-sm font-black italic tracking-tighter leading-none">NOBLE DENTAL</h4>
+                        <h4 className="text-sm font-black tracking-tighter leading-none">NOBLE DENTAL</h4>
                         <p className="text-[8px] font-bold text-indigo-300 uppercase tracking-widest leading-none mt-1">Premium Care</p>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ export function IDCardGenerator({ staff, onDownload }: { staff: IDCardData, onDo
                     </div>
 
                     <div className="text-center space-y-1">
-                        <h2 className="text-2xl font-black italic tracking-tighter leading-none">{staff.name}</h2>
+                        <h2 className="text-2xl font-black tracking-tighter leading-none">{staff.name}</h2>
                         <p className="text-[10px] font-bold text-indigo-400 uppercase tracking-[0.2em]">{staff.role}</p>
                     </div>
                 </div>

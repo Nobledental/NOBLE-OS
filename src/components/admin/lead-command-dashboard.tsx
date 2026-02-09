@@ -62,7 +62,7 @@ export default function LeadCommandDashboard() {
                         <div className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-[0.2em] mb-4">
                             <Zap size={14} className="animate-pulse" /> Logistics Command Engine
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight italic text-slate-900 dark:text-white">Lead Command</h1>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">Lead Command</h1>
                         <p className="text-slate-500 dark:text-slate-400 font-medium">Orchestrating patient fulfillment with zero-friction logic.</p>
                     </div>
 
@@ -89,7 +89,7 @@ export default function LeadCommandDashboard() {
                                         <column.icon size={18} />
                                     </div>
                                     <div>
-                                        <h3 className="font-black italic uppercase tracking-tighter text-slate-900 dark:text-white">{column.label}</h3>
+                                        <h3 className="font-black uppercase tracking-tighter text-slate-900 dark:text-white">{column.label}</h3>
                                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{getColumnPatients(column.id).length} Active</p>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ export default function LeadCommandDashboard() {
                                             <div className="flex justify-between items-start mb-4">
                                                 <div>
                                                     <div className="flex items-center gap-2">
-                                                        <h4 className="font-black text-lg text-slate-900 dark:text-white italic">{patient.name}</h4>
+                                                        <h4 className="font-black text-lg text-slate-900 dark:text-white">{patient.name}</h4>
                                                         {patient.priority && (
                                                             <div className="w-2 h-2 rounded-full bg-red-500 animate-ping"></div>
                                                         )}
@@ -139,7 +139,7 @@ export default function LeadCommandDashboard() {
                                             {patient.waitTime > 30 && column.id === 'WAITING' && (
                                                 <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/20 rounded-xl flex items-center gap-3">
                                                     <AlertCircle size={14} className="text-red-500" />
-                                                    <p className="text-[9px] font-bold text-red-600 dark:text-red-400 uppercase tracking-widest italic leading-tight">Bottleneck detected: Delayed 12m+</p>
+                                                    <p className="text-[9px] font-bold text-red-600 dark:text-red-400 uppercase tracking-widest leading-tight">Bottleneck detected: Delayed 12m+</p>
                                                 </div>
                                             )}
                                         </motion.div>
@@ -161,17 +161,17 @@ export default function LeadCommandDashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2 bg-slate-900 rounded-[3rem] p-10 text-white flex flex-col justify-between overflow-hidden relative group">
                         <div className="relative z-10">
-                            <h3 className="text-xl font-black italic uppercase tracking-tighter mb-6">Clinic Speed Index</h3>
+                            <h3 className="text-xl font-black uppercase tracking-tighter mb-6">Clinic Speed Index</h3>
                             <div className="flex items-end gap-10">
                                 <div className="space-y-2">
-                                    <div className="text-5xl font-black italic tracking-tighter">Fast <span className="text-blue-500">Live</span></div>
-                                    <p className="text-xs font-medium text-slate-400 tracking-tight leading-relaxed max-w-sm italic">
+                                    <div className="text-5xl font-black tracking-tighter">Fast <span className="text-blue-500">Live</span></div>
+                                    <p className="text-xs font-medium text-slate-400 tracking-tight leading-relaxed max-w-sm">
                                         "Your average fulfillment time is 12% faster than last week. Suggesting opening 1 more hygiene chair for 11:30 AM surge."
                                     </p>
                                 </div>
                                 <div className="flex items-center gap-2 mb-2 text-emerald-400">
                                     <ArrowUpRight size={24} />
-                                    <span className="text-3xl font-black italic">+12%</span>
+                                    <span className="text-3xl font-black">+12%</span>
                                 </div>
                             </div>
                         </div>
@@ -181,9 +181,9 @@ export default function LeadCommandDashboard() {
                     <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-xl flex flex-col justify-center gap-6">
                         <div className="flex items-center gap-3">
                             <Zap className="text-yellow-500" />
-                            <h4 className="font-black italic text-lg uppercase tracking-tighter dark:text-white">Smart Restack</h4>
+                            <h4 className="font-black text-lg uppercase tracking-tighter dark:text-white">Smart Restack</h4>
                         </div>
-                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed italic">
+                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
                             Move 'Anand S.' to 'Vitals' manually? The nurse station is currently idle.
                         </p>
                         <button className="w-full py-4 bg-slate-900 dark:bg-white/10 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all">

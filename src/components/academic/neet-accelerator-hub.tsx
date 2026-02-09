@@ -54,10 +54,10 @@ export default function NEETAcceleratorHub() {
                         <div className="flex items-center gap-3 text-rose-500 font-black text-[10px] uppercase tracking-[0.4em]">
                             <BookOpen size={16} className="animate-pulse" /> Noble Entrance Module
                         </div>
-                        <h1 className="text-5xl font-black italic tracking-tighter text-slate-900 dark:text-white leading-[0.9]">
+                        <h1 className="text-5xl font-black tracking-tighter text-slate-900 dark:text-white leading-[0.9]">
                             Academic <br /> Accelerator
                         </h1>
-                        <p className="text-sm font-medium text-slate-400 italic max-w-md">
+                        <p className="text-sm font-medium text-slate-400 max-w-md">
                             Proprietary NEET-MDS training engine. Transforming your daily clinical recordings into high-yield exam preparation.
                         </p>
 
@@ -68,7 +68,7 @@ export default function NEETAcceleratorHub() {
                             >
                                 <GraduationCap size={16} /> Year: {currentYear === 1 ? '1st' : currentYear === 2 ? '2nd' : currentYear === 3 ? '3rd' : 'Final'}
                             </button>
-                            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest italic">
+                            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
                                 Content Filter: Year {currentYear} and below
                             </div>
                         </div>
@@ -98,12 +98,12 @@ export default function NEETAcceleratorHub() {
                     <div className="flex gap-6 relative z-10">
                         <div className="p-10 bg-rose-600 rounded-[3rem] text-white shadow-2xl shadow-rose-500/30 text-center flex flex-col items-center">
                             <Trophy size={32} className="mb-4" />
-                            <div className="text-3xl font-black italic tracking-tighter">1,240</div>
+                            <div className="text-3xl font-black tracking-tighter">1,240</div>
                             <div className="text-[9px] font-black uppercase tracking-widest opacity-80">Noble Points</div>
                         </div>
                         <div className="p-10 bg-slate-900 rounded-[3rem] text-white border border-white/10 text-center flex flex-col items-center">
                             <Target size={32} className="mb-4 text-emerald-400" />
-                            <div className="text-3xl font-black italic tracking-tighter">88%</div>
+                            <div className="text-3xl font-black tracking-tighter">88%</div>
                             <div className="text-[9px] font-black uppercase tracking-widest opacity-80">Accuracy Rate</div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@ export default function NEETAcceleratorHub() {
                     {/* 2. SIDEBAR COMMANDS */}
                     <div className="lg:col-span-3 space-y-6">
                         <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-xl">
-                            <h3 className="text-[10px] font-black italic uppercase tracking-[0.2em] mb-8 text-slate-400">Training Segments</h3>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] mb-8 text-slate-400">Training Segments</h3>
                             <div className="space-y-4">
                                 {[
                                     { icon: Zap, label: 'Daily MCQ Sprint', id: 'SPRINT' },
@@ -143,7 +143,7 @@ export default function NEETAcceleratorHub() {
 
                         {/* TEXTBOOK INDEX STATUS */}
                         <div className="bg-slate-900 p-8 rounded-[3rem] text-white shadow-2xl relative overflow-hidden">
-                            <h3 className="text-[10px] font-black italic uppercase tracking-[0.2em] mb-6 text-rose-500 flex items-center gap-2">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] mb-6 text-rose-500 flex items-center gap-2">
                                 <Lock size={12} /> GraphRAG Engine V2
                             </h3>
                             <div className="space-y-4 relative z-10">
@@ -154,7 +154,7 @@ export default function NEETAcceleratorHub() {
                                 <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                                     <div className="h-full w-[48%] bg-rose-500"></div>
                                 </div>
-                                <p className="text-[9px] text-slate-500 italic mt-4 uppercase tracking-widest leading-relaxed">
+                                <p className="text-[9px] text-slate-500 mt-4 uppercase tracking-widest leading-relaxed">
                                     Questions are automatically synthesized from verified sources like **Carranza** & **Grossman**.
                                 </p>
                             </div>
@@ -168,7 +168,7 @@ export default function NEETAcceleratorHub() {
                             <div className="flex items-center gap-4">
                                 <div className="w-14 h-14 bg-rose-600/10 rounded-2xl flex items-center justify-center text-rose-600"><Timer size={24} /></div>
                                 <div>
-                                    <h2 className="text-2xl font-black italic tracking-tighter uppercase dark:text-white">Daily 10-Sprint</h2>
+                                    <h2 className="text-2xl font-black tracking-tighter uppercase dark:text-white">Daily 10-Sprint</h2>
                                     <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Difficulty: High-Yield</p>
                                 </div>
                             </div>
@@ -185,14 +185,14 @@ export default function NEETAcceleratorHub() {
                                 <Clock size={14} className="text-amber-500" />
                                 <span className="text-[10px] font-black uppercase tracking-widest text-amber-600">Revision Loop Active: 20% Foundational Refresh (Yr 1-3)</span>
                             </div>
-                            <div className="text-[9px] font-bold text-amber-500 italic">Ensuring no first-year concepts are forgotten.</div>
+                            <div className="text-[9px] font-bold text-amber-500">Ensuring no first-year concepts are forgotten.</div>
                         </div>
 
                         {/* QUESTION INTERFACE */}
                         <div className="flex-1 space-y-12">
                             <div className="p-10 bg-slate-50 dark:bg-white/5 rounded-[3rem] border border-slate-100 dark:border-white/5 relative group">
                                 <HelpCircle className="absolute top-8 right-8 text-rose-500/20" size={40} />
-                                <p className="text-xl font-black italic tracking-tight text-slate-900 dark:text-white leading-[1.4] max-w-2xl">
+                                <p className="text-xl font-black tracking-tight text-slate-900 dark:text-white leading-[1.4] max-w-2xl">
                                     "{questions[currentQuestionIndex].q}"
                                 </p>
                             </div>
@@ -239,8 +239,8 @@ export default function NEETAcceleratorHub() {
                             <CheckCircle2 className="text-white" size={40} />
                         </div>
                         <div>
-                            <h3 className="text-3xl font-black italic tracking-tighter uppercase text-slate-900 dark:text-white">Shadowing Sign-Off</h3>
-                            <p className="text-[11px] font-medium text-slate-500 italic mt-1 leading-relaxed max-w-xl uppercase tracking-widest">
+                            <h3 className="text-3xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">Shadowing Sign-Off</h3>
+                            <p className="text-[11px] font-medium text-slate-500 mt-1 leading-relaxed max-w-xl uppercase tracking-widest">
                                 Senior verified signatures for clinical competency. <br />
                                 <span className="text-blue-600 font-black">4 PENDING SIGN-OFFS FROM DR. SARAH (PROSTHODONTICS).</span>
                             </p>

@@ -64,7 +64,7 @@ export default function AEODashboard() {
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
                                 <h3 className="text-blue-100 font-bold text-xs uppercase tracking-widest mb-1">Clinic Authority Score</h3>
-                                <div className="text-6xl font-black italic">{overallScore}<span className="text-2xl opacity-50 underline">/100</span></div>
+                                <div className="text-6xl font-black">{overallScore}<span className="text-2xl opacity-50 underline">/100</span></div>
                             </div>
                             <div className="flex items-center gap-4 mt-8">
                                 <div className="flex -space-x-3">
@@ -113,7 +113,7 @@ export default function AEODashboard() {
                     <div className="lg:col-span-1 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl p-8 space-y-6">
                         <div className="flex items-center gap-3 border-b border-slate-100 dark:border-white/5 pb-4">
                             <Zap className="text-blue-600" />
-                            <h3 className="font-black italic uppercase tracking-tighter text-lg dark:text-white">AEO Tactical Insights</h3>
+                            <h3 className="font-black uppercase tracking-tighter text-lg dark:text-white">AEO Tactical Insights</h3>
                         </div>
 
                         <div className="space-y-4">
@@ -134,7 +134,7 @@ export default function AEODashboard() {
                     <div className="lg:col-span-2 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl overflow-hidden flex flex-col">
                         <div className="p-8 border-b border-slate-100 dark:border-white/5 flex justify-between items-center">
                             <div>
-                                <h3 className="font-black italic uppercase tracking-tighter text-xl dark:text-white">Faculty Trust Leaderboard</h3>
+                                <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Faculty Trust Leaderboard</h3>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Authority scores based on SEEAT metrics</p>
                             </div>
                             <button className="flex items-center gap-2 text-xs font-black uppercase text-blue-600 hover:opacity-75 tracking-widest">
@@ -161,7 +161,7 @@ export default function AEODashboard() {
                                                         <img src={doc.image} alt="" className="object-cover" />
                                                     </div>
                                                     <div>
-                                                        <div className="font-bold text-slate-900 dark:text-white text-sm italic">{doc.name}</div>
+                                                        <div className="font-bold text-slate-900 dark:text-white text-sm">{doc.name}</div>
                                                         <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{doc.specialty}</div>
                                                     </div>
                                                 </div>

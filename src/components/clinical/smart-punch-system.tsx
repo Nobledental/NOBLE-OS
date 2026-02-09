@@ -67,7 +67,7 @@ export function SmartPunchSystem() {
                         {isWithinFence ? "Inside Geofence" : "Outside Clinic Perimeter"}
                     </span>
                 </div>
-                <h2 className="text-4xl font-black italic tracking-tighter text-slate-900">
+                <h2 className="text-4xl font-black tracking-tighter text-slate-900">
                     {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
                 </h2>
                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">
@@ -92,7 +92,7 @@ export function SmartPunchSystem() {
                         <ShieldCheck className={cn("w-10 h-10", status === "IN" ? "text-white" : "text-emerald-500")} />
                     </div>
                     <div className="text-center space-y-1">
-                        <h4 className="font-black italic text-xl uppercase tracking-tighter">Clock In</h4>
+                        <h4 className="font-black text-xl uppercase tracking-tighter">Clock In</h4>
                         <p className={cn("text-[9px] font-bold uppercase tracking-widest opacity-60", status === "IN" ? "text-white" : "text-slate-400")}>Start Session</p>
                     </div>
                     {status === "IN" && (
@@ -119,7 +119,7 @@ export function SmartPunchSystem() {
                         <Clock className={cn("w-10 h-10", status === "BREAK" ? "text-white" : "text-amber-500")} />
                     </div>
                     <div className="text-center space-y-1">
-                        <h4 className="font-black italic text-xl uppercase tracking-tighter">Break</h4>
+                        <h4 className="font-black text-xl uppercase tracking-tighter">Break</h4>
                         <p className={cn("text-[9px] font-bold uppercase tracking-widest opacity-60", status === "BREAK" ? "text-white" : "text-slate-400")}>Pause Work</p>
                     </div>
                     {status === "BREAK" && (
@@ -143,7 +143,7 @@ export function SmartPunchSystem() {
                         <ArrowRightLeft className="w-10 h-10 text-slate-400 group-hover:text-slate-900" />
                     </div>
                     <div className="text-center space-y-1">
-                        <h4 className="font-black italic text-xl uppercase tracking-tighter">Clock Out</h4>
+                        <h4 className="font-black text-xl uppercase tracking-tighter">Clock Out</h4>
                         <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest opacity-60">End Shift</p>
                     </div>
                     {status === "OUT" && (
@@ -174,7 +174,7 @@ export function SmartPunchSystem() {
                                         {log.type === 'IN' ? <CheckCircle2 className="w-5 h-5" /> : log.type === 'BREAK' ? <Clock className="w-5 h-5" /> : <ArrowRightLeft className="w-5 h-5" />}
                                     </div>
                                     <div>
-                                        <p className="text-sm font-black italic tracking-tight">{log.type === 'IN' ? 'Clocked In' : log.type === 'BREAK' ? 'Break' : 'Clocked Out'}</p>
+                                        <p className="text-sm font-black tracking-tight">{log.type === 'IN' ? 'Clocked In' : log.type === 'BREAK' ? 'Break' : 'Clocked Out'}</p>
                                         <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1">
                                             <MapPin className="w-3 h-3 text-indigo-400" /> {log.location}
                                         </p>
@@ -186,7 +186,7 @@ export function SmartPunchSystem() {
                                 </div>
                             </div>
                         )) : (
-                            <div className="h-32 flex flex-col items-center justify-center text-center opacity-20 italic">
+                            <div className="h-32 flex flex-col items-center justify-center text-center opacity-20">
                                 <Activity className="w-8 h-8 mb-2" />
                                 <p className="text-[10px] font-black uppercase tracking-widest">No activity recorded today</p>
                             </div>
@@ -201,17 +201,17 @@ export function SmartPunchSystem() {
                             <Activity className="w-8 h-8 text-indigo-100" />
                         </div>
                         <div className="space-y-2">
-                            <h4 className="text-2xl font-black italic tracking-tighter">Punctuality Score</h4>
-                            <p className="text-4xl font-black italic tracking-tighter">94%</p>
+                            <h4 className="text-2xl font-black tracking-tighter">Punctuality Score</h4>
+                            <p className="text-4xl font-black tracking-tighter">94%</p>
                         </div>
                         <div className="h-px bg-white/10" />
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest italic">Hours this month</span>
+                                <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest">Hours this month</span>
                                 <span className="text-sm font-black">164h</span>
                             </div>
                             <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest italic">Avg. Punch In</span>
+                                <span className="text-[10px] font-bold opacity-60 uppercase tracking-widest">Avg. Punch In</span>
                                 <span className="text-sm font-black">09:12 AM</span>
                             </div>
                         </div>

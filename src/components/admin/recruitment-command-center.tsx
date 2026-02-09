@@ -35,10 +35,10 @@ export default function RecruitmentCommandCenter() {
                         <div className="flex items-center gap-3 text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em]">
                             <Building2 size={16} className="animate-spin-slow" /> HFLO Recruitment Hub
                         </div>
-                        <h1 className="text-5xl font-black italic tracking-tighter text-slate-900 dark:text-white leading-[0.9]">
+                        <h1 className="text-5xl font-black tracking-tighter text-slate-900 dark:text-white leading-[0.9]">
                             Smart Clinical <br /> Talent Sourcing
                         </h1>
-                        <p className="text-sm font-medium text-slate-400 italic max-w-md">
+                        <p className="text-sm font-medium text-slate-400 max-w-md">
                             Locate verified dentists and students based on real-world clinical scores, not just resumes.
                         </p>
                     </div>
@@ -46,12 +46,12 @@ export default function RecruitmentCommandCenter() {
                     <div className="flex gap-6 relative z-10">
                         <div className="p-10 bg-indigo-600 rounded-[3rem] text-white shadow-2xl shadow-indigo-500/30 text-center flex flex-col items-center">
                             <Users size={32} className="mb-4" />
-                            <div className="text-3xl font-black italic tracking-tighter">142</div>
+                            <div className="text-3xl font-black tracking-tighter">142</div>
                             <div className="text-[9px] font-black uppercase tracking-widest opacity-80">Active Candidates</div>
                         </div>
                         <div className="p-10 bg-slate-900 rounded-[3rem] text-white border border-white/10 text-center flex flex-col items-center">
                             <TicketPercent size={32} className="mb-4 text-amber-400" />
-                            <div className="text-3xl font-black italic tracking-tighter">03</div>
+                            <div className="text-3xl font-black tracking-tighter">03</div>
                             <div className="text-[9px] font-black uppercase tracking-widest opacity-80">Hiring Vouchers</div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ export default function RecruitmentCommandCenter() {
                     {/* 3. CANDIDATE FEED */}
                     <div className="lg:col-span-8 space-y-8">
                         <div className="flex items-center justify-between px-6">
-                            <h3 className="text-xl font-black italic tracking-tighter uppercase dark:text-white flex items-center gap-3">
+                            <h3 className="text-xl font-black tracking-tighter uppercase dark:text-white flex items-center gap-3">
                                 <UserCheck className="text-indigo-600" /> Top-Scoring Candidates
                             </h3>
                             <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 cursor-pointer hover:text-indigo-600 transition-all">SORT BY: REAL-WORLD SCORE <ChevronDown size={12} className="inline ml-1" /></div>
@@ -126,7 +126,7 @@ export default function RecruitmentCommandCenter() {
                                             </div>
                                             <div>
                                                 <div className="flex items-center gap-4 mb-2">
-                                                    <h4 className="text-2xl font-black italic tracking-tighter uppercase dark:text-white">{candidate.name}</h4>
+                                                    <h4 className="text-2xl font-black tracking-tighter uppercase dark:text-white">{candidate.name}</h4>
                                                     <span className="text-[9px] font-black uppercase tracking-widest px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 rounded-full">{candidate.status}</span>
                                                 </div>
                                                 <div className="flex gap-4 mb-6">
@@ -145,11 +145,11 @@ export default function RecruitmentCommandCenter() {
                                         <div className="flex flex-col gap-4">
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="text-center p-4 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                                                    <div className="text-xl font-black italic tracking-tighter text-indigo-600">{candidate.skill}%</div>
+                                                    <div className="text-xl font-black tracking-tighter text-indigo-600">{candidate.skill}%</div>
                                                     <div className="text-[8px] font-black uppercase tracking-widest text-slate-400">Hand-Skill</div>
                                                 </div>
                                                 <div className="text-center p-4 bg-slate-50 dark:bg-white/5 rounded-2xl">
-                                                    <div className="text-xl font-black italic tracking-tighter text-emerald-600">{candidate.efficiency}%</div>
+                                                    <div className="text-xl font-black tracking-tighter text-emerald-600">{candidate.efficiency}%</div>
                                                     <div className="text-[8px] font-black uppercase tracking-widest text-slate-400">Efficiency</div>
                                                 </div>
                                             </div>
@@ -167,7 +167,7 @@ export default function RecruitmentCommandCenter() {
                     {/* 4. RECRUITMENT LOGS & ANALYTICS */}
                     <div className="lg:col-span-4 space-y-8">
                         <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
-                            <h3 className="text-sm font-black italic uppercase tracking-widest mb-8 dark:text-white">Active Postings</h3>
+                            <h3 className="text-sm font-black uppercase tracking-widest mb-8 dark:text-white">Active Postings</h3>
                             <div className="space-y-6">
                                 {[
                                     { title: 'Associate Dentist', candidates: 12, status: 'Urgent' },
@@ -175,7 +175,7 @@ export default function RecruitmentCommandCenter() {
                                 ].map((post, i) => (
                                     <div key={i} className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 group hover:border-indigo-500/30 transition-all cursor-pointer">
                                         <div className="flex justify-between items-start mb-4">
-                                            <div className="text-xs font-black italic tracking-tighter dark:text-white uppercase">{post.title}</div>
+                                            <div className="text-xs font-black tracking-tighter dark:text-white uppercase">{post.title}</div>
                                             <span className={`text-[8px] font-black uppercase tracking-widest ${post.status === 'Urgent' ? 'text-rose-500 bg-rose-500/10' : 'text-emerald-500 bg-emerald-500/10'} px-2 py-0.5 rounded-full`}>{post.status}</span>
                                         </div>
                                         <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
@@ -196,8 +196,8 @@ export default function RecruitmentCommandCenter() {
                         <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-10 rounded-[4rem] text-white shadow-3xl shadow-amber-500/20 relative overflow-hidden group">
                             <div className="relative z-10">
                                 <TicketPercent className="mb-6" size={40} />
-                                <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-4 leading-none">Hiring <br /> Vouchers</h3>
-                                <p className="text-[11px] font-medium opacity-80 leading-relaxed uppercase tracking-widest italic mb-10">
+                                <h3 className="text-2xl font-black tracking-tighter uppercase mb-4 leading-none">Hiring <br /> Vouchers</h3>
+                                <p className="text-[11px] font-medium opacity-80 leading-relaxed uppercase tracking-widest mb-10">
                                     Hire a candidate through Noble OS and unlock **1 Month of Free Teleconsult Listings**.
                                 </p>
                                 <button className="w-full py-5 bg-white text-indigo-900 rounded-[2rem] font-black text-[10px] uppercase tracking-widest shadow-2xl hover:scale-105 transition-all">
@@ -216,8 +216,8 @@ export default function RecruitmentCommandCenter() {
                             <ShieldCheck className="text-white" size={40} />
                         </div>
                         <div>
-                            <h3 className="text-3xl font-black italic tracking-tighter uppercase text-slate-900 dark:text-white">Verified Clinical Data</h3>
-                            <p className="text-xs font-medium text-slate-500 italic mt-1 leading-relaxed max-w-xl">
+                            <h3 className="text-3xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">Verified Clinical Data</h3>
+                            <p className="text-xs font-medium text-slate-500 mt-1 leading-relaxed max-w-xl">
                                 "Recruitment Hub logic utilizes **Double-Blind Clinical Verification**. <br />
                                 Hand-Skill scores are recalculated every 24 hours based on new Case Sign-offs and NEET mock scores."
                             </p>

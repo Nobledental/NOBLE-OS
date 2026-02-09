@@ -82,7 +82,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
             <div className="bg-slate-900 p-8 text-white">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className="text-2xl font-black italic tracking-tighter flex items-center gap-3">
+                        <h3 className="text-2xl font-black tracking-tighter flex items-center gap-3">
                             <Syringe className="w-6 h-6 text-indigo-400" />
                             Rx Engine
                         </h3>
@@ -129,7 +129,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
                 {searchTerm && (
                     <div className="border border-slate-100 rounded-[2rem] max-h-60 overflow-y-auto bg-white shadow-lg">
                         {filteredDrugs.length === 0 ? (
-                            <div className="text-center text-slate-400 py-8 font-bold italic">No medications matched your search</div>
+                            <div className="text-center text-slate-400 py-8 font-bold">No medications matched your search</div>
                         ) : (
                             filteredDrugs.map((drug, index) => (
                                 <div
@@ -158,7 +158,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
                             {prescriptions.map((prescription, index) => (
                                 <div key={index} className="bg-slate-50/50 border border-slate-100 p-6 rounded-[2rem] space-y-4 shadow-sm group hover:border-indigo-200 transition-all">
                                     <div className="flex items-center justify-between">
-                                        <span className="font-black text-lg italic tracking-tighter text-slate-900 uppercase">{prescription.drug}</span>
+                                        <span className="font-black text-lg tracking-tighter text-slate-900 uppercase">{prescription.drug}</span>
                                         <button
                                             onClick={() => removePrescription(index)}
                                             className="text-slate-300 hover:text-red-500 transition-colors"

@@ -70,7 +70,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
             {/* Header / Branding */}
             <div className="flex justify-between items-start border-b-2 border-slate-900 pb-8 mb-8">
                 <div className="space-y-2">
-                    <h1 className="text-4xl font-black italic tracking-tighter text-slate-900">{clinicInfo?.name || "Noble Dental Care"}</h1>
+                    <h1 className="text-4xl font-black tracking-tighter text-slate-900">{clinicInfo?.name || "Noble Dental Care"}</h1>
                     <p className="text-xs font-bold text-slate-500 max-w-sm leading-relaxed uppercase tracking-widest">
                         {clinicInfo?.address || "123 Healthcare Blvd, Bangalore, KA 560001"}
                     </p>
@@ -116,7 +116,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                                 {clinicalNotes.assessment && (
                                     <div>
                                         <span className="text-[8px] font-black text-slate-400 uppercase">Diagnosis</span>
-                                        <p className="text-sm font-bold leading-relaxed italic text-indigo-900">{clinicalNotes.assessment}</p>
+                                        <p className="text-sm font-bold leading-relaxed text-indigo-900">{clinicalNotes.assessment}</p>
                                     </div>
                                 )}
                             </div>
@@ -151,7 +151,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                     {/* Medications */}
                     <div className="space-y-6">
                         <div className="flex items-baseline gap-2">
-                            <span className="text-4xl font-serif italic font-black text-indigo-600">Rx</span>
+                            <span className="text-4xl font-serif font-black text-indigo-600">Rx</span>
                             <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest">Medications</h4>
                         </div>
                         <div className="space-y-6">
@@ -161,14 +161,14 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                                     <div className="space-y-1 flex-1">
                                         <p className="font-black text-lg text-slate-900">{p.drug}</p>
                                         <div className="grid grid-cols-2 gap-4">
-                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider italic">Dosage: {p.dosage}</p>
-                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider italic">Duration: {p.duration}</p>
+                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dosage: {p.dosage}</p>
+                                            <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Duration: {p.duration}</p>
                                         </div>
                                         {p.instructions && <p className="text-xs font-medium text-slate-600 border-l-2 border-slate-200 pl-2 mt-2">{p.instructions}</p>}
                                     </div>
                                 </div>
                             )) : (
-                                <p className="text-sm text-slate-400 italic">No medications prescribed.</p>
+                                <p className="text-sm text-slate-400">No medications prescribed.</p>
                             )}
                         </div>
                     </div>
@@ -177,7 +177,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                     {clinicalNotes?.advice && (
                         <div className="p-8 bg-amber-50 rounded-[2.5rem] border border-amber-100 space-y-4">
                             <h4 className="text-[10px] font-black text-amber-900 uppercase tracking-widest flex items-center gap-2">Post-Procedure Instructions</h4>
-                            <p className="text-sm font-bold text-amber-900 leading-relaxed italic">&quot;{clinicalNotes.advice}&quot;</p>
+                            <p className="text-sm font-bold text-amber-900 leading-relaxed">&quot;{clinicalNotes.advice}&quot;</p>
                         </div>
                     )}
                 </div>

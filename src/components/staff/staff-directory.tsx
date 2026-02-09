@@ -109,7 +109,7 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
                         <Filter className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Filters</span>
                     </Button>
-                    <Button onClick={onAddStaff} className="h-14 px-8 rounded-2xl bg-white text-black hover:bg-slate-200 gap-3 shadow-xl transition-all duration-700 border-none italic font-black">
+                    <Button onClick={onAddStaff} className="h-14 px-8 rounded-2xl bg-white text-black hover:bg-slate-200 gap-3 shadow-xl transition-all duration-700 border-none font-black">
                         <Plus className="w-4 h-4" />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Onboard Staff</span>
                     </Button>

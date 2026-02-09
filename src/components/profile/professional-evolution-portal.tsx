@@ -71,7 +71,7 @@ export default function ProfessionalEvolutionPortal() {
 
                         <div>
                             <div className="flex items-center gap-3 mb-2">
-                                <h1 className="text-3xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">
+                                <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">
                                     {isStealth ? 'Dr. Anonymous' : 'Dhivakaran G.'}
                                 </h1>
                                 <button
@@ -82,7 +82,7 @@ export default function ProfessionalEvolutionPortal() {
                                     {isStealth ? 'Stealth ON' : 'Go Stealth'}
                                 </button>
                             </div>
-                            <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest italic">
+                            <div className="flex items-center gap-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                                 <span>{role === 'STUDENT' ? 'BDS Final Year' : 'Oral & Maxillofacial Surgeon'}</span>
                                 <span className="w-1 h-1 bg-slate-300 dark:bg-slate-700 rounded-full"></span>
                                 <span className={status === 'PERMANENT' ? 'text-emerald-500' : 'text-amber-500'}>
@@ -142,8 +142,8 @@ export default function ProfessionalEvolutionPortal() {
                                     <div className="w-16 h-16 bg-blue-500/10 text-blue-500 rounded-3xl flex items-center justify-center mb-6">
                                         <ShieldCheck size={32} />
                                     </div>
-                                    <h2 className="text-3xl font-black italic tracking-tighter uppercase dark:text-white mb-2">Unlock Clinic Mode</h2>
-                                    <p className="text-sm text-slate-400 italic font-medium">Enter your Permanent Registration Number to verify your degree and unlock Teleconsult & Live Surgery tools.</p>
+                                    <h2 className="text-3xl font-black tracking-tighter uppercase dark:text-white mb-2">Unlock Clinic Mode</h2>
+                                    <p className="text-sm text-slate-400 font-medium">Enter your Permanent Registration Number to verify your degree and unlock Teleconsult & Live Surgery tools.</p>
                                 </div>
 
                                 <div className="space-y-6">
@@ -154,7 +154,7 @@ export default function ProfessionalEvolutionPortal() {
                                             value={prnInput}
                                             onChange={(e) => setPrnInput(e.target.value.toUpperCase())}
                                             placeholder="e.g. MA_44129"
-                                            className="w-full p-6 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl outline-none font-black italic tracking-tighter text-blue-600 focus:border-blue-500 transition-all"
+                                            className="w-full p-6 bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 rounded-2xl outline-none font-black tracking-tighter text-blue-600 focus:border-blue-500 transition-all"
                                         />
                                     </div>
 
@@ -190,7 +190,7 @@ export default function ProfessionalEvolutionPortal() {
                     {/* 3. CLINICAL METRICS (The Scoring Engine) */}
                     <div className="col-span-12 lg:col-span-4 space-y-8">
                         <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[3.5rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
-                            <h2 className="text-xl font-black italic uppercase tracking-tighter mb-10 dark:text-white flex items-center gap-3">
+                            <h2 className="text-xl font-black uppercase tracking-tighter mb-10 dark:text-white flex items-center gap-3">
                                 <TrendingUp className="text-rose-500" /> Professional Gauges
                             </h2>
 
@@ -199,33 +199,33 @@ export default function ProfessionalEvolutionPortal() {
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-end">
                                         <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Hand-Skill Score</div>
-                                        <div className="text-2xl font-black italic text-rose-600 tracking-tighter">{stats.handSkillScore}%</div>
+                                        <div className="text-2xl font-black text-rose-600 tracking-tighter">{stats.handSkillScore}%</div>
                                     </div>
                                     <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                                         <motion.div initial={{ width: 0 }} animate={{ width: `${stats.handSkillScore}%` }} className="h-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]"></motion.div>
                                     </div>
-                                    <div className="text-[9px] text-slate-400 italic">Aggregated from verified Endodontic & Restorative cases.</div>
+                                    <div className="text-[9px] text-slate-400">Aggregated from verified Endodontic & Restorative cases.</div>
                                 </div>
 
                                 {/* CLINICAL EFFICIENCY */}
                                 <div className="space-y-4">
                                     <div className="flex justify-between items-end">
                                         <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Clinical Efficiency</div>
-                                        <div className="text-2xl font-black italic text-blue-600 tracking-tighter">{stats.clinicalEfficiency}%</div>
+                                        <div className="text-2xl font-black text-blue-600 tracking-tighter">{stats.clinicalEfficiency}%</div>
                                     </div>
                                     <div className="h-2 w-full bg-slate-100 dark:bg-white/5 rounded-full overflow-hidden">
                                         <motion.div initial={{ width: 0 }} animate={{ width: `${stats.clinicalEfficiency}%` }} className="h-full bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></motion.div>
                                     </div>
-                                    <div className="text-[9px] text-slate-400 italic">Patient satisfaction vs. completion time index.</div>
+                                    <div className="text-[9px] text-slate-400">Patient satisfaction vs. completion time index.</div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4 pt-6">
                                     <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 text-center">
-                                        <div className="text-2xl font-black italic text-slate-900 dark:text-white mb-1">{stats.verifiedCases}</div>
+                                        <div className="text-2xl font-black text-slate-900 dark:text-white mb-1">{stats.verifiedCases}</div>
                                         <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Verified Cases</div>
                                     </div>
                                     <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 text-center">
-                                        <div className="text-2xl font-black italic text-slate-900 dark:text-white mb-1">{stats.mentorEndorsements}</div>
+                                        <div className="text-2xl font-black text-slate-900 dark:text-white mb-1">{stats.mentorEndorsements}</div>
                                         <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Endorsements</div>
                                     </div>
                                 </div>
@@ -239,8 +239,8 @@ export default function ProfessionalEvolutionPortal() {
                         {/* HIRING / RECRUITMENT STATUS */}
                         <div className={`p-10 rounded-[3.5rem] border shadow-2xl relative overflow-hidden group transition-all duration-500 ${role === 'STUDENT' ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-white dark:bg-[#0a0f1d] dark:text-white border-slate-200 dark:border-white/5'}`}>
                             <div className="relative z-10">
-                                <h3 className="text-xl font-black italic uppercase tracking-tighter mb-4">{role === 'STUDENT' ? 'Placement Pulse' : 'Teleconsult Visibility'}</h3>
-                                <p className="text-xs font-medium opacity-80 italic leading-relaxed mb-10">
+                                <h3 className="text-xl font-black uppercase tracking-tighter mb-4">{role === 'STUDENT' ? 'Placement Pulse' : 'Teleconsult Visibility'}</h3>
+                                <p className="text-xs font-medium opacity-80 leading-relaxed mb-10">
                                     {role === 'STUDENT'
                                         ? "Your profile is active in the Hiring Network. 4 Clinics within 15km are currently seeking Interns with your Hand-Skill profile."
                                         : "Your profile is listed on the Global Teleconsult Marketplace. Average response time: 24 mins."
@@ -284,7 +284,7 @@ export default function ProfessionalEvolutionPortal() {
                         {/* TAB CONTENT: THE CASE TIMELINE */}
                         <div className="bg-white dark:bg-[#0a0f1d] p-12 rounded-[4.5rem] border border-slate-200 dark:border-white/5 shadow-2xl relative">
                             <div className="flex items-center justify-between mb-12">
-                                <h2 className="text-2xl font-black italic tracking-tighter uppercase dark:text-white flex items-center gap-3">
+                                <h2 className="text-2xl font-black tracking-tighter uppercase dark:text-white flex items-center gap-3">
                                     <Activity className="text-rose-500" />
                                     {role === 'STUDENT' ? 'Clinical Portfolio' : 'Verified Clinical Record'}
                                 </h2>
@@ -318,7 +318,7 @@ export default function ProfessionalEvolutionPortal() {
                                                     )}
                                                     <div>
                                                         <div className="flex items-center gap-3 mb-1">
-                                                            <div className="text-xs font-black italic tracking-tighter dark:text-white uppercase">{caseItem.title}</div>
+                                                            <div className="text-xs font-black tracking-tighter dark:text-white uppercase">{caseItem.title}</div>
                                                             <span className="text-[8px] font-black uppercase tracking-widest px-2 py-0.5 bg-rose-500/10 text-rose-500 rounded-full">{caseItem.score}% Skill</span>
                                                         </div>
                                                         <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{caseItem.type} · {caseItem.date}</div>
@@ -357,14 +357,14 @@ export default function ProfessionalEvolutionPortal() {
                                     <div className="flex items-center gap-3 text-rose-500 font-black text-[10px] uppercase tracking-[0.4em]">
                                         <Zap size={16} className="animate-pulse" /> Noble Entrance
                                     </div>
-                                    <h2 className="text-4xl font-black italic tracking-tighter uppercase leading-none">NEET-MDS <br /> Accelerator</h2>
-                                    <p className="text-sm font-medium text-slate-400 italic max-w-sm">
+                                    <h2 className="text-4xl font-black tracking-tighter uppercase leading-none">NEET-MDS <br /> Accelerator</h2>
+                                    <p className="text-sm font-medium text-slate-400 max-w-sm">
                                         Transform your clinical cases into academic success. Daily MCQ sprints generated from your clinical data.
                                     </p>
                                 </div>
                                 <div className="flex flex-col items-center gap-6 bg-white/5 p-8 rounded-[3rem] border border-white/10 backdrop-blur-md">
                                     <div className="text-center">
-                                        <div className="text-4xl font-black italic tracking-tighter text-rose-500">12th</div>
+                                        <div className="text-4xl font-black tracking-tighter text-rose-500">12th</div>
                                         <div className="text-[10px] font-black uppercase tracking-widest opacity-60">Global Rank</div>
                                     </div>
                                     <button className="px-10 py-5 bg-rose-600 text-white rounded-[2rem] font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-rose-500/20 hover:scale-105 transition-all">

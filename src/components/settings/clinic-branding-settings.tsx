@@ -213,7 +213,7 @@ export const ClinicBrandingSettings: React.FC<{
             <div className="bg-[#0f172a] px-8 py-10 relative overflow-hidden">
                 <div className="relative z-10 flex items-center justify-between gap-6">
                     <div className="space-y-1">
-                        <h2 className="text-3xl font-black text-white italic tracking-tighter">Clinic Core Setup</h2>
+                        <h2 className="text-3xl font-black text-white tracking-tighter">Clinic Core Setup</h2>
                         <p className="text-slate-400 text-sm font-medium">Configure your clinical identity and digital heartbeat.</p>
                     </div>
                     <div className="w-16 h-16 bg-slate-800 rounded-3xl flex items-center justify-center text-indigo-400 shadow-2xl rotate-12">
@@ -290,7 +290,7 @@ export const ClinicBrandingSettings: React.FC<{
                             <div className="space-y-8">
                                 <div className="p-8 bg-amber-50 rounded-[3rem] border border-amber-100 flex items-center justify-between gap-6">
                                     <div className="space-y-2">
-                                        <h3 className="text-xl font-black text-amber-900 leading-tight italic">Registration Status: Under Review</h3>
+                                        <h3 className="text-xl font-black text-amber-900 leading-tight">Registration Status: Under Review</h3>
                                         <p className="text-sm text-amber-800 font-medium opacity-80">Your clinic is currently listed as unregistered. HealthFlo can help expedite your documentation.</p>
                                     </div>
                                     <div className="px-6 py-2 bg-amber-200 text-amber-900 rounded-full text-[10px] font-black uppercase tracking-widest">Action Required</div>
@@ -298,13 +298,13 @@ export const ClinicBrandingSettings: React.FC<{
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="p-8 bg-slate-900 text-white rounded-[2.5rem] space-y-6 shadow-2xl relative overflow-hidden group">
                                         <LifeBuoy className="w-10 h-10 text-indigo-400 group-hover:rotate-45 transition-transform" />
-                                        <h4 className="text-lg font-black italic tracking-tighter">Documentation Concierge</h4>
+                                        <h4 className="text-lg font-black tracking-tighter">Documentation Concierge</h4>
                                         <p className="text-sm text-slate-400 leading-relaxed font-medium">Need help with Trade License or Medical Registrations? Our experts handle everything.</p>
                                         <button onClick={() => alert("Concierge notified.")} className="w-full py-4 bg-white text-slate-900 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 transition-all">Request HealthFlo Assistance</button>
                                     </div>
                                     <div className="p-8 bg-white border border-slate-100 rounded-[2.5rem] space-y-6 shadow-lg hover:shadow-xl transition-all group">
                                         <FileUp className="w-10 h-10 text-emerald-500" />
-                                        <h4 className="text-lg font-black italic tracking-tighter text-slate-900">Document Vault</h4>
+                                        <h4 className="text-lg font-black tracking-tighter text-slate-900">Document Vault</h4>
                                         <p className="text-sm text-slate-400 leading-relaxed font-medium">Upload and verify your existing legal documents (GST, PCB, etc.)</p>
                                         <button className="w-full py-4 bg-slate-50 text-slate-900 border border-slate-100 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-white hover:border-emerald-300 transition-all">Upload New Documents</button>
                                     </div>
@@ -319,7 +319,7 @@ export const ClinicBrandingSettings: React.FC<{
                                         <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
                                             <Globe2 className="w-6 h-6" />
                                         </div>
-                                        <h3 className="text-4xl font-black leading-[0.9] italic tracking-tighter">Your Clinic&apos;s Digital Headquarters.</h3>
+                                        <h3 className="text-4xl font-black leading-[0.9] tracking-tighter">Your Clinic&apos;s Digital Headquarters.</h3>
                                         <p className="text-indigo-100 text-lg font-medium opacity-90">Get a high-converting dental website built by HealthFlo experts. Standard: nobledentalnallagandla.in</p>
                                         <button onClick={() => alert("Website request sent.")} className="px-8 py-5 bg-white text-indigo-900 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl">Order Custom Build</button>
                                     </div>

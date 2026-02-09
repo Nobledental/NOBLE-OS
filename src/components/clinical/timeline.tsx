@@ -9,7 +9,7 @@ interface ClinicalTimelineProps {
 
 export function ClinicalTimeline({ records }: ClinicalTimelineProps) {
     if (!records || records.length === 0) return (
-        <div className="py-8 text-center text-sm text-muted-foreground italic">
+        <div className="py-8 text-center text-sm text-muted-foreground">
             No clinical visits recorded yet.
         </div>
     )

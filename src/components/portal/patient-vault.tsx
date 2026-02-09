@@ -38,7 +38,7 @@ export default function PatientVault() {
                         <div className="flex items-center gap-2 text-blue-400 font-bold text-xs uppercase tracking-[0.2em] mb-4">
                             <ShieldCheck size={14} /> End-to-End Encryption Active
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight italic">Noble Health Vault</h1>
+                        <h1 className="text-4xl font-black tracking-tight">Noble Health Vault</h1>
                         <p className="text-slate-400 font-medium mt-2">Welcome back, Karthik. Your clinical timeline is fully synchronized.</p>
                     </div>
 
@@ -62,9 +62,9 @@ export default function PatientVault() {
                         <div className="space-y-4">
                             <div className="flex items-center gap-3">
                                 <Sparkles className="text-emerald-500" />
-                                <h3 className="font-black italic text-xl dark:text-white uppercase tracking-tighter">Smart Recovery Check-in</h3>
+                                <h3 className="font-black text-xl dark:text-white uppercase tracking-tighter">Smart Recovery Check-in</h3>
                             </div>
-                            <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                            <p className="text-sm font-medium text-slate-600 dark:text-slate-400 leading-relaxed">
                                 "Day 4 since your implant. How is the swelling on the left side? Typing 'Good' or 'Pain' helps our clinical AI monitor your progress."
                             </p>
                         </div>
@@ -87,8 +87,8 @@ export default function PatientVault() {
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat as any)}
                                 className={`w-full p-6 rounded-2xl text-left font-black uppercase tracking-widest text-[10px] transition-all border ${selectedCategory === cat
-                                        ? 'bg-slate-900 text-white shadow-xl'
-                                        : 'bg-white dark:bg-[#0a0f1d] text-slate-400 border-transparent hover:border-slate-200 dark:hover:border-white/10'
+                                    ? 'bg-slate-900 text-white shadow-xl'
+                                    : 'bg-white dark:bg-[#0a0f1d] text-slate-400 border-transparent hover:border-slate-200 dark:hover:border-white/10'
                                     }`}
                             >
                                 {cat}
@@ -115,7 +115,7 @@ export default function PatientVault() {
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-3">
-                                                <h4 className="font-black text-slate-900 dark:text-white text-lg tracking-tight italic">{item.title}</h4>
+                                                <h4 className="font-black text-slate-900 dark:text-white text-lg tracking-tight">{item.title}</h4>
                                                 {item.recovery && (
                                                     <span className="px-2 py-0.5 bg-blue-100 text-blue-600 rounded-lg text-[8px] font-black uppercase tracking-widest">Active Monitoring</span>
                                                 )}

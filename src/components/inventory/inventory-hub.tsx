@@ -60,7 +60,7 @@ export function InventoryHub() {
             {/* List Table */}
             <div className="space-y-4">
                 <div className="flex items-center justify-between px-2">
-                    <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3 italic tracking-tighter uppercase">
+                    <h2 className="text-lg font-bold text-slate-900 flex items-center gap-3 tracking-tighter uppercase">
                         Stock Registry
                     </h2>
                     <Button variant="ghost" className="text-[10px] font-bold uppercase tracking-widest text-blue-600 gap-2">

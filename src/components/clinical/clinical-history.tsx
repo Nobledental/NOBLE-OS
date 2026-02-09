@@ -135,7 +135,7 @@ export function ClinicalHistory({ patientId }: { patientId: string }) {
                     {/* End of Timeline */}
                     <div className="relative pl-6 pt-2">
                         <div className="absolute -left-[5px] top-3 w-2 h-2 rounded-full bg-slate-300" />
-                        <p className="text-xs text-muted-foreground italic">Patient Registered on 2023-10-01</p>
+                        <p className="text-xs text-muted-foreground">Patient Registered on 2023-10-01</p>
                     </div>
                 </div>
             </ScrollArea>

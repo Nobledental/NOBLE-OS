@@ -80,17 +80,17 @@ export default function DMETemplateEngine() {
                         <div className="flex items-center gap-3 text-emerald-600 font-black text-xs uppercase tracking-[0.3em] mb-4">
                             <Activity size={16} className="animate-pulse" /> DME Template Engine
                         </div>
-                        <h1 className="text-3xl font-black italic tracking-tighter mb-4 text-slate-900 dark:text-white uppercase">
+                        <h1 className="text-3xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white uppercase">
                             Dynamic Rx & Material Sync
                         </h1>
-                        <p className="text-sm font-medium text-slate-400 italic">
+                        <p className="text-sm font-medium text-slate-400">
                             Automatically switching Rx forms based on Lab-specific inventories and live price indexes.
                         </p>
                     </div>
 
                     <div className="relative z-10 bg-emerald-600/10 p-6 rounded-[2.5rem] border border-emerald-600/20 text-center min-w-[200px]">
                         <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Est. Lab Cost</div>
-                        <div className="text-4xl font-black italic tracking-tighter text-emerald-600">${currentPrice}</div>
+                        <div className="text-4xl font-black tracking-tighter text-emerald-600">${currentPrice}</div>
                     </div>
 
                     <div className="absolute top-[-40px] right-[-40px] opacity-[0.03] scale-[3] rotate-[-15deg]">
@@ -103,7 +103,7 @@ export default function DMETemplateEngine() {
 
                     <div className="lg:col-span-4 space-y-6">
                         <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-xl">
-                            <h3 className="text-sm font-black italic uppercase tracking-widest mb-6 dark:text-white">Connected Labs</h3>
+                            <h3 className="text-sm font-black uppercase tracking-widest mb-6 dark:text-white">Connected Labs</h3>
                             <div className="space-y-4">
                                 {labs.map((lab) => (
                                     <button
@@ -122,7 +122,7 @@ export default function DMETemplateEngine() {
                                         </div>
                                         <div>
                                             <div className="text-xs font-black uppercase tracking-tight">{lab.name}</div>
-                                            <div className="text-[9px] opacity-60 font-medium mt-1 uppercase tracking-widest italic">{lab.turnaround} · ★ {lab.rating}</div>
+                                            <div className="text-[9px] opacity-60 font-medium mt-1 uppercase tracking-widest">{lab.turnaround} · ★ {lab.rating}</div>
                                         </div>
                                     </button>
                                 ))}
@@ -132,8 +132,8 @@ export default function DMETemplateEngine() {
                         <div className="bg-emerald-600 p-8 rounded-[3rem] text-white shadow-2xl relative overflow-hidden group">
                             <div className="relative z-10">
                                 <Zap className="mb-4 text-emerald-300" size={24} />
-                                <h3 className="text-lg font-black italic uppercase tracking-tighter mb-2">Live Price Index</h3>
-                                <p className="text-[10px] font-medium opacity-80 leading-relaxed uppercase tracking-widest italic">
+                                <h3 className="text-lg font-black uppercase tracking-tighter mb-2">Live Price Index</h3>
+                                <p className="text-[10px] font-medium opacity-80 leading-relaxed uppercase tracking-widest">
                                     Prices are synced in real-time with lab-managed DME catalogs.
                                 </p>
                             </div>
@@ -144,7 +144,7 @@ export default function DMETemplateEngine() {
                     {/* 3. DYNAMIC RX FORM */}
                     <div className="lg:col-span-8 bg-white dark:bg-[#0a0f1d] p-12 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl relative">
                         <div className="flex items-center justify-between mb-12">
-                            <h2 className="text-2xl font-black italic tracking-tighter uppercase dark:text-white flex items-center gap-3">
+                            <h2 className="text-2xl font-black tracking-tighter uppercase dark:text-white flex items-center gap-3">
                                 <ClipboardList className="text-emerald-600" /> Digital Rx Formulation
                             </h2>
                             <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-400 bg-slate-100 dark:bg-white/5 px-4 py-2 rounded-full">
@@ -166,9 +166,9 @@ export default function DMETemplateEngine() {
                                                 : 'bg-white dark:bg-white/5 border-slate-100 dark:border-white/5 text-slate-500'
                                                 }`}
                                         >
-                                            <div className="font-black italic uppercase text-xs mb-1">{m.label}</div>
-                                            <div className="text-[9px] font-medium opacity-60 italic">{m.description}</div>
-                                            <div className="absolute top-4 right-6 font-black text-[10px] italic">+ ${m.price}</div>
+                                            <div className="font-black uppercase text-xs mb-1">{m.label}</div>
+                                            <div className="text-[9px] font-medium opacity-60">{m.description}</div>
+                                            <div className="absolute top-4 right-6 font-black text-[10px]">+ ${m.price}</div>
                                             {selectedMaterial === m.id && (
                                                 <motion.div layoutId="check" className="absolute bottom-4 right-6 text-emerald-600">
                                                     <CheckCircle2 size={18} />
@@ -203,7 +203,7 @@ export default function DMETemplateEngine() {
                             <div className="flex items-center gap-6 p-6 bg-slate-900 rounded-[2.5rem] text-white">
                                 <div className="p-4 bg-white/10 rounded-2xl border border-white/10"><Beaker size={20} className="text-emerald-400" /></div>
                                 <div className="flex-1">
-                                    <div className="text-xs font-black italic uppercase tracking-tighter">Attach Scan Metadata</div>
+                                    <div className="text-xs font-black uppercase tracking-tighter">Attach Scan Metadata</div>
                                     <div className="text-[9px] opacity-60 uppercase tracking-widest mt-1">Automatically syncing TRIOS STL + SmileStudio Mockup</div>
                                 </div>
                                 <CheckCircle2 className="text-emerald-500" />
@@ -222,8 +222,8 @@ export default function DMETemplateEngine() {
                         <Layers className="text-white" size={28} />
                     </div>
                     <div>
-                        <h4 className="text-xl font-black italic tracking-tighter uppercase text-slate-900 dark:text-white">DME Cloud Protocol</h4>
-                        <p className="text-[10px] font-medium text-slate-500 italic uppercase tracking-widest mt-1">
+                        <h4 className="text-xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">DME Cloud Protocol</h4>
+                        <p className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-1">
                             Your "Noble OS" Rx is fully compatible with **3Shape Communicate** and **Medit Link** infrastructure.
                         </p>
                     </div>

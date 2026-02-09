@@ -53,7 +53,7 @@ export default function NobleSmileStudio() {
                             <div className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-[0.3em] mb-1">
                                 <ScanFace size={14} /> AI Aesthetic Engine
                             </div>
-                            <h1 className="text-3xl font-black italic tracking-tighter text-slate-900 dark:text-white uppercase">Noble Smile Studio</h1>
+                            <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">Noble Smile Studio</h1>
                         </div>
                     </div>
 
@@ -87,11 +87,11 @@ export default function NobleSmileStudio() {
 
                         {/* ANALYSIS WIDGET: The "Brain" of the Studio */}
                         <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
-                            <h2 className="text-xl font-black italic uppercase tracking-tighter mb-8 dark:text-white">Clinical Analytics</h2>
+                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8 dark:text-white">Clinical Analytics</h2>
 
                             <div className="space-y-8">
                                 <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 group-hover:border-indigo-400 transition-all">
-                                    <div className="text-3xl font-black italic tracking-tighter text-indigo-600">{metrics.goldenRatioMatch}%</div>
+                                    <div className="text-3xl font-black tracking-tighter text-indigo-600">{metrics.goldenRatioMatch}%</div>
                                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1">Golden Ratio Sync</div>
                                     <div className="mt-4 h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
                                         <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.goldenRatioMatch}%` }} className="h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></motion.div>
@@ -107,7 +107,7 @@ export default function NobleSmileStudio() {
                                         <div key={stat.label} className="flex items-center justify-between">
                                             <div>
                                                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{stat.label}</div>
-                                                <div className="text-sm font-black italic dark:text-white">{stat.value}</div>
+                                                <div className="text-sm font-black dark:text-white">{stat.value}</div>
                                             </div>
                                             <div className={`px-3 py-1 bg-${stat.color}-500/10 text-${stat.color}-500 rounded-lg text-[8px] font-black uppercase tracking-widest`}>
                                                 {stat.status}
@@ -124,7 +124,7 @@ export default function NobleSmileStudio() {
 
                         {/* TOOLBOX: Physical Logic Controls */}
                         <div className="bg-slate-900 rounded-[3.5rem] p-10 text-white shadow-2xl relative overflow-hidden">
-                            <h3 className="text-lg font-black italic uppercase tracking-tighter mb-8">Smile Components</h3>
+                            <h3 className="text-lg font-black uppercase tracking-tighter mb-8">Smile Components</h3>
                             <div className="grid grid-cols-2 gap-4">
                                 {[
                                     { icon: Smile, label: 'Tooth Library' },
@@ -201,12 +201,12 @@ export default function NobleSmileStudio() {
                             <div className="flex gap-12">
                                 <div>
                                     <div className="text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 mb-2">Analysis Vector</div>
-                                    <div className="text-xl font-black italic tracking-tighter text-white">INTERPUPILLARY <br /> ALIGNMENT</div>
+                                    <div className="text-xl font-black tracking-tighter text-white">INTERPUPILLARY <br /> ALIGNMENT</div>
                                 </div>
                                 <div className="h-full w-px bg-white/10"></div>
                                 <div>
                                     <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Simulated Result</div>
-                                    <div className="text-xl font-black italic tracking-tighter text-emerald-400 uppercase">Synchronized</div>
+                                    <div className="text-xl font-black tracking-tighter text-emerald-400 uppercase">Synchronized</div>
                                 </div>
                             </div>
                             <div className="flex gap-4">
@@ -223,7 +223,7 @@ export default function NobleSmileStudio() {
                     {/* RIGHT PANEL: ECOSYSTEM SYNC */}
                     <div className="col-span-3 space-y-8 overflow-y-auto pr-4 custom-scrollbar">
                         <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl">
-                            <h2 className="text-xl font-black italic uppercase tracking-tighter mb-8 dark:text-white">Collaborative Blueprint</h2>
+                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8 dark:text-white">Collaborative Blueprint</h2>
                             <div className="space-y-6">
                                 {[
                                     { doc: 'Dr. Sarah (Prosthodontist)', note: 'Increase incisal dominance by 1mm for better lip support.', time: '2h ago' },
@@ -231,7 +231,7 @@ export default function NobleSmileStudio() {
                                 ].map((comment, i) => (
                                     <div key={i} className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 relative group">
                                         <div className="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2">{comment.doc}</div>
-                                        <p className="text-xs font-medium text-slate-500 italic leading-relaxed">{comment.note}</p>
+                                        <p className="text-xs font-medium text-slate-500 leading-relaxed">{comment.note}</p>
                                         <span className="text-[9px] text-slate-400 mt-4 block uppercase font-bold">{comment.time}</span>
                                         <div className="absolute right-6 top-6 opacity-0 group-hover:opacity-100 transition-opacity">
                                             <CircleDot className="text-indigo-600 animate-pulse" size={14} />
@@ -248,10 +248,10 @@ export default function NobleSmileStudio() {
                         <div className="p-10 bg-indigo-600 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden group">
                             <div className="relative z-10">
                                 <Activity className="text-white mb-6" size={32} />
-                                <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Universal Bridge</h3>
+                                <h3 className="text-2xl font-black tracking-tighter uppercase mb-2">Universal Bridge</h3>
                                 <div className="text-[10px] font-bold text-indigo-200 uppercase tracking-widest">Linked to TRIOS 5 Cloud</div>
                                 <div className="mt-8 flex items-center justify-between">
-                                    <div className="text-3xl font-black italic tracking-tighter">14ms</div>
+                                    <div className="text-3xl font-black tracking-tighter">14ms</div>
                                     <ChevronRight className="group-hover:translate-x-4 transition-transform" />
                                 </div>
                             </div>
