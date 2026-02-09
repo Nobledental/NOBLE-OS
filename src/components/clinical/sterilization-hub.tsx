@@ -339,7 +339,7 @@ export function SterilizationHub() {
 
             {/* Verification Modal */}
             <Dialog open={isVerifying} onOpenChange={setIsVerifying}>
-                <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border border-white/10 bg-slate-950 shadow-2xl">
+                <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border border-slate-100 dark:border-white/10 bg-white dark:bg-slate-950 shadow-2xl">
                     <div className="bg-blue-600 p-10 text-white relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full -mr-24 -mt-24 blur-3xl opacity-50" />
                         <div className="relative z-10 space-y-2">
@@ -349,11 +349,11 @@ export function SterilizationHub() {
                         </div>
                     </div>
 
-                    <div className="p-10 space-y-10 bg-slate-950">
+                    <div className="p-10 space-y-10 bg-white dark:bg-slate-950">
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white">Terminal Temp: {temp}°C</Label>
-                                <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Target 134°C</span>
+                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-700 dark:text-white">Terminal Temp: {temp}°C</Label>
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Target 134°C</span>
                             </div>
                             <Slider
                                 value={[temp]}
@@ -361,14 +361,14 @@ export function SterilizationHub() {
                                 min={100}
                                 max={150}
                                 step={1}
-                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
+                                className="[&_[role=slider]]:bg-slate-900 dark:[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
                             />
                         </div>
 
                         <div className="space-y-6">
                             <div className="flex items-center justify-between">
-                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-white">Atmospheric Pressure: {pressure} bar</Label>
-                                <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Target 2.1 bar</span>
+                                <Label className="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-700 dark:text-white">Atmospheric Pressure: {pressure} bar</Label>
+                                <span className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">Target 2.1 bar</span>
                             </div>
                             <Slider
                                 value={[pressure]}
@@ -376,21 +376,21 @@ export function SterilizationHub() {
                                 min={0}
                                 max={4}
                                 step={0.1}
-                                className="[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
+                                className="[&_[role=slider]]:bg-slate-900 dark:[&_[role=slider]]:bg-white [&_[role=slider]]:border-blue-500"
                             />
                         </div>
 
-                        <div className="flex items-center justify-between p-6 bg-white/10 rounded-[2rem] border border-white/20 shadow-xl">
+                        <div className="flex items-center justify-between p-6 bg-slate-50 dark:bg-white/10 rounded-[2rem] border border-slate-200 dark:border-white/20 shadow-xl shadow-slate-200/50 dark:shadow-none">
                             <div className="space-y-1">
-                                <Label className="text-[10px] font-bold uppercase tracking-widest text-white">Visual Indicator</Label>
-                                <p className="text-[9px] font-bold text-white/60 uppercase tracking-tighter">Has the chemical tape transformed?</p>
+                                <Label className="text-[10px] font-bold uppercase tracking-widest text-slate-900 dark:text-white">Visual Indicator</Label>
+                                <p className="text-[9px] font-bold text-slate-600 dark:text-white/60 uppercase tracking-tighter">Has the chemical tape transformed?</p>
                             </div>
                             <Switch checked={indicatorPassed} onCheckedChange={setIndicatorPassed} className="data-[state=checked]:bg-emerald-500 scale-125" />
                         </div>
 
                         <Button
                             onClick={handleVerifyBatch}
-                            className="w-full h-16 rounded-[2rem] bg-white text-slate-950 font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-white/90 shadow-xl transition-all"
+                            className="w-full h-16 rounded-[2rem] bg-slate-900 dark:bg-white text-white dark:text-slate-950 font-bold tracking-[0.4em] uppercase text-[10px] hover:bg-slate-800 dark:hover:bg-white/90 shadow-xl transition-all"
                         >
                             Authorize Batch Release
                         </Button>
