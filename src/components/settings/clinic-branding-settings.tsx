@@ -146,11 +146,14 @@ const LogoUpload: React.FC<{
 // MAIN COMPONENT
 // =============================================================================
 
+import { useTheme } from "next-themes";
+
 export const ClinicBrandingSettings: React.FC<{
     initialSettings?: ClinicSettings;
     onSave?: (settings: ClinicSettings) => void;
     onCancel?: () => void;
 }> = ({ initialSettings = DEFAULT_CLINIC_SETTINGS, onSave, onCancel }) => {
+    const { theme, setTheme } = useTheme();
     const [settings, setSettings] = useState<ClinicSettings>(initialSettings);
     const [activeTab, setActiveTab] = useState<'branding' | 'registration' | 'website' | 'theme' | 'invoice' | 'marketplace'>('branding');
 
@@ -173,6 +176,36 @@ export const ClinicBrandingSettings: React.FC<{
         { id: 'invoice' as const, label: 'Billing', icon: FileText },
         { id: 'marketplace' as const, label: 'Growth', icon: Globe },
     ];
+
+    // THEME PREVIEW COMPONENT
+    const AppThemePreview = ({ id, name, colors, isActive }: { id: string, name: string, colors: string[], isActive: boolean }) => (
+        <button
+            onClick={() => setTheme(id)}
+            className={cn(
+                "group relative w-full aspect-video rounded-3xl border-2 transition-all duration-500 overflow-hidden",
+                isActive ? "border-indigo-500 shadow-2xl scale-[1.02]" : "border-slate-200/50 hover:border-indigo-300"
+            )}
+        >
+            <div className={cn("absolute inset-0 bg-gradient-to-br", colors[0])} />
+            <div className="absolute inset-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-inner flex flex-col p-4 gap-2">
+                <div className="h-4 w-1/3 rounded-full bg-white/20" />
+                <div className="h-2 w-full rounded-full bg-white/10" />
+                <div className="h-2 w-2/3 rounded-full bg-white/10" />
+                <div className="mt-auto flex gap-2">
+                    <div className={cn("w-8 h-8 rounded-lg shadow-lg", colors[1])} />
+                    <div className={cn("w-8 h-8 rounded-lg shadow-lg", colors[2])} />
+                </div>
+            </div>
+            {isActive && (
+                <div className="absolute top-4 right-4 w-6 h-6 bg-indigo-500 rounded-full flex items-center justify-center shadow-lg animate-in zoom-in">
+                    <Check className="w-3.5 h-3.5 text-white" />
+                </div>
+            )}
+            <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/50 to-transparent">
+                <span className="text-white text-xs font-bold uppercase tracking-widest">{name}</span>
+            </div>
+        </button>
+    );
 
     return (
         <div className="bg-white rounded-[3rem] shadow-2xl overflow-hidden max-w-5xl mx-auto border border-slate-100">
@@ -306,12 +339,47 @@ export const ClinicBrandingSettings: React.FC<{
                         )}
 
                         {activeTab === 'theme' && (
-                            <div className="space-y-6">
-                                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">Clinical Visual Presets</h3>
-                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-                                    {Object.entries(PDF_COLOR_THEMES).map(([key, theme]) => (
-                                        <ThemePreviewCard key={key} theme={theme} themeName={key} isSelected={settings.selectedTheme === key} onSelect={() => setSettings(prev => ({ ...prev, selectedTheme: key }))} />
-                                    ))}
+                            <div className="space-y-8">
+                                <div className="bg-slate-50 border border-slate-200 rounded-[2.5rem] p-8 space-y-8">
+                                    <div>
+                                        <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+                                            <Palette className="w-6 h-6 text-indigo-600" />
+                                            Interface Theme
+                                        </h3>
+                                        <p className="text-slate-500 text-sm mt-2">Customize the visual appearance of the Noble OS command center.</p>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <AppThemePreview
+                                            id="dark"
+                                            name="Noble Dark"
+                                            colors={["from-slate-900 to-slate-950", "bg-slate-800", "bg-indigo-500"]}
+                                            isActive={theme === 'dark' || theme === 'system'}
+                                        />
+                                        <AppThemePreview
+                                            id="light"
+                                            name="Clinical White"
+                                            colors={["from-slate-50 to-white", "bg-white", "bg-indigo-500"]}
+                                            isActive={theme === 'light'}
+                                        />
+                                        <AppThemePreview
+                                            id="neo-rose"
+                                            name="Neo Rose"
+                                            colors={["from-rose-50 to-white", "bg-white", "bg-rose-500"]}
+                                            isActive={theme === 'neo-rose'}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="h-px bg-slate-200" />
+
+                                <div className="space-y-6">
+                                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-400">PDF Document Themes</h3>
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                                        {Object.entries(PDF_COLOR_THEMES).map(([key, theme]) => (
+                                            <ThemePreviewCard key={key} theme={theme} themeName={key} isSelected={settings.selectedTheme === key} onSelect={() => setSettings(prev => ({ ...prev, selectedTheme: key }))} />
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         )}

@@ -21,7 +21,9 @@ export default function RootLayout({
                 className="antialiased font-sans"
             >
                 <Providers>
-                    {children}
+                    <div className="relative min-h-screen bg-background font-sans antialiased">
+                        {children}
+                    </div>
                 </Providers>
             </body>
         </html>
