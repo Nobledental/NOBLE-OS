@@ -21,7 +21,8 @@ import {
     Package,
     Calendar,
     X,
-    ArrowLeft
+    ArrowLeft,
+    ExternalLink
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -193,6 +194,13 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
     }
 ];
 
+// Map actions to full page routes
+const ACTION_ROUTES: Record<string, string> = {
+    "STERILIZATION": "/dashboard/sterilization",
+    "BILLING": "/dashboard/billing",
+    "STAFF": "/dashboard/settings/staff",
+};
+
 export function ClinicManagementDeck() {
     const [activeAction, setActiveAction] = useState<string | null>(null);
 
@@ -299,12 +307,29 @@ export function ClinicManagementDeck() {
             <Dialog open={!!activeAction} onOpenChange={(open) => !open && setActiveAction(null)}>
                 <DialogContent className="max-w-[85vw] md:max-w-[70vw] h-[90vh] md:h-[85vh] p-0 rounded-3xl md:rounded-[3rem] overflow-hidden border-none bg-transparent shadow-none">
                     <div className="w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
-                        <button
-                            onClick={() => setActiveAction(null)}
-                            className="absolute top-4 right-4 md:top-8 md:right-8 z-50 p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
-                        >
-                            <X className="w-5 h-5 md:w-6 md:h-6" />
-                        </button>
+                        {/* Header Controls */}
+                        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
+                            {/* Open in Full Page Button */}
+                            {activeAction && ACTION_ROUTES[activeAction] && (
+                                <Link href={ACTION_ROUTES[activeAction]}>
+                                    <button
+                                        className="p-2 md:p-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full transition-all flex items-center gap-2 group/btn"
+                                        title="Open in Full Page"
+                                    >
+                                        <span className="max-w-0 overflow-hidden group-hover/btn:max-w-[100px] transition-all duration-500 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">Full Page</span>
+                                        <ExternalLink className="w-5 h-5 md:w-6 md:h-6" />
+                                    </button>
+                                </Link>
+                            )}
+
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setActiveAction(null)}
+                                className="p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
+                            >
+                                <X className="w-5 h-5 md:w-6 md:h-6" />
+                            </button>
+                        </div>
 
                         <div className="p-6 md:p-12">
                             {/* Inner Back Button for Dialog Context */}

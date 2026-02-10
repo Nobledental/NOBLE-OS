@@ -14,6 +14,8 @@ import {
     Plus,
     Check
 } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -130,6 +132,11 @@ export function SterilizationHub() {
                 </div>
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                     <h1 className="text-2xl md:text-3xl font-semibold tracking-tight text-[#000000] dark:text-[#000000] flex items-center gap-4">
+                        <Link href="/dashboard?view=operations">
+                            <Button variant="ghost" size="icon" className="h-10 w-10 md:h-12 md:w-12 rounded-full md:rounded-2xl bg-white/50 backdrop-blur-xl border border-slate-200/60 hover:bg-white hover:scale-105 transition-all duration-300 shadow-sm group">
+                                <ArrowLeft className="h-5 w-5 md:h-6 md:w-6 text-slate-600 group-hover:text-slate-900" />
+                            </Button>
+                        </Link>
                         <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-emerald-600 shadow-sm">
                             <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
                         </div>

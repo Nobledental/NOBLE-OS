@@ -10,6 +10,9 @@ import { Button } from "@/components/ui/button";
 import { ClinicManagementDeck } from "./clinic-management-deck";
 import { cn } from "@/lib/utils";
 
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
@@ -25,6 +28,21 @@ interface AdminDashboardViewProps {
 }
 
 export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboardViewProps) {
+    const searchParams = useSearchParams();
+
+    useEffect(() => {
+        const view = searchParams.get('view');
+        if (view === 'operations') {
+            const element = document.getElementById('operations-hub');
+            if (element) {
+                // Small delay to ensure render
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 500);
+            }
+        }
+    }, [searchParams]);
+
     return (
         <div className="space-y-5 min-h-[600px] pb-20 px-4 lg:px-0">
             {/* 1. Perspective & Intel Layer */}
@@ -199,7 +217,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
             </motion.div>
 
             {/* 3. Clinical Operations Center (Editorial Arctic Blue) */}
-            <motion.div variants={itemVariants} className="space-y-5 pb-20">
+            <motion.div variants={itemVariants} className="space-y-5 pb-20" id="operations-hub">
                 <div className="flex items-center gap-12 px-6">
                     <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent" />
                     <div className="flex flex-col items-center gap-2">
