@@ -228,10 +228,8 @@ export function ClinicManagementDeck() {
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Removed Glows as per user request */}
-
                             {/* Medizinisch Glass Layer */}
-                            <div className="bg-white/80 backdrop-blur-2xl rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border border-white/40 shadow-sm hover:shadow-xl transition-all duration-700 group-hover:bg-white/90">
+                            <div className="glass-frost rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border-slate-100 shadow-sm hover:shadow-md transition-all duration-700 group-hover:bg-slate-50/50">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
@@ -318,14 +316,10 @@ export function ClinicManagementDeck() {
             {/* Action Dialogs */}
             <Dialog open={!!activeAction} onOpenChange={(open) => !open && setActiveAction(null)}>
                 <DialogContent className="max-w-[85vw] md:max-w-[70vw] h-[90vh] md:h-[85vh] p-0 rounded-3xl md:rounded-[3rem] overflow-hidden border-none bg-transparent shadow-none">
-                    <div className="w-full h-full bg-slate-50/95 backdrop-blur-3xl rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300 border border-white/20 shadow-2xl">
-                        {/* Medical Grid Pattern Background */}
-                        <div className="absolute inset-0 z-0 bg-white/40">
-                            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-                        </div>    {/* Open in Full Page Button */}
-                        {/* Open in Full Page Button */}
-                        {/* Header Controls - Restored for Syntax/Layout Fix */}
+                    <div className="w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
+                        {/* Header Controls */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
+                            {/* Open in Full Page Button */}
                             {activeAction && ACTION_ROUTES[activeAction] && (
                                 <Link href={ACTION_ROUTES[activeAction]}>
                                     <Button
@@ -407,9 +401,9 @@ export function ClinicManagementDeck() {
                                 </div>
                             )}
                         </div>
-                    </div >
+                    </div>
                 </DialogContent>
             </Dialog>
-        </div >
+        </div>
     );
 }

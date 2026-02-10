@@ -53,7 +53,7 @@ export function ClinicalMasterHub() {
             >
                 <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 flex-1 min-h-0">
                     {/* Left: Interactive 3D/2D Map - Always Visible */}
-                    <div className="xl:col-span-2 overflow-y-auto border border-white/40 rounded-[2.5rem] bg-white/60 backdrop-blur-2xl p-8 space-y-8 shadow-lg shadow-slate-200/50">
+                    <div className="xl:col-span-2 overflow-y-auto border-slate-100 rounded-[2.5rem] bg-white/[0.01] glass-neo p-8 space-y-8">
                         {/* Eka Care Style Digital Health ID */}
                         <div className="mb-4">
                             <AbhaCard />
@@ -71,7 +71,7 @@ export function ClinicalMasterHub() {
                     </div>
 
                     {/* Right: Tabbed Clinical Workflow */}
-                    <div className="xl:col-span-2 bg-white/60 backdrop-blur-2xl border border-white/40 rounded-[2.5rem] p-8 flex flex-col overflow-hidden relative shadow-lg shadow-slate-200/50">
+                    <div className="xl:col-span-2 bg-white/[0.01] border-slate-100 rounded-[2.5rem] glass-frost p-8 flex flex-col overflow-hidden relative">
                         <Tabs defaultValue="notes" className="flex-1 flex flex-col min-h-0">
                             <TabsList className="flex flex-wrap h-auto gap-2 mb-8 bg-slate-100 p-2 rounded-2xl border border-slate-100 max-w-fit">
                                 <TabsTrigger value="history">History</TabsTrigger>
