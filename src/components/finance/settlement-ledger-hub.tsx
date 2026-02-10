@@ -103,7 +103,7 @@ export function SettlementLedgerHub() {
 
             {/* Financial Summary Cards */}
             <div className="grid gap-4 md:grid-cols-4">
-                <Card className="border-none shadow-sm bg-slate-50 dark:bg-slate-900/50">
+                <Card className="border-none shadow-sm bg-slate-50">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase text-muted-foreground">Cash in Box</CardTitle>
                         <Wallet className="h-4 w-4 text-emerald-500" />
@@ -112,7 +112,7 @@ export function SettlementLedgerHub() {
                         <div className="text-2xl font-black">₹{totalCash.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-none shadow-sm bg-slate-50 dark:bg-slate-900/50">
+                <Card className="border-none shadow-sm bg-slate-50">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase text-muted-foreground">UPI / Digital</CardTitle>
                         <Landmark className="h-4 w-4 text-indigo-500" />
@@ -121,7 +121,7 @@ export function SettlementLedgerHub() {
                         <div className="text-2xl font-black">₹{totalUPI.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-none shadow-sm bg-slate-50 dark:bg-slate-900/50">
+                <Card className="border-none shadow-sm bg-slate-50">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase text-muted-foreground">Card Swipes</CardTitle>
                         <CreditCard className="h-4 w-4 text-amber-500" />
@@ -130,13 +130,13 @@ export function SettlementLedgerHub() {
                         <div className="text-2xl font-black">₹{totalCard.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-2 border-slate-100 bg-white dark:bg-slate-950 shadow-md">
+                <Card className="border-2 border-slate-100 bg-white shadow-md">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
                         <CardTitle className="text-sm font-bold uppercase text-indigo-600">Total Revenue</CardTitle>
                         <Zap className="h-4 w-4 text-indigo-600 fill-indigo-600" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-black text-slate-900 dark:text-white">₹{totalRevenue.toLocaleString()}</div>
+                        <div className="text-3xl font-black text-slate-900">₹{totalRevenue.toLocaleString()}</div>
                     </CardContent>
                 </Card>
             </div>

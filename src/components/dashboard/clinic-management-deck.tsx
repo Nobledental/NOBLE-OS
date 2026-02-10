@@ -318,7 +318,7 @@ export function ClinicManagementDeck() {
             {/* Action Dialogs */}
             <Dialog open={!!activeAction} onOpenChange={(open) => !open && setActiveAction(null)}>
                 <DialogContent className="max-w-[85vw] md:max-w-[70vw] h-[90vh] md:h-[85vh] p-0 rounded-3xl md:rounded-[3rem] overflow-hidden border-none bg-transparent shadow-none">
-                    <div className="w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
+                    <div className="light w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
                         {/* Header Controls */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
                             {/* Open in Full Page Button */}
@@ -328,7 +328,7 @@ export function ClinicManagementDeck() {
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        className="h-9 gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-white transition-all shadow-sm"
+                                        className="h-9 gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-indigo-600 transition-all shadow-sm"
                                     >
                                         <ExternalLink className="w-3.5 h-3.5" />
                                         Open Full Page
@@ -339,7 +339,7 @@ export function ClinicManagementDeck() {
                             {/* Close Button */}
                             <button
                                 onClick={() => setActiveAction(null)}
-                                className="p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
+                                className="p-2 md:p-3 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-all"
                             >
                                 <X className="w-5 h-5 md:w-6 md:h-6" />
                             </button>
