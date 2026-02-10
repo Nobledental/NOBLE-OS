@@ -96,7 +96,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
 
                                         <div>
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
-                                            <div className="text-2xl font-medium tracking-tight text-black dark:text-white mb-1">
+                                            <div className="text-2xl font-medium tracking-tight text-black mb-1">
                                                 {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                             </div>
                                             <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
