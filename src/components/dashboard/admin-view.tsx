@@ -96,10 +96,10 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
 
                                         <div>
                                             <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
-                                            <div className="text-2xl font-black tracking-tight text-slate-900 dark:text-white mb-1">
+                                            <div className="text-2xl font-medium tracking-tight text-black dark:text-white mb-1">
                                                 {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                             </div>
-                                            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
+                                            <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
                                         </div>
                                     </div>
                                 );
@@ -131,7 +131,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <div className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">98.2%</div>
+                                    <div className="text-2xl font-medium text-black dark:text-white tracking-tight">98.2%</div>
                                 </div>
                                 <p className="text-[11px] md:text-[12px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
                                     &quot;Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks.&quot;
