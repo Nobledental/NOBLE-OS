@@ -49,14 +49,14 @@ export function SurgicalSafetyChecklist({
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-0 overflow-hidden border-none shadow-2xl">
-                <div className="bg-slate-900 p-8">
+                <div className="bg-white p-8 border-b border-slate-100">
                     <div className="flex items-center gap-4 mb-2">
-                        <div className="w-12 h-12 rounded-2xl bg-rose-500/20 flex items-center justify-center border border-rose-500/30">
-                            <ShieldCheck className="w-6 h-6 text-rose-400" />
+                        <div className="w-12 h-12 rounded-2xl bg-rose-50 flex items-center justify-center border border-rose-100">
+                            <ShieldCheck className="w-6 h-6 text-rose-600" />
                         </div>
                         <div>
-                            <DialogTitle className="text-white text-xl font-black tracking-tight">Surgical Safety Checklist</DialogTitle>
-                            <DialogDescription className="text-slate-400 text-[10px] font-black uppercase tracking-widest mt-1">High-Risk Protocol Verification</DialogDescription>
+                            <DialogTitle className="text-slate-900 text-xl font-black tracking-tight">Surgical Safety Checklist</DialogTitle>
+                            <DialogDescription className="text-rose-600 font-bold uppercase tracking-widest text-[10px] mt-1">High-Risk Protocol Verification</DialogDescription>
                         </div>
                     </div>
                 </div>

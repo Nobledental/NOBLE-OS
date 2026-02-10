@@ -29,16 +29,18 @@ export function SuccessCardGenerator({
     doctorName,
     clinicName
 }: SuccessCardProps) {
-    const [theme, setTheme] = useState<'midnight' | 'emerald' | 'sunset'>('midnight');
+    const [theme, setTheme] = useState<'white' | 'midnight' | 'emerald' | 'sunset'>('white');
     const cardRef = useRef<HTMLDivElement>(null);
 
     const themes = {
+        white: "bg-white text-slate-900 border border-slate-100",
         midnight: "bg-slate-900 text-white",
         emerald: "bg-emerald-900 text-white",
         sunset: "bg-indigo-900 text-white",
     };
 
     const accents = {
+        white: "text-blue-600",
         midnight: "text-indigo-400",
         emerald: "text-emerald-400",
         sunset: "text-rose-400",
@@ -56,15 +58,15 @@ export function SuccessCardGenerator({
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Branded Success Cards</p>
                     </div>
                 </div>
-                <div className="flex gap-2 bg-slate-100 p-1 rounded-xl">
-                    {(['midnight', 'emerald', 'sunset'] as const).map((t) => (
+                <div className="flex gap-2 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm">
+                    {(['white', 'midnight', 'emerald', 'sunset'] as const).map((t) => (
                         <button
                             key={t}
                             onClick={() => setTheme(t)}
                             className={cn(
-                                "w-6 h-6 rounded-full border-2 border-white transition-all",
-                                t === 'midnight' ? "bg-slate-900" : t === 'emerald' ? "bg-emerald-600" : "bg-indigo-600",
-                                theme === t && "scale-125 shadow-lg"
+                                "w-6 h-6 rounded-full border border-slate-200 transition-all shadow-sm",
+                                t === 'white' ? "bg-white" : t === 'midnight' ? "bg-slate-900" : t === 'emerald' ? "bg-emerald-600" : "bg-indigo-600",
+                                theme === t && "scale-125 ring-2 ring-offset-2 ring-slate-200"
                             )}
                         />
                     ))}
@@ -90,10 +92,12 @@ export function SuccessCardGenerator({
                                 <Activity className="w-6 h-6 text-white" />
                             </div>
                             <div>
-                                <h4 className="font-black text-xs uppercase tracking-[0.2em] opacity-60">{clinicName}</h4>
-                                <div className="flex items-center gap-1 mt-0.5">
-                                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/80">Clinical Milestone</span>
+                                <div>
+                                    <h4 className={cn("font-black text-xs uppercase tracking-[0.2em]", theme === 'white' ? "text-slate-400" : "opacity-60")}>{clinicName}</h4>
+                                    <div className="flex items-center gap-1 mt-0.5">
+                                        <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                                        <span className={cn("text-[10px] font-black uppercase tracking-widest", theme === 'white' ? "text-slate-900" : "text-white/80")}>Clinical Milestone</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +107,7 @@ export function SuccessCardGenerator({
                                 Treatment <br />
                                 <span className={accents[theme]}>Success.</span>
                             </h2>
-                            <p className="text-sm font-bold text-white/50 leading-relaxed max-w-[200px]">
+                            <p className={cn("text-sm font-bold leading-relaxed max-w-[200px]", theme === 'white' ? "text-slate-500" : "text-white/50")}>
                                 We are proud to announce the successful completion of clinical care for {patientName}.
                             </p>
                         </div>
@@ -126,7 +130,7 @@ export function SuccessCardGenerator({
                         </div>
                     </div>
                 </motion.div>
-            </div>
+            </div >
 
             <div className="grid grid-cols-2 gap-4">
                 <Button className="h-14 rounded-2xl bg-white border border-slate-200 text-slate-600 font-black uppercase tracking-widest text-[10px] hover:bg-slate-50 transition-all flex gap-3">
@@ -138,6 +142,6 @@ export function SuccessCardGenerator({
                     Share Story
                 </Button>
             </div>
-        </div>
+        </div >
     );
 }

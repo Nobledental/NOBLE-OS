@@ -68,7 +68,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
     return (
         <div ref={ref} className="bg-white p-12 text-slate-900 w-[794px] min-h-[1123px] font-sans print:p-8">
             {/* Header / Branding */}
-            <div className="flex justify-between items-start border-b-2 border-slate-900 pb-8 mb-8">
+            <div className="flex justify-between items-start border-b border-slate-200 pb-8 mb-8">
                 <div className="space-y-2">
                     <h1 className="text-4xl font-black tracking-tighter text-slate-900">{clinicInfo?.name || "Noble Dental Care"}</h1>
                     <p className="text-xs font-bold text-slate-500 max-w-sm leading-relaxed uppercase tracking-widest">
@@ -77,7 +77,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                     <p className="text-xs font-black text-slate-900">Phone: {clinicInfo?.phone || "+91 98765 43210"}</p>
                 </div>
                 <div className="text-right space-y-1">
-                    <div className="inline-block px-4 py-2 bg-slate-900 text-white text-xs font-black uppercase tracking-widest">Prescription</div>
+                    <div className="inline-block px-4 py-2 bg-slate-100 text-slate-900 border border-slate-200 text-xs font-black uppercase tracking-widest rounded-lg">Prescription</div>
                     <p className="text-xs font-bold text-slate-500 mt-2">Date: {date}</p>
                 </div>
             </div>
@@ -164,7 +164,7 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
                                             <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Dosage: {p.dosage}</p>
                                             <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Duration: {p.duration}</p>
                                         </div>
-                                        {p.instructions && <p className="text-xs font-medium text-slate-600 border-l-2 border-slate-200 pl-2 mt-2">{p.instructions}</p>}
+                                        {p.instructions && <p className="text-xs font-bold text-slate-700 bg-slate-50/50 p-2 rounded-lg border border-slate-100 mt-2">{p.instructions}</p>}
                                     </div>
                                 </div>
                             )) : (

@@ -41,26 +41,26 @@ export default function RankingEngine() {
         <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] p-8">
             <div className="max-w-6xl mx-auto space-y-10">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-slate-900 rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 bg-gradient-to-br from-amber-50 to-orange-50 rounded-[3rem] p-10 border border-amber-100 shadow-2xl relative overflow-hidden">
                     <div className="relative z-10">
-                        <div className="flex items-center gap-2 text-amber-400 font-bold text-xs uppercase tracking-[0.2em] mb-4">
+                        <div className="flex items-center gap-2 text-amber-600 font-bold text-xs uppercase tracking-[0.2em] mb-4">
                             <Trophy size={14} className="animate-bounce" /> Marketplace Intelligence
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight">Gold Ranking Engine</h1>
-                        <p className="text-slate-400 font-medium mt-2">Powering discovery through real-world clinical performance metrics.</p>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900">Gold Ranking Engine</h1>
+                        <p className="text-slate-500 font-bold uppercase tracking-widest text-[10px] mt-2">Powering discovery through real-world clinical performance metrics.</p>
                     </div>
 
-                    <div className="relative z-10 bg-white/10 backdrop-blur-md p-6 rounded-[2rem] border border-white/5">
+                    <div className="relative z-10 bg-white/60 backdrop-blur-md p-6 rounded-[2rem] border border-amber-200/50 shadow-lg">
                         <div className="flex items-center gap-4">
-                            <BarChart3 className="text-amber-400" />
+                            <BarChart3 className="text-amber-500" />
                             <div>
-                                <div className="text-2xl font-black">ATR-Aware</div>
+                                <div className="text-2xl font-black text-slate-900">ATR-Aware</div>
                                 <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Active Ranking Logic</div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="absolute right-[-40px] top-[-40px] opacity-10">
+                    <div className="absolute right-[-40px] top-[-40px] opacity-[0.05] text-amber-900">
                         <Medal size={240} className="rotate-[15deg]" />
                     </div>
                 </div>
@@ -69,7 +69,7 @@ export default function RankingEngine() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Metrics Sidebar */}
                     <div className="lg:col-span-1 space-y-8">
-                        <div className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl">
+                        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-xl hover:shadow-2xl transition-all duration-500 group">
                             <h3 className="font-black uppercase tracking-tighter text-xl mb-6 dark:text-white">Ranking Core</h3>
                             <div className="space-y-6">
                                 {[
@@ -77,8 +77,8 @@ export default function RankingEngine() {
                                     { label: 'Wait Index', value: 'Low', desc: 'Avg wait < 15 mins', icon: Clock, color: 'text-emerald-500' },
                                     { label: 'Review Integrity', value: 'High', desc: 'Verified social proof', icon: ShieldCheck, color: 'text-purple-500' },
                                 ].map((stat, i) => (
-                                    <div key={i} className="flex gap-4">
-                                        <div className={`p-3 rounded-xl bg-slate-50 dark:bg-white/5 ${stat.color} shrink-0`}>
+                                    <div key={i} className="flex gap-4 group/item">
+                                        <div className={`p-3 rounded-xl bg-slate-50 ${stat.color} shrink-0 group-hover/item:scale-110 transition-transform`}>
                                             <stat.icon size={20} />
                                         </div>
                                         <div>
@@ -111,10 +111,10 @@ export default function RankingEngine() {
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-8 group hover:border-amber-400 dark:hover:border-amber-600 transition-all"
+                                className="bg-white p-8 rounded-[3rem] border border-slate-200 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-8 group hover:border-amber-400 transition-all hover:shadow-2xl duration-500"
                             >
                                 <div className="flex items-center gap-6">
-                                    <div className="w-16 h-16 rounded-[1.5rem] bg-slate-100 dark:bg-white/5 flex items-center justify-center font-black text-2xl text-slate-300 group-hover:text-amber-500 transition-colors">
+                                    <div className="w-16 h-16 rounded-[1.5rem] bg-slate-50 border border-slate-100 flex items-center justify-center font-black text-2xl text-slate-300 group-hover:text-amber-500 transition-colors">
                                         #{idx + 1}
                                     </div>
                                     <div>
