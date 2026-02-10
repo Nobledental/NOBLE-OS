@@ -72,9 +72,11 @@ export function ClinicalHistory({ patientId }: { patientId: string }) {
         <div className="space-y-4 h-full flex flex-col">
             {/* Header with Family Switcher */}
             <div className="flex items-center justify-between shrink-0">
-                <h3 className="font-bold flex items-center gap-2">
-                    <Activity className="w-5 h-5 text-indigo-500" />
-                    Health Timeline
+                <h3 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-3">
+                    <div className="p-2 bg-indigo-50 rounded-lg border border-indigo-100">
+                        <Activity className="w-5 h-5 text-indigo-600" />
+                    </div>
+                    Clinical Timeline
                 </h3>
                 <Select value={selectedMember} onValueChange={setSelectedMember}>
                     <SelectTrigger className="w-[140px] h-8 text-xs border-indigo-200 bg-indigo-50/50">
@@ -95,7 +97,7 @@ export function ClinicalHistory({ patientId }: { patientId: string }) {
                     {MOCK_TIMELINE.map((item, index) => (
                         <div key={item.id} className="relative pl-6 pb-6 last:pb-0 border-l-2 border-slate-200 dark:border-slate-800 last:border-transparent">
                             {/* Dot */}
-                            <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-950 ${item.color.replace('text-', 'bg-').replace('bg-', 'bg-opacity-100 ')}`} />
+                            <div className={`absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 border-white dark:border-slate-950 shadow-sm ${item.color.replace('text-', 'bg-').replace('bg-', 'bg-opacity-100 ')} ring-4 ring-white dark:ring-slate-950`} />
 
                             {/* Content */}
                             <div className="relative -top-1.5 group cursor-pointer">
@@ -103,7 +105,7 @@ export function ClinicalHistory({ patientId }: { patientId: string }) {
                                     {item.date}
                                 </span>
 
-                                <Card className="border-0 shadow-sm hover:shadow-md transition-shadow bg-slate-50/50">
+                                <Card className="border-0 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 bg-white group-hover:bg-slate-50/80 rounded-2xl overflow-hidden ring-1 ring-slate-100">
                                     <CardContent className="p-3 flex items-start gap-3">
                                         <div className={`p-2 rounded-lg shrink-0 ${item.color}`}>
                                             <item.icon className="w-4 h-4" />

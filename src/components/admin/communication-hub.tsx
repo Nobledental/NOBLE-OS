@@ -45,7 +45,7 @@ export default function CommunicationHub() {
                             <History size={14} className="animate-spin-slow" /> Communication Intelligence
                         </div>
                         <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">Lead Command</h1>
-                        <p className="text-slate-500 dark:text-slate-400 font-medium">Real-time response tracking and lead recovery engine.</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Real-time response tracking and lead recovery engine.</p>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -69,8 +69,8 @@ export default function CommunicationHub() {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                     {stats.map((stat, i) => (
-                        <div key={i} className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl flex items-center gap-6">
-                            <div className={`p-4 rounded-2xl bg-slate-50 dark:bg-white/5 ${stat.color}`}>
+                        <div key={i} className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl hover:shadow-2xl transition-all duration-500 flex items-center gap-6 group">
+                            <div className={`p-4 rounded-2xl bg-slate-50 dark:bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}>
                                 <stat.icon size={24} />
                             </div>
                             <div>
@@ -85,7 +85,7 @@ export default function CommunicationHub() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
                     {/* Live Lead Queue */}
                     <div className="lg:col-span-8 space-y-6">
-                        <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-2xl overflow-hidden">
+                        <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden group">
                             <div className="p-8 border-b border-slate-100 dark:border-white/5 flex justify-between items-center bg-slate-50/50 dark:bg-white/5">
                                 <div>
                                     <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Active Lead Queue</h3>
@@ -175,7 +175,7 @@ export default function CommunicationHub() {
                             </div>
                         </div>
 
-                        <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] p-8 border border-slate-200 dark:border-white/5 shadow-xl">
+                        <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] p-8 border border-slate-200 dark:border-white/5 shadow-xl hover:shadow-2xl transition-all duration-500 group">
                             <div className="flex items-center gap-3 mb-6">
                                 <AlertTriangle className="text-amber-500" />
                                 <h3 className="font-black text-lg dark:text-white uppercase tracking-tighter">Communication Alerts</h3>

@@ -38,7 +38,7 @@ export function IDCardGenerator({ staff, onDownload }: { staff: IDCardData, onDo
             {/* The ID Card */}
             <div
                 ref={cardRef}
-                className="relative w-full aspect-[1/1.58] bg-white rounded-[3rem] overflow-hidden shadow-2xl p-8 text-slate-900 group border border-slate-200"
+                className="relative w-full aspect-[1/1.58] bg-white rounded-[2.5rem] overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 p-8 text-slate-900 group border border-slate-200"
             >
                 {/* Brand Header */}
                 <div className="flex items-center gap-3 relative z-10">
@@ -112,15 +112,15 @@ export function IDCardGenerator({ staff, onDownload }: { staff: IDCardData, onDo
             <div className="flex gap-4">
                 <Button
                     variant="outline"
-                    className="flex-1 h-14 rounded-2xl border-slate-100 font-black uppercase tracking-widest text-[10px] gap-2"
+                    className="flex-1 h-14 rounded-2xl border-slate-200 hover:bg-slate-50 font-bold uppercase tracking-widest text-[10px] gap-2 transition-all"
                 >
-                    <Share2 className="w-4 h-4" /> Share
+                    <Share2 className="w-4 h-4 text-slate-600" /> Share
                 </Button>
                 <Button
                     onClick={onDownload}
-                    className="flex-1 h-14 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 font-black uppercase tracking-widest text-[10px] gap-2"
+                    className="flex-1 h-14 rounded-2xl bg-slate-900 text-white hover:bg-slate-800 font-bold uppercase tracking-widest text-[10px] gap-2 shadow-lg shadow-slate-900/20 hover:scale-[1.02] transition-all"
                 >
-                    <Download className="w-4 h-4" /> Download
+                    <Download className="w-4 h-4 text-emerald-400" /> Download
                 </Button>
             </div>
         </div>

@@ -22,11 +22,11 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
     };
 
     return (
-        <Card className="h-full border-none shadow-sm bg-white dark:bg-slate-950">
+        <Card className="h-full border border-slate-100 shadow-xl bg-white dark:bg-slate-950 rounded-[2.5rem] overflow-hidden group hover:shadow-2xl transition-all duration-500">
             <CardHeader className="flex flex-row items-center justify-between">
                 <div>
-                    <CardTitle className="text-lg font-bold">Noble Bottleneck Heatmap</CardTitle>
-                    <p className="text-xs text-muted-foreground mt-1">Peak congestion hours (Last 30 days)</p>
+                    <CardTitle className="text-xl font-bold tracking-tight text-slate-900">Noble Bottleneck Heatmap</CardTitle>
+                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em] mt-1">Peak congestion hours (Last 30 days)</p>
                 </div>
                 <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((i) => (
@@ -60,7 +60,7 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
                     </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-900/50 flex items-start gap-3">
+                <div className="p-5 rounded-[2rem] bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/50 flex items-start gap-4 shadow-inner">
                     <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-500 shrink-0 mt-0.5" />
                     <div>
                         <h4 className="text-xs font-bold text-red-700 dark:text-red-400">Revenue Leakage Detected</h4>
@@ -70,7 +70,7 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl border border-dashed">
+                <div className="flex items-center gap-3 p-4 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
                     <Info className="h-4 w-4 text-slate-400" />
                     <p className="text-[10px] text-slate-500">
                         Leapfrog Strategy: Optimization suggested for 3:00 PM slot due to high consistent congestion.

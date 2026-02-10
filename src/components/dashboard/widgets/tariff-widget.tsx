@@ -42,7 +42,7 @@ export function TariffWidget() {
                     </div>
                     <div>
                         <h3 className="text-xl font-bold tracking-tight text-slate-900">Tariff Master</h3>
-                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-[0.2em]">Clinical Cost Matrix</p>
+                        <p className="text-[9px] text-slate-500 font-bold uppercase tracking-[0.2em] leading-tight">Clinical Cost Matrix</p>
                     </div>
                 </div>
                 <Link href="/dashboard/tariff">
@@ -55,7 +55,7 @@ export function TariffWidget() {
             {/* Controls */}
             <div className="p-5 space-y-4 bg-white/20 backdrop-blur-sm">
                 {/* Auto Adjust */}
-                <div className="flex items-center gap-3 p-3 bg-white/40 rounded-2xl border border-white/60 shadow-sm">
+                <div className="flex items-center gap-3 p-3 bg-white/60 rounded-2xl border border-white/60 shadow-sm transition-shadow hover:shadow-md">
                     <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest px-1">Bulk ADJUST:</div>
                     <Input
                         type="number"
@@ -91,8 +91,9 @@ export function TariffWidget() {
             <ScrollArea className="flex-1">
                 <div className="divide-y divide-white/20">
                     {filteredTariff.slice(0, 5).map((item) => (
-                        <div key={item.id} className="p-5 hover:bg-white/40 transition-all flex items-center justify-between group cursor-pointer">
-                            <div className="flex items-center gap-4">
+                        <div key={item.id} className="p-5 hover:bg-white/60 transition-all flex items-center justify-between group cursor-pointer border-b border-transparent hover:border-slate-100 last:border-0 relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-50/0 via-blue-50/0 to-blue-50/0 group-hover:via-blue-50/30 transition-all duration-500" />
+                            <div className="flex items-center gap-4 relative z-10">
                                 <span className="text-[10px] font-mono text-slate-400 opacity-60">#{item.id}</span>
                                 <div>
                                     <div className="text-sm font-bold text-slate-800 group-hover:text-neo-vibrant-blue transition-colors">
@@ -105,7 +106,7 @@ export function TariffWidget() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="text-base font-black text-slate-900 group-hover:text-neo-vibrant-blue transition-all tabular-nums">
+                            <div className="text-base font-black text-slate-900 group-hover:text-neo-vibrant-blue transition-all tabular-nums relative z-10">
                                 ₹{item.cost.toLocaleString()}
                             </div>
                         </div>

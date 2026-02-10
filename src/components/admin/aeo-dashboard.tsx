@@ -42,7 +42,7 @@ export default function AEODashboard() {
                         <p className="text-slate-500 dark:text-slate-400 font-medium">Manage clinical SEEAT (Search, Experience, Expertise, Authoritativeness, Trustworthiness).</p>
                     </div>
 
-                    <div className="bg-white dark:bg-[#0a0f1d] p-1 rounded-2xl border border-slate-200 dark:border-white/5 flex gap-1 shadow-xl">
+                    <div className="bg-white dark:bg-[#0a0f1d] p-1.5 rounded-2xl border border-slate-200 dark:border-white/5 flex gap-1 shadow-2xl shadow-indigo-500/10">
                         {['authority', 'trust', 'readiness'].map((tab) => (
                             <button
                                 key={tab}
@@ -60,7 +60,7 @@ export default function AEODashboard() {
 
                 {/* Top Metrics Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div className="md:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-8 text-white relative overflow-hidden shadow-2xl">
+                    <div className="md:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2.5rem] p-10 text-white relative overflow-hidden shadow-2xl shadow-blue-900/20 group">
                         <div className="relative z-10 flex flex-col h-full justify-between">
                             <div>
                                 <h3 className="text-blue-100 font-bold text-xs uppercase tracking-widest mb-1">Clinic Authority Score</h3>
@@ -83,7 +83,7 @@ export default function AEODashboard() {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] p-8 border border-slate-200 dark:border-white/5 shadow-xl flex flex-col justify-between">
+                    <div className="bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] p-8 border border-slate-200 dark:border-white/5 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between group">
                         <div className="p-3 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 rounded-2xl w-fit">
                             <CheckCircle2 size={24} />
                         </div>
@@ -93,7 +93,7 @@ export default function AEODashboard() {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-[2.5rem] p-8 shadow-xl flex flex-col justify-between relative overflow-hidden group border border-slate-100">
+                    <div className="bg-white rounded-[2.5rem] p-8 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col justify-between relative overflow-hidden group border border-slate-100">
                         <div className="p-3 bg-slate-100 text-slate-900 rounded-2xl w-fit">
                             <Sparkles size={24} className="group-hover:rotate-12 transition-transform" />
                         </div>
@@ -110,7 +110,7 @@ export default function AEODashboard() {
                 {/* Insights & Real-time Graph */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     {/* Insights Hub */}
-                    <div className="lg:col-span-1 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl p-8 space-y-6">
+                    <div className="lg:col-span-1 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl p-8 space-y-8">
                         <div className="flex items-center gap-3 border-b border-slate-100 dark:border-white/5 pb-4">
                             <Zap className="text-blue-600" />
                             <h3 className="font-black uppercase tracking-tighter text-lg text-slate-900">AEO Tactical Insights</h3>
@@ -157,7 +157,7 @@ export default function AEODashboard() {
                                         <tr key={doc.id} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors">
                                             <td className="px-8 py-4">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 dark:border-white/10 shrink-0 relative">
+                                                    <div className="w-12 h-12 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 dark:border-white/10 shrink-0 relative shadow-sm">
                                                         <img src={doc.image} alt="" className="object-cover" />
                                                     </div>
                                                     <div>
