@@ -144,20 +144,20 @@ export function SterilizationHub() {
                     </h1>
 
                     <div className="flex gap-4">
-                        <div className="h-12 px-4 bg-slate-100 border border-slate-200 rounded-xl flex items-center gap-3 shadow-sm">
+                        <div className="h-12 px-5 bg-white border border-slate-200/60 rounded-xl flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow">
                             <div className="text-right">
-                                <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Active</p>
-                                <p className="text-lg font-bold text-amber-600 tracking-tight">{activeCycles}</p>
+                                <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest leading-none mb-1">Active Cycles</p>
+                                <p className="text-lg font-black text-slate-900 tracking-tight leading-none">{activeCycles}</p>
                             </div>
-                            <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                                <Flame className="w-3.5 h-3.5 text-amber-600/60" />
+                            <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
+                                <Flame className="w-4 h-4 text-amber-600" />
                             </div>
                         </div>
                         <Button
                             onClick={() => setIsCreating(true)}
-                            className="h-12 px-6 rounded-xl bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 gap-2 transition-all duration-700 shadow-sm"
+                            className="h-12 px-6 rounded-xl bg-slate-900 text-white hover:bg-slate-800 gap-2 transition-all duration-300 shadow-lg shadow-slate-900/20 hover:scale-105"
                         >
-                            <Plus className="w-4 h-4 text-emerald-600" />
+                            <Plus className="w-4 h-4 text-emerald-400" />
                             <span className="text-[10px] font-bold uppercase tracking-widest">New Cycle</span>
                         </Button>
                     </div>
@@ -206,16 +206,20 @@ export function SterilizationHub() {
                                                         <div className="space-y-3">
                                                             <div className="flex items-center gap-3">
                                                                 <div className={cn("w-2 h-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]", Config.color)} />
-                                                                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-slate-500">{Config.label}</span>
-                                                                <span className="text-[9px] font-bold text-slate-400 tracking-widest border-l border-slate-200 pl-2">#{batch.id}</span>
+                                                                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500">{Config.label}</span>
+                                                                <div className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-[10px] font-mono font-bold text-slate-600">
+                                                                    #{batch.id}
+                                                                </div>
                                                             </div>
                                                             <h4 className="text-xl font-semibold text-slate-900 tracking-tight">{batch.name}</h4>
                                                         </div>
                                                         <div className={cn(
-                                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all border border-slate-100 bg-slate-50 shadow-sm",
-                                                            batch.status === 'PROCESSING' && "animate-pulse border-amber-200 shadow-amber-100"
+                                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all border shadow-sm",
+                                                            batch.status === 'PROCESSING'
+                                                                ? "bg-amber-50 border-amber-200 text-amber-600 animate-pulse"
+                                                                : "bg-slate-50 border-slate-100 text-slate-400"
                                                         )}>
-                                                            <Icon className={cn("w-4 h-4", batch.status === 'PROCESSING' ? "text-amber-500" : "text-slate-400")} />
+                                                            <Icon className="w-5 h-5" />
                                                         </div>
                                                     </div>
 
@@ -295,37 +299,39 @@ export function SterilizationHub() {
                 </div>
 
                 <div className="lg:col-span-4 space-y-6">
-                    <PanzeCard className="p-6 rounded-3xl bg-white border border-slate-100 shadow-xl">
-                        <div className="space-y-6">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100">
-                                <ShieldCheck className="w-5 h-5 text-indigo-600" />
+                    <PanzeCard className="p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-50 rounded-full blur-3xl -mr-16 -mt-16 opacity-50" />
+                        <div className="space-y-8 relative z-10">
+                            <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-200">
+                                <ShieldCheck className="w-6 h-6 text-white" />
                             </div>
-                            <div className="space-y-2">
-                                <h4 className="text-xl font-bold text-slate-900 tracking-tight">Compliance Score</h4>
-                                <p className="text-[10px] font-semibold text-slate-500 leading-relaxed uppercase tracking-widest">
-                                    Armamentarium protocols are 98.4% compliant with NABH standards.
+                            <div className="space-y-3">
+                                <h4 className="text-2xl font-black text-slate-900 tracking-tight">Compliance Score</h4>
+                                <p className="text-xs font-medium text-slate-500 leading-relaxed">
+                                    Armamentarium protocols are <strong className="text-indigo-600">98.4% compliant</strong> with NABH standards.
                                 </p>
                             </div>
                             <div className="h-px w-full bg-slate-100" />
                             <div className="flex items-center justify-between">
                                 <div className="space-y-1">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Cycles Processed</p>
-                                    <p className="text-2xl font-black text-slate-900 tracking-tighter">142</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Cycles</p>
+                                    <p className="text-3xl font-black text-slate-900 tracking-tighter">142</p>
                                 </div>
                                 <div className="text-right space-y-1">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Safety Alerts</p>
-                                    <p className="text-2xl font-black text-rose-500 tracking-tighter">02</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Alerts</p>
+                                    <p className="text-3xl font-black text-rose-500 tracking-tighter">02</p>
                                 </div>
                             </div>
                         </div>
                     </PanzeCard>
 
-                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-6">
-                        <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-slate-300" />
+                    <div className="p-8 rounded-[2.5rem] bg-slate-50 border border-slate-100/60 space-y-8 relative overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-30" />
+                        <div className="relative z-10 flex items-center gap-3">
+                            <div className="w-2 h-2 rounded-full bg-slate-400 shadow-[0_0_8px_rgba(148,163,184,0.5)]" />
                             <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
                         </div>
-                        <div className="space-y-6">
+                        <div className="space-y-5 relative z-10">
                             {[
                                 "B-Class Autoclave: 134°C (5 mins)",
                                 "Daily Indicator Tape Validation",
@@ -333,10 +339,10 @@ export function SterilizationHub() {
                                 "Dry Storage protocol mandatory"
                             ].map((rule, i) => (
                                 <div key={i} className="flex gap-4 group/rule">
-                                    <div className="w-6 h-6 rounded-lg bg-white flex items-center justify-center shrink-0 border border-slate-100 group-hover/rule:border-emerald-200 transition-colors shadow-sm">
-                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                                    <div className="w-6 h-6 rounded-lg bg-white flex items-center justify-center shrink-0 border border-slate-200 group-hover/rule:border-emerald-300 group-hover/rule:shadow-lg group-hover/rule:shadow-emerald-100 transition-all duration-500">
+                                        <CheckCircle2 className="w-3.5 h-3.5 text-slate-300 group-hover/rule:text-emerald-500 transition-colors" />
                                     </div>
-                                    <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest leading-relaxed">{rule}</span>
+                                    <span className="text-[11px] font-bold text-slate-500 group-hover/rule:text-slate-800 uppercase tracking-widest leading-relaxed transition-colors">{rule}</span>
                                 </div>
                             ))}
                         </div>
