@@ -322,15 +322,17 @@ export function ClinicManagementDeck() {
                         {/* Header Controls */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
                             {/* Open in Full Page Button */}
+                            {/* Open in Full Page Button */}
                             {activeAction && ACTION_ROUTES[activeAction] && (
                                 <Link href={ACTION_ROUTES[activeAction]}>
-                                    <button
-                                        className="p-2 md:p-3 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full transition-all flex items-center gap-2 group/btn"
-                                        title="Open in Full Page"
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="h-9 gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-white transition-all shadow-sm"
                                     >
-                                        <span className="max-w-0 overflow-hidden group-hover/btn:max-w-[100px] transition-all duration-500 text-[10px] font-bold uppercase tracking-widest whitespace-nowrap">Full Page</span>
-                                        <ExternalLink className="w-5 h-5 md:w-6 md:h-6" />
-                                    </button>
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                        Open Full Page
+                                    </Button>
                                 </Link>
                             )}
 

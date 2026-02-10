@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { ClinicSchedulingSettings } from "@/components/settings/clinic-scheduling-settings";
 import { useSchedulingStore } from "@/lib/scheduling-store";
 import { generateAvailableSlots } from "@/lib/scheduling-engine";
@@ -15,6 +17,14 @@ export default function SchedulingPage() {
         <div className="flex flex-col lg:flex-row h-[calc(100vh-64px)] overflow-hidden">
             {/* Left: Admin Settings Panel */}
             <div className="flex-1 overflow-y-auto p-6 bg-gray-50 border-r border-gray-200">
+                <div className="mb-6">
+                    <Link href="/dashboard?view=operations">
+                        <Button variant="ghost" className="gap-2 text-slate-500 hover:text-slate-900 px-0 hover:bg-transparent">
+                            <ArrowLeft className="w-4 h-4" />
+                            <span className="font-bold uppercase tracking-wider text-xs">Back to Dashboard</span>
+                        </Button>
+                    </Link>
+                </div>
                 <ClinicSchedulingSettings />
             </div>
 
