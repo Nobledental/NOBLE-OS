@@ -28,8 +28,8 @@ export function ClinicalMasterHub() {
         <div className="flex-1 space-y-4 h-[calc(100vh-100px)] flex flex-col">
             <div className="flex items-center justify-between shrink-0">
                 <div>
-                    <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-foreground">Clinical Master</h2>
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mt-1">Digital Tooth Map & Procedural Charting.</p>
+                    <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-slate-900">Clinical Master</h2>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">Digital Tooth Map & Procedural Charting.</p>
                 </div>
                 <Button className="bg-indigo-600 hover:bg-indigo-700">
                     <CalendarPlus className="w-4 h-4 mr-2" />
@@ -40,8 +40,8 @@ export function ClinicalMasterHub() {
             <PermissionGuard
                 permission="can_view_clinical"
                 fallback={
-                    <div className="h-[calc(100vh-20rem)] border-2 border-dashed rounded-3xl flex flex-col items-center justify-center space-y-4 bg-slate-50 dark:bg-slate-900/50">
-                        <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+                    <div className="h-[calc(100vh-20rem)] border-2 border-dashed rounded-3xl flex flex-col items-center justify-center space-y-4 bg-slate-50">
+                        <div className="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center">
                             <Lock className="w-8 h-8 text-amber-600" />
                         </div>
                         <h3 className="text-xl font-bold">Restricted Access</h3>
@@ -53,7 +53,7 @@ export function ClinicalMasterHub() {
             >
                 <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 flex-1 min-h-0">
                     {/* Left: Interactive 3D/2D Map - Always Visible */}
-                    <div className="xl:col-span-2 overflow-y-auto border-border rounded-[2.5rem] bg-card/40 glass-neo p-8 space-y-8">
+                    <div className="xl:col-span-2 overflow-y-auto border-slate-100 rounded-[2.5rem] bg-white/[0.01] glass-neo p-8 space-y-8">
                         {/* Eka Care Style Digital Health ID */}
                         <div className="mb-4">
                             <AbhaCard />
@@ -61,8 +61,8 @@ export function ClinicalMasterHub() {
 
                         <CaseQueue />
 
-                        <div className="border-t border-border pt-8">
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-muted-foreground mb-6 flex items-center gap-3">
+                        <div className="border-t border-slate-100 pt-8">
+                            <h3 className="text-[11px] font-black uppercase tracking-[0.4em] text-slate-400 mb-6 flex items-center gap-3">
                                 <Skull className="w-4 h-4" />
                                 Visual Charting
                             </h3>
@@ -71,9 +71,9 @@ export function ClinicalMasterHub() {
                     </div>
 
                     {/* Right: Tabbed Clinical Workflow */}
-                    <div className="xl:col-span-2 bg-card/40 border-border rounded-[2.5rem] glass-frost p-8 flex flex-col overflow-hidden relative">
+                    <div className="xl:col-span-2 bg-white/[0.01] border-slate-100 rounded-[2.5rem] glass-frost p-8 flex flex-col overflow-hidden relative">
                         <Tabs defaultValue="notes" className="flex-1 flex flex-col min-h-0">
-                            <TabsList className="flex flex-wrap h-auto gap-2 mb-8 bg-muted p-2 rounded-2xl border border-border max-w-fit">
+                            <TabsList className="flex flex-wrap h-auto gap-2 mb-8 bg-slate-100 p-2 rounded-2xl border border-slate-100 max-w-fit">
                                 <TabsTrigger value="history">History</TabsTrigger>
                                 <TabsTrigger value="notes">Case Sheet</TabsTrigger>
                                 <TabsTrigger value="rx">Rx</TabsTrigger>

@@ -231,21 +231,21 @@ export function ClinicManagementDeck() {
                             {/* Removed Glows as per user request */}
 
                             {/* Medizinisch Glass Layer */}
-                            <div className="glass-frost rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border-slate-100 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-700 group-hover:bg-slate-50/50 dark:group-hover:bg-white/[0.02]">
+                            <div className="glass-frost rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border-slate-100 shadow-sm hover:shadow-md transition-all duration-700 group-hover:bg-slate-50/50">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
-                                        "w-8 h-8 rounded-xl bg-indigo-50 dark:bg-white/5 flex items-center justify-center border border-indigo-100 dark:border-white/5 transition-all duration-700",
+                                        "w-8 h-8 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100 transition-all duration-700",
                                         feature.accent || "text-slate-400",
-                                        `group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black`
+                                        `group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white`
                                     )}>
                                         <feature.icon className="w-4 h-4 md:w-5 md:h-5 opacity-70 group-hover:opacity-100" />
                                     </div>
 
                                     <div className="flex flex-col items-end gap-1.5 opacity-60">
-                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">{feature.category}</span>
+                                        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400">{feature.category}</span>
                                         {feature.locked ? (
-                                            <div className="w-6 h-6 rounded-full bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/5 flex items-center justify-center text-slate-400 dark:text-white/20">
+                                            <div className="w-6 h-6 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-400">
                                                 <Lock className="w-2.5 h-2.5" />
                                             </div>
                                         ) : feature.badge && (
@@ -259,13 +259,13 @@ export function ClinicManagementDeck() {
                                 {/* Typography Unified Content */}
                                 <div className="mt-auto relative z-10 flex flex-col gap-1.5">
                                     <div className="flex items-center gap-2 mb-1.5">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 ring-2 ring-blue-500/20 dark:ring-blue-400/20" />
-                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500">{feature.chip}</span>
+                                        <div className="w-1.5 h-1.5 rounded-full bg-blue-500 ring-2 ring-blue-500/20" />
+                                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{feature.chip}</span>
                                     </div>
-                                    <h3 className="text-[16px] font-bold tracking-tight text-slate-900 dark:text-slate-100 mb-0.5 group-hover:text-indigo-600 dark:group-hover:text-white transition-colors duration-500">
+                                    <h3 className="text-[16px] font-bold tracking-tight text-slate-900 mb-0.5 group-hover:text-indigo-600 transition-colors duration-500">
                                         {feature.title}
                                     </h3>
-                                    <p className="text-[13px] text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                                    <p className="text-[13px] text-slate-500 font-medium leading-relaxed">
                                         {feature.subtitle}
                                     </p>
 
@@ -276,7 +276,7 @@ export function ClinicManagementDeck() {
                                                 key={idx}
                                                 className={cn(
                                                     "w-[3px] rounded-full transition-all duration-500",
-                                                    idx === 3 ? "bg-indigo-500 dark:bg-indigo-400" : "bg-slate-200 dark:bg-white/10"
+                                                    idx === 3 ? "bg-indigo-500" : "bg-slate-200"
                                                 )}
                                                 style={{ height: `${h * 100}%` }}
                                             />
@@ -286,12 +286,12 @@ export function ClinicManagementDeck() {
 
                                 {/* Premium Silk Trail Animation (Subtle) */}
                                 {!feature.locked && (
-                                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/10 dark:via-white/5 to-transparent overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                                    <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/10 to-transparent overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-700">
                                         <motion.div
                                             initial={{ x: '-100%' }}
                                             whileHover={{ x: '100%' }}
                                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                                            className="w-1/2 h-full bg-gradient-to-r from-transparent via-indigo-500/40 dark:via-white/20 to-transparent"
+                                            className="w-1/2 h-full bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent"
                                         />
                                     </div>
                                 )}
@@ -318,7 +318,7 @@ export function ClinicManagementDeck() {
             {/* Action Dialogs */}
             <Dialog open={!!activeAction} onOpenChange={(open) => !open && setActiveAction(null)}>
                 <DialogContent className="max-w-[85vw] md:max-w-[70vw] h-[90vh] md:h-[85vh] p-0 rounded-3xl md:rounded-[3rem] overflow-hidden border-none bg-transparent shadow-none">
-                    <div className="light w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
+                    <div className="w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
                         {/* Header Controls */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
                             {/* Open in Full Page Button */}
@@ -339,7 +339,7 @@ export function ClinicManagementDeck() {
                             {/* Close Button */}
                             <button
                                 onClick={() => setActiveAction(null)}
-                                className="p-2 md:p-3 bg-slate-100 hover:bg-slate-200 rounded-full text-slate-500 transition-all"
+                                className="p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
                             >
                                 <X className="w-5 h-5 md:w-6 md:h-6" />
                             </button>
