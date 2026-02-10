@@ -85,9 +85,9 @@ export function NewAppointmentDialog() {
                     New Appointment
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent className="sm:max-w-[600px] bg-white text-slate-900 border-none shadow-2xl rounded-[2rem]">
                 <DialogHeader>
-                    <DialogTitle>Book Appointment</DialogTitle>
+                    <DialogTitle className="text-2xl font-black text-slate-900 tracking-tight">Book Appointment</DialogTitle>
                 </DialogHeader>
 
                 <Tabs defaultValue="registered" className="w-full">
@@ -115,7 +115,7 @@ export function NewAppointmentDialog() {
                                 filteredPatients.map(patient => (
                                     <div
                                         key={patient.id}
-                                        className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${selectedPatient?.id === patient.id ? 'bg-indigo-50 border border-indigo-200' : 'hover:bg-gray-50'}`}
+                                        className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all border ${selectedPatient?.id === patient.id ? 'bg-indigo-50 border-indigo-200 shadow-sm' : 'bg-white border-transparent hover:bg-slate-50 hover:border-slate-100'}`}
                                         onClick={() => setSelectedPatient(patient)}
                                     >
                                         <div className="flex items-center gap-3">
