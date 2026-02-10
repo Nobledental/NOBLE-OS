@@ -324,90 +324,92 @@ export function ClinicManagementDeck() {
                             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
                         </div>    {/* Open in Full Page Button */}
                         {/* Open in Full Page Button */}
-                        {activeAction && ACTION_ROUTES[activeAction] && (
-                            <Link href={ACTION_ROUTES[activeAction]}>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="h-9 gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-indigo-600 transition-all shadow-sm"
-                                >
-                                    <ExternalLink className="w-3.5 h-3.5" />
-                                    Open Full Page
-                                </Button>
-                            </Link>
-                        )}
-
-                        {/* Close Button */}
-                        <button
-                            onClick={() => setActiveAction(null)}
-                            className="p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
-                        >
-                            <X className="w-5 h-5 md:w-6 md:h-6" />
-                        </button>
-                    </div>
-
-                    <div className="p-6 md:p-12">
-                        {/* Inner Back Button for Dialog Context */}
-                        <Button
-                            variant="ghost"
-                            onClick={() => setActiveAction(null)}
-                            className="mb-8 text-slate-400 hover:text-slate-900 gap-2 px-0 hover:bg-transparent font-bold uppercase tracking-widest text-[10px]"
-                        >
-                            <ArrowLeft className="w-4 h-4" /> Back to Dashboard
-                        </Button>
-
-                        {activeAction === "STAFF" && <StaffSettings />}
-                        {activeAction === "BILLING" && <BillingSettings />}
-                        {activeAction === "INTEGRATIONS" && <UniversalBridgeHub />}
-                        {activeAction === "IDENTITY" && <ClinicBrandingSettings onSave={() => setActiveAction(null)} />}
-                        {activeAction === "INVENTORY" && <InventoryHub />}
-                        {activeAction === "STERILIZATION" && (
-                            <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                                <SterilizationHub />
-                            </div>
-                        )}
-
-                        {activeAction === "QUEUE" && <AppointmentsHub />}
-                        {activeAction === "SCHEDULING" && <ClinicSchedulingSettings />}
-                        {activeAction === "DEPARTMENTS" && <ClinicalMasterHub />}
-                        {activeAction === "TARIFF" && <TariffMasterHub />}
-                        {activeAction === "SPECIALISTS" && <SettlementLedgerHub />}
-
-                        {/* Fallback & Placeholders */}
-                        {["WORKFLOW", "CHAIRS"].includes(activeAction!) && (
-                            <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-10">
-                                <div className="relative">
-                                    <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-3xl" />
-                                    <div className="w-24 h-24 md:w-28 md:h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] flex items-center justify-center text-blue-400/40 relative z-10">
-                                        {activeAction === "CHAIRS" ? <Armchair className="w-10 h-10 md:w-12 md:h-12" /> : <Settings2 className="w-10 h-10 md:w-12 md:h-12" />}
-                                    </div>
-                                </div>
-                                <div className="space-y-4 relative z-10">
-                                    <div className="flex items-center justify-center gap-4">
-                                        <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                                        <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
-                                    </div>
-                                    <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
-                                        {activeAction === "CHAIRS" ? "Asset Utilization" : "Workflow"} <span className="text-white font-light border-b border-white/20">Optimization</span>
-                                    </h3>
-                                    <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
-                                        {activeAction === "CHAIRS"
-                                            ? "Digital Twin for Chair Management is initializing. Connecting to IoT sensors..."
-                                            : "Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle."
-                                        }
-                                    </p>
-                                </div>
-                                <div className="flex gap-4">
-                                    <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/30 bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
-                                        View Documentation
+                        {/* Header Controls - Restored for Syntax/Layout Fix */}
+                        <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
+                            {activeAction && ACTION_ROUTES[activeAction] && (
+                                <Link href={ACTION_ROUTES[activeAction]}>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        className="h-9 gap-2 text-xs font-bold uppercase tracking-wider text-slate-600 border-slate-200 hover:bg-slate-50 hover:text-indigo-600 transition-all shadow-sm"
+                                    >
+                                        <ExternalLink className="w-3.5 h-3.5" />
+                                        Open Full Page
                                     </Button>
+                                </Link>
+                            )}
+
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setActiveAction(null)}
+                                className="p-2 md:p-3 bg-slate-900/5 hover:bg-slate-900/10 rounded-full text-slate-400 transition-all"
+                            >
+                                <X className="w-5 h-5 md:w-6 md:h-6" />
+                            </button>
+                        </div>
+
+                        <div className="p-6 md:p-12">
+                            {/* Inner Back Button for Dialog Context */}
+                            <Button
+                                variant="ghost"
+                                onClick={() => setActiveAction(null)}
+                                className="mb-8 text-slate-400 hover:text-slate-900 gap-2 px-0 hover:bg-transparent font-bold uppercase tracking-widest text-[10px]"
+                            >
+                                <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+                            </Button>
+
+                            {activeAction === "STAFF" && <StaffSettings />}
+                            {activeAction === "BILLING" && <BillingSettings />}
+                            {activeAction === "INTEGRATIONS" && <UniversalBridgeHub />}
+                            {activeAction === "IDENTITY" && <ClinicBrandingSettings onSave={() => setActiveAction(null)} />}
+                            {activeAction === "INVENTORY" && <InventoryHub />}
+                            {activeAction === "STERILIZATION" && (
+                                <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                    <SterilizationHub />
                                 </div>
-                            </div>
-                        )}
-                    </div>
-                </div >
-            </DialogContent>
-        </Dialog>
+                            )}
+
+                            {activeAction === "QUEUE" && <AppointmentsHub />}
+                            {activeAction === "SCHEDULING" && <ClinicSchedulingSettings />}
+                            {activeAction === "DEPARTMENTS" && <ClinicalMasterHub />}
+                            {activeAction === "TARIFF" && <TariffMasterHub />}
+                            {activeAction === "SPECIALISTS" && <SettlementLedgerHub />}
+
+                            {/* Fallback & Placeholders */}
+                            {["WORKFLOW", "CHAIRS"].includes(activeAction!) && (
+                                <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-10">
+                                    <div className="relative">
+                                        <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-3xl" />
+                                        <div className="w-24 h-24 md:w-28 md:h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] flex items-center justify-center text-blue-400/40 relative z-10">
+                                            {activeAction === "CHAIRS" ? <Armchair className="w-10 h-10 md:w-12 md:h-12" /> : <Settings2 className="w-10 h-10 md:w-12 md:h-12" />}
+                                        </div>
+                                    </div>
+                                    <div className="space-y-4 relative z-10">
+                                        <div className="flex items-center justify-center gap-4">
+                                            <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
+                                        </div>
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                                            {activeAction === "CHAIRS" ? "Asset Utilization" : "Workflow"} <span className="text-white font-light border-b border-white/20">Optimization</span>
+                                        </h3>
+                                        <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
+                                            {activeAction === "CHAIRS"
+                                                ? "Digital Twin for Chair Management is initializing. Connecting to IoT sensors..."
+                                                : "Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle."
+                                            }
+                                        </p>
+                                    </div>
+                                    <div className="flex gap-4">
+                                        <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/30 bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
+                                            View Documentation
+                                        </Button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div >
+                </DialogContent>
+            </Dialog>
         </div >
     );
 }
