@@ -103,7 +103,7 @@ export function ClinicalHistory({ patientId }: { patientId: string }) {
                                     {item.date}
                                 </span>
 
-                                <Card className="border-0 shadow-sm hover:shadow-md transition-shadow bg-slate-50/50 dark:bg-slate-900/50">
+                                <Card className="border-0 shadow-sm hover:shadow-md transition-shadow bg-slate-50/50">
                                     <CardContent className="p-3 flex items-start gap-3">
                                         <div className={`p-2 rounded-lg shrink-0 ${item.color}`}>
                                             <item.icon className="w-4 h-4" />

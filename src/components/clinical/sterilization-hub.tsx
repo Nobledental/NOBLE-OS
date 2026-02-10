@@ -191,7 +191,7 @@ export function SterilizationHub() {
                                         animate={{ opacity: 1, scale: 1 }}
                                         className="group"
                                     >
-                                        <PanzeCard className="relative overflow-hidden bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-1000 hover:border-slate-700 shadow-2xl">
+                                        <PanzeCard className="relative overflow-hidden bg-white border border-slate-200 rounded-2xl md:rounded-3xl p-5 md:p-6 transition-all duration-1000 hover:border-slate-300 shadow-xl">
                                             {/* Silk Glow */}
                                             <div className={cn(
                                                 "absolute top-0 right-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-1000",
@@ -205,50 +205,50 @@ export function SterilizationHub() {
                                                     <div className="flex items-start justify-between">
                                                         <div className="space-y-3">
                                                             <div className="flex items-center gap-3">
-                                                                <div className={cn("w-2 h-2 rounded-full shadow-[0_0_8px_rgba(255,255,255,0.4)]", Config.color)} />
-                                                                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-white">{Config.label}</span>
-                                                                <span className="text-[9px] font-bold text-white/80 tracking-widest border-l border-white/20 pl-2">#{batch.id}</span>
+                                                                <div className={cn("w-2 h-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0.1)]", Config.color)} />
+                                                                <span className="text-[9px] font-bold uppercase tracking-[0.4em] text-slate-500">{Config.label}</span>
+                                                                <span className="text-[9px] font-bold text-slate-400 tracking-widest border-l border-slate-200 pl-2">#{batch.id}</span>
                                                             </div>
-                                                            <h4 className="text-xl font-semibold text-white tracking-tight">{batch.name}</h4>
+                                                            <h4 className="text-xl font-semibold text-slate-900 tracking-tight">{batch.name}</h4>
                                                         </div>
                                                         <div className={cn(
-                                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all border border-white/20 bg-white/10 shadow-lg",
-                                                            batch.status === 'PROCESSING' && "animate-pulse border-amber-500/60 shadow-amber-500/20"
+                                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-all border border-slate-100 bg-slate-50 shadow-sm",
+                                                            batch.status === 'PROCESSING' && "animate-pulse border-amber-200 shadow-amber-100"
                                                         )}>
-                                                            <Icon className={cn("w-4 h-4", batch.status === 'PROCESSING' ? "text-amber-400" : "text-white")} />
+                                                            <Icon className={cn("w-4 h-4", batch.status === 'PROCESSING' ? "text-amber-500" : "text-slate-400")} />
                                                         </div>
                                                     </div>
 
                                                     <div className="flex flex-wrap gap-2">
                                                         {batch.kits.map((kit, i) => (
-                                                            <div key={i} className="px-4 py-2 bg-white/10 rounded-xl border border-white/20 flex items-center gap-3 group/kit">
-                                                                <div className="w-1 h-1 rounded-full bg-white group-hover/kit:bg-white transition-colors" />
-                                                                <span className="text-[10px] font-bold text-white uppercase tracking-widest">{kit}</span>
+                                                            <div key={i} className="px-4 py-2 bg-slate-50 rounded-xl border border-slate-200 flex items-center gap-3 group/kit">
+                                                                <div className="w-1 h-1 rounded-full bg-slate-400 group-hover/kit:bg-slate-900 transition-colors" />
+                                                                <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{kit}</span>
                                                             </div>
                                                         ))}
                                                     </div>
 
-                                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-4 border-t border-white/5">
+                                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 pt-4 border-t border-slate-100">
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Equipment</p>
-                                                            <p className="text-[10px] font-black text-white tracking-tight uppercase">{batch.machineId}</p>
+                                                            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Equipment</p>
+                                                            <p className="text-[10px] font-black text-slate-700 tracking-tight uppercase">{batch.machineId}</p>
                                                         </div>
                                                         <div className="space-y-1">
-                                                            <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Start Time</p>
-                                                            <p className="text-[10px] font-black text-white tracking-tight">
+                                                            <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Start Time</p>
+                                                            <p className="text-[10px] font-black text-slate-700 tracking-tight">
                                                                 {batch.startTime?.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) || '--:--'}
                                                             </p>
                                                         </div>
                                                         {batch.temperature && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Vitals</p>
-                                                                <p className="text-[10px] font-black text-white tracking-tight">{batch.temperature}°C • {batch.pressure} bar</p>
+                                                                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Vitals</p>
+                                                                <p className="text-[10px] font-black text-slate-700 tracking-tight">{batch.temperature}°C • {batch.pressure} bar</p>
                                                             </div>
                                                         )}
                                                         {batch.verifiedBy && (
                                                             <div className="space-y-1">
-                                                                <p className="text-[8px] font-bold text-white uppercase tracking-[0.2em] opacity-80">Verifier</p>
-                                                                <p className="text-[10px] font-black text-white tracking-tight uppercase">{batch.verifiedBy}</p>
+                                                                <p className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em]">Verifier</p>
+                                                                <p className="text-[10px] font-black text-slate-700 tracking-tight uppercase">{batch.verifiedBy}</p>
                                                             </div>
                                                         )}
                                                     </div>
@@ -295,35 +295,35 @@ export function SterilizationHub() {
                 </div>
 
                 <div className="lg:col-span-4 space-y-6">
-                    <PanzeCard className="p-6 rounded-3xl bg-slate-900 border border-slate-800 shadow-2xl">
+                    <PanzeCard className="p-6 rounded-3xl bg-white border border-slate-100 shadow-xl">
                         <div className="space-y-6">
-                            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20">
-                                <ShieldCheck className="w-5 h-5 text-indigo-400/60" />
+                            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center border border-indigo-100">
+                                <ShieldCheck className="w-5 h-5 text-indigo-600" />
                             </div>
                             <div className="space-y-2">
-                                <h4 className="text-xl font-bold text-white tracking-tight">Compliance Score</h4>
-                                <p className="text-[10px] font-semibold text-white leading-relaxed uppercase tracking-widest opacity-90">
+                                <h4 className="text-xl font-bold text-slate-900 tracking-tight">Compliance Score</h4>
+                                <p className="text-[10px] font-semibold text-slate-500 leading-relaxed uppercase tracking-widest">
                                     Armamentarium protocols are 98.4% compliant with NABH standards.
                                 </p>
                             </div>
-                            <div className="h-px w-full bg-white/5" />
+                            <div className="h-px w-full bg-slate-100" />
                             <div className="flex items-center justify-between">
                                 <div className="space-y-1">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white">Cycles Processed</p>
-                                    <p className="text-2xl font-black text-white tracking-tighter">142</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Cycles Processed</p>
+                                    <p className="text-2xl font-black text-slate-900 tracking-tighter">142</p>
                                 </div>
                                 <div className="text-right space-y-1">
-                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white">Safety Alerts</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Safety Alerts</p>
                                     <p className="text-2xl font-black text-rose-500 tracking-tighter">02</p>
                                 </div>
                             </div>
                         </div>
                     </PanzeCard>
 
-                    <div className="p-6 rounded-3xl bg-white/[0.02] border border-white/5 space-y-6">
+                    <div className="p-6 rounded-3xl bg-slate-50 border border-slate-100 space-y-6">
                         <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-white/10" />
-                            <h4 className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
+                            <div className="w-2 h-2 rounded-full bg-slate-300" />
+                            <h4 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.4em]">Protocol Guidelines</h4>
                         </div>
                         <div className="space-y-6">
                             {[
@@ -333,10 +333,10 @@ export function SterilizationHub() {
                                 "Dry Storage protocol mandatory"
                             ].map((rule, i) => (
                                 <div key={i} className="flex gap-4 group/rule">
-                                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center shrink-0 border border-emerald-500/40 group-hover/rule:bg-emerald-500/30 transition-colors shadow-lg">
-                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                                    <div className="w-6 h-6 rounded-lg bg-white flex items-center justify-center shrink-0 border border-slate-100 group-hover/rule:border-emerald-200 transition-colors shadow-sm">
+                                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                                     </div>
-                                    <span className="text-[11px] font-bold text-white uppercase tracking-widest leading-relaxed">{rule}</span>
+                                    <span className="text-[11px] font-bold text-slate-600 uppercase tracking-widest leading-relaxed">{rule}</span>
                                 </div>
                             ))}
                         </div>

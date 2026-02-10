@@ -46,7 +46,7 @@ export function TariffWidget() {
                     </div>
                 </div>
                 <Link href="/dashboard/tariff">
-                    <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-slate-900/5 transition-all">
+                    <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-slate-100 transition-all">
                         <ChevronRight className="w-5 h-5 text-slate-400" />
                     </Button>
                 </Link>

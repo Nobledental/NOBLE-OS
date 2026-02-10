@@ -14,7 +14,7 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
     const heatmapData = data || [0, 0, 0, 0, 0, 0, 0, 2, 8, 15, 22, 18, 10, 12, 25, 30, 20, 15, 5, 2, 0, 0, 0, 0];
 
     const getIntensity = (val: number) => {
-        if (val === 0) return "bg-slate-50 dark:bg-slate-900";
+        if (val === 0) return "bg-slate-50";
         if (val < 5) return "bg-indigo-100 dark:bg-indigo-900/20";
         if (val < 15) return "bg-indigo-300 dark:bg-indigo-800/40";
         if (val < 25) return "bg-indigo-500 dark:bg-indigo-700/60";
@@ -70,7 +70,7 @@ export function BottleneckHeatmap({ data }: HeatmapProps) {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-dashed">
+                <div className="flex items-center gap-2 p-3 bg-slate-50 rounded-xl border border-dashed">
                     <Info className="h-4 w-4 text-slate-400" />
                     <p className="text-[10px] text-slate-500">
                         Leapfrog Strategy: Optimization suggested for 3:00 PM slot due to high consistent congestion.

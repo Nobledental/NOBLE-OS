@@ -38,7 +38,7 @@ export default function AEODashboard() {
                         <div className="flex items-center gap-2 text-blue-600 font-bold text-xs uppercase tracking-[0.2em] mb-3">
                             <BrainCircuit size={14} className="animate-pulse" /> AI Engine Optimization
                         </div>
-                        <h1 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white">AEO Authority Index</h1>
+                        <h1 className="text-4xl font-black tracking-tight text-slate-900">AEO Authority Index</h1>
                         <p className="text-slate-500 dark:text-slate-400 font-medium">Manage clinical SEEAT (Search, Experience, Expertise, Authoritativeness, Trustworthiness).</p>
                     </div>
 
@@ -48,8 +48,8 @@ export default function AEODashboard() {
                                 key={tab}
                                 onClick={() => setSelectedMetric(tab as any)}
                                 className={`px-6 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${selectedMetric === tab
-                                    ? 'bg-slate-900 text-white shadow-lg'
-                                    : 'text-slate-400 hover:text-slate-600 dark:hover:text-white'
+                                    ? 'bg-white text-slate-900 shadow-lg border border-slate-200'
+                                    : 'text-slate-400 hover:text-slate-600'
                                     }`}
                             >
                                 {tab}
@@ -88,17 +88,17 @@ export default function AEODashboard() {
                             <CheckCircle2 size={24} />
                         </div>
                         <div>
-                            <div className="text-3xl font-black text-slate-900 dark:text-white">96%</div>
+                            <div className="text-3xl font-black text-slate-900">96%</div>
                             <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Metadata Health</div>
                         </div>
                     </div>
 
-                    <div className="bg-slate-900 rounded-[2.5rem] p-8 shadow-xl flex flex-col justify-between relative overflow-hidden group">
-                        <div className="p-3 bg-white/10 text-white rounded-2xl w-fit">
+                    <div className="bg-white rounded-[2.5rem] p-8 shadow-xl flex flex-col justify-between relative overflow-hidden group border border-slate-100">
+                        <div className="p-3 bg-slate-100 text-slate-900 rounded-2xl w-fit">
                             <Sparkles size={24} className="group-hover:rotate-12 transition-transform" />
                         </div>
                         <div className="relative z-10">
-                            <div className="text-3xl font-black text-white">4.2k</div>
+                            <div className="text-3xl font-black text-slate-900">4.2k</div>
                             <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">AEO Impressions</div>
                         </div>
                         <div className="absolute top-0 right-0 p-4">
@@ -113,7 +113,7 @@ export default function AEODashboard() {
                     <div className="lg:col-span-1 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl p-8 space-y-6">
                         <div className="flex items-center gap-3 border-b border-slate-100 dark:border-white/5 pb-4">
                             <Zap className="text-blue-600" />
-                            <h3 className="font-black uppercase tracking-tighter text-lg dark:text-white">AEO Tactical Insights</h3>
+                            <h3 className="font-black uppercase tracking-tighter text-lg text-slate-900">AEO Tactical Insights</h3>
                         </div>
 
                         <div className="space-y-4">
@@ -134,7 +134,7 @@ export default function AEODashboard() {
                     <div className="lg:col-span-2 bg-white dark:bg-[#0a0f1d] rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-xl overflow-hidden flex flex-col">
                         <div className="p-8 border-b border-slate-100 dark:border-white/5 flex justify-between items-center">
                             <div>
-                                <h3 className="font-black uppercase tracking-tighter text-xl dark:text-white">Faculty Trust Leaderboard</h3>
+                                <h3 className="font-black uppercase tracking-tighter text-xl text-slate-900">Faculty Trust Leaderboard</h3>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Authority scores based on SEEAT metrics</p>
                             </div>
                             <button className="flex items-center gap-2 text-xs font-black uppercase text-blue-600 hover:opacity-75 tracking-widest">
@@ -161,7 +161,7 @@ export default function AEODashboard() {
                                                         <img src={doc.image} alt="" className="object-cover" />
                                                     </div>
                                                     <div>
-                                                        <div className="font-bold text-slate-900 dark:text-white text-sm">{doc.name}</div>
+                                                        <div className="font-bold text-slate-900 text-sm">{doc.name}</div>
                                                         <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{doc.specialty}</div>
                                                     </div>
                                                 </div>
