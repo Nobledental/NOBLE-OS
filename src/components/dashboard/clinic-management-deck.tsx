@@ -35,6 +35,11 @@ import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import { ClinicBrandingSettings } from "@/components/settings/clinic-branding-settings";
 import { InventoryHub } from "@/components/inventory/inventory-hub";
 import { SterilizationHub } from "@/components/clinical/sterilization-hub";
+import { AppointmentsHub } from "@/components/dashboard/appointments-hub";
+import { ClinicSchedulingSettings } from "@/components/settings/clinic-scheduling-settings";
+import { ClinicalMasterHub } from "@/components/clinical/clinical-master-hub";
+import { TariffMasterHub } from "@/components/finance/tariff-master-hub";
+import { SettlementLedgerHub } from "@/components/finance/settlement-ledger-hub";
 import { cn } from "@/lib/utils";
 
 interface ManagementFeature {
@@ -61,7 +66,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-blue-400",
         glow: "blue-500",
         category: "Operations",
-        href: "/dashboard/appointments"
+        action: "QUEUE"
     },
     {
         title: "Scheduling",
@@ -71,7 +76,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-blue-400",
         glow: "blue-400",
         category: "Operations",
-        href: "/dashboard/settings/scheduling"
+        action: "SCHEDULING"
     },
     {
         title: "Departments",
@@ -81,7 +86,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-blue-400",
         glow: "blue-500",
         category: "Operations",
-        href: "/dashboard/clinical"
+        action: "DEPARTMENTS"
     },
     {
         title: "Dental Chairs",
@@ -91,7 +96,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-blue-400",
         glow: "blue-400",
         category: "Operations",
-        href: "/dashboard/admin/chairs"
+        action: "CHAIRS"
     },
 
     // 2. Finance Workstream (Champagne Gold)
@@ -103,7 +108,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-amber-200",
         glow: "amber-500",
         category: "Finance",
-        href: "/dashboard/tariff"
+        action: "TARIFF"
     },
     {
         title: "Specialists",
@@ -113,7 +118,7 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
         accent: "text-amber-200",
         glow: "amber-500",
         category: "Finance",
-        href: "/dashboard/settlement"
+        action: "SPECIALISTS"
     },
     {
         title: "Billing Hub",
@@ -199,6 +204,13 @@ const ACTION_ROUTES: Record<string, string> = {
     "STERILIZATION": "/dashboard/sterilization",
     "BILLING": "/dashboard/billing",
     "STAFF": "/dashboard/settings/staff",
+    "QUEUE": "/dashboard/appointments",
+    "SCHEDULING": "/dashboard/settings/scheduling",
+    "DEPARTMENTS": "/dashboard/clinical",
+    "TARIFF": "/dashboard/tariff",
+    "SPECIALISTS": "/dashboard/settlement",
+    "CHAIRS": "/dashboard/admin/chairs", // Placeholder route
+    "WORKFLOW": "/dashboard/admin/workflow", // Placeholder route
 };
 
 export function ClinicManagementDeck() {
@@ -352,13 +364,19 @@ export function ClinicManagementDeck() {
                                 </div>
                             )}
 
-                            {/* Fallback */}
-                            {["WORKFLOW"].includes(activeAction!) && (
+                            {activeAction === "QUEUE" && <AppointmentsHub />}
+                            {activeAction === "SCHEDULING" && <ClinicSchedulingSettings />}
+                            {activeAction === "DEPARTMENTS" && <ClinicalMasterHub />}
+                            {activeAction === "TARIFF" && <TariffMasterHub />}
+                            {activeAction === "SPECIALISTS" && <SettlementLedgerHub />}
+
+                            {/* Fallback & Placeholders */}
+                            {["WORKFLOW", "CHAIRS"].includes(activeAction!) && (
                                 <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-10">
                                     <div className="relative">
                                         <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-3xl" />
                                         <div className="w-24 h-24 md:w-28 md:h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] flex items-center justify-center text-blue-400/40 relative z-10">
-                                            <Settings2 className="w-10 h-10 md:w-12 md:h-12" />
+                                            {activeAction === "CHAIRS" ? <Armchair className="w-10 h-10 md:w-12 md:h-12" /> : <Settings2 className="w-10 h-10 md:w-12 md:h-12" />}
                                         </div>
                                     </div>
                                     <div className="space-y-4 relative z-10">
@@ -366,14 +384,21 @@ export function ClinicManagementDeck() {
                                             <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
                                             <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
                                         </div>
-                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">Workflow <span className="text-white font-light border-b border-white/20">Optimization</span></h3>
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                                            {activeAction === "CHAIRS" ? "Asset Utilization" : "Workflow"} <span className="text-white font-light border-b border-white/20">Optimization</span>
+                                        </h3>
                                         <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
-                                            Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle.
+                                            {activeAction === "CHAIRS"
+                                                ? "Digital Twin for Chair Management is initializing. Connecting to IoT sensors..."
+                                                : "Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle."
+                                            }
                                         </p>
                                     </div>
-                                    <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/30 bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
-                                        View Documentation
-                                    </Button>
+                                    <div className="flex gap-4">
+                                        <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/30 bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
+                                            View Documentation
+                                        </Button>
+                                    </div>
                                 </div>
                             )}
                         </div>
