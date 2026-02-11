@@ -134,8 +134,7 @@ export function ClinicalMasterHub() {
                         </Tabs>
                     </div>
                 </div>
+            </PermissionGuard>
         </div>
-            </PermissionGuard >
-        </div >
     );
 }
