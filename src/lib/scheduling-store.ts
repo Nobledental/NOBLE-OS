@@ -109,19 +109,76 @@ export const fetchAvailableSlots = async (dateStr: string, activeChairs: number)
     }
 };
 
-const generateFallbackSlots = (dateStr: string, activeChairs: number) => {
-    const slots = [];
-    let currentTime = new Date(`${dateStr}T09:00:00`);
-    const endTime = new Date(`${dateStr}T18:00:00`);
 
-    while (currentTime < endTime) {
+export const PROCEDURE_TYPES = [
+    { id: 'consultation', label: 'Consultation', duration: 30, color: 'bg-blue-100 text-blue-800' },
+    { id: 'dental_cleaning', label: 'Dental Cleaning', duration: 45, color: 'bg-green-100 text-green-800' },
+    { id: 'root_canal', label: 'Root Canal Treatment', duration: 60, color: 'bg-red-100 text-red-800' },
+    { id: 'extraction', label: 'Tooth Extraction', duration: 45, color: 'bg-orange-100 text-orange-800' },
+    { id: 'follow_up', label: 'Follow Up', duration: 15, color: 'bg-slate-100 text-slate-800' },
+    { id: 'emergency', label: 'Emergency', duration: 30, color: 'bg-red-500 text-white' },
+];
+
+const generateFallbackSlots = (
+    dateStr: string,
+    activeChairs: number,
+    durationMinutes: number = 30,
+    config: SchedulingConfig
+) => {
+    const slots = [];
+    const { start: startStr, end: endStr } = config.operatingHours;
+
+    // Parse start/end times
+    const startTime = new Date(`${dateStr}T${startStr}:00`);
+    const endTime = new Date(`${dateStr}T${endStr}:00`);
+    const now = new Date();
+
+    // Loop through day in 15-min intervals
+    let currentTime = new Date(startTime);
+
+    while (currentTime.getTime() + (durationMinutes * 60000) <= endTime.getTime()) {
+        const slotEnd = new Date(currentTime.getTime() + (durationMinutes * 60000));
         const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-        slots.push({
-            time: timeString,
-            capacity: activeChairs,
-            available: activeChairs - Math.floor(Math.random() * 2)
+
+        let isAvailable = true;
+
+        // 1. Check if slot is in the past (for today)
+        if (new Date(dateStr).toDateString() === now.toDateString() && currentTime < now) {
+            isAvailable = false;
+        }
+
+        // 2. Check Breaks
+        const inBreak = config.breaks.some(b => {
+            const breakStart = new Date(`${dateStr}T${b.start}:00`);
+            const breakEnd = new Date(`${dateStr}T${b.end}:00`);
+            // Overlap check
+            return (currentTime < breakEnd && slotEnd > breakStart);
         });
-        currentTime.setMinutes(currentTime.getMinutes() + 30);
+        if (inBreak) isAvailable = false;
+
+        // 3. Check Chair Capacity (Concept: Count overlapping appointments)
+        // Simplified: Random simulation for demo, but structure is here for real logic
+        // In real app: Filter appointments where (appt.start < slotEnd && appt.end > currentTime)
+        // If count >= activeChairs, isAvailable = false.
+
+        // For User Demo: We simulate "Busy" slots randomly if it's not a break
+        if (isAvailable) {
+            // Deterministic pseudo-random based on time (so it doesn't flicker on re-render)
+            const entropy = currentTime.getHours() + currentTime.getMinutes();
+            const bookedChairs = entropy % (activeChairs + 1); // Mock utilization
+            const availableChairs = Math.max(0, activeChairs - bookedChairs);
+
+            if (availableChairs > 0) {
+                slots.push({
+                    time: timeString,
+                    capacity: activeChairs,
+                    available: availableChairs
+                });
+            }
+        }
+
+        // Increment by 15 mins for granular slots
+        currentTime.setMinutes(currentTime.getMinutes() + 15);
     }
     return slots;
 };
