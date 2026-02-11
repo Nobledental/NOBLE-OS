@@ -37,7 +37,10 @@ import {
     Map,
     Globe,
     Search,
-    Activity
+    Activity,
+    Calendar,
+    Copy,
+    ExternalLink
 } from 'lucide-react';
 import {
     ClinicBranding,
@@ -419,31 +422,79 @@ export const ClinicBrandingSettings: React.FC<{
                             </div>
                         )}
 
-                        {activeTab === 'website' && (
-                            <div className="space-y-10">
-                                <div className="bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-[3.5rem] p-10 text-white relative overflow-hidden shadow-2xl">
-                                    <div className="relative z-10 space-y-6 max-w-xl">
-                                        <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
-                                            <Globe2 className="w-6 h-6" />
-                                        </div>
-                                        <h3 className="text-4xl font-black leading-[0.9] tracking-tighter">Your Clinic&apos;s Digital Headquarters.</h3>
-                                        <p className="text-indigo-100 text-lg font-medium opacity-90">Get a high-converting dental website built by HealthFlo experts. Standard: nobledentalnallagandla.in</p>
-                                        <button onClick={() => alert("Website request sent.")} className="px-8 py-5 bg-white text-indigo-900 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl">Order Custom Build</button>
+                        <div className="space-y-10">
+                            <div className="bg-gradient-to-br from-indigo-600 to-indigo-900 rounded-[3.5rem] p-10 text-white relative overflow-hidden shadow-2xl">
+                                <div className="relative z-10 space-y-6 max-w-xl">
+                                    <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-md">
+                                        <Globe2 className="w-6 h-6" />
                                     </div>
-                                    <Globe2 className="absolute -bottom-20 -right-20 w-80 h-80 text-indigo-100/10 rotate-12 blur-[2px]" />
+                                    <h3 className="text-4xl font-black leading-[0.9] tracking-tighter">Your Clinic&apos;s Digital Headquarters.</h3>
+                                    <p className="text-indigo-100 text-lg font-medium opacity-90">Get a high-converting dental website built by HealthFlo experts. Standard: nobledentalnallagandla.in</p>
+                                    <button onClick={() => alert("Website request sent.")} className="px-8 py-5 bg-white text-indigo-900 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl">Order Custom Build</button>
                                 </div>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1 flex items-center gap-2"><Globe className="w-3 h-3" />Existing Domain</label>
-                                        <input type="url" value={settings.branding.website || ''} onChange={(e) => updateBranding('website', e.target.value)} placeholder="https://yourclinic.com" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl outline-none font-bold transition-all" />
+                                <Globe2 className="absolute -bottom-20 -right-20 w-80 h-80 text-indigo-100/10 rotate-12 blur-[2px]" />
+                            </div>
+
+                            {/* Public Booking Portal Card */}
+                            <div className="p-8 bg-slate-50 border border-slate-100 rounded-[3rem] shadow-sm hover:shadow-md transition-all relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors"></div>
+                                <div className="relative z-10 space-y-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm text-blue-600">
+                                            <Calendar className="w-7 h-7" />
+                                        </div>
+                                        <div>
+                                            <h3 className="text-xl font-black text-slate-900 leading-none">Public Booking Portal</h3>
+                                            <p className="text-slate-500 font-medium text-sm mt-1">Direct booking link for your patients.</p>
+                                        </div>
+                                        <div className="ml-auto px-4 py-2 bg-green-100 text-green-700 rounded-full text-[10px] font-black uppercase tracking-widest border border-green-200">
+                                            Live
+                                        </div>
                                     </div>
-                                    <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1 flex items-center gap-2"><Instagram className="w-3 h-3 text-pink-500" />Instagram Hook</label>
-                                        <input type="text" placeholder="@clinic_handle" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl outline-none font-bold transition-all" />
+
+                                    <div className="p-6 bg-white rounded-[2rem] border border-slate-200 shadow-inner flex items-center justify-between gap-4">
+                                        <div className="flex-1 overflow-hidden">
+                                            <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Your Unique Booking Link</p>
+                                            <p className="font-mono text-slate-900 font-bold truncate text-sm">
+                                                {typeof window !== 'undefined' ? `${window.location.origin}/book/${store.clinicDetails?.googleLocationId ? "HFD-HYD-NLG-001" : "HFD-HYD-NLG-001"}` : '...'}
+                                            </p>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    const url = `${window.location.origin}/book/HFD-HYD-NLG-001`; // Hardcoded for Noble
+                                                    navigator.clipboard.writeText(url);
+                                                    alert("Link copied to clipboard!");
+                                                }}
+                                                className="w-12 h-12 bg-slate-100 hover:bg-slate-200 rounded-xl flex items-center justify-center text-slate-600 transition-colors"
+                                                title="Copy Link"
+                                            >
+                                                <Copy className="w-5 h-5" />
+                                            </button>
+                                            <button
+                                                onClick={() => window.open(`/book/HFD-HYD-NLG-001`, '_blank')}
+                                                className="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 transition-all"
+                                                title="Open Page"
+                                            >
+                                                <ExternalLink className="w-5 h-5" />
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        )}
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1 flex items-center gap-2"><Globe className="w-3 h-3" />Existing Domain</label>
+                                    <input type="url" value={settings.branding.website || ''} onChange={(e) => updateBranding('website', e.target.value)} placeholder="https://yourclinic.com" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl outline-none font-bold transition-all" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1 flex items-center gap-2"><Instagram className="w-3 h-3 text-pink-500" />Instagram Hook</label>
+                                    <input type="text" placeholder="@clinic_handle" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl outline-none font-bold transition-all" />
+                                </div>
+                            </div>
+                        </div>
+
 
                         {activeTab === 'theme' && (
                             <div className="space-y-8">
