@@ -66,7 +66,7 @@ export function ClinicalMasterHub() {
                                 <Skull className="w-4 h-4" />
                                 Visual Charting
                             </h3>
-                            <ToothMap patientId={MOCK_PATIENT_ID} />
+                            <UniversalToothChart mode="MIXED" className="border-none shadow-none p-0" />
                         </div>
                     </div>
 

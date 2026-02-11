@@ -173,7 +173,7 @@ export default function PatientDetailPage() {
                             </TabsContent>
 
                             <TabsContent value="charts">
-                                <DentalChart />
+                                <UniversalToothChart mode="ADULT" />
                             </TabsContent>
 
                             <TabsContent value="vitals">

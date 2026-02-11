@@ -1,6 +1,6 @@
 "use client";
 
-import { DentalMap } from "@/components/dental/dental-map";
+import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 import { useChairStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -37,99 +37,113 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
     };
 
     return (
-        <div className="h-screen flex bg-background overflow-hidden relative">
+        <div className="h-screen flex bg-slate-50 overflow-hidden relative">
             {/* Left: Dental Map (The Canvas) */}
-            <div className="flex-1 bg-slate-100 dark:bg-slate-950 p-4 flex flex-col items-center justify-center relative">
+            <div className="flex-1 bg-slate-100 p-4 flex flex-col items-center justify-center relative">
                 <div className="absolute top-4 left-4 z-10">
                     <Link href="/dashboard">
-                        <Button variant="outline" size="sm">← Exit Chair</Button>
+                        <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50">← Exit Chair</Button>
                     </Link>
                 </div>
 
-                <div className="absolute top-4 right-4 z-10 bg-white/80 dark:bg-slate-900/80 p-2 rounded-lg backdrop-blur">
-                    <h2 className="text-sm font-semibold">Patient: Divya Sharma</h2>
-                    <p className="text-xs text-muted-foreground">ID: HF-2024-9021 • <span className="text-red-500 font-bold">Allergy: Penicillin</span></p>
+                <div className="absolute top-4 right-4 z-10 bg-white/90 p-3 rounded-xl shadow-lg border border-slate-200 backdrop-blur">
+                    <h2 className="text-sm font-bold text-slate-800">Patient: Divya Sharma</h2>
+                    <p className="text-xs text-slate-500 font-medium">ID: HF-2024-9021 • <span className="text-red-500 font-bold">Allergy: Penicillin</span></p>
                 </div>
 
-                <DentalMap />
+                <div className="scale-90 origin-center max-h-screen overflow-auto">
+                    <UniversalToothChart mode="ADULT" className="shadow-2xl" />
+                </div>
             </div>
 
             {/* Right: Quick Chart Sidebar & Hybrid Note */}
-            <div className="w-[400px] border-l bg-background flex flex-col shadow-xl z-20">
-                <div className="p-4 border-b">
-                    <h3 className="font-semibold text-lg flex items-center">
-                        <Wand2 className="w-4 h-4 mr-2" />
+            <div className="w-[400px] border-l bg-white flex flex-col shadow-2xl z-20">
+                <div className="p-6 border-b border-slate-100">
+                    <h3 className="font-black text-xl flex items-center text-slate-900 tracking-tight">
+                        <Wand2 className="w-5 h-5 mr-2 text-indigo-600" />
                         Quick Chart
                     </h3>
-                    <p className="text-xs text-muted-foreground">Select teeth to apply treatments</p>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Select teeth to apply treatments</p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto p-4 space-y-6">
+                <div className="flex-1 overflow-y-auto p-6 space-y-8">
                     {/* Contextual Actions */}
                     <div className="space-y-4">
-                        <h4 className="text-xs font-semibold uppercase text-muted-foreground">Procedures</h4>
-                        <div className="grid grid-cols-2 gap-2">
+                        <h4 className="text-xs font-black uppercase text-slate-400 tracking-widest">Common Procedures</h4>
+                        <div className="grid grid-cols-2 gap-3">
                             <Button
                                 variant="outline"
                                 disabled={selectedTeeth.length === 0}
                                 onClick={() => applyTreatment('RCT')}
-                                className="justify-start hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+                                className="justify-start hover:bg-amber-50 hover:text-amber-700 hover:border-amber-200 h-auto py-3 border-slate-200"
                             >
-                                ROOT CANAL (RCT)
+                                <div className="text-left">
+                                    <div className="font-bold text-xs">ROOT CANAL</div>
+                                    <div className="text-[10px] opacity-70">Single/Multi visit</div>
+                                </div>
                             </Button>
                             <Button
                                 variant="outline"
                                 disabled={selectedTeeth.length === 0}
                                 onClick={() => applyTreatment('Filling')}
-                                className="justify-start"
+                                className="justify-start hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 h-auto py-3 border-slate-200"
                             >
-                                Composite Filling
+                                <div className="text-left">
+                                    <div className="font-bold text-xs">COMPOSITE</div>
+                                    <div className="text-[10px] opacity-70">Light Cure Filling</div>
+                                </div>
                             </Button>
                             <Button
                                 variant="outline"
                                 disabled={selectedTeeth.length === 0}
                                 onClick={() => applyTreatment('Extraction')}
-                                className="justify-start"
+                                className="justify-start hover:bg-red-50 hover:text-red-700 hover:border-red-200 h-auto py-3 border-slate-200"
                             >
-                                Extraction
+                                <div className="text-left">
+                                    <div className="font-bold text-xs">EXTRACTION</div>
+                                    <div className="text-[10px] opacity-70">Surgical/Simple</div>
+                                </div>
                             </Button>
                             <Button
                                 variant="outline"
                                 disabled={selectedTeeth.length === 0}
                                 onClick={() => applyTreatment('Crown')}
-                                className="justify-start"
+                                className="justify-start hover:bg-orange-50 hover:text-orange-700 hover:border-orange-200 h-auto py-3 border-slate-200"
                             >
-                                Zirconia Crown
+                                <div className="text-left">
+                                    <div className="font-bold text-xs">CROWN</div>
+                                    <div className="text-[10px] opacity-70">Zirconia/PFM</div>
+                                </div>
                             </Button>
                         </div>
                         {selectedTeeth.length > 0 && (
-                            <div className="text-xs text-blue-600 bg-blue-50 p-2 rounded">
-                                Selected: {selectedTeeth.join(", ")}
+                            <div className="text-xs font-bold text-indigo-600 bg-indigo-50 p-3 rounded-xl border border-indigo-100 flex items-center gap-2">
+                                <span className="uppercase tracking-wider">Active:</span> {selectedTeeth.join(", ")}
                             </div>
                         )}
                     </div>
 
                     {/* Hybrid Note */}
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                            <h4 className="text-xs font-semibold uppercase text-muted-foreground">Clinical Note</h4>
+                            <h4 className="text-xs font-black uppercase text-slate-400 tracking-widest">Clinical Note</h4>
                             <Button
                                 size="icon"
                                 variant={isListening ? "destructive" : "secondary"}
-                                className="h-6 w-6 rounded-full"
+                                className={isListening ? "animate-pulse shadow-lg shadow-red-500/30" : "bg-slate-100 text-slate-600"}
                                 onClick={toggleVoice}
                             >
-                                <Mic className="h-3 w-3" />
+                                <Mic className="h-4 w-4" />
                             </Button>
                         </div>
                         <Textarea
-                            placeholder="Start talking or typing..."
-                            className="min-h-[150px] resize-none focus-visible:ring-indigo-500"
+                            placeholder="Dictate or type clinical findings..."
+                            className="min-h-[150px] resize-none focus-visible:ring-indigo-500 bg-slate-50 border-slate-200 rounded-xl"
                             value={note}
                             onChange={(e) => setNote(e.target.value)}
                         />
                         <div className="flex justify-end">
-                            <Button size="sm">
+                            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20 rounded-lg font-bold">
                                 <Check className="h-4 w-4 mr-2" />
                                 Save Record
                             </Button>
@@ -137,13 +151,13 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
                     </div>
 
                     {/* Smart Inventory Link (Visual Mock) */}
-                    <Card className="bg-slate-50 border-dashed">
+                    <Card className="bg-slate-50 border-dashed border-2 shadow-none">
                         <CardHeader className="py-3">
-                            <CardTitle className="text-xs font-medium">Auto-Stock Deductions</CardTitle>
+                            <CardTitle className="text-xs font-black uppercase tracking-widest text-slate-500">Auto-Stock Deductions</CardTitle>
                         </CardHeader>
-                        <CardContent className="py-0 pb-3 text-xs text-muted-foreground">
-                            Applying <b>RCT</b> will deduct:
-                            <ul className="list-disc list-inside mt-1">
+                        <CardContent className="py-0 pb-3 text-xs text-slate-500 font-medium">
+                            Applying <span className="font-bold text-slate-800">RCT</span> will deduct:
+                            <ul className="list-disc list-inside mt-2 space-y-1 ml-1 text-[11px]">
                                 <li>Endo Motor File (x1)</li>
                                 <li>GP Point (x3)</li>
                                 <li>Sealer (0.5g)</li>
