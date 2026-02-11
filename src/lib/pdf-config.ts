@@ -435,6 +435,9 @@ export interface ClinicSettings {
     // Marketplace Flags (HealthFlo Pivot)
     isMarketplaceActive: boolean;
     discoveryEnabled: boolean;
+
+    // Scheduling Configuration
+    bookingMode: 'auto' | 'manual';
 }
 
 export const DEFAULT_CLINIC_SETTINGS: ClinicSettings = {
@@ -445,6 +448,7 @@ export const DEFAULT_CLINIC_SETTINGS: ClinicSettings = {
     currentInvoiceNumber: 1001,
     isMarketplaceActive: false,
     discoveryEnabled: false,
+    bookingMode: 'manual',
 };
 
 /**

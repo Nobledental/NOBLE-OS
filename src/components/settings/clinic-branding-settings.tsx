@@ -168,30 +168,60 @@ export const ClinicBrandingSettings: React.FC<{
     const store = useSchedulingStore();
     const [isImporting, setIsImporting] = useState(false);
 
+    // Sync with Store on Mount
+    React.useEffect(() => {
+        if (store.clinicDetails) {
+            setSettings(prev => ({
+                ...prev,
+                bookingMode: store.bookingMode === 'auto' ? 'auto' : 'manual', // Sync Booking Mode
+                branding: {
+                    ...prev.branding,
+                    clinicName: store.clinicDetails!.name,
+                    tagline: store.clinicDetails!.slogan,
+                    website: store.clinicDetails!.websiteUrl,
+                    address: store.clinicDetails!.address,
+                    phone: store.clinicDetails!.phone,
+                    latitude: store.clinicDetails!.lat,
+                    longitude: store.clinicDetails!.lng,
+                    isVerified: store.clinicDetails!.isVerified,
+                    googleLocationId: store.clinicDetails!.googleLocationId,
+                    syncStatus: store.clinicDetails!.syncStatus
+                }
+            }));
+        }
+    }, [store.clinicDetails, store.bookingMode]);
+
+    const handleSave = () => {
+        // 1. Update Store (Global Identity & Settings)
+        store.setBookingMode(settings.bookingMode); // Save Booking Mode
+
+        store.updateClinicDetails({
+            name: settings.branding.clinicName,
+            slogan: settings.branding.tagline,
+            websiteUrl: settings.branding.website,
+            address: settings.branding.address,
+            phone: settings.branding.phone,
+            lat: settings.branding.latitude,
+            lng: settings.branding.longitude,
+            isVerified: settings.branding.isVerified || false,
+            syncStatus: settings.branding.syncStatus,
+            googleLocationId: settings.branding.googleLocationId,
+            googleMapsUrl: store.clinicDetails?.googleMapsUrl // Preserve this
+        });
+
+        // 2. Call Parent onSave (for PDF/Invoice)
+        onSave?.(settings);
+    };
+
     const handleImportFromGoogle = async () => {
         setIsImporting(true);
         try {
             // Use Store Action (Architecture Future-Proofing)
             await store.importFromGoogle();
+            // Store update triggers the useEffect above, so no manual setSettings needed here ideally, 
+            // but to be safe and immediate:
 
-            // Sync local settings with new store data
-            if (store.clinicDetails) {
-                setSettings(prev => ({
-                    ...prev,
-                    branding: {
-                        ...prev.branding,
-                        clinicName: store.clinicDetails!.name,
-                        phone: store.clinicDetails!.phone,
-                        address: store.clinicDetails!.address,
-                        latitude: store.clinicDetails!.lat,
-                        longitude: store.clinicDetails!.lng,
-                        isVerified: store.clinicDetails!.isVerified,
-                        googleLocationId: store.clinicDetails!.googleLocationId,
-                        syncStatus: store.clinicDetails!.syncStatus
-                    }
-                }));
-                alert('Successfully imported verified clinic details from Google!');
-            }
+            // (The useEffect will handle the sync once store updates)
 
         } catch (error: any) {
             if (error.message?.includes('AUTH_REQUIRED')) {
@@ -374,9 +404,16 @@ export const ClinicBrandingSettings: React.FC<{
                                         <input type="text" value={settings.branding.clinicName} onChange={(e) => updateBranding('clinicName', e.target.value)} className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl focus:bg-white focus:ring-4 focus:ring-indigo-100 outline-none font-bold transition-all" />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Area / Locality</label>
-                                        <input type="text" placeholder="e.g. Nallagandla" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl focus:bg-white focus:ring-4 focus:ring-indigo-100 outline-none font-bold transition-all" />
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Clinic Slogan / Tagline</label>
+                                        <input
+                                            type="text"
+                                            value={settings.branding.tagline || ''}
+                                            onChange={(e) => updateBranding('tagline', e.target.value)}
+                                            placeholder="e.g. World-Class Dental Care"
+                                            className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl focus:bg-white focus:ring-4 focus:ring-indigo-100 outline-none font-bold transition-all"
+                                        />
                                     </div>
+
                                     <div className="space-y-2">
                                         <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-1">Short Label</label>
                                         <input type="text" value={settings.branding.shortName || ''} onChange={(e) => updateBranding('shortName', e.target.value)} className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl focus:bg-white focus:ring-4 focus:ring-indigo-100 outline-none font-bold transition-all" />
@@ -493,6 +530,42 @@ export const ClinicBrandingSettings: React.FC<{
                                     <input type="text" placeholder="@clinic_handle" className="w-full px-6 py-4 bg-slate-50 border border-slate-100 rounded-3xl outline-none font-bold transition-all" />
                                 </div>
                             </div>
+
+                            {/* Booking Mode Toggle */}
+                            <div className="p-8 bg-slate-900 rounded-[3rem] items-center justify-between flex gap-6 text-white relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                                <div className="relative z-10 space-y-2 max-w-lg">
+                                    <h3 className="text-xl font-black flex items-center gap-3">
+                                        <Activity className="w-6 h-6 text-indigo-400" />
+                                        <span>Auto-Confirmation Mode</span>
+                                        {settings.bookingMode === 'auto' && (
+                                            <span className="px-2 py-0.5 bg-green-500/20 text-green-300 text-[10px] uppercase tracking-wider rounded-full border border-green-500/30">Active</span>
+                                        )}
+                                    </h3>
+                                    <p className="text-slate-400 text-sm font-medium leading-relaxed">
+                                        Automatically confirm appointments when slots are available.
+                                        <br />
+                                        <span className={cn("text-xs", settings.bookingMode === 'auto' ? "text-indigo-300" : "text-slate-500")}>
+                                            {settings.bookingMode === 'auto'
+                                                ? "Patients receive immediate confirmation."
+                                                : "Requires manual approval for everyday requests."}
+                                        </span>
+                                    </p>
+                                </div>
+
+                                <button
+                                    onClick={() => setSettings(prev => ({ ...prev, bookingMode: prev.bookingMode === 'auto' ? 'manual' : 'auto' }))}
+                                    className={cn(
+                                        "relative z-10 w-20 h-10 rounded-full transition-all duration-300 shadow-inner flex items-center",
+                                        settings.bookingMode === 'auto' ? "bg-green-500" : "bg-slate-700"
+                                    )}
+                                >
+                                    <div className={cn(
+                                        "w-8 h-8 bg-white rounded-full shadow-lg transform transition-all duration-300",
+                                        settings.bookingMode === 'auto' ? "translate-x-11" : "translate-x-1"
+                                    )} />
+                                </button>
+                            </div>
                         </div>
 
 
@@ -581,7 +654,7 @@ export const ClinicBrandingSettings: React.FC<{
                 <button onClick={() => setSettings(DEFAULT_CLINIC_SETTINGS)} className="flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-all font-black text-[10px] uppercase tracking-widest"><RotateCcw className="w-4 h-4" /> Factory Reset</button>
                 <div className="flex gap-4 w-full md:w-auto">
                     {onCancel && <button onClick={onCancel} className="flex-1 md:flex-none px-8 py-4 text-slate-500 font-black text-[10px] uppercase tracking-widest">Discard</button>}
-                    <button onClick={() => onSave?.(settings)} className="flex-1 md:flex-none flex items-center justify-center gap-2 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-700 hover:shadow-2xl shadow-indigo-500/30 transition-all transform active:scale-95"><Save className="w-4 h-4" /> Commit Changes</button>
+                    <button onClick={handleSave} className="flex-1 md:flex-none flex items-center justify-center gap-2 px-10 py-4 bg-indigo-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-700 hover:shadow-2xl shadow-indigo-500/30 transition-all transform active:scale-95"><Save className="w-4 h-4" /> Commit Changes</button>
                 </div>
             </div>
         </div>

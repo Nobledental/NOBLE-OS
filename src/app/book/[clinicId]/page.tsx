@@ -91,6 +91,7 @@ export default function PublicBookingPage() {
         }
     };
 
+    // Booking Logic
     const handleBook = async () => {
         if (!formData.date || !formData.slot) {
             toast.error("Please select a time slot.");
@@ -110,13 +111,16 @@ export default function PublicBookingPage() {
             isNew: true
         });
 
+        // Booking Mode Logic
+        const initialStatus = store.bookingMode === 'auto' ? 'confirmed' : 'pending';
+
         store.addAppointment({
             patientId: newPatientId,
             date: formData.date,
             slot: formData.slot,
             type: formData.reasonId, // Pass Procedure ID
             reason: formData.reasonLabel,
-            status: 'pending', // Pending Confirmation
+            status: initialStatus,
             locationLink: store.clinicDetails?.googleMapsUrl
         });
 
@@ -147,11 +151,17 @@ export default function PublicBookingPage() {
                     <div>
                         <div className="flex items-center gap-3 mb-6">
                             <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center">
-                                <span className="text-2xl font-black text-black">N</span>
+                                <span className="text-2xl font-black text-black">
+                                    {(store.clinicDetails?.name || "Noble")[0]}
+                                </span>
                             </div>
                             <div>
-                                <h1 className="text-xl font-bold tracking-tight text-white">Noble Dental Care</h1>
-                                <p className="text-sm text-slate-400 font-medium uppercase tracking-wider">Premium Dental Studio</p>
+                                <h1 className="text-xl font-bold tracking-tight text-white">
+                                    {store.clinicDetails?.name || "Noble Dental Care"}
+                                </h1>
+                                <p className="text-sm text-slate-400 font-medium uppercase tracking-wider">
+                                    {store.clinicDetails?.slogan || "Premium Dental Studio"}
+                                </p>
                             </div>
                         </div>
 
@@ -203,6 +213,11 @@ export default function PublicBookingPage() {
                         <div>
                             <p className="text-sm font-bold text-white mb-1">Nallagandla, Hyderabad</p>
                             <p className="text-xs text-slate-400 leading-relaxed max-w-xs">{store.clinicDetails?.address || "Loading location..."}</p>
+                            {store.clinicDetails?.websiteUrl && (
+                                <p className="text-xs text-blue-400 mt-2 hover:underline cursor-pointer" onClick={() => window.open(store.clinicDetails?.websiteUrl, '_blank')}>
+                                    {store.clinicDetails.websiteUrl.replace(/^https?:\/\//, '')}
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -437,13 +452,27 @@ export default function PublicBookingPage() {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="text-center space-y-6"
                             >
-                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 ring-8 ring-green-50">
-                                    <CheckCircle2 className="w-10 h-10 text-green-600" />
+                                <div className={cn(
+                                    "w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 ring-8 transition-all",
+                                    store.bookingMode === 'auto' ? "bg-green-100 ring-green-50" : "bg-amber-100 ring-amber-50"
+                                )}>
+                                    {store.bookingMode === 'auto' ? (
+                                        <CheckCircle2 className="w-10 h-10 text-green-600" />
+                                    ) : (
+                                        <Clock className="w-10 h-10 text-amber-600" />
+                                    )}
                                 </div>
 
                                 <div className="space-y-2">
-                                    <h2 className="text-3xl font-black text-black tracking-tight">Booking Confirmed!</h2>
-                                    <p className="text-slate-600 text-lg">Your appointment is scheduled.</p>
+                                    <h2 className="text-3xl font-black text-black tracking-tight">
+                                        {store.bookingMode === 'auto' ? "Booking Confirmed!" : "Request Received"}
+                                    </h2>
+                                    <p className="text-slate-600 text-lg">
+                                        {store.bookingMode === 'auto'
+                                            ? "Your appointment is scheduled."
+                                            : "We will review and confirm your slot shortly."
+                                        }
+                                    </p>
                                 </div>
 
                                 <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 text-left space-y-4 shadow-sm">

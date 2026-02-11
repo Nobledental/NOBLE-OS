@@ -41,6 +41,8 @@ export interface SchedulingConfig {
     // Verified Clinic Details (GMB)
     clinicDetails?: {
         name: string;
+        slogan?: string; // Marketing Tagline
+        websiteUrl?: string; // Custom Domain
         address: string;
         phone: string;
         googleMapsUrl?: string;
