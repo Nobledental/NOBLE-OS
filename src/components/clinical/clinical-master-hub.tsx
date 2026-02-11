@@ -19,6 +19,7 @@ import NobleSmileStudio from "@/components/clinical/noble-smile-studio";
 import { IntraOralCamera } from "@/components/clinical/intra-oral-camera";
 import UniversalBridgeHub from "@/components/clinical/universal-bridge-hub";
 import NobleSharePortal from "@/components/clinical/noble-share-portal";
+import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 
 
 const MOCK_PATIENT_ID = "p123";
