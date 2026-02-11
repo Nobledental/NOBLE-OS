@@ -19,8 +19,8 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
         console.error('GMB Import Error:', error);
 
-        if (error.message.includes('not connected') || error.message.includes('authorize')) {
-            return NextResponse.json({ error: 'Google Account not connected', code: 'AUTH_REQUIRED' }, { status: 401 });
+        if (error.message.includes('not connected') || error.message.includes('authorize') || error.message.includes('insufficient authentication scopes')) {
+            return NextResponse.json({ error: 'Additional permissions required', code: 'AUTH_REQUIRED' }, { status: 401 });
         }
 
         return NextResponse.json({ error: error.message || 'Failed to fetch business information' }, { status: 500 });
