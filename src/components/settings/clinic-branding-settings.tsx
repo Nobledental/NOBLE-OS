@@ -312,10 +312,8 @@ export const ClinicBrandingSettings: React.FC<{
                     >
                         {activeTab === 'branding' && (
                             <div className="space-y-10">
-                                <LogoUpload currentLogo={settings.branding.logo} onLogoChange={(logo) => updateBranding('logo', logo)} />
-
-                                {/* Google Import Card */}
-                                <div className="p-6 bg-blue-50 border border-blue-100 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                                {/* Google Import Card - Moved to Top */}
+                                <div className="p-6 bg-blue-50 border border-blue-100 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden mb-8">
                                     <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-200/50 rounded-full blur-3xl"></div>
                                     <div className="flex items-center gap-4 relative z-10">
                                         <div className="w-12 h-12 bg-white text-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
@@ -342,6 +340,10 @@ export const ClinicBrandingSettings: React.FC<{
                                         {store.clinicDetails?.isVerified ? 'Sync Again' : 'Import verified Data'}
                                     </button>
                                 </div>
+
+                                <LogoUpload currentLogo={settings.branding.logo} onLogoChange={(logo) => updateBranding('logo', logo)} />
+
+
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                                     <div className="space-y-2">
