@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Eye, EyeOff, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { maskPhone } from "@/lib/security";
+import { maskPhone, auditPIIAccess } from "@/neo/encryption";
 
 interface PatientResult {
     id: string;
@@ -46,16 +46,8 @@ export function UnifiedPatientSearch() {
 
     const toggleSensitive = async (id: string, type: 'phone') => {
         if (!showSensitive[id]) {
-            try {
-                // In a real app, 'performerId' would come from Auth Context
-                await api.post(`/patients/${id}/audit`, {
-                    performerId: "dr-dhivakaran-uuid",
-                    field: type
-                });
-                console.log(`[AUDIT] Logged PII access for ${id}`);
-            } catch (err) {
-                console.error("Failed to log audit", err);
-            }
+            // Use centralized NEO security auditor
+            await auditPIIAccess(id, type, "patient_contact_view");
         }
         setShowSensitive(prev => ({ ...prev, [id]: !prev[id] }));
     };

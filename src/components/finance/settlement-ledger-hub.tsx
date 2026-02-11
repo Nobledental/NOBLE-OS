@@ -62,81 +62,89 @@ export function SettlementLedgerHub() {
     const totalRevenue = totalCash + totalUPI + totalCard;
 
     return (
-        <div className="flex-1 space-y-8 p-4 md:p-8 max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="flex-1 space-y-8 h-full flex flex-col">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 shrink-0">
                 <div className="space-y-2">
                     <div className="flex items-center gap-3">
-                        <h1 className="text-4xl font-black tracking-tighter">EOD SETTLEMENT</h1>
+                        <h1 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-slate-900">EOD Settlement</h1>
                         {isClosed ? (
-                            <Badge className="bg-emerald-500 text-white font-bold border-none px-3">
-                                LOCKED & CLOSED
+                            <Badge className="bg-emerald-500 text-white font-bold border-none px-3 rounded-full text-[10px] uppercase tracking-widest sticky">
+                                LOCKED
                             </Badge>
                         ) : (
-                            <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 animate-pulse font-bold">
+                            <Badge variant="outline" className="bg-amber-50 text-amber-600 border-amber-200 animate-pulse font-bold rounded-full text-[10px] uppercase tracking-widest">
                                 OPEN SESSION
                             </Badge>
                         )}
                     </div>
-                    <p className="text-muted-foreground font-medium">Verified audit trail for {new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1">Verified audit trail for {new Date().toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                 </div>
 
                 <div className="flex gap-3">
                     {isClosed ? (
                         <Button
                             variant="outline"
-                            className="bg-white hover:bg-slate-50 border-2 gap-2 h-12 px-6 rounded-2xl font-bold shadow-sm"
+                            className="bg-white hover:bg-slate-50 border gap-2 h-12 px-6 rounded-[1.5rem] font-bold shadow-sm"
                             onClick={() => generateSettlementPDF(settlementStatus, transactions)}
                         >
-                            <Download className="h-5 w-5" /> Download Report
+                            <Download className="h-4 w-4" /> Download Report
                         </Button>
                     ) : (
                         <Button
-                            className="bg-indigo-600 hover:bg-indigo-700 text-white gap-2 h-12 px-8 rounded-2xl font-bold shadow-lg shadow-indigo-200 disabled:opacity-50"
+                            className="bg-slate-900 hover:bg-slate-800 text-white gap-2 h-12 px-8 rounded-[1.5rem] text-xs font-black uppercase tracking-widest shadow-xl shadow-slate-900/20 disabled:opacity-50"
                             disabled={!isAllVerified || transactions.length === 0 || closeDayMutation.isPending}
                             onClick={() => closeDayMutation.mutate()}
                         >
-                            <ShieldCheck className="h-5 w-5" /> Execute Day Close Ritual
+                            <ShieldCheck className="h-4 w-4" /> Execute Day Close Ritual
                         </Button>
                     )}
                 </div>
             </div>
 
             {/* Financial Summary Cards */}
-            <div className="grid gap-4 md:grid-cols-4">
-                <Card className="border-none shadow-sm bg-slate-50">
+            <div className="grid gap-6 md:grid-cols-4">
+                <Card className="border border-slate-100 shadow-xl rounded-[2rem] bg-white group hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase text-muted-foreground">Cash in Box</CardTitle>
-                        <Wallet className="h-4 w-4 text-emerald-500" />
+                        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Cash in Box</CardTitle>
+                        <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100">
+                            <Wallet className="h-4 w-4" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-black">₹{totalCash.toLocaleString()}</div>
+                        <div className="text-3xl font-serif italic text-slate-900">₹{totalCash.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-none shadow-sm bg-slate-50">
+                <Card className="border border-slate-100 shadow-xl rounded-[2rem] bg-white group hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase text-muted-foreground">UPI / Digital</CardTitle>
-                        <Landmark className="h-4 w-4 text-indigo-500" />
+                        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">UPI / Digital</CardTitle>
+                        <div className="p-2 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100">
+                            <Landmark className="h-4 w-4" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-black">₹{totalUPI.toLocaleString()}</div>
+                        <div className="text-3xl font-serif italic text-slate-900">₹{totalUPI.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-none shadow-sm bg-slate-50">
+                <Card className="border border-slate-100 shadow-xl rounded-[2rem] bg-white group hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase text-muted-foreground">Card Swipes</CardTitle>
-                        <CreditCard className="h-4 w-4 text-amber-500" />
+                        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-slate-400">Card Swipes</CardTitle>
+                        <div className="p-2 rounded-xl bg-amber-50 text-amber-600 border border-amber-100">
+                            <CreditCard className="h-4 w-4" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-black">₹{totalCard.toLocaleString()}</div>
+                        <div className="text-3xl font-serif italic text-slate-900">₹{totalCard.toLocaleString()}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-2 border-slate-100 bg-white shadow-md">
+                <Card className="border border-indigo-100 shadow-2xl rounded-[2rem] bg-indigo-50/50 group hover:-translate-y-1 transition-all duration-300">
                     <CardHeader className="flex flex-row items-center justify-between pb-2">
-                        <CardTitle className="text-sm font-bold uppercase text-indigo-600">Total Revenue</CardTitle>
-                        <Zap className="h-4 w-4 text-indigo-600 fill-indigo-600" />
+                        <CardTitle className="text-[10px] font-black uppercase tracking-widest text-indigo-600">Total Revenue</CardTitle>
+                        <div className="p-2 rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/20">
+                            <Zap className="h-4 w-4 fill-white" />
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-3xl font-black text-slate-900">₹{totalRevenue.toLocaleString()}</div>
+                        <div className="text-4xl font-serif italic text-indigo-900">₹{totalRevenue.toLocaleString()}</div>
                     </CardContent>
                 </Card>
             </div>

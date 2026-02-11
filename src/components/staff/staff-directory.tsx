@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { maskPhone, maskEmail } from "@/lib/security";
+import { maskPhone, maskEmail, auditPIIAccess } from "@/neo/encryption";
 
 // Mock Data (will be replaced with real data later)
 const MOCK_STAFF = [
@@ -177,7 +177,10 @@ export function StaffDirectory({ onAddStaff, onViewId }: StaffDirectoryProps) {
                                 <Button
                                     variant="ghost"
                                     className="w-full h-14 mt-8 rounded-2xl bg-blue-500/[0.03] hover:bg-blue-500/[0.08] text-blue-400/60 hover:text-blue-400 text-[10px] font-bold uppercase tracking-[0.3em] gap-3 border border-blue-500/10 transition-all duration-700"
-                                    onClick={() => onViewId(staff)}
+                                    onClick={() => {
+                                        auditPIIAccess(staff.id, "full_profile_view", "hr_access");
+                                        onViewId(staff);
+                                    }}
                                 >
                                     <IdCard className="w-4 h-4" />
                                     Access Identity
