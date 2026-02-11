@@ -44,16 +44,16 @@ export default function UniversalBridgeHub() {
     const [activeScan, setActiveScan] = useState<string | null>('Patient: Anand S. | Upper Jaw | STL');
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] p-8 font-sans selection:bg-blue-500/30">
+        <div className="min-h-screen bg-[#F8FAFC] p-8 font-sans selection:bg-blue-500/30">
             <div className="max-w-[1600px] mx-auto space-y-10">
 
                 {/* 1. HERO HEADER: The Universal Teleporter */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-white dark:bg-[#0a0f1d] p-12 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-white p-12 rounded-[4rem] border border-slate-200 shadow-2xl relative overflow-hidden group">
                     <div className="relative z-10">
                         <div className="flex items-center gap-3 text-blue-600 font-black text-xs uppercase tracking-[0.3em] mb-4">
                             <CloudLightning size={16} className="animate-pulse" /> Universal Bridge Hub
                         </div>
-                        <h1 className="text-4xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white leading-none">
+                        <h1 className="text-4xl font-black tracking-tighter mb-4 text-slate-900 leading-none">
                             Scanner Orchestration <br /> & Cloud Teleport
                         </h1>
                         <p className="text-sm font-medium text-slate-400 max-w-lg">
@@ -65,7 +65,7 @@ export default function UniversalBridgeHub() {
                         <button className="px-8 py-5 bg-blue-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-blue-500/20">
                             Connect New Device
                         </button>
-                        <button className="px-8 py-5 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-slate-200 dark:hover:bg-white/10 transition-all border border-slate-200 dark:border-white/5">
+                        <button className="px-8 py-5 bg-slate-100 text-slate-600 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-slate-200 transition-all border border-slate-200">
                             Settings
                         </button>
                     </div>
@@ -84,10 +84,10 @@ export default function UniversalBridgeHub() {
                                 <motion.div
                                     key={device.id}
                                     whileHover={{ y: -5 }}
-                                    className="bg-white dark:bg-[#0a0f1d] p-8 rounded-[3rem] border border-slate-200 dark:border-white/5 shadow-xl relative group overflow-hidden"
+                                    className="bg-white p-8 rounded-[3rem] border border-slate-200 shadow-xl relative group overflow-hidden"
                                 >
                                     <div className="flex items-start justify-between mb-8">
-                                        <div className={`p-4 rounded-2xl bg-slate-50 dark:bg-white/5 ${device.status === 'ERROR' ? 'text-red-500' : 'text-blue-500'}`}>
+                                        <div className={`p-4 rounded-2xl bg-slate-50 ${device.status === 'ERROR' ? 'text-red-500' : 'text-blue-500'}`}>
                                             <HardDrive size={24} />
                                         </div>
                                         <div className="flex items-center gap-2">
@@ -100,17 +100,17 @@ export default function UniversalBridgeHub() {
                                         </div>
                                     </div>
 
-                                    <h3 className="text-xl font-black tracking-tighter mb-2 text-slate-900 dark:text-white uppercase">{device.name}</h3>
+                                    <h3 className="text-xl font-black tracking-tighter mb-2 text-slate-900 uppercase">{device.name}</h3>
                                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-6">{device.type.replace('_', ' ')}</div>
 
-                                    <div className="space-y-4 pt-6 border-t border-slate-100 dark:border-white/5">
+                                    <div className="space-y-4 pt-6 border-t border-slate-100">
                                         <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
                                             <span>Local Folder</span>
-                                            <span className="text-slate-600 dark:text-slate-300 font-mono">{device.folderPath}</span>
+                                            <span className="text-slate-600 font-mono">{device.folderPath}</span>
                                         </div>
                                         <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-400">
                                             <span>Last Sync</span>
-                                            <span className="text-slate-600 dark:text-slate-300">{device.lastSync}</span>
+                                            <span className="text-slate-600">{device.lastSync}</span>
                                         </div>
                                     </div>
 
@@ -120,16 +120,16 @@ export default function UniversalBridgeHub() {
                         </div>
 
                         {/* RECENT INGESTIONS */}
-                        <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl">
+                        <div className="bg-white p-10 rounded-[4rem] border border-slate-200 shadow-2xl">
                             <div className="flex items-center justify-between mb-10">
-                                <h2 className="text-2xl font-black tracking-tighter uppercase dark:text-white">Frictionless Ingestions</h2>
+                                <h2 className="text-2xl font-black tracking-tighter uppercase">Frictionless Ingestions</h2>
                                 <FileUp className="text-blue-500" />
                             </div>
 
                             <div className="overflow-x-auto">
                                 <table className="w-full">
                                     <thead>
-                                        <tr className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100 dark:border-white/5">
+                                        <tr className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 border-b border-slate-100">
                                             <th className="text-left pb-6">Patient</th>
                                             <th className="text-left pb-6">File Type</th>
                                             <th className="text-left pb-6">Source</th>
@@ -137,20 +137,20 @@ export default function UniversalBridgeHub() {
                                             <th className="text-right pb-6">Status</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-slate-100 dark:divide-white/5">
+                                    <tbody className="divide-y divide-slate-100">
                                         {[
                                             { patient: 'Arun Kumar', type: 'STL (Upper)', source: 'TRIOS 5', time: '12:42 PM', status: 'Vaulted', ortho: 'Ready' },
                                             { patient: 'Priya V.', type: 'OBJ (Lower)', source: 'Medit i700', time: '11:15 AM', status: 'Vaulted', ortho: 'In-Queue' },
                                             { patient: 'Rahul S.', type: 'PLY (Full)', source: 'TRIOS 3', time: '09:30 AM', status: 'Processing', ortho: 'Calculating' },
                                         ].map((ingest, i) => (
-                                            <tr key={i} className="group hover:bg-slate-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
-                                                <td className="py-6 text-sm font-black dark:text-white">{ingest.patient}</td>
+                                            <tr key={i} className="group hover:bg-slate-50 transition-colors cursor-pointer">
+                                                <td className="py-6 text-sm font-black">{ingest.patient}</td>
                                                 <td className="py-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{ingest.type}</td>
                                                 <td className="py-6 text-[10px] font-bold text-blue-500 uppercase tracking-widest">{ingest.source}</td>
                                                 <td className="py-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">{ingest.time}</td>
                                                 <td className="py-6">
                                                     <div className="flex flex-col items-end gap-1">
-                                                        <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${ingest.status === 'Vaulted' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/20' : 'bg-amber-100 text-amber-600 dark:bg-amber-900/20'
+                                                        <span className={`text-[9px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${ingest.status === 'Vaulted' ? 'bg-emerald-100 text-emerald-600' : 'bg-amber-100 text-amber-600'
                                                             }`}>
                                                             {ingest.status}
                                                         </span>
@@ -222,7 +222,7 @@ export default function UniversalBridgeHub() {
                             <Cpu className="text-white animate-pulse" size={32} />
                         </div>
                         <div>
-                            <h3 className="text-2xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">Predictive Orchestration</h3>
+                            <h3 className="text-2xl font-black tracking-tighter uppercase text-slate-900">Predictive Orchestration</h3>
                             <p className="text-xs font-medium text-slate-500 mt-1 leading-relaxed max-w-xl">
                                 "TRIOS Scan detected for Anand S. (Full Mouth Rehabilitation). <br />
                                 Checking **Insta-PharmacyHub** for Implant inventory... <span className="text-emerald-500 font-bold">STOCK READY.</span> <br />
@@ -230,7 +230,7 @@ export default function UniversalBridgeHub() {
                             </p>
                         </div>
                     </div>
-                    <button className="px-10 py-5 bg-white dark:bg-white/10 text-slate-900 dark:text-white rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl relative z-10 border border-slate-200 dark:border-white/5">
+                    <button className="px-10 py-5 bg-white text-slate-900 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl relative z-10 border border-slate-200">
                         Optimize Workflow
                     </button>
                     <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_right,rgba(59,130,246,0.05),transparent)]"></div>

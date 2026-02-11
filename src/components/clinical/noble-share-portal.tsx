@@ -26,16 +26,16 @@ export default function NobleSharePortal() {
     const shareLink = "https://noble.os/v/ax4421-smilestudio";
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] p-8 font-sans selection:bg-indigo-500/30">
+        <div className="min-h-screen bg-[#F8FAFC] p-8 font-sans selection:bg-indigo-500/30">
             <div className="max-w-[1400px] mx-auto space-y-10">
 
                 {/* 1. HERO SECTION: The Zero-App Philosophy */}
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12 bg-white dark:bg-[#0a0f1d] p-12 rounded-[4.5rem] border border-slate-200 dark:border-white/5 shadow-3xl relative overflow-hidden group">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-12 bg-white p-12 rounded-[4.5rem] border border-slate-200 shadow-3xl relative overflow-hidden group">
                     <div className="relative z-10 space-y-6">
                         <div className="flex items-center gap-3 text-indigo-600 font-black text-[10px] uppercase tracking-[0.4em]">
                             <Globe size={16} className="animate-spin-slow" /> Noble Share Protocol
                         </div>
-                        <h1 className="text-5xl font-black tracking-tighter text-slate-900 dark:text-white leading-[0.9]">
+                        <h1 className="text-5xl font-black tracking-tighter text-slate-900 leading-[0.9]">
                             Instant 3D <br /> Web Experience
                         </h1>
                         <p className="text-sm font-medium text-slate-400 max-w-md">
@@ -96,11 +96,11 @@ export default function NobleSharePortal() {
                 {/* 2. CONTROL PANEL */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-                    <div className="bg-white dark:bg-[#0a0f1d] p-12 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl space-y-10">
+                    <div className="bg-white p-12 rounded-[4rem] border border-slate-200 shadow-2xl space-y-10">
                         <div className="flex items-center gap-4">
                             <div className="p-4 bg-indigo-600 rounded-3xl text-white shadow-xl shadow-indigo-500/20"><LinkIcon size={24} /></div>
                             <div>
-                                <h2 className="text-2xl font-black tracking-tighter uppercase dark:text-white">Secure Link Logic</h2>
+                                <h2 className="text-2xl font-black tracking-tighter uppercase">Secure Link Logic</h2>
                                 <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Configure sharing parameters and permissions</p>
                             </div>
                         </div>
@@ -113,7 +113,7 @@ export default function NobleSharePortal() {
                                         onClick={() => setExpiry(time)}
                                         className={`py-4 rounded-2xl border transition-all text-[10px] font-black uppercase tracking-widest ${expiry === time
                                             ? 'bg-indigo-600 border-indigo-600 text-white shadow-xl'
-                                            : 'bg-slate-50 dark:bg-white/5 border-slate-100 dark:border-white/5 text-slate-400 hover:border-slate-300'
+                                            : 'bg-slate-50 border-slate-100 text-slate-400 hover:border-slate-300'
                                             }`}
                                     >
                                         <Clock size={12} className="inline mr-2" /> {time}
@@ -131,12 +131,12 @@ export default function NobleSharePortal() {
                                         { label: 'Disable Measurements', sub: 'Viewer cannot use the ruler tool' },
                                         { label: 'Cloud Watermarking', sub: 'Clinic name embedded in viewport' },
                                     ].map((opt, i) => (
-                                        <div key={i} className="flex items-center justify-between p-6 bg-slate-50 dark:bg-white/5 rounded-[2.5rem] border border-slate-100 dark:border-white/5 group hover:border-indigo-500/30 transition-all cursor-pointer">
+                                        <div key={i} className="flex items-center justify-between p-6 bg-slate-50 rounded-[2.5rem] border border-slate-100 group hover:border-indigo-500/30 transition-all cursor-pointer">
                                             <div>
-                                                <div className="text-[11px] font-black dark:text-white uppercase tracking-tight">{opt.label}</div>
+                                                <div className="text-[11px] font-black uppercase tracking-tight">{opt.label}</div>
                                                 <div className="text-[9px] text-slate-400 font-medium mt-0.5">{opt.sub}</div>
                                             </div>
-                                            <div className="w-10 h-6 bg-slate-200 dark:bg-white/10 rounded-full relative p-1 group-hover:bg-indigo-600/20 transition-colors">
+                                            <div className="w-10 h-6 bg-slate-200 rounded-full relative p-1 group-hover:bg-indigo-600/20 transition-colors">
                                                 <div className="w-4 h-4 bg-white rounded-full shadow-sm"></div>
                                             </div>
                                         </div>
@@ -212,7 +212,7 @@ export default function NobleSharePortal() {
                             <Smartphone className="text-white" size={32} />
                         </div>
                         <div>
-                            <h3 className="text-2xl font-black tracking-tighter uppercase text-slate-900 dark:text-white">Mobile-First Infiltration</h3>
+                            <h3 className="text-2xl font-black tracking-tighter uppercase text-slate-900">Mobile-First Infiltration</h3>
                             <p className="text-xs font-medium text-slate-500 mt-1 leading-relaxed max-w-xl">
                                 "Noble Share links are optimized for **iOS & Android WebGPU**. <br />
                                 High-poly STLs (5M+ facets) are decimate-simulated on the fly for 60FPS mobile interaction."

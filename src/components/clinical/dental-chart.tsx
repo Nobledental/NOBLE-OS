@@ -59,12 +59,12 @@ export function DentalChart() {
             case "CROWN": return "fill-yellow-600 stroke-yellow-700"
             case "IMPLANT": return "fill-slate-600 stroke-slate-800"
             case "DECAY": return "fill-red-500 stroke-red-700"
-            default: return "fill-white dark:fill-slate-800 stroke-slate-300 dark:stroke-slate-600"
+            default: return "fill-white stroke-slate-300"
         }
     }
 
     return (
-        <div className="p-6 bg-white dark:bg-slate-950 rounded-xl border shadow-sm">
+        <div className="p-6 bg-white rounded-xl border shadow-sm">
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h3 className="text-lg font-bold">Interactive Dental Mapper</h3>
@@ -167,7 +167,7 @@ export function DentalChart() {
                                     "p-3 rounded-lg border text-left transition-all",
                                     teeth.find(t => t.id === selectedTooth)?.state === state
                                         ? "bg-indigo-600 text-white border-transparent ring-2 ring-indigo-200"
-                                        : "hover:bg-slate-50 dark:hover:bg-slate-900"
+                                        : "hover:bg-slate-50"
                                 )}
                             >
                                 <div className="font-bold text-xs">{state}</div>

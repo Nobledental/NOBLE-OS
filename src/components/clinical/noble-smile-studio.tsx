@@ -40,11 +40,11 @@ export default function NobleSmileStudio() {
     });
 
     return (
-        <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#020617] p-8 font-sans selection:bg-blue-500/30 overflow-hidden">
+        <div className="min-h-screen bg-[#F8FAFC] p-8 font-sans selection:bg-blue-500/30 overflow-hidden">
             <div className="max-w-[1700px] mx-auto h-[calc(100vh-100px)] flex flex-col gap-8">
 
                 {/* 1. TOP NAV: Studio Management */}
-                <div className="flex items-center justify-between bg-white dark:bg-[#0a0f1d] p-8 rounded-[3.5rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
+                <div className="flex items-center justify-between bg-white p-8 rounded-[3.5rem] border border-slate-200 shadow-2xl relative overflow-hidden group">
                     <div className="flex items-center gap-6 relative z-10">
                         <div className="w-16 h-16 bg-gradient-to-br from-indigo-600 to-blue-600 rounded-[2rem] flex items-center justify-center shadow-xl shadow-blue-500/20">
                             <Sparkles className="text-white animate-pulse" size={28} />
@@ -53,17 +53,17 @@ export default function NobleSmileStudio() {
                             <div className="flex items-center gap-2 text-indigo-600 font-black text-xs uppercase tracking-[0.3em] mb-1">
                                 <ScanFace size={14} /> AI Aesthetic Engine
                             </div>
-                            <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">Noble Smile Studio</h1>
+                            <h1 className="text-3xl font-black tracking-tighter text-slate-900 uppercase">Noble Smile Studio</h1>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-4 relative z-10">
-                        <div className="flex bg-slate-100 dark:bg-white/5 p-2 rounded-[2rem] border border-slate-200 dark:border-white/5">
+                        <div className="flex bg-slate-100 p-2 rounded-[2rem] border border-slate-200">
                             {(['PROPORTION', 'SYMMETRY', 'MOCKUP'] as AnalysisMode[]).map((m) => (
                                 <button
                                     key={m}
                                     onClick={() => setMode(m)}
-                                    className={`px-8 py-3 rounded-[1.8rem] font-black text-[10px] uppercase tracking-widest transition-all ${mode === m ? 'bg-white dark:bg-white/10 text-indigo-600 shadow-xl' : 'text-slate-400 hover:text-slate-600'
+                                    className={`px-8 py-3 rounded-[1.8rem] font-black text-[10px] uppercase tracking-widest transition-all ${mode === m ? 'bg-white text-indigo-600 shadow-xl' : 'text-slate-400 hover:text-slate-600'
                                         }`}
                                 >
                                     {m}
@@ -71,7 +71,7 @@ export default function NobleSmileStudio() {
                             ))}
                         </div>
                         <div className="flex gap-3 ml-4">
-                            <button className="p-4 bg-slate-900 dark:bg-white/10 text-white rounded-2xl hover:scale-110 transition-all border border-black/20"><Save size={20} /></button>
+                            <button className="p-4 bg-slate-900 text-white rounded-2xl hover:scale-110 transition-all border border-black/20"><Save size={20} /></button>
                             <button className="p-4 bg-indigo-600 text-white rounded-2xl hover:scale-110 transition-all shadow-xl shadow-indigo-500/20"><Share2 size={20} /></button>
                         </div>
                     </div>
@@ -86,14 +86,14 @@ export default function NobleSmileStudio() {
                     <div className="col-span-3 space-y-8 overflow-y-auto pr-4 custom-scrollbar">
 
                         {/* ANALYSIS WIDGET: The "Brain" of the Studio */}
-                        <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl relative overflow-hidden group">
-                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8 dark:text-white">Clinical Analytics</h2>
+                        <div className="bg-white p-10 rounded-[4rem] border border-slate-200 shadow-2xl relative overflow-hidden group">
+                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8">Clinical Analytics</h2>
 
                             <div className="space-y-8">
-                                <div className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 group-hover:border-indigo-400 transition-all">
+                                <div className="p-6 bg-slate-50 rounded-3xl border border-slate-100 group-hover:border-indigo-400 transition-all">
                                     <div className="text-3xl font-black tracking-tighter text-indigo-600">{metrics.goldenRatioMatch}%</div>
                                     <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest leading-none mt-1">Golden Ratio Sync</div>
-                                    <div className="mt-4 h-1.5 w-full bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden">
+                                    <div className="mt-4 h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
                                         <motion.div initial={{ width: 0 }} animate={{ width: `${metrics.goldenRatioMatch}%` }} className="h-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></motion.div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@ export default function NobleSmileStudio() {
                                         <div key={stat.label} className="flex items-center justify-between">
                                             <div>
                                                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{stat.label}</div>
-                                                <div className="text-sm font-black dark:text-white">{stat.value}</div>
+                                                <div className="text-sm font-black">{stat.value}</div>
                                             </div>
                                             <div className={`px-3 py-1 bg-${stat.color}-500/10 text-${stat.color}-500 rounded-lg text-[8px] font-black uppercase tracking-widest`}>
                                                 {stat.status}
@@ -222,14 +222,14 @@ export default function NobleSmileStudio() {
 
                     {/* RIGHT PANEL: ECOSYSTEM SYNC */}
                     <div className="col-span-3 space-y-8 overflow-y-auto pr-4 custom-scrollbar">
-                        <div className="bg-white dark:bg-[#0a0f1d] p-10 rounded-[4rem] border border-slate-200 dark:border-white/5 shadow-2xl">
-                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8 dark:text-white">Collaborative Blueprint</h2>
+                        <div className="bg-white p-10 rounded-[4rem] border border-slate-200 shadow-2xl">
+                            <h2 className="text-xl font-black uppercase tracking-tighter mb-8">Collaborative Blueprint</h2>
                             <div className="space-y-6">
                                 {[
                                     { doc: 'Dr. Sarah (Prosthodontist)', note: 'Increase incisal dominance by 1mm for better lip support.', time: '2h ago' },
                                     { doc: 'S.V. Lab', note: 'Shade B1 confirmed. Ready for milling.', time: '5h ago' },
                                 ].map((comment, i) => (
-                                    <div key={i} className="p-6 bg-slate-50 dark:bg-white/5 rounded-3xl border border-slate-100 dark:border-white/5 relative group">
+                                    <div key={i} className="p-6 bg-slate-50 rounded-3xl border border-slate-100 relative group">
                                         <div className="text-[10px] font-black uppercase tracking-widest text-indigo-500 mb-2">{comment.doc}</div>
                                         <p className="text-xs font-medium text-slate-500 leading-relaxed">{comment.note}</p>
                                         <span className="text-[9px] text-slate-400 mt-4 block uppercase font-bold">{comment.time}</span>
@@ -239,7 +239,7 @@ export default function NobleSmileStudio() {
                                     </div>
                                 ))}
                             </div>
-                            <button className="w-full mt-10 py-5 bg-slate-900 dark:bg-white/10 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition-all">
+                            <button className="w-full mt-10 py-5 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-indigo-600 transition-all">
                                 Request Lab Review
                             </button>
                         </div>
