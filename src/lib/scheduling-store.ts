@@ -17,11 +17,6 @@ export interface Doctor {
     id: string;
     name: string;
     specialty: string;
-    image: string; // URL or Base64
-    experience: string;
-    languages: string[];
-    biography?: string;
-    color: string; // Brand color for their card
     isAvailable: boolean;
 }
 
@@ -87,28 +82,8 @@ const DEFAULT_CONFIG: SchedulingConfig = {
     showDoctorAvailability: true,
     slotDurationMinutes: 30,
     doctors: [
-        {
-            id: 'd1',
-            name: "Dr. Dhivakaran",
-            specialty: "Implantologist & Cosmetic Dentist",
-            image: "/assets/images/doctors/dr-dhiva.webp", // Ensure this exists or use placeholder
-            experience: "12+ Years",
-            languages: ["English", "Telugu", "Tamil"],
-            biography: "Pioneering minimally invasive dentistry with a focus on aesthetic perfection.",
-            color: "bg-blue-600",
-            isAvailable: true
-        },
-        {
-            id: 'd2',
-            name: "Dr. P. Prathibha",
-            specialty: "Endodontist (Root Canal Specialist)",
-            image: "/assets/images/doctors/dr-prathibha.webp",
-            experience: "10+ Years",
-            languages: ["English", "Telugu", "Hindi"],
-            biography: "Expert in pain-free root canal treatments and microscopic dentistry.",
-            color: "bg-emerald-600",
-            isAvailable: true
-        },
+        { id: 'd1', name: "Dr. A. Smith", specialty: "General Dentist", isAvailable: true },
+        { id: 'd2', name: "Dr. B. Jones", specialty: "Orthodontist", isAvailable: true },
     ],
     patients: [
         { id: 'p1', name: "Alice Johnson", phone: "9876543210" },
