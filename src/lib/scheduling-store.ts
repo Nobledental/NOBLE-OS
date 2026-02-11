@@ -97,16 +97,19 @@ const DEFAULT_CONFIG: SchedulingConfig = {
 
 // Simulation Logic: Generate slots based on Active Chairs
 // Backend Integration: Fetch slots from API
-export const fetchAvailableSlots = async (dateStr: string, activeChairs: number) => {
+
+// Simulation Logic: Generate slots based on Active Chairs
+// Backend Integration: Fetch slots from API
+export const fetchAvailableSlots = async (dateStr: string, activeChairs: number, duration: number, config: SchedulingConfig) => {
     try {
-        const res = await fetch(`/api/calendar/availability?date=${dateStr}&chairs=${activeChairs}`);
+        // In real app, we might pass duration to API too
+        const res = await fetch(`/api/calendar/availability?date=${dateStr}&chairs=${activeChairs}&duration=${duration}`);
         if (!res.ok) throw new Error("Failed to fetch slots");
         const data = await res.json();
         return data.slots;
     } catch (err) {
-        console.error("Slot Fetch Error, falling back to simulation", err);
         // Fallback Simulation
-        return generateFallbackSlots(dateStr, activeChairs);
+        return generateFallbackSlots(dateStr, activeChairs, duration, config);
     }
 };
 
@@ -227,8 +230,9 @@ export const useSchedulingStore = create<SchedulingState>()(
 
             setChairCapacity: (operational, active) => set({ operationalChairs: operational, activeChairs: active }),
 
-            fetchAvailableSlots: async (date, activeChairs) => {
-                return await fetchAvailableSlots(date, activeChairs);
+            fetchAvailableSlots: async (date, activeChairs, duration = 30) => {
+                const state = get();
+                return await fetchAvailableSlots(date, activeChairs, duration, state);
             },
 
 
