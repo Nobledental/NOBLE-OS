@@ -34,7 +34,7 @@ export interface SchedulingConfig {
     showDoctorAvailability: boolean;
     slotDurationMinutes: number;
     doctors: Doctor[];
-    patients: PatientShort[]; 
+    patients: PatientShort[];
     appointments: any[];
     // Chair Capacity
     operationalChairs: number;
@@ -52,7 +52,8 @@ interface SchedulingState extends SchedulingConfig {
     addPatient: (patient: PatientShort) => void;
     addAppointment: (appt: any) => void;
     assignDoctor: (apptId: string, doctorId: string) => void;
-    setChairCapacity: (operational: number, active: number) => void; // Added
+    setChairCapacity: (operational: number, active: number) => void;
+    fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>; // Added
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -78,29 +79,33 @@ const DEFAULT_CONFIG: SchedulingConfig = {
 };
 
 // Simulation Logic: Generate slots based on Active Chairs
-export const generateAvailableSlots = (config: SchedulingConfig, dateStr: string) => {
-    // This is a simulation of what the Backend "SlotGenerator" would do
+// Backend Integration: Fetch slots from API
+export const fetchAvailableSlots = async (dateStr: string, activeChairs: number) => {
+    try {
+        const res = await fetch(`/api/calendar/availability?date=${dateStr}&chairs=${activeChairs}`);
+        if (!res.ok) throw new Error("Failed to fetch slots");
+        const data = await res.json();
+        return data.slots;
+    } catch (err) {
+        console.error("Slot Fetch Error, falling back to simulation", err);
+        // Fallback Simulation
+        return generateFallbackSlots(dateStr, activeChairs);
+    }
+};
+
+const generateFallbackSlots = (dateStr: string, activeChairs: number) => {
     const slots = [];
-    let currentTime = new Date(`${dateStr}T${config.operatingHours.start}:00`);
-    const endTime = new Date(`${dateStr}T${config.operatingHours.end}:00`);
+    let currentTime = new Date(`${dateStr}T09:00:00`);
+    const endTime = new Date(`${dateStr}T18:00:00`);
 
     while (currentTime < endTime) {
         const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-        
-        // precise logic: Check if this time is inside any break
-        const isBreak = config.breaks.some(b => timeString >= b.start && timeString < b.end);
-
-        if (!isBreak) {
-            // CRITICAL LOGIC: 
-            // We create 'N' slots for this time, where N = activeChairs
-            // In a real DB, we would check how many of these 'N' are already taken.
-            slots.push({
-                time: timeString,
-                capacity: config.activeChairs, // The Multiplying Factor
-                available: config.activeChairs - Math.floor(Math.random() * 2) // Mock availability
-            });
-        }
-        currentTime.setMinutes(currentTime.getMinutes() + config.slotDurationMinutes);
+        slots.push({
+            time: timeString,
+            capacity: activeChairs,
+            available: activeChairs - Math.floor(Math.random() * 2)
+        });
+        currentTime.setMinutes(currentTime.getMinutes() + 30);
     }
     return slots;
 };
@@ -147,6 +152,10 @@ export const useSchedulingStore = create<SchedulingState>()(
             })),
 
             setChairCapacity: (operational, active) => set({ operationalChairs: operational, activeChairs: active }),
+
+            fetchAvailableSlots: async (date, activeChairs) => {
+                return await fetchAvailableSlots(date, activeChairs);
+            },
         }),
         {
             name: 'noble-scheduling-storage',

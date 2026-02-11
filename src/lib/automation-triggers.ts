@@ -397,6 +397,61 @@ export class AutomationEngine {
     private generateReceiptUrl(data: PaymentSuccessData): string {
         return `/api/receipts/${data.paymentId}`;
     }
+
+    /**
+     * ON_APPOINTMENT_BOOKED trigger
+     */
+    onAppointmentBooked(data: AppointmentBookingData): AutomationResult<void> {
+        const notifications: NotificationPayload[] = [];
+        try {
+            // 1. WhatsApp Confirmation
+            notifications.push({
+                type: 'sms', // Map to WhatsApp provider in delivery layer
+                templateId: 'APPT_CONFIRM_WHATSAPP',
+                recipient: data.patientPhone,
+                recipientType: 'patient',
+                data: {
+                    patientName: data.patientName,
+                    date: data.date,
+                    time: data.time,
+                    doctor: data.doctorName,
+                    meetLink: data.googleMeetLink || ''
+                }
+            });
+
+            // 2. Notify Doctor (In-App)
+            notifications.push({
+                type: 'in_app',
+                templateId: 'NEW_APPT_ALERT',
+                recipient: data.doctorId,
+                recipientType: 'doctor',
+                data: {
+                    patientName: data.patientName,
+                    slot: `${data.date} ${data.time}`
+                }
+            });
+
+            return { success: true, notifications };
+        } catch (error) {
+            return {
+                success: false,
+                error: error instanceof Error ? error.message : 'Unknown error',
+                notifications
+            };
+        }
+    }
+}
+
+export interface AppointmentBookingData {
+    appointmentId: string;
+    patientId: string;
+    patientName: string;
+    patientPhone: string;
+    doctorId: string;
+    doctorName: string;
+    date: string;
+    time: string;
+    googleMeetLink?: string;
 }
 
 export const automationEngine = new AutomationEngine();
