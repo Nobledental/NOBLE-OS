@@ -62,6 +62,26 @@ export class GoogleBusinessService {
      * Uses 'mybusinessbusinessinformation' v1 API.
      */
     async getLocations(): Promise<GoogleLocation[]> {
+        // --- MOCK MODE: Bypass API Quota ---
+        if (process.env.NEXT_PUBLIC_USE_GMB_MOCK === 'true') {
+            console.log(' Using MOCK GMB Data (Quota Bypass)');
+            await new Promise(resolve => setTimeout(resolve, 1500)); // Fake latency
+            return [{
+                name: "locations/4527181657920795054",
+                title: "Noble Dental Care",
+                storefrontAddress: {
+                    addressLines: ["1st Floor, ICA Clinic, Plot no. 151/2, Huda Layout, Water Tank Road"],
+                    locality: "Nallagandla",
+                    administrativeArea: "Telangana",
+                    postalCode: "500019"
+                },
+                phoneNumbers: { primaryPhone: "+91 86104 25342" },
+                latlng: { latitude: 17.4739015, longitude: 78.305614 },
+                metadata: { mapsUri: "https://maps.google.com/?cid=4527181657920795054" }
+            }];
+        }
+        // -----------------------------------
+
         await this.loadCredentials();
 
         // 1. Get the Account ID first
@@ -90,5 +110,32 @@ export class GoogleBusinessService {
         });
 
         return (locationsRes.data.locations as GoogleLocation[]) || [];
+    }
+
+    /**
+     * Fetch merged clinic data for onboarding.
+     * Returns the first location found.
+     */
+    async fetchClinicData() {
+        try {
+            const locations = await this.getLocations();
+            if (locations.length === 0) throw new Error("No locations found.");
+
+            const loc = locations[0];
+            return {
+                name: loc.title,
+                address: `${loc.storefrontAddress?.addressLines?.[0]}, ${loc.storefrontAddress?.locality}`,
+                phone: loc.phoneNumbers?.primaryPhone || "",
+                googleMapsUrl: loc.metadata?.mapsUri,
+                lat: loc.latlng?.latitude,
+                lng: loc.latlng?.longitude,
+                googleLocationId: loc.name,
+                isVerified: true, // If we got it from API, it's a real listing
+                syncStatus: 'success'
+            };
+        } catch (error) {
+            console.error("GMB Fetch Details Error:", error);
+            throw error;
+        }
     }
 }

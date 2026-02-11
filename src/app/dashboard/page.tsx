@@ -13,6 +13,7 @@ import { DoctorDashboardView } from "@/components/dashboard/doctor-view";
 import { ReceptionistDashboardView } from "@/components/dashboard/receptionist-view";
 import { AssistantDashboardView } from "@/components/dashboard/assistant-view";
 import { MobileBottomDock } from "@/components/layout/mobile-bottom-dock";
+import { VerifiedBadge } from "@/components/ui/verified-badge";
 
 // Enhanced NEO Orb with Layered Rings
 const NEOOrb = ({ status, className }: { status: string, className?: string }) => (
@@ -71,6 +72,7 @@ export default function DashboardPage() {
             {/* Header Area with View Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-700">
                 <div>
+                    <VerifiedBadge className="mb-3 w-fit" />
                     <h2 className="text-[18px] text-[#0A84FF] font-semibold tracking-[0.05em] mb-1">
                         {viewMode === 'overview' ? `Logged in as ${role}` : 'Active Treatment Focus'}
                     </h2>

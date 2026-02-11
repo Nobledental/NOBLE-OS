@@ -168,50 +168,34 @@ export const ClinicBrandingSettings: React.FC<{
     const handleImportFromGoogle = async () => {
         setIsImporting(true);
         try {
-            const res = await fetch('/api/business/import');
-            const data = await res.json();
+            // Use Store Action (Architecture Future-Proofing)
+            await store.importFromGoogle();
 
-            if (!res.ok) {
-                if (data.code === 'AUTH_REQUIRED') {
-                    // Redirect to Auth if needed, or show simple alert for now
-                    window.location.href = '/api/auth/google'; // Re-trigger auth loop with new scope
-                    return;
-                }
-                throw new Error(data.error || 'Failed to import');
-            }
-
-            const location = data.locations[0]; // Take first verified location
-            if (location) {
-                // Update Local Settings State
+            // Sync local settings with new store data
+            if (store.clinicDetails) {
                 setSettings(prev => ({
                     ...prev,
                     branding: {
                         ...prev.branding,
-                        clinicName: location.title,
-                        phone: location.phoneNumbers?.primaryPhone || prev.branding.phone,
-                        address: location.storefrontAddress?.addressLines?.join(', ') || prev.branding.address,
-                        latitude: location.latlng?.latitude || prev.branding.latitude,
-                        longitude: location.latlng?.longitude || prev.branding.longitude,
+                        clinicName: store.clinicDetails!.name,
+                        phone: store.clinicDetails!.phone,
+                        address: store.clinicDetails!.address,
+                        latitude: store.clinicDetails!.lat,
+                        longitude: store.clinicDetails!.lng,
+                        isVerified: store.clinicDetails!.isVerified,
+                        googleLocationId: store.clinicDetails!.googleLocationId,
+                        syncStatus: store.clinicDetails!.syncStatus
                     }
                 }));
-
-                // Update Global Store
-                store.updateClinicDetails({
-                    name: location.title,
-                    address: location.storefrontAddress?.addressLines?.join(', ') || '',
-                    phone: location.phoneNumbers?.primaryPhone || '',
-                    googleMapsUrl: location.metadata?.mapsUri,
-                    googleLocationId: location.name,
-                    isVerified: true,
-                    lat: location.latlng?.latitude,
-                    lng: location.latlng?.longitude
-                });
-
                 alert('Successfully imported verified clinic details from Google!');
             }
 
         } catch (error: any) {
-            alert(`Import Failed: ${error.message}`);
+            if (error.message?.includes('AUTH_REQUIRED')) {
+                window.location.href = '/api/auth/google';
+            } else {
+                alert(`Import Failed: ${error.message}`);
+            }
         } finally {
             setIsImporting(false);
         }
@@ -313,31 +297,67 @@ export const ClinicBrandingSettings: React.FC<{
                         {activeTab === 'branding' && (
                             <div className="space-y-10">
                                 {/* Google Import Card - Moved to Top */}
+                                {/* Google Import Card - Moved to Top */}
                                 <div className="p-6 bg-blue-50 border border-blue-100 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden mb-8">
                                     <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-200/50 rounded-full blur-3xl"></div>
                                     <div className="flex items-center gap-4 relative z-10">
-                                        <div className="w-12 h-12 bg-white text-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
-                                            <MapPin className="w-6 h-6" />
+                                        <div className={cn(
+                                            "w-16 h-16 rounded-2xl flex items-center justify-center shadow-sm transition-all",
+                                            store.clinicDetails?.isVerified ? "bg-green-100 text-green-600" : "bg-white text-blue-600"
+                                        )}>
+                                            {store.clinicDetails?.isVerified ? <Check className="w-8 h-8" /> : <MapPin className="w-6 h-6" />}
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">
                                                 <h3 className="text-lg font-black text-blue-900">Google Business Profile</h3>
                                                 {store.clinicDetails?.isVerified && (
-                                                    <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
-                                                        <Check className="w-3 h-3" /> Verified
+                                                    <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1 border border-green-200">
+                                                        Verified
                                                     </span>
                                                 )}
                                             </div>
-                                            <p className="text-sm text-blue-800/70 font-medium">Auto-fill verified details (Name, Address, Maps) from Google.</p>
+                                            <div className="text-sm text-blue-800/70 font-medium mt-1">
+                                                {store.clinicDetails?.syncStatus === 'pending' ? (
+                                                    <span className="flex items-center gap-2 animate-pulse">
+                                                        <RotateCcw className="w-3 h-3 animate-spin" />
+                                                        Connecting to Google Business...
+                                                    </span>
+                                                ) : store.clinicDetails?.isVerified ? (
+                                                    <span className="text-green-700 font-bold">
+                                                        Synced: {store.clinicDetails.name}
+                                                    </span>
+                                                ) : (
+                                                    "Auto-fill verified name, address, and location data."
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                     <button
                                         onClick={handleImportFromGoogle}
-                                        disabled={isImporting}
-                                        className="relative z-10 px-6 py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95 disabled:opacity-50"
+                                        disabled={isImporting || store.clinicDetails?.syncStatus === 'pending'}
+                                        className={cn(
+                                            "relative z-10 px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-widest transition-all flex items-center gap-2 shadow-lg active:scale-95 disabled:opacity-50",
+                                            store.clinicDetails?.isVerified
+                                                ? "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50"
+                                                : "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
+                                        )}
                                     >
-                                        {isImporting ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-                                        {store.clinicDetails?.isVerified ? 'Sync Again' : 'Import verified Data'}
+                                        {isImporting || store.clinicDetails?.syncStatus === 'pending' ? (
+                                            <>
+                                                <RotateCcw className="w-4 h-4 animate-spin" />
+                                                Verifying...
+                                            </>
+                                        ) : store.clinicDetails?.isVerified ? (
+                                            <>
+                                                <Check className="w-4 h-4 text-green-600" />
+                                                Re-Sync Data
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Upload className="w-4 h-4" />
+                                                Import Verified Data
+                                            </>
+                                        )}
                                     </button>
                                 </div>
 

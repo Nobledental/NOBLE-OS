@@ -36,6 +36,8 @@ export interface SchedulingConfig {
     doctors: Doctor[];
     patients: PatientShort[];
     appointments: any[];
+    operationalChairs: number;
+    activeChairs: number;
     // Verified Clinic Details (GMB)
     clinicDetails?: {
         name: string;
@@ -47,6 +49,7 @@ export interface SchedulingConfig {
         lat?: number;
         lng?: number;
         isVerified: boolean;
+        syncStatus?: 'idle' | 'pending' | 'success' | 'error';
     };
 }
 
@@ -64,6 +67,7 @@ interface SchedulingState extends SchedulingConfig {
     setChairCapacity: (operational: number, active: number) => void;
     fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>;
     updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
+    importFromGoogle: () => Promise<boolean>;
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -169,7 +173,55 @@ export const useSchedulingStore = create<SchedulingState>()(
                 return await fetchAvailableSlots(date, activeChairs);
             },
 
+
+
             updateClinicDetails: (details) => set({ clinicDetails: details }),
+
+            // --- Google My Business Action ---
+            importFromGoogle: async () => {
+                try {
+                    // Set loading state
+                    set((state) => ({
+                        clinicDetails: {
+                            ...state.clinicDetails!,
+                            syncStatus: 'pending'
+                        }
+                    }));
+
+                    const res = await fetch('/api/business/import');
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.error || 'Import failed');
+                    }
+
+                    const data = await res.json();
+
+                    set({
+                        clinicDetails: {
+                            name: data.name,
+                            address: data.address,
+                            phone: data.phone,
+                            googleMapsUrl: data.googleMapsUrl,
+                            lat: data.lat,
+                            lng: data.lng,
+                            googleLocationId: data.googleLocationId,
+                            isVerified: true,
+                            syncStatus: 'success'
+                        }
+                    });
+
+                    return true;
+                } catch (error) {
+                    console.error("Store GMB Import Error:", error);
+                    set((state) => ({
+                        clinicDetails: {
+                            ...state.clinicDetails!,
+                            syncStatus: 'error'
+                        }
+                    }));
+                    throw error;
+                }
+            }
         }),
         {
             name: 'noble-scheduling-storage',

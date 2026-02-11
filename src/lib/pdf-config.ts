@@ -42,6 +42,11 @@ export interface ClinicBranding {
     // Location (HealthFlo Pivot)
     latitude?: number;
     longitude?: number;
+
+    // Google My Business Integration
+    googleLocationId?: string;
+    isVerified?: boolean;
+    syncStatus?: 'idle' | 'pending' | 'success' | 'error';
 }
 
 export interface PDFColorTheme {
