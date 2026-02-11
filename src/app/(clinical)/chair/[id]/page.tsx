@@ -1,14 +1,5 @@
 "use client";
 
-import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
-import { useChairStore } from "@/lib/store";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Mic, Check, Wand2 } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
-import { use } from "react";
 
 import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 import { useChairStore } from "@/lib/store";
