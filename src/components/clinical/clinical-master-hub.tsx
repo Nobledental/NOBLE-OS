@@ -1,7 +1,7 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ToothMap } from "@/components/clinical/tooth-map";
+
 import { ChartingControls } from "@/components/clinical/charting-controls";
 import { ClinicalHistory } from "@/components/clinical/clinical-history";
 import { ClinicalNoteEditor } from "@/components/clinical/clinical-note-editor";

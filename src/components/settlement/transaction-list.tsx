@@ -39,10 +39,10 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
     });
 
     return (
-        <div className="rounded-2xl border bg-white dark:bg-slate-950 overflow-hidden shadow-sm">
+        <div className="rounded-2xl border bg-white overflow-hidden shadow-sm">
             <Table>
                 <TableHeader>
-                    <TableRow className="bg-slate-50/50 dark:bg-slate-900/50">
+                    <TableRow className="bg-slate-50/50">
                         <TableHead className="font-bold">Patient</TableHead>
                         <TableHead className="font-bold">Invoice</TableHead>
                         <TableHead className="font-bold text-right">Amount</TableHead>
@@ -60,7 +60,7 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
                         </TableRow>
                     ) : (
                         transactions.map((tx) => (
-                            <TableRow key={tx.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-900/40">
+                            <TableRow key={tx.id} className="hover:bg-slate-50/50">
                                 <TableCell>
                                     <div className="font-medium">
                                         {tx.appointment.patient.first_name} {tx.appointment.patient.last_name}

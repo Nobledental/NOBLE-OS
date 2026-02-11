@@ -45,7 +45,7 @@ export function DoctorDashboardView() {
             <motion.div variants={itemVariants} className="lg:col-span-8 flex flex-col gap-8">
                 <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                        <h2 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white">Active Clinical Feed</h2>
+                        <h2 className="text-3xl font-black tracking-tighter text-slate-900">Active Clinical Feed</h2>
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Real-time Procedural Audit Active</p>

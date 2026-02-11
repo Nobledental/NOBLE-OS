@@ -54,16 +54,16 @@ export function OtterVoice() {
     };
 
     return (
-        <PanzeCard className="h-full flex flex-col relative overflow-hidden bg-slate-900 text-white border-slate-800">
+        <PanzeCard className="h-full flex flex-col relative overflow-hidden bg-white text-slate-900 border-slate-200 shadow-xl">
             {/* Header */}
             <div className="flex justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-200">
                         <Mic className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                        <h3 className="font-bold text-sm">Clinical Voice Assistant</h3>
-                        <p className="text-[10px] text-slate-400">Powered by Noble AI</p>
+                        <h3 className="font-bold text-sm text-slate-900">Clinical Voice Assistant</h3>
+                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Powered by Noble AI</p>
                     </div>
                 </div>
                 {isListening && (
@@ -71,7 +71,7 @@ export function OtterVoice() {
                         {[...Array(5)].map((_, i) => (
                             <div
                                 key={i}
-                                className="w-1 bg-green-400 rounded-full animate-pulse"
+                                className="w-1 bg-emerald-500 rounded-full animate-pulse"
                                 style={{
                                     height: `${Math.random() * 100}%`,
                                     animationDuration: `${0.5 + Math.random()}s`
@@ -83,10 +83,10 @@ export function OtterVoice() {
             </div>
 
             {/* Transcript Area */}
-            <div className="flex-1 bg-slate-800/50 rounded-xl p-4 font-mono text-sm leading-relaxed overflow-y-auto min-h-[100px] border border-white/10">
-                <p className="text-slate-300 whitespace-pre-wrap">
+            <div className="flex-1 bg-slate-50 rounded-xl p-4 font-mono text-sm leading-relaxed overflow-y-auto min-h-[100px] border border-slate-200 shadow-inner">
+                <p className="text-slate-700 whitespace-pre-wrap font-medium">
                     {transcript}
-                    {isListening && <span className="animate-pulse text-blue-400 ml-1">|</span>}
+                    {isListening && <span className="animate-pulse text-indigo-500 ml-1">|</span>}
                 </p>
             </div>
 
@@ -95,10 +95,10 @@ export function OtterVoice() {
                 <Button
                     onClick={toggleListening}
                     className={cn(
-                        "flex-1 font-bold transition-all",
+                        "flex-1 font-bold transition-all shadow-lg",
                         isListening
-                            ? "bg-red-500 hover:bg-red-600 text-white animate-pulse"
-                            : "bg-blue-600 hover:bg-blue-700 text-white"
+                            ? "bg-rose-500 hover:bg-rose-600 text-white animate-pulse shadow-rose-200"
+                            : "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200"
                     )}
                 >
                     {isListening ? (
@@ -111,16 +111,16 @@ export function OtterVoice() {
                         </>
                     )}
                 </Button>
-                <Button variant="outline" size="icon" className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800">
+                <Button variant="outline" size="icon" className="border-slate-200 bg-white text-slate-500 hover:bg-slate-50 hover:text-indigo-600">
                     <Copy className="w-4 h-4" />
                 </Button>
-                <Button variant="outline" size="icon" className="border-slate-700 bg-transparent text-slate-300 hover:bg-slate-800">
-                    <Sparkles className="w-4 h-4 text-amber-400" />
+                <Button variant="outline" size="icon" className="border-slate-200 bg-white text-slate-500 hover:bg-slate-50 hover:text-amber-500">
+                    <Sparkles className="w-4 h-4" />
                 </Button>
             </div>
 
             {/* Warning if API not supported */}
-            <div className="text-[10px] text-slate-600 mt-2 text-center flex items-center justify-center gap-1">
+            <div className="text-[10px] text-slate-400 mt-2 text-center flex items-center justify-center gap-1 font-medium">
                 <AlertCircle className="w-3 h-3" />
                 <span>Microphone access required for transcription.</span>
             </div>

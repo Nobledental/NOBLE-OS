@@ -33,7 +33,7 @@ export function PatientHUD({ patientName, patientId, vitals, risks }: PatientHUD
             <GlassCard className="p-4 flex items-center justify-between" intensity="high">
                 {/* Patient Info */}
                 <div className="flex items-center gap-4 pl-2">
-                    <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-lg font-bold">
+                    <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-lg font-bold">
                         {patientName.charAt(0)}
                     </div>
                     <div>
@@ -57,7 +57,7 @@ export function PatientHUD({ patientName, patientId, vitals, risks }: PatientHUD
                         <div className="flex items-center gap-1 justify-center text-slate-500 text-xs uppercase tracking-wider mb-1 group-hover:text-cyan-500 transition-colors">
                             <Activity className="w-3 h-3" /> BP
                         </div>
-                        <div className="text-2xl font-black font-mono flex items-baseline gap-1 text-cyan-600 dark:text-cyan-400">
+                        <div className="text-2xl font-black font-mono flex items-baseline gap-1 text-cyan-600">
                             {vitals.bp}
                         </div>
                     </div>
@@ -66,7 +66,7 @@ export function PatientHUD({ patientName, patientId, vitals, risks }: PatientHUD
                         <div className="flex items-center gap-1 justify-center text-slate-500 text-xs uppercase tracking-wider mb-1 group-hover:text-emerald-500 transition-colors">
                             <Thermometer className="w-3 h-3" /> SpO2
                         </div>
-                        <div className="text-2xl font-black font-mono flex items-baseline gap-1 text-emerald-600 dark:text-emerald-400">
+                        <div className="text-2xl font-black font-mono flex items-baseline gap-1 text-emerald-600">
                             {vitals.spo2}%
                         </div>
                     </div>
@@ -78,7 +78,7 @@ export function PatientHUD({ patientName, patientId, vitals, risks }: PatientHUD
                         <span>Past Visits</span>
                         <span className="text-blue-500">Live</span>
                     </div>
-                    <div className="h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden relative group cursor-pointer">
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden relative group cursor-pointer">
                         <div className="absolute inset-y-0 left-0 w-3/4 bg-gradient-to-r from-indigo-500/20 to-indigo-500" />
                         <div className="absolute top-1/2 left-3/4 w-3 h-3 bg-white rounded-full shadow-lg -translate-y-1/2 -translate-x-1/2 group-hover:scale-125 transition-transform" />
                     </div>

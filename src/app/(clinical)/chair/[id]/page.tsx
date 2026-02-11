@@ -10,11 +10,35 @@ import { useState } from "react";
 import Link from "next/link";
 import { use } from "react";
 
+import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
+import { useChairStore } from "@/lib/store";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Mic, Check, Wand2, Loader2, ArrowLeft } from "lucide-react";
+import { useState, use } from "react";
+import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import api from "@/lib/api";
+import { toast } from "sonner";
+
 export default function ChairPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
     const { selectedTeeth, applyTreatment, resetSelection } = useChairStore();
     const [note, setNote] = useState("");
     const [isListening, setIsListening] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Fetch Patient Details
+    const { data: patient, isLoading } = useQuery({
+        queryKey: ['patient', id],
+        queryFn: async () => {
+            const res = await api.get(`/patients/${id}`);
+            return res.data;
+        }
+    });
+
+    const chartMode = (!patient) ? "ADULT" : (patient.age < 6) ? "CHILD" : (patient.age < 13) ? "MIXED" : "ADULT";
 
     // Mock Voice Dictation (Web Speech API Wrapper)
     const toggleVoice = () => {
@@ -36,23 +60,52 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
         }
     };
 
+    const handleSave = async () => {
+        if (!note.trim() && selectedTeeth.length === 0) {
+            toast.error("Nothing to save");
+            return;
+        }
+
+        try {
+            setIsSaving(true);
+            await api.post('/clinical/notes', {
+                patient_id: id,
+                content: note,
+                procedures: selectedTeeth,
+                type: 'PROCEDURE'
+            });
+            toast.success("Procedure & Note Saved");
+            setNote("");
+            resetSelection();
+        } catch (e) {
+            toast.error("Failed to save record");
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    if (isLoading) return <div className="h-screen flex items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-slate-400" /></div>;
+
     return (
         <div className="h-screen flex bg-slate-50 overflow-hidden relative">
             {/* Left: Dental Map (The Canvas) */}
             <div className="flex-1 bg-slate-100 p-4 flex flex-col items-center justify-center relative">
                 <div className="absolute top-4 left-4 z-10">
-                    <Link href="/dashboard">
-                        <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50">← Exit Chair</Button>
+                    <Link href={`/dashboard/patients/${id}`}>
+                        <Button variant="outline" size="sm" className="bg-white hover:bg-slate-50 border-slate-200 text-slate-700">
+                            <ArrowLeft className="w-4 h-4 mr-2" />
+                            Back to Profile
+                        </Button>
                     </Link>
                 </div>
 
                 <div className="absolute top-4 right-4 z-10 bg-white/90 p-3 rounded-xl shadow-lg border border-slate-200 backdrop-blur">
-                    <h2 className="text-sm font-bold text-slate-800">Patient: Divya Sharma</h2>
-                    <p className="text-xs text-slate-500 font-medium">ID: HF-2024-9021 • <span className="text-red-500 font-bold">Allergy: Penicillin</span></p>
+                    <h2 className="text-sm font-bold text-slate-800">Patient: {patient?.name}</h2>
+                    <p className="text-xs text-slate-500 font-medium">ID: {patient?.healthflo_id} • <span className="text-red-500 font-bold">Allergy: Penicillin</span></p>
                 </div>
 
                 <div className="scale-90 origin-center max-h-screen overflow-auto">
-                    <UniversalToothChart mode="ADULT" className="shadow-2xl" />
+                    <UniversalToothChart mode={chartMode as any} className="shadow-2xl" />
                 </div>
             </div>
 
@@ -143,8 +196,8 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
                             onChange={(e) => setNote(e.target.value)}
                         />
                         <div className="flex justify-end">
-                            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20 rounded-lg font-bold">
-                                <Check className="h-4 w-4 mr-2" />
+                            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/20 rounded-lg font-bold" onClick={handleSave} disabled={isSaving}>
+                                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4 mr-2" />}
                                 Save Record
                             </Button>
                         </div>

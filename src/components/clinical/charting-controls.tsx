@@ -57,7 +57,7 @@ export function ChartingControls({ patientId }: { patientId: string }) {
                     <Label className="text-xs uppercase text-slate-400">Clinical Observations</Label>
                     <Textarea
                         placeholder="Type observation or use voice commands..."
-                        className="min-h-[120px] rounded-xl resize-none bg-slate-50 dark:bg-slate-900 border-none focus-visible:ring-indigo-500"
+                        className="min-h-[120px] rounded-xl resize-none bg-slate-50 border-none focus-visible:ring-indigo-500"
                     />
                 </div>
 

@@ -12,6 +12,7 @@ import { OtterVoice } from "@/components/clinical/otter-voice";
 import { cn } from "@/lib/utils";
 import { CLINICAL_SUGGESTIONS, CLINICAL_TEMPLATES, ClinicalTemplate, ClinicalSuggestion } from "@/lib/clinical-suggest";
 import { motion, AnimatePresence } from "framer-motion";
+import api from "@/lib/api";
 
 // Define the type for the notes state
 export type ClinicalNoteState = {
@@ -90,10 +91,18 @@ export function ClinicalNoteEditor({
         }
     }, [activeField]);
 
-    const handleSave = () => {
-        console.log("Saving SOAP Note:", { patientId, ...notes });
-        onArchive?.(notes);
-        toast.success("Clinical notes archived and saved successfully.");
+    const handleSave = async () => {
+        try {
+            await api.post('/clinical/notes', {
+                patientId,
+                ...notes,
+                type: 'SOAP'
+            });
+            onArchive?.(notes);
+            toast.success("Clinical notes archived and saved successfully.");
+        } catch (e) {
+            toast.error("Failed to save notes");
+        }
     };
 
     return (
@@ -101,22 +110,22 @@ export function ClinicalNoteEditor({
             <CardHeader className="px-0 pt-0">
                 <CardTitle className="flex items-center justify-between">
                     <div className="flex flex-col">
-                        <div className="flex items-center gap-2 text-3xl font-serif tracking-tighter text-white">
-                            <FileText className="w-6 h-6 text-neo-lavender" />
+                        <div className="flex items-center gap-2 text-3xl font-serif tracking-tighter text-slate-900">
+                            <FileText className="w-6 h-6 text-indigo-600" />
                             Case Sheet
                         </div>
-                        <p className="text-[10px] font-black text-white/40 uppercase tracking-widest mt-1">SOAP-AI Guided Documentation</p>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">SOAP-AI Guided Documentation</p>
                     </div>
 
                     <div className="flex items-center gap-2">
                         <Dialog>
                             <DialogTrigger asChild>
-                                <Button variant="outline" size="sm" className="rounded-2xl gap-2 border-white/10 bg-white/5 text-white/60 hover:bg-white/10 hover:text-white font-black text-[10px] uppercase tracking-widest h-10 px-4 backdrop-blur-md">
-                                    <Mic className="w-4 h-4 text-neo-vibrant-blue" />
+                                <Button variant="outline" size="sm" className="rounded-2xl gap-2 border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-black text-[10px] uppercase tracking-widest h-10 px-4">
+                                    <Mic className="w-4 h-4 text-indigo-600" />
                                     Dictate
                                 </Button>
                             </DialogTrigger>
-                            <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden bg-transparent border-none shadow-none">
+                            <DialogContent className="sm:max-w-[425px] p-0 overflow-hidden bg-white border-none shadow-xl">
                                 <OtterVoice />
                             </DialogContent>
                         </Dialog>
@@ -126,15 +135,15 @@ export function ClinicalNoteEditor({
             <CardContent className="px-0 space-y-8 mt-4">
                 {/* Quick Templates Bar */}
                 <div className="space-y-3">
-                    <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest flex items-center gap-2">
-                        <Wand2 className="w-3 h-3 text-neo-lavender" /> Quick Smart Templates
+                    <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <Wand2 className="w-3 h-3 text-indigo-500" /> Quick Smart Templates
                     </Label>
                     <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                         {CLINICAL_TEMPLATES.map(template => (
                             <button
                                 key={template.id}
                                 onClick={() => applyTemplate(template)}
-                                className="flex-shrink-0 px-4 py-2.5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-bold text-white/70 uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all shadow-sm"
+                                className="flex-shrink-0 px-4 py-2.5 bg-white border border-slate-200 rounded-2xl text-[10px] font-bold text-slate-600 uppercase tracking-widest hover:bg-slate-50 hover:text-slate-900 transition-all shadow-sm"
                             >
                                 {template.name}
                             </button>
@@ -145,12 +154,12 @@ export function ClinicalNoteEditor({
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Subjective */}
                     <div className="space-y-3">
-                        <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest flex items-center gap-2">
-                            <Sparkles className="w-3 h-3 text-amber-400" /> S - Subjective
+                        <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                            <Sparkles className="w-3 h-3 text-amber-500" /> S - Subjective
                         </Label>
                         <Textarea
                             placeholder="Patient's stated symptoms, history of present illness..."
-                            className="min-h-[140px] bg-white/[0.03] border-white/5 rounded-[2rem] p-6 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/5 outline-none font-bold text-sm text-white transition-all placeholder:text-white/20"
+                            className="min-h-[140px] bg-slate-50 border-slate-100 rounded-[2rem] p-6 focus:bg-white focus:ring-4 focus:ring-indigo-50/50 outline-none font-bold text-sm text-slate-700 transition-all placeholder:text-slate-300 resize-none"
                             value={notes.subjective}
                             onFocus={() => setActiveField('subjective')}
                             onChange={(e) => handleChange("subjective", e.target.value)}
@@ -159,10 +168,10 @@ export function ClinicalNoteEditor({
 
                     {/* Objective */}
                     <div className="space-y-3">
-                        <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest">O - Objective</Label>
+                        <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">O - Objective</Label>
                         <Textarea
                             placeholder="Vital signs, physical exam findings, specific tooth status..."
-                            className="min-h-[140px] bg-white/[0.03] border-white/5 rounded-[2rem] p-6 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/5 outline-none font-bold text-sm text-white transition-all placeholder:text-white/20"
+                            className="min-h-[140px] bg-slate-50 border-slate-100 rounded-[2rem] p-6 focus:bg-white focus:ring-4 focus:ring-indigo-50/50 outline-none font-bold text-sm text-slate-700 transition-all placeholder:text-slate-300 resize-none"
                             value={notes.objective}
                             onFocus={() => setActiveField('objective')}
                             onChange={(e) => handleChange("objective", e.target.value)}
@@ -171,10 +180,10 @@ export function ClinicalNoteEditor({
 
                     {/* Assessment */}
                     <div className="space-y-3">
-                        <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest">A - Assessment</Label>
+                        <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">A - Assessment</Label>
                         <Textarea
                             placeholder="Clinical diagnosis based on S & O..."
-                            className="min-h-[120px] bg-white/[0.03] border-white/5 rounded-[2rem] p-6 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/5 outline-none font-bold text-sm text-white transition-all placeholder:text-white/20"
+                            className="min-h-[120px] bg-slate-50 border-slate-100 rounded-[2rem] p-6 focus:bg-white focus:ring-4 focus:ring-indigo-50/50 outline-none font-bold text-sm text-slate-700 transition-all placeholder:text-slate-300 resize-none"
                             value={notes.assessment}
                             onFocus={() => setActiveField('assessment')}
                             onChange={(e) => handleChange("assessment", e.target.value)}
@@ -184,10 +193,10 @@ export function ClinicalNoteEditor({
                     {/* Plan & Advice */}
                     <div className="space-y-6">
                         <div className="space-y-3">
-                            <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest">P - Plan</Label>
+                            <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">P - Plan</Label>
                             <Textarea
                                 placeholder="Proposed procedure, medication, referrals..."
-                                className="min-h-[120px] bg-white/[0.03] border-white/5 rounded-[2rem] p-6 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/5 outline-none font-bold text-sm text-white transition-all placeholder:text-white/20"
+                                className="min-h-[120px] bg-slate-50 border-slate-100 rounded-[2rem] p-6 focus:bg-white focus:ring-4 focus:ring-indigo-50/50 outline-none font-bold text-sm text-slate-700 transition-all placeholder:text-slate-300 resize-none"
                                 value={notes.plan}
                                 onFocus={() => setActiveField('plan')}
                                 onChange={(e) => handleChange("plan", e.target.value)}
@@ -197,10 +206,10 @@ export function ClinicalNoteEditor({
                 </div>
 
                 <div className="space-y-3">
-                    <Label className="text-[10px] font-black text-white/40 uppercase tracking-widest">Post-Procedure Advice</Label>
+                    <Label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Post-Procedure Advice</Label>
                     <Textarea
                         placeholder="Instructions given to patient..."
-                        className="min-h-[80px] bg-white/[0.03] border-white/5 rounded-[2.5rem] p-6 focus:bg-white/[0.05] focus:ring-4 focus:ring-white/5 outline-none font-bold text-sm text-white transition-all placeholder:text-white/20"
+                        className="min-h-[80px] bg-slate-50 border-slate-100 rounded-[2.5rem] p-6 focus:bg-white focus:ring-4 focus:ring-indigo-50/50 outline-none font-bold text-sm text-slate-700 transition-all placeholder:text-slate-300 resize-none"
                         value={notes.advice}
                         onFocus={() => setActiveField('advice')}
                         onChange={(e) => handleChange("advice", e.target.value)}
@@ -214,11 +223,11 @@ export function ClinicalNoteEditor({
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
-                            className="p-6 bg-neo-vibrant-blue rounded-[2.5rem] shadow-2xl shadow-neo-vibrant-blue/30 glass-neo border-white/20"
+                            className="p-6 bg-white rounded-[2.5rem] shadow-2xl shadow-indigo-100 border border-slate-100"
                         >
                             <div className="flex justify-between items-center mb-4 px-2">
-                                <span className="text-[10px] font-black text-white/70 uppercase tracking-widest">AI Assisted Suggestions</span>
-                                <button onClick={() => setSuggestions([])} className="text-white hover:bg-white/10 p-1 rounded-lg transition-all">
+                                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">AI Assisted Suggestions</span>
+                                <button onClick={() => setSuggestions([])} className="text-slate-400 hover:bg-slate-100 p-1 rounded-lg transition-all">
                                     <X className="w-4 h-4" />
                                 </button>
                             </div>
@@ -227,7 +236,7 @@ export function ClinicalNoteEditor({
                                     <button
                                         key={suggestion.id}
                                         onClick={() => addSuggestion(suggestion)}
-                                        className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl text-xs font-bold text-white transition-all"
+                                        className="px-4 py-2 bg-slate-50 hover:bg-indigo-50 border border-slate-100 rounded-xl text-xs font-bold text-slate-600 hover:text-indigo-600 transition-all"
                                     >
                                         + {suggestion.label}
                                     </button>
@@ -238,10 +247,10 @@ export function ClinicalNoteEditor({
                 </AnimatePresence>
 
                 <Button
-                    className="w-full h-16 bg-white text-black hover:bg-white/90 rounded-3xl text-sm font-black uppercase tracking-widest gap-3 shadow-2xl transform active:scale-[0.98] transition-all"
+                    className="w-full h-16 bg-slate-900 text-white hover:bg-slate-800 rounded-3xl text-sm font-black uppercase tracking-widest gap-3 shadow-2xl shadow-slate-200 transform active:scale-[0.98] transition-all"
                     onClick={handleSave}
                 >
-                    <ClipboardCheck className="w-5 h-5 text-neo-vibrant-blue" />
+                    <ClipboardCheck className="w-5 h-5 text-emerald-400" />
                     Archive Clinical Record
                 </Button>
             </CardContent>

@@ -38,7 +38,7 @@ function VitalCard({ label, value, unit, icon: Icon, status = "normal" }: VitalC
             <div className="flex items-baseline gap-1">
                 <span className={cn(
                     "text-xl font-black tracking-tight transition-colors",
-                    status === "risk" ? "text-rose-600 dark:text-rose-400" : "text-slate-900 dark:text-slate-100"
+                    status === "risk" ? "text-rose-600" : "text-slate-900"
                 )}>{value}</span>
                 <span className="text-[10px] text-muted-foreground font-bold">{unit}</span>
             </div>
@@ -50,15 +50,23 @@ function VitalCard({ label, value, unit, icon: Icon, status = "normal" }: VitalC
     )
 }
 
-export function VitalsHUD() {
-    // Mock Data
+export interface VitalsData {
+    temp?: number;
+    bp?: string;
+    hr?: number;
+    spo2?: number;
+    rr?: number;
+}
+
+export function VitalsHUD({ data }: { data?: VitalsData }) {
+    // Default values if no data provided
     const vitals = {
-        temp: 98.6,
-        bp_sys: 165, // Risk Level
-        bp_dia: 105, // Risk Level
-        hr: 78,
-        spo2: 94,   // Warning Level
-        rr: 18
+        temp: data?.temp || 98.6,
+        bp_sys: parseInt(data?.bp?.split('/')[0] || "120"),
+        bp_dia: parseInt(data?.bp?.split('/')[1] || "80"),
+        hr: data?.hr || 72,
+        spo2: data?.spo2 || 98,
+        rr: data?.rr || 16
     }
 
     const getBPStatus = () => {
@@ -76,7 +84,7 @@ export function VitalsHUD() {
     return (
         <GlassCard className="mx-4 my-2 px-6 py-4 flex items-center justify-between animate-ios-reveal border-white/20 shadow-lg" intensity="low">
             <div className="flex items-center gap-4 border-r border-white/10 pr-6 mr-6">
-                <div className="h-10 w-10 rounded-2xl bg-slate-900 dark:bg-white flex items-center justify-center text-white dark:text-slate-900 shadow-xl group hover:scale-110 transition-transform">
+                <div className="h-10 w-10 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl group hover:scale-110 transition-transform">
                     <HeartPulse className="h-5 w-5 animate-pulse" />
                 </div>
                 <div>
@@ -126,9 +134,9 @@ export function VitalsHUD() {
             <div className="hidden lg:flex items-center gap-2 pl-6 border-l border-white/10 ml-6">
                 <div className="text-right">
                     <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground leading-tight">Patient Safety</p>
-                    <p className="text-xs font-bold text-rose-600">Action Required</p>
+                    <p className="text-xs font-bold text-slate-700">Monitor Active</p>
                 </div>
-                <AlertCircle className="w-4 h-4 text-rose-500" />
+                <AlertCircle className="w-4 h-4 text-emerald-500" />
             </div>
         </GlassCard>
     )

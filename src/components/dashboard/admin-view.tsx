@@ -53,10 +53,10 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-4"
             >
                 {/* Operations Summary (Frosty White Glass) */}
-                <PanzeCard className="lg:col-span-2 group glass-frost border-slate-100 dark:border-white/10 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/80 dark:bg-transparent">
-                    {/* Champagne Gold & Silver Silk Glows - Dark Mode Only */}
-                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none opacity-0 dark:opacity-100" />
-                    <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none opacity-0 dark:opacity-100" />
+                <PanzeCard className="lg:col-span-2 group glass-frost border-slate-100 relative overflow-hidden flex flex-col min-h-[220px] md:min-h-[240px] transition-all duration-1000 p-4 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] backdrop-blur-[60px] saturate-[1.5] rounded-xl bg-white/80">
+                    {/* Champagne Gold - Light Mode Accent */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/[0.04] via-transparent to-white/[0.01] z-0 pointer-events-none opacity-100" />
+                    <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_85%_0%,_rgba(251,191,36,0.06)_0%,_transparent_75%)] pointer-events-none opacity-100" />
 
                     <div className="relative z-20 flex flex-col h-full">
                         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 md:mb-14">
@@ -69,15 +69,15 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 <div>
                                     <div className="flex items-center gap-3 mb-1.5">
                                         <div className="w-8 h-[2px] bg-indigo-500" />
-                                        <span className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-500 dark:text-slate-400">Perspective</span>
+                                        <span className="text-[10px] uppercase tracking-[0.4em] font-black text-slate-500">Perspective</span>
                                     </div>
-                                    <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-none">
+                                    <h1 className="text-xl font-bold tracking-tight text-slate-900 leading-none">
                                         Operations <span className="opacity-70 font-light">Analysis</span>
                                     </h1>
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <div className="glass-frost border-slate-200 dark:border-white/10 px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 dark:text-white backdrop-blur-3xl shadow-2xl">
+                                <div className="glass-frost border-slate-200 px-8 py-3 rounded-2xl text-[10px] font-black uppercase tracking-[0.4em] text-slate-900 backdrop-blur-3xl shadow-2xl">
                                     {activeFilter} MATRIC
                                 </div>
                             </div>
@@ -93,19 +93,19 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                 return (
                                     <div
                                         key={idx}
-                                        className="relative flex flex-col p-5 rounded-2xl bg-white dark:bg-white/5 border border-slate-100 dark:border-white/10 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/pod shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]"
+                                        className="relative flex flex-col p-5 rounded-2xl bg-white border border-slate-100 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 group/pod shadow-[0_4px_20px_-4px_rgba(0,0,0,0.02)]"
                                     >
                                         <div className="flex items-center justify-between mb-4">
                                             <div className={cn(
                                                 "w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
-                                                pod.positive ? "bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400" : "bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400"
+                                                pod.positive ? "bg-emerald-100 text-emerald-600" : "bg-blue-100 text-blue-600"
                                             )}>
                                                 <pod.icon className="w-5 h-5" />
                                             </div>
                                             {pod.trend && (
                                                 <div className={cn(
                                                     "text-[10px] font-black px-2.5 py-1 rounded-lg uppercase tracking-wider flex items-center gap-1",
-                                                    pod.positive ? "bg-emerald-100/50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400" : "bg-blue-100/50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400"
+                                                    pod.positive ? "bg-emerald-100/50 text-emerald-700" : "bg-blue-100/50 text-blue-700"
                                                 )}>
                                                     <TrendingUp className="w-3 h-3" /> {pod.trend}
                                                 </div>
@@ -113,11 +113,11 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                         </div>
 
                                         <div>
-                                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400 font-bold block mb-1">{pod.label}</span>
+                                            <span className="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold block mb-1">{pod.label}</span>
                                             <div className="text-2xl font-medium tracking-tight text-black mb-1">
                                                 {pod.value.startsWith('₹') ? pod.value : `₹${pod.value}`}
                                             </div>
-                                            <p className="text-[10px] text-slate-500 dark:text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
+                                            <p className="text-[10px] text-slate-500 font-medium capitalize">{pod.caption || pod.sub}</p>
                                         </div>
                                     </div>
                                 );
@@ -127,8 +127,8 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                 </PanzeCard>
 
                 {/* Intelligence Layer (Frosty White Glass) */}
-                <PanzeCard className="flex flex-col glass-frost border-slate-100 dark:border-white/10 rounded-xl relative overflow-hidden group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_60px_100px_-30px_rgba(0,0,0,0.08)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/80 dark:bg-transparent">
-                    <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none opacity-0 dark:opacity-100" />
+                <PanzeCard className="flex flex-col glass-frost border-slate-100 rounded-xl relative overflow-hidden group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] backdrop-blur-[60px] saturate-[1.5] transition-all duration-1000 min-h-[220px] bg-white/80">
+                    <div className="absolute inset-0 bg-gradient-to-b from-emerald-500/[0.03] to-transparent pointer-events-none opacity-100" />
                     <div className="p-4 space-y-4 flex-1 relative z-10">
                         <div className="flex items-center gap-4">
                             <div className="w-12 h-12 bg-emerald-500 flex items-center justify-center text-white rounded-xl border border-emerald-400 group-hover:scale-105 transition-all duration-700 shadow-lg shadow-emerald-500/20">
@@ -139,19 +139,19 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                                     <div className="w-4 h-[1px] bg-emerald-500" />
                                     <span className="text-[9px] md:text-[10px] uppercase tracking-[0.5em] font-bold text-emerald-600">AI Pulse</span>
                                 </div>
-                                <h3 className="text-base font-semibold tracking-tight text-slate-900 dark:text-white leading-none">Intelligence</h3>
+                                <h3 className="text-base font-semibold tracking-tight text-slate-900 leading-none">Intelligence</h3>
                             </div>
                         </div>
 
                         <div className="relative group/insight pt-4">
-                            <div className="relative bg-white/50 dark:bg-white/[0.01] rounded-xl p-4 border border-slate-100 dark:border-white/[0.02] backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-sm dark:shadow-[inset_0_0_40px_rgba(0,0,0,0.2)]">
+                            <div className="relative bg-white/50 rounded-xl p-4 border border-slate-100 backdrop-blur-3xl group-hover/insight:bg-white/[0.03] group-hover/insight:border-emerald-500/10 transition-all duration-700 shadow-sm">
                                 <div className="flex items-center gap-4 mb-4">
                                     <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 border border-emerald-100 group-hover/insight:bg-emerald-100 transition-all duration-700">
                                         <BarChart3 className="w-5 h-5 md:w-6 md:h-6" />
                                     </div>
-                                    <div className="text-2xl font-medium text-black dark:text-white tracking-tight">98.2%</div>
+                                    <div className="text-2xl font-medium text-black tracking-tight">98.2%</div>
                                 </div>
-                                <p className="text-[11px] md:text-[12px] text-slate-500 dark:text-slate-400 font-semibold leading-relaxed border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
+                                <p className="text-[11px] md:text-[12px] text-slate-500 font-semibold leading-relaxed border-l-2 border-emerald-500/60 pl-6 bg-emerald-500/5 py-4 rounded-r-2xl font-serif">
                                     &quot;Clinical velocity indicators suggest a conversion optimization window. Unified staff performance remains at elite benchmarks.&quot;
                                 </p>
                             </div>
@@ -160,7 +160,7 @@ export function AdminDashboardView({ activeFilter = "This Month" }: AdminDashboa
                         </div>
                     </div>
 
-                    <div className="p-6 md:p-8 bg-white/[0.05] border-t border-slate-100 dark:border-white/10">
+                    <div className="p-6 md:p-8 bg-white/[0.05] border-t border-slate-100">
                         <Button variant="ghost" className="w-full h-12 rounded-[1.5rem] bg-white hover:bg-emerald-50 border border-slate-100 text-slate-900 hover:text-emerald-600 text-[10px] font-black uppercase tracking-[0.4em] gap-4 transition-all duration-700 shadow-lg shadow-slate-100">
                             <ScrollText className="w-5 h-5 opacity-100" /> System Registry
                         </Button>
