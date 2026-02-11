@@ -1,6 +1,8 @@
 'use client';
 
+
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Zap,
@@ -35,6 +37,7 @@ interface C3Lead {
 }
 
 export default function C3ControlRoom() {
+    const router = useRouter();
     const [activeSection, setActiveSection] = useState<'logistics' | 'clinical' | 'performance'>('logistics');
 
     // Simulated C3 Fusion State
@@ -58,7 +61,10 @@ export default function C3ControlRoom() {
 
                 {/* 1. TOP COMMAND BAR: The "Brain" Health */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div className="md:col-span-2 bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-2xl flex items-center justify-between relative overflow-hidden group">
+                    <div
+                        onClick={() => router.push('/dashboard/analytics/aeo')}
+                        className="md:col-span-2 bg-white dark:bg-[#0a0f1d] p-8 rounded-[2.5rem] border border-slate-200 dark:border-white/5 shadow-2xl flex items-center justify-between relative overflow-hidden group cursor-pointer hover:border-blue-500/50 transition-all"
+                    >
                         <div className="relative z-10">
                             <div className="flex items-center gap-2 text-blue-600 font-bold text-[10px] uppercase tracking-[0.2em] mb-3">
                                 <Cpu size={14} className="animate-pulse" /> Neural Core Active
@@ -129,8 +135,11 @@ export default function C3ControlRoom() {
                                 ))}
                             </div>
 
-                            <button className="w-full mt-8 py-4 bg-slate-900 dark:bg-white/10 text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all">
-                                Orchestrate Queue
+                            <button
+                                onClick={() => router.push('/dashboard/admin/auditor')}
+                                className="w-full mt-8 py-4 bg-slate-900 dark:bg-white/10 text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest hover:bg-red-600 transition-all"
+                            >
+                                Launch Auditor
                             </button>
                         </div>
 
@@ -212,8 +221,11 @@ export default function C3ControlRoom() {
                                         <motion.div initial={{ width: 0 }} animate={{ width: intelligence.atr + '%' }} className="h-full bg-amber-400"></motion.div>
                                     </div>
                                 </div>
-                                <button className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl">
-                                    Boost Discovery
+                                <button
+                                    onClick={() => router.push('/dashboard/analytics/performance')}
+                                    className="w-full py-4 bg-white text-indigo-600 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl"
+                                >
+                                    Boost Performance
                                 </button>
                             </div>
                             <Command className="absolute top-[-20px] right-[-20px] opacity-10 scale-150 rotate-[20deg]" size={150} />
