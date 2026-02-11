@@ -36,9 +36,18 @@ export interface SchedulingConfig {
     doctors: Doctor[];
     patients: PatientShort[];
     appointments: any[];
-    // Chair Capacity
-    operationalChairs: number;
-    activeChairs: number;
+    // Verified Clinic Details (GMB)
+    clinicDetails?: {
+        name: string;
+        address: string;
+        phone: string;
+        googleMapsUrl?: string;
+        googleLocationId?: string;
+        placeId?: string;
+        lat?: number;
+        lng?: number;
+        isVerified: boolean;
+    };
 }
 
 interface SchedulingState extends SchedulingConfig {
@@ -53,7 +62,8 @@ interface SchedulingState extends SchedulingConfig {
     addAppointment: (appt: any) => void;
     assignDoctor: (apptId: string, doctorId: string) => void;
     setChairCapacity: (operational: number, active: number) => void;
-    fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>; // Added
+    fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>;
+    updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -75,7 +85,9 @@ const DEFAULT_CONFIG: SchedulingConfig = {
     appointments: [],
     // Defaults
     operationalChairs: 5,
-    activeChairs: 3
+    activeChairs: 3,
+    // Default Empty Clinic Details
+    clinicDetails: undefined
 };
 
 // Simulation Logic: Generate slots based on Active Chairs
@@ -156,6 +168,8 @@ export const useSchedulingStore = create<SchedulingState>()(
             fetchAvailableSlots: async (date, activeChairs) => {
                 return await fetchAvailableSlots(date, activeChairs);
             },
+
+            updateClinicDetails: (details) => set({ clinicDetails: details }),
         }),
         {
             name: 'noble-scheduling-storage',

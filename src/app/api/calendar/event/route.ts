@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
         // if (!session) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
         const body = await request.json();
-        const { summary, description, start, durationMinutes = 30, googleMeet } = body;
+        const { summary, description, start, durationMinutes = 30, googleMeet, location } = body;
 
         const calendarService = new GoogleCalendarService();
 
@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
             description,
             start: { dateTime: startTime.toISOString() },
             end: { dateTime: endTime.toISOString() },
-            meetLink: googleMeet
+            meetLink: googleMeet,
+            location // Pass location
         });
 
         return NextResponse.json({ success: true, event });

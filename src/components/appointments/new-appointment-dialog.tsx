@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Calendar, User, Phone, Video, Users, Clock, CheckCircle2, RefreshCw } from "lucide-react";
+import { Plus, Search, Calendar, User, Phone, Video, Users, Clock, CheckCircle2, RefreshCw, MapPin } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useSchedulingStore } from "@/lib/scheduling-store"; // IMPORT STORE
 import { toast } from "sonner";
@@ -29,7 +29,10 @@ export function NewAppointmentDialog() {
         doctorId: "any",
         date: "",
         time: "",
-        googleMeet: false
+        date: "",
+        time: "",
+        googleMeet: false,
+        locationShare: true // Default to true if user has GMB
     });
     const [isSyncing, setIsSyncing] = useState(false);
 
@@ -67,7 +70,9 @@ export function NewAppointmentDialog() {
                     summary: `Consultation: ${selectedPatient.name}`,
                     description: `Reason: ${bookingDetails.reason}\nPhone: ${selectedPatient.phone}`,
                     start: `${bookingDetails.date}T${bookingDetails.time}:00`,
-                    end: `` // logic to add duration
+                    end: ``, // logic to add duration
+                    googleMeet: bookingDetails.googleMeet,
+                    location: bookingDetails.locationShare ? store.clinicDetails?.address : undefined
                 })
             });
         } catch (e) {
@@ -84,7 +89,8 @@ export function NewAppointmentDialog() {
             slot: bookingDetails.time,
             reason: bookingDetails.reason,
             type: 'consultation',
-            googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined
+            googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined,
+            locationLink: bookingDetails.locationShare ? store.clinicDetails?.googleMapsUrl : undefined
         });
 
         toast.success(`Appointment booked for ${selectedPatient.name}`, {
@@ -120,7 +126,8 @@ export function NewAppointmentDialog() {
             slot: bookingDetails.time,
             reason: bookingDetails.reason,
             type: 'new',
-            googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined
+            googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined,
+            locationLink: bookingDetails.locationShare ? store.clinicDetails?.googleMapsUrl : undefined
         });
 
         toast.success(`Registered ${patientData.name} & Booked!`, {
@@ -177,13 +184,29 @@ export function NewAppointmentDialog() {
                                     </div>
                                 </div>
                             </div>
+
+                            {store.clinicDetails?.googleMapsUrl && (
+                                <div className="mt-4 p-4 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-200">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-3">
+                                            <div className={cn("p-2 rounded-lg transition-colors", bookingDetails.locationShare ? "bg-amber-100 text-amber-600" : "bg-slate-100 text-slate-400")}>
+                                                <MapPin className="w-4 h-4" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="text-xs font-bold text-slate-600">Share Location</span>
+                                                <span className="text-[10px] text-slate-400">Attach Google Maps</span>
+                                            </div>
+                                        </div>
+                                        <Switch checked={bookingDetails.locationShare} onCheckedChange={(c) => setBookingDetails({ ...bookingDetails, locationShare: c })} />
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
-                        <div className="text-[10px] text-slate-300 font-medium text-center">
+                        <div className="mt-auto pt-8 text-[10px] text-slate-300 font-medium text-center">
                             Powered by NobleOS Scheduling Engine
                         </div>
                     </div>
-
                     {/* Right Content: Bento Grid Form */}
                     <div className="flex-1 p-8 bg-white overflow-y-auto custom-scrollbar">
                         <Tabs defaultValue="registered" className="w-full space-y-6">
@@ -285,7 +308,7 @@ export function NewAppointmentDialog() {
                                 </Button>
                             </TabsContent>
 
-                            {/* === Tab 2: New Patient === */}
+
                             <TabsContent value="new" className="space-y-6">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
@@ -337,4 +360,3 @@ export function NewAppointmentDialog() {
         </Dialog>
     );
 }
-

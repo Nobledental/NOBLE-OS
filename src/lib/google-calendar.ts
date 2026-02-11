@@ -4,7 +4,8 @@ import { createClient } from '@supabase/supabase-js';
 // --- Configuration ---
 const SCOPES = [
     'https://www.googleapis.com/auth/calendar',
-    'https://www.googleapis.com/auth/calendar.events'
+    'https://www.googleapis.com/auth/calendar.events',
+    'https://www.googleapis.com/auth/business.manage' // Required for GMB Clinic Onboarding
 ];
 
 interface CalendarEvent {
@@ -14,6 +15,7 @@ interface CalendarEvent {
     end: { dateTime: string };
     attendees?: { email: string }[];
     meetLink?: boolean;
+    location?: string;
 }
 
 export class GoogleCalendarService {
@@ -117,6 +119,7 @@ export class GoogleCalendarService {
             description: eventDetails.description,
             start: eventDetails.start,
             end: eventDetails.end,
+            location: eventDetails.location, // Added location
             attendees: eventDetails.attendees,
         };
 

@@ -47,6 +47,7 @@ import {
     DEFAULT_CLINIC_SETTINGS,
     createPDFConfiguration
 } from '@/lib/pdf-config';
+import { useSchedulingStore } from '@/lib/scheduling-store'; // Added Store
 import { generateFlightTicketInvoice, createSampleInvoice } from '@/lib/billing-invoice-generator';
 import { LocationPicker } from '@/components/location-picker';
 import { cn } from '@/lib/utils';
@@ -161,6 +162,61 @@ export const ClinicBrandingSettings: React.FC<{
         setSettings(prev => ({ ...prev, branding: { ...prev.branding, [field]: value } }));
     };
 
+    const store = useSchedulingStore();
+    const [isImporting, setIsImporting] = useState(false);
+
+    const handleImportFromGoogle = async () => {
+        setIsImporting(true);
+        try {
+            const res = await fetch('/api/business/import');
+            const data = await res.json();
+
+            if (!res.ok) {
+                if (data.code === 'AUTH_REQUIRED') {
+                    // Redirect to Auth if needed, or show simple alert for now
+                    window.location.href = '/api/auth/google'; // Re-trigger auth loop with new scope
+                    return;
+                }
+                throw new Error(data.error || 'Failed to import');
+            }
+
+            const location = data.locations[0]; // Take first verified location
+            if (location) {
+                // Update Local Settings State
+                setSettings(prev => ({
+                    ...prev,
+                    branding: {
+                        ...prev.branding,
+                        clinicName: location.title,
+                        phone: location.phoneNumbers?.primaryPhone || prev.branding.phone,
+                        address: location.storefrontAddress?.addressLines?.join(', ') || prev.branding.address,
+                        latitude: location.latlng?.latitude || prev.branding.latitude,
+                        longitude: location.latlng?.longitude || prev.branding.longitude,
+                    }
+                }));
+
+                // Update Global Store
+                store.updateClinicDetails({
+                    name: location.title,
+                    address: location.storefrontAddress?.addressLines?.join(', ') || '',
+                    phone: location.phoneNumbers?.primaryPhone || '',
+                    googleMapsUrl: location.metadata?.mapsUri,
+                    googleLocationId: location.name,
+                    isVerified: true,
+                    lat: location.latlng?.latitude,
+                    lng: location.latlng?.longitude
+                });
+
+                alert('Successfully imported verified clinic details from Google!');
+            }
+
+        } catch (error: any) {
+            alert(`Import Failed: ${error.message}`);
+        } finally {
+            setIsImporting(false);
+        }
+    };
+
     const handlePreview = () => {
         const config = createPDFConfiguration(settings.branding, settings.selectedTheme as keyof typeof PDF_COLOR_THEMES);
         const html = generateFlightTicketInvoice(createSampleInvoice(), config);
@@ -257,6 +313,35 @@ export const ClinicBrandingSettings: React.FC<{
                         {activeTab === 'branding' && (
                             <div className="space-y-10">
                                 <LogoUpload currentLogo={settings.branding.logo} onLogoChange={(logo) => updateBranding('logo', logo)} />
+
+                                {/* Google Import Card */}
+                                <div className="p-6 bg-blue-50 border border-blue-100 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+                                    <div className="absolute -right-10 -top-10 w-32 h-32 bg-blue-200/50 rounded-full blur-3xl"></div>
+                                    <div className="flex items-center gap-4 relative z-10">
+                                        <div className="w-12 h-12 bg-white text-blue-600 rounded-2xl flex items-center justify-center shadow-sm">
+                                            <MapPin className="w-6 h-6" />
+                                        </div>
+                                        <div>
+                                            <div className="flex items-center gap-2">
+                                                <h3 className="text-lg font-black text-blue-900">Google Business Profile</h3>
+                                                {store.clinicDetails?.isVerified && (
+                                                    <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase tracking-wider flex items-center gap-1">
+                                                        <Check className="w-3 h-3" /> Verified
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <p className="text-sm text-blue-800/70 font-medium">Auto-fill verified details (Name, Address, Maps) from Google.</p>
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={handleImportFromGoogle}
+                                        disabled={isImporting}
+                                        className="relative z-10 px-6 py-3 bg-blue-600 text-white rounded-xl font-bold text-xs uppercase tracking-widest hover:bg-blue-700 transition-all flex items-center gap-2 shadow-lg shadow-blue-500/20 active:scale-95 disabled:opacity-50"
+                                    >
+                                        {isImporting ? <RotateCcw className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                        {store.clinicDetails?.isVerified ? 'Sync Again' : 'Import verified Data'}
+                                    </button>
+                                </div>
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
                                     <div className="space-y-2">

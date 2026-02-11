@@ -415,7 +415,8 @@ export class AutomationEngine {
                     date: data.date,
                     time: data.time,
                     doctor: data.doctorName,
-                    meetLink: data.googleMeetLink || ''
+                    meetLink: data.googleMeetLink || '',
+                    locationLink: data.locationLink || '' // Added Location Link
                 }
             });
 
@@ -452,6 +453,7 @@ export interface AppointmentBookingData {
     date: string;
     time: string;
     googleMeetLink?: string;
+    locationLink?: string; // Added field
 }
 
 export const automationEngine = new AutomationEngine();
