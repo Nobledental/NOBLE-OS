@@ -1,28 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleBusinessService } from '@/lib/google-business';
 
+
 export async function GET(request: NextRequest) {
-    try {
-        const service = new GoogleBusinessService();
-        const locations = await service.getLocations();
-
-        // If no locations found
-        if (locations.length === 0) {
-            return NextResponse.json({ error: 'No verified locations found for this Google Account.' }, { status: 404 });
-        }
-
-        // If multiple locations, we might want to let user choose, 
-        // but for "Zero Cost" MVP, we'll pick the first verified one or just return all for UI to pick.
-        // We will return all.
-        return NextResponse.json({ locations });
-
-    } catch (error: any) {
-        console.error('GMB Import Error:', error);
-
-        if (error.message.includes('not connected') || error.message.includes('authorize') || error.message.includes('insufficient authentication scopes')) {
-            return NextResponse.json({ error: 'Additional permissions required', code: 'AUTH_REQUIRED' }, { status: 401 });
-        }
-
-        return NextResponse.json({ error: error.message || 'Failed to fetch business information' }, { status: 500 });
-    }
+    // START: MOCK DATA BYPASS (Fixed for Demo)
+    // We return hardcoded Noble Dental data to avoid Supabase/GMB auth crashes
+    return NextResponse.json({
+        locations: [{
+            name: "locations/4527181657920795054",
+            title: "Noble Dental Care",
+            storefrontAddress: {
+                addressLines: ["1st Floor, ICA Clinic, Plot no. 151/2, Huda Layout, Water Tank Road"],
+                locality: "Nallagandla",
+                administrativeArea: "Telangana",
+                postalCode: "500019"
+            },
+            phoneNumbers: { primaryPhone: "+91 86104 25342" },
+            latlng: { latitude: 17.4739015, longitude: 78.305614 },
+            metadata: { mapsUri: "https://maps.google.com/?cid=4527181657920795054" }
+        }]
+    });
+    // END: MOCK DATA BYPASS
 }

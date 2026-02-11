@@ -67,6 +67,7 @@ interface SchedulingState extends SchedulingConfig {
     setChairCapacity: (operational: number, active: number) => void;
     fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>;
     updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
+    updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => void;
     importFromGoogle: () => Promise<boolean>;
 }
 
@@ -233,6 +234,13 @@ export const useSchedulingStore = create<SchedulingState>()(
 
 
             updateClinicDetails: (details) => set({ clinicDetails: details }),
+
+
+            updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => set((state) => ({
+                appointments: state.appointments.map(a =>
+                    a.id === id ? { ...a, status } : a
+                )
+            })),
 
             // --- Google My Business Action ---
             importFromGoogle: async () => {

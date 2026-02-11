@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { NewAppointmentDialog } from "@/components/appointments/new-appointment-dialog";
 import { LiveLocationSharer } from "@/components/communication/live-location-sharer";
-import { useSchedulingStore } from "@/lib/scheduling-store";
+import { useSchedulingStore, PROCEDURE_TYPES } from "@/lib/scheduling-store";
 import { format, addDays, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, isToday } from "date-fns";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -220,9 +220,15 @@ function StatRow({ icon: Icon, color, label, value, total }: any) {
     );
 }
 
+
 function AppointmentCard({ appt, store }: any) {
     const patient = store.patients.find((p: any) => p.id === appt.patientId);
     const doctor = store.doctors.find((d: any) => d.id === appt.doctorId);
+
+    // Dynamic Style Lookup
+    const procedure = PROCEDURE_TYPES.find(p => p.id === appt.type);
+    const badgeStyle = procedure ? procedure.color : "bg-slate-50 text-slate-500 border-slate-200";
+    const label = procedure ? procedure.label : (appt.type || 'Appointment');
 
     return (
         <motion.div
@@ -250,24 +256,52 @@ function AppointmentCard({ appt, store }: any) {
                     </h4>
                     <div className="flex items-center gap-2">
                         <Badge variant="outline" className={cn(
-                            "text-[9px] font-black uppercase tracking-wider px-1.5 py-0 h-4 border-slate-200 text-slate-500",
-                            appt.type === 'new' && "bg-emerald-50 text-emerald-600 border-emerald-100",
-                            appt.type === 'consultation' && "bg-blue-50 text-blue-600 border-blue-100"
+                            "text-[9px] font-black uppercase tracking-wider px-1.5 py-0 h-4 border",
+                            badgeStyle.replace('bg-', 'bg-opacity-20 border-opacity-20 ') // Adjust to be outline-ish
                         )}>
-                            {appt.type}
+                            {label}
                         </Badge>
                         <span className="text-[10px] text-slate-400 font-medium truncate max-w-[150px]">
-                            w/ {doctor?.name || "Any Doctor"} • {appt.reason}
+                            w/ {doctor?.name || "Any Doctor"}
                         </span>
                     </div>
                 </div>
             </div>
 
+
             {/* Actions */}
             <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button variant="ghost" size="sm" className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50">
-                    <User className="w-4 h-4" />
-                </Button>
+                {(!appt.status || appt.status === 'pending') && (
+                    <>
+                        <Button
+                            onClick={() => store.updateAppointmentStatus(appt.id, 'confirmed')}
+                            size="sm"
+                            className="h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-700 border border-green-200 text-xs font-bold px-3"
+                        >
+                            Confirm
+                        </Button>
+                        <Button
+                            onClick={() => store.updateAppointmentStatus(appt.id, 'canceled')}
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                            title="Cancel"
+                        >
+                            <AlertCircle className="w-4 h-4" />
+                        </Button>
+                    </>
+                )}
+
+                {appt.status === 'confirmed' && (
+                    <Button
+                        onClick={() => store.updateAppointmentStatus(appt.id, 'completed')}
+                        size="sm"
+                        className="h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border border-blue-200 text-xs font-bold px-3"
+                    >
+                        Complete
+                    </Button>
+                )}
+
                 <Button variant="ghost" size="sm" className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-slate-900 hover:bg-slate-100">
                     <MoreHorizontal className="w-4 h-4" />
                 </Button>
