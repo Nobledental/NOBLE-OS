@@ -40,6 +40,7 @@ import { ClinicSchedulingSettings } from "@/components/settings/clinic-schedulin
 import { ClinicalMasterHub } from "@/components/clinical/clinical-master-hub";
 import { TariffMasterHub } from "@/components/finance/tariff-master-hub";
 import { SettlementLedgerHub } from "@/components/finance/settlement-ledger-hub";
+import { ChairManagementHub } from "@/components/admin/chair-management-hub";
 import { cn } from "@/lib/utils";
 
 interface ManagementFeature {
@@ -228,8 +229,8 @@ export function ClinicManagementDeck() {
                             className="h-full cursor-pointer relative group"
                             onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
                         >
-                            {/* Medizinisch Glass Layer */}
-                            <div className="glass-frost rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border-slate-100 shadow-sm hover:shadow-md transition-all duration-700 group-hover:bg-slate-50/50">
+                            {/* Medizinisch Solid Layer - White Theme */}
+                            <div className="bg-white rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border border-slate-200 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group-hover:bg-white">
                                 {/* Editorial Header Section */}
                                 <div className="flex justify-between items-start relative z-10 mb-5">
                                     <div className={cn(
@@ -369,32 +370,31 @@ export function ClinicManagementDeck() {
                             {activeAction === "TARIFF" && <TariffMasterHub />}
                             {activeAction === "SPECIALISTS" && <SettlementLedgerHub />}
 
+                            {activeAction === "CHAIRS" && <ChairManagementHub />}
+
                             {/* Fallback & Placeholders */}
-                            {["WORKFLOW", "CHAIRS"].includes(activeAction!) && (
+                            {["WORKFLOW"].includes(activeAction!) && (
                                 <div className="flex flex-col items-center justify-center h-[60vh] text-center gap-10">
                                     <div className="relative">
-                                        <div className="absolute -inset-10 bg-blue-500/10 rounded-full blur-3xl" />
-                                        <div className="w-24 h-24 md:w-28 md:h-28 bg-white/[0.03] border border-white/5 rounded-[2rem] flex items-center justify-center text-blue-400/40 relative z-10">
-                                            {activeAction === "CHAIRS" ? <Armchair className="w-10 h-10 md:w-12 md:h-12" /> : <Settings2 className="w-10 h-10 md:w-12 md:h-12" />}
+                                        <div className="absolute -inset-10 bg-blue-500/5 rounded-full blur-3xl" />
+                                        <div className="w-24 h-24 md:w-28 md:h-28 bg-slate-50 border border-slate-100 rounded-[2rem] flex items-center justify-center text-blue-500/40 relative z-10 shadow-xl">
+                                            <Settings2 className="w-10 h-10 md:w-12 md:h-12" />
                                         </div>
                                     </div>
                                     <div className="space-y-4 relative z-10">
                                         <div className="flex items-center justify-center gap-4">
                                             <div className="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                                            <span className="text-[10px] font-bold tracking-[0.6em] text-white uppercase">Core Logic Layer</span>
+                                            <span className="text-[10px] font-bold tracking-[0.6em] text-slate-400 uppercase">Core Logic Layer</span>
                                         </div>
-                                        <h3 className="text-3xl md:text-4xl font-semibold text-white tracking-tight">
-                                            {activeAction === "CHAIRS" ? "Asset Utilization" : "Workflow"} <span className="text-white font-light border-b border-white/20">Optimization</span>
+                                        <h3 className="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">
+                                            Workflow <span className="text-slate-400 font-light border-b border-slate-200">Optimization</span>
                                         </h3>
-                                        <p className="text-white text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
-                                            {activeAction === "CHAIRS"
-                                                ? "Digital Twin for Chair Management is initializing. Connecting to IoT sensors..."
-                                                : "Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle."
-                                            }
+                                        <p className="text-slate-500 text-[11px] font-semibold max-w-xs mx-auto uppercase tracking-widest leading-relaxed">
+                                            Clinical engine calibration in progress. System architectural sync scheduled for next deployment cycle.
                                         </p>
                                     </div>
                                     <div className="flex gap-4">
-                                        <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-white/30 bg-white/10 text-white hover:bg-white/20 text-[10px] font-bold uppercase tracking-widest transition-all duration-700">
+                                        <Button variant="ghost" className="h-14 px-8 rounded-2xl border border-slate-200 bg-white text-slate-900 hover:bg-slate-50 text-[10px] font-bold uppercase tracking-widest transition-all duration-700 shadow-lg">
                                             View Documentation
                                         </Button>
                                     </div>
