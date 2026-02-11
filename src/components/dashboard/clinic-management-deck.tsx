@@ -316,7 +316,7 @@ export function ClinicManagementDeck() {
             {/* Action Dialogs */}
             <Dialog open={!!activeAction} onOpenChange={(open) => !open && setActiveAction(null)}>
                 <DialogContent className="max-w-[85vw] md:max-w-[70vw] h-[90vh] md:h-[85vh] p-0 rounded-3xl md:rounded-[3rem] overflow-hidden border-none bg-transparent shadow-none">
-                    <div className="w-full h-full bg-white glass-white rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
+                    <div className="w-full h-full bg-white shadow-2xl rounded-3xl md:rounded-[3rem] overflow-y-auto relative animate-in zoom-in-95 duration-300">
                         {/* Header Controls */}
                         <div className="absolute top-4 right-4 md:top-8 md:right-8 z-50 flex items-center gap-3">
                             {/* Open in Full Page Button */}
