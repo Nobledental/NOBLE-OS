@@ -1,16 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Calendar, User, Phone } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSchedulingStore } from "@/lib/scheduling-store"; // IMPORT STORE
-import { toast } from "sonner";
 
 "use client";
 
