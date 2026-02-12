@@ -29,6 +29,9 @@ export interface PatientShort {
     name: string;
     phone: string;
     isNew?: boolean;
+    medicalAlerts?: string[];
+    tags?: string[];
+    lastVisit?: string;
 }
 
 // --- Dental Chair Types ---
