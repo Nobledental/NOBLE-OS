@@ -247,10 +247,10 @@ export function AppointmentGrid() {
                                                             .map(slot => (
                                                                 <button
                                                                     key={slot.start}
-                                                                    onClick={() => actions.selectSlot(slot.time)}
+                                                                    onClick={() => actions.selectSlot(slot.start)}
                                                                     className={cn(
                                                                         "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
-                                                                        state.selectedSlot === slot.time
+                                                                        state.selectedSlot === slot.start
                                                                             ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
                                                                             : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
                                                                     )}
@@ -410,7 +410,7 @@ export function AppointmentGrid() {
                                     <p className="text-lg font-bold text-slate-900">
                                         {state.selectedDate ? format(new Date(state.selectedDate), 'MMM do') : '--'}
                                         <span className="text-slate-400 font-normal"> at </span>
-                                        {state.selectedSlot ? format(new Date(`2000-01-01T${state.selectedSlot}`), 'h:mm a') : '--'}
+                                        {state.selectedSlot ? format(new Date(state.selectedSlot), 'h:mm a') : '--'}
                                     </p>
                                 </div>
                             </div>
