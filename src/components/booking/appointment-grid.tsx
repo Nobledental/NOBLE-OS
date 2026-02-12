@@ -45,7 +45,7 @@ export function AppointmentGrid() {
 
     return (
         <div className="h-screen w-full bg-slate-50 flex items-center justify-center p-4 lg:p-6 font-sans overflow-hidden">
-            <div className="bg-white w-full max-w-6xl h-[90vh] rounded-[2rem] shadow-2xl shadow-slate-200/50 flex flex-col lg:flex-row relative ring-1 ring-slate-900/5 overflow-hidden">
+            <div className="bg-white w-full max-w-6xl max-h-[90vh] min-h-[600px] h-auto rounded-[2rem] shadow-2xl shadow-slate-200/50 flex flex-col lg:flex-row relative ring-1 ring-slate-900/5 overflow-hidden">
 
                 {/* --- Left Panel: Steps & Interaction --- */}
                 <div className="flex-1 flex flex-col relative z-10">
@@ -349,7 +349,7 @@ export function AppointmentGrid() {
                                     <Sparkles className="w-5 h-5 text-indigo-500" />
                                 </div>
                                 <div>
-                                    <p className="text-xs font-semibold text-slate-400 uppercase">Procedure</p>
+                                    <p className="text-xs font-semibold text-slate-500 uppercase">Procedure</p>
                                     <p className="text-lg font-bold text-slate-900">{PROCEDURE_TYPES.find(p => p.id === state.selectedService)?.label || 'Not selected'}</p>
                                 </div>
                             </div>
@@ -362,7 +362,7 @@ export function AppointmentGrid() {
                                     <User className="w-5 h-5 text-teal-500" />
                                 </div>
                                 <div>
-                                    <p className="text-xs font-semibold text-slate-400 uppercase">Specialist</p>
+                                    <p className="text-xs font-semibold text-slate-500 uppercase">Specialist</p>
                                     <p className="text-lg font-bold text-slate-900">{doctors.find(d => d.id === state.selectedDoctor)?.name || 'Not selected'}</p>
                                 </div>
                             </div>
@@ -375,7 +375,7 @@ export function AppointmentGrid() {
                                     <CalendarIcon className="w-5 h-5 text-rose-500" />
                                 </div>
                                 <div>
-                                    <p className="text-xs font-semibold text-slate-400 uppercase">Schedule</p>
+                                    <p className="text-xs font-semibold text-slate-500 uppercase">Schedule</p>
                                     <p className="text-lg font-bold text-slate-900">
                                         {state.selectedDate ? format(state.selectedDate, 'MMM do') : '--'}
                                         <span className="text-slate-400 font-normal"> at </span>
