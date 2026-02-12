@@ -29,10 +29,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+// --- Constants ---
+const MOCK_REVENUE = 12500; // Daily Goal Mock
+
 export function AppointmentsHub() {
     const store = useSchedulingStore();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [filter, setFilter] = useState<'all' | 'upcoming' | 'waiting' | 'done'>('all');
+    const [searchQuery, setSearchQuery] = useState("");
     const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
 
     // --- Date Logic ---
@@ -46,6 +50,13 @@ export function AppointmentsHub() {
         .sort((a, b) => a.slot.localeCompare(b.slot));
 
     const filteredAppointments = todaysAppointments.filter(appt => {
+        // Search Filter
+        if (searchQuery) {
+            const patient = store.patients.find(p => p.id === appt.patientId);
+            const query = searchQuery.toLowerCase();
+            return patient?.name.toLowerCase().includes(query) || patient?.phone.includes(query);
+        }
+        // Category Filter
         if (filter === 'all') return true;
         if (filter === 'waiting') return appt.status === 'arrived';
         if (filter === 'done') return appt.status === 'completed';
@@ -65,20 +76,38 @@ export function AppointmentsHub() {
         <div className="flex flex-col h-full bg-slate-50 relative overflow-hidden">
             {/* --- TOP HEADER (Sticky) --- */}
             <div className="bg-white border-b border-slate-100 sticky top-0 z-20 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)]">
-                {/* Row 1: Title & New Appt */}
-                <div className="flex items-center justify-between px-4 py-4 md:px-6">
-                    <div className="flex flex-col">
-                        <div className="flex items-center gap-2">
+                {/* Row 1: Title, Search, New Appt */}
+                <div className="flex flex-col gap-4 px-4 py-4 md:px-6">
+                    <div className="flex items-center justify-between">
+                        <div className="flex flex-col">
                             <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                                 <span className="bg-slate-900 text-white w-8 h-8 rounded-lg flex items-center justify-center text-xs">NO</span>
                                 Appointments
                             </h1>
+                            <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mt-1 pl-1">
+                                {format(selectedDate, "MMMM do, yyyy")}
+                            </p>
                         </div>
-                        <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mt-1 pl-1">
-                            {format(selectedDate, "MMMM do, yyyy")}
-                        </p>
+                        <div className="flex items-center gap-2">
+                            {/* Daily Goal Widget */}
+                            <div className="hidden md:flex flex-col items-end mr-4">
+                                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Daily Revenue</span>
+                                <span className="text-sm font-black text-emerald-600">₹{MOCK_REVENUE.toLocaleString()}</span>
+                            </div>
+                            <NewAppointmentDialog />
+                        </div>
                     </div>
-                    <NewAppointmentDialog />
+
+                    {/* Search Bar (Integrated) */}
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Input
+                            placeholder="Search patient by name or phone..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="pl-9 h-10 bg-slate-50 border-slate-200 rounded-xl focus:bg-white transition-all text-xs font-medium"
+                        />
+                    </div>
                 </div>
 
                 {/* Row 2: Date Strip (Horizontal Scroll) */}
@@ -117,10 +146,10 @@ export function AppointmentsHub() {
                     ].map((f) => (
                         <button
                             key={f.id}
-                            onClick={() => setFilter(f.id as any)}
+                            onClick={() => { setFilter(f.id as any); setSearchQuery(""); }}
                             className={cn(
                                 "px-4 py-2 rounded-full text-xs font-bold border transition-colors whitespace-nowrap flex items-center gap-2",
-                                filter === f.id
+                                filter === f.id && !searchQuery
                                     ? "bg-slate-900 border-slate-900 text-white shadow-md"
                                     : "bg-white border-slate-200 text-slate-500 hover:border-slate-300"
                             )}
@@ -129,7 +158,7 @@ export function AppointmentsHub() {
                             {f.count > 0 && (
                                 <span className={cn(
                                     "px-1.5 py-0.5 rounded-full text-[9px]",
-                                    filter === f.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                                    filter === f.id && !searchQuery ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
                                 )}>
                                     {f.count}
                                 </span>
@@ -149,13 +178,15 @@ export function AppointmentsHub() {
                                 className="flex flex-col items-center justify-center py-20 text-center"
                             >
                                 <div className="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mb-6">
-                                    <CalendarIcon className="w-10 h-10 text-indigo-300" />
+                                    <Search className="w-10 h-10 text-indigo-300" />
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-900">No Appointments</h3>
+                                <h3 className="text-lg font-bold text-slate-900">No Appointments Found</h3>
                                 <p className="text-slate-500 text-sm max-w-xs mt-2">
-                                    {filter === 'all'
-                                        ? "You don't have any appointments scheduled for this day."
-                                        : `No appointments found in the '${filter}' category.`}
+                                    {searchQuery
+                                        ? `No results for "${searchQuery}"`
+                                        : filter === 'all'
+                                            ? "You don't have any appointments scheduled for this day."
+                                            : `No appointments found in the '${filter}' category.`}
                                 </p>
                             </motion.div>
                         ) : (
@@ -194,6 +225,11 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
     const isCompleted = appt.status === 'completed';
     const isUpcoming = !appt.status || appt.status === 'confirmed';
 
+    // Mock Data for "Advanced" Feel
+    const isNewPatient = Math.random() > 0.7;
+    const hasBalance = Math.random() > 0.8;
+    const balanceAmount = 1500;
+
     return (
         <motion.div
             layout
@@ -218,16 +254,43 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
                     {isCompleted && <Badge className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border-none shadow-none uppercase text-[9px] tracking-wider">Done</Badge>}
                 </div>
 
-                {/* Context Menu or Quick Action */}
-                {!isCompleted && (
-                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" onClick={() => onReschedule(appt.id)}>
-                        <CalendarClock className="w-4 h-4" />
+                {/* Advanced Actions Menu */}
+                <div className="flex items-center gap-1">
+                    <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600" onClick={() => toast.info("Voice note recording simulated")}>
+                        <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <Phone className="w-3.5 h-3.5" /> {/* Using Phone icon as placeholder for Mic if unavailable, usually Mic is avail */}
                     </Button>
-                )}
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-600">
+                                <MoreHorizontal className="w-4 h-4" />
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[300px] p-0 overflow-hidden rounded-2xl">
+                            <div className="flex flex-col p-2 bg-white">
+                                <Button variant="ghost" className="justify-start gap-3 h-12 text-slate-600 font-medium" onClick={() => onReschedule(appt.id)}>
+                                    <CalendarClock className="w-4 h-4" /> Reschedule
+                                </Button>
+                                <Button variant="ghost" className="justify-start gap-3 h-12 text-amber-600 font-medium bg-amber-50/50" onClick={() => store.updateAppointmentStatus(appt.id, 'no-show')}>
+                                    <AlertCircle className="w-4 h-4" /> Mark as No-Show
+                                </Button>
+                                <Button variant="ghost" className="justify-start gap-3 h-12 text-red-600 font-medium hover:bg-red-50" onClick={() => store.updateAppointmentStatus(appt.id, 'canceled')}>
+                                    <X className="w-4 h-4" /> Cancel Appointment
+                                </Button>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                </div>
             </div>
 
             {/* 2. Body: Patient & Details */}
-            <div className="p-5 flex gap-4">
+            <div className="p-5 flex gap-4 relative">
+                {/* Context Badges (Absolute) */}
+                <div className="absolute top-4 right-5 flex flex-col gap-1 items-end pointer-events-none">
+                    {isNewPatient && <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">New Patient</span>}
+                    {hasBalance && <span className="text-[9px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-2 py-0.5 rounded-md border border-red-100">Due: ₹{balanceAmount}</span>}
+                </div>
+
                 {/* Patient Avatar (Initials) */}
                 <div className={cn(
                     "w-14 h-14 rounded-2xl flex items-center justify-center text-xl font-bold shrink-0 shadow-inner",
@@ -236,7 +299,7 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
                     {patient?.name.charAt(0)}
                 </div>
 
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 pr-16"> {/* PR for badges */}
                     <h3 className="text-lg font-bold text-slate-900 truncate leading-tight mb-1">{patient?.name || "Unknown Patient"}</h3>
                     <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-3">
                         <span className="bg-slate-50 px-2 py-0.5 rounded-md border border-slate-100 truncate max-w-[120px]">
@@ -251,10 +314,15 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
 
                     {/* Patient Phone / Contact Actions */}
                     <div className="flex items-center gap-3">
-                        <a href={`tel:${patient?.phone}`} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors bg-slate-50 hover:bg-indigo-50 px-3 py-1.5 rounded-lg">
+                        <a href={`tel:${patient?.phone}`} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors bg-slate-50 hover:bg-indigo-50 px-3 py-1.5 rounded-lg border border-slate-100">
                             <Phone className="w-3 h-3" /> Call
                         </a>
-                        <a href="#" className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-emerald-600 transition-colors bg-slate-50 hover:bg-emerald-50 px-3 py-1.5 rounded-lg">
+                        <a
+                            href={`https://wa.me/${patient?.phone?.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-emerald-600 transition-colors bg-slate-50 hover:bg-emerald-50 px-3 py-1.5 rounded-lg border border-slate-100"
+                        >
                             <span className="w-3 h-3 rounded-full bg-current opacity-50" /> WhatsApp
                         </a>
                     </div>
