@@ -17,6 +17,10 @@ export interface Doctor {
     id: string;
     name: string;
     specialty: string;
+    image: string;
+    rating: number;
+    experience: number;
+    languages: string[];
     isAvailable: boolean;
 }
 
@@ -82,8 +86,36 @@ const DEFAULT_CONFIG: SchedulingConfig = {
     showDoctorAvailability: true,
     slotDurationMinutes: 30,
     doctors: [
-        { id: 'd1', name: "Dr. A. Smith", specialty: "General Dentist", isAvailable: true },
-        { id: 'd2', name: "Dr. B. Jones", specialty: "Orthodontist", isAvailable: true },
+        {
+            id: 'd1',
+            name: "Dr. Sarah Miller",
+            specialty: "Cosmetic Dentist",
+            image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=300&h=300",
+            rating: 4.9,
+            experience: 8,
+            languages: ["English", "Spanish"],
+            isAvailable: true
+        },
+        {
+            id: 'd2',
+            name: "Dr. James Chen",
+            specialty: "Orthodontist",
+            image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300",
+            rating: 4.8,
+            experience: 12,
+            languages: ["English", "Mandarin"],
+            isAvailable: true
+        },
+        {
+            id: 'd3',
+            name: "Dr. Emily Wilson",
+            specialty: "Endodontist",
+            image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&q=80&w=300&h=300",
+            rating: 5.0,
+            experience: 15,
+            languages: ["English", "French"],
+            isAvailable: true
+        },
     ],
     patients: [
         { id: 'p1', name: "Alice Johnson", phone: "9876543210" },
@@ -123,6 +155,8 @@ export const PROCEDURE_TYPES = [
     { id: 'extraction', label: 'Tooth Extraction', duration: 45, color: 'bg-orange-100 text-orange-800' },
     { id: 'follow_up', label: 'Follow Up', duration: 15, color: 'bg-slate-100 text-slate-800' },
     { id: 'emergency', label: 'Emergency', duration: 30, color: 'bg-red-500 text-white' },
+    { id: 'whitening', label: 'Teeth Whitening', duration: 60, color: 'bg-cyan-100 text-cyan-800' },
+    { id: 'veneers', label: 'Dental Veneers', duration: 90, color: 'bg-purple-100 text-purple-800' },
 ];
 
 const generateFallbackSlots = (

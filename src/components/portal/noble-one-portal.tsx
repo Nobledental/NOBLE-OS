@@ -13,12 +13,16 @@ import {
     ArrowRight,
     UserCircle,
     Sparkles,
-    CalendarCheck
+    CalendarCheck,
+    Activity,
+    FileText
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NewAppointmentDialog } from "@/components/appointments/new-appointment-dialog";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { SmartScanner } from "@/components/patient/smart-scanner";
+import { VitalsMonitor } from "@/components/patient/vitals-monitor";
 
 export default function NobleOnePortal() {
     const [isMember, setIsMember] = useState(true);
@@ -81,21 +85,43 @@ export default function NobleOnePortal() {
                     <Sparkles className="absolute top-10 right-10 text-white/10" size={120} />
                 </div>
 
-                {/* Exclusive Benefit Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {[
-                        { title: 'Priority Access', desc: 'Skip the wait with exclusive member slots.', icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50' },
-                        { title: 'Unlimited Tele-Care', desc: 'Zero-cost follow-ups with your clinical team.', icon: PhoneCall, color: 'text-purple-500', bg: 'bg-purple-50' },
-                        { title: 'Specialist Concierge', desc: 'Direct access to senior clinicians 24/7.', icon: UserCircle, color: 'text-pink-500', bg: 'bg-pink-50' },
-                    ].map((benefit, i) => (
-                        <div key={i} className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-xl hover:scale-[1.02] transition-all">
-                            <div className={`p-4 rounded-2xl ${benefit.bg} ${benefit.color} w-fit mb-6`}>
-                                <benefit.icon size={24} />
-                            </div>
-                            <h3 className="text-xl font-black uppercase tracking-tighter mb-2 text-slate-900">{benefit.title}</h3>
-                            <p className="text-xs font-medium text-slate-500 leading-relaxed">{benefit.desc}</p>
+
+                {/* Vitals & Scans Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    {/* Left: Vitals Monitor */}
+                    <div className="lg:col-span-8 space-y-6">
+                        <div className="flex items-center gap-3 mb-4">
+                            <Activity className="text-rose-500" size={24} />
+                            <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Live Vitals</h2>
                         </div>
-                    ))}
+                        <VitalsMonitor />
+
+                        {/* Membership Benefit Grid (Moved here) */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                            {[
+                                { title: 'Priority Access', desc: 'Skip the wait.', icon: Clock, color: 'text-blue-500', bg: 'bg-blue-50' },
+                                { title: 'Unlimited Tele-Care', desc: 'Free follow-ups.', icon: PhoneCall, color: 'text-purple-500', bg: 'bg-purple-50' },
+                                { title: 'Specialist Concierge', desc: '24/7 senior access.', icon: UserCircle, color: 'text-pink-500', bg: 'bg-pink-50' },
+                            ].map((benefit, i) => (
+                                <div key={i} className="bg-white p-6 rounded-[2rem] border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                                    <div className={`p-3 rounded-xl ${benefit.bg} ${benefit.color} w-fit mb-4`}>
+                                        <benefit.icon size={20} />
+                                    </div>
+                                    <h3 className="text-sm font-black uppercase tracking-tighter mb-1 text-slate-900">{benefit.title}</h3>
+                                    <p className="text-xs font-medium text-slate-500 leading-relaxed">{benefit.desc}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Right: Smart Scanner */}
+                    <div className="lg:col-span-4">
+                        <div className="flex items-center gap-3 mb-4">
+                            <FileText className="text-indigo-500" size={24} />
+                            <h2 className="text-2xl font-black text-slate-900 tracking-tighter">Quick Scan</h2>
+                        </div>
+                        <SmartScanner />
+                    </div>
                 </div>
 
                 {/* Automated Health Reordering (Instamart Logic) */}
