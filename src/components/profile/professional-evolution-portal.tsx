@@ -72,7 +72,7 @@ export default function ProfessionalEvolutionPortal() {
                         <div>
                             <div className="flex items-center gap-3 mb-2">
                                 <h1 className="text-3xl font-black tracking-tighter text-slate-900 dark:text-white uppercase">
-                                    {isStealth ? 'Dr. Anonymous' : 'Dhivakaran G.'}
+                                    {isStealth ? 'Dr. Anonymous' : 'Dr. Dhivakaran R'}
                                 </h1>
                                 <button
                                     onClick={() => setIsStealth(!isStealth)}
