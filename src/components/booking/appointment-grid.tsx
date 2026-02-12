@@ -6,6 +6,7 @@ import { PROCEDURE_TYPES, useSchedulingStore } from '@/lib/scheduling-store';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarIcon, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 // import { Calendar } from '@/components/ui/calendar'; // Removed as per request for horizontal row
 import { format, addDays, isSameDay, isBefore, startOfDay } from 'date-fns';
 

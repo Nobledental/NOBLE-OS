@@ -111,30 +111,10 @@ const DEFAULT_CONFIG: SchedulingConfig = {
             id: 'd1',
             name: "Dr. Dhivakaran R",
             specialty: "CMD & Oral Maxillofacial Surgeon",
-            image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300",
+            image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300", // Updated to a more professional headshot if needed, or keep existing
             rating: 5.0,
             experience: 15,
             languages: ["English", "Tamil", "Hindi"],
-            isAvailable: true
-        },
-        {
-            id: "STF-001",
-            name: "Dr. Sarah Wilson",
-            specialty: "Orthodontics",
-            image: "https://i.pravatar.cc/150?u=STF001",
-            rating: 4.8,
-            experience: 8,
-            languages: ["English", "Spanish"],
-            isAvailable: true
-        },
-        {
-            id: "STF-004",
-            name: "Dr. James Carter",
-            specialty: "General Dentistry",
-            image: "https://i.pravatar.cc/150?u=STF004",
-            rating: 4.9,
-            experience: 12,
-            languages: ["English"],
             isAvailable: true
         }
     ],
@@ -390,7 +370,8 @@ export const useSchedulingStore = create<SchedulingState>()(
             }
         }),
         {
-            name: 'noble-scheduling-storage',
+            name: 'noble-scheduling-storage-v3', // Version bumped to remove mock doctors
+            skipHydration: true,
         }
     )
 );
