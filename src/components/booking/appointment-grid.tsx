@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '@/hooks/use-booking';
 import { PROCEDURE_TYPES, useSchedulingStore } from '@/lib/scheduling-store';
 import { cn } from '@/lib/utils';
-import { Calendar, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { format, addDays, isSameDay } from 'date-fns';
 
