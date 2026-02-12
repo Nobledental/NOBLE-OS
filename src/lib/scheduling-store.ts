@@ -391,7 +391,6 @@ export const useSchedulingStore = create<SchedulingState>()(
         }),
         {
             name: 'noble-scheduling-storage-v3', // Version bumped to remove mock doctors
-            skipHydration: true,
         }
     )
 );

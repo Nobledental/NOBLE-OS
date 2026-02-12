@@ -35,6 +35,9 @@ export function AppointmentsHub() {
     const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
     const [viewMode, setViewMode] = useState<'board' | 'list'>('board');
 
+    // Mobile Tab State (Upcoming, Queue, Ongoing, Completed)
+    const [activeMobileTab, setActiveMobileTab] = useState<'upcoming' | 'queue' | 'ongoing' | 'completed'>('upcoming');
+
     // --- Calendar Logic ---
     const weekStart = startOfWeek(selectedDate);
     const weekEnd = endOfWeek(selectedDate);
@@ -50,7 +53,7 @@ export function AppointmentsHub() {
     // --- Bucket Logic ---
     const buckets = {
         upcoming: todaysAppointments.filter(a => !a.status || a.status === 'confirmed' || a.status === 'pending'),
-        arrived: todaysAppointments.filter(a => a.status === 'arrived'),
+        arrived: todaysAppointments.filter(a => a.status === 'arrived'), // Queue
         ongoing: todaysAppointments.filter(a => a.status === 'ongoing'),
         completed: todaysAppointments.filter(a => a.status === 'completed'),
         canceled: todaysAppointments.filter(a => a.status === 'canceled'),
@@ -58,32 +61,32 @@ export function AppointmentsHub() {
 
     const stats = {
         confirmed: buckets.upcoming.length,
-        pending: buckets.arrived.length, // Treating Arrived as "Pending Action"
+        pending: buckets.arrived.length,
         completed: buckets.completed.length
     };
 
     return (
-        <div className="flex-1 space-y-4 md:space-y-8 h-full flex flex-col pb-20 md:pb-0"> {/* Mobile PB for safe area */}
+        <div className="flex-1 space-y-4 md:space-y-8 h-full flex flex-col pb-24 md:pb-0"> {/* Mobile PB increased */}
             {/* Header Section */}
             <div className="flex flex-col md:flex-row md:items-end justify-between shrink-0 gap-6">
                 <div>
                     <h2 className="text-4xl md:text-6xl font-serif italic tracking-tighter text-slate-900 drop-shadow-sm">Appointments</h2>
-                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-slate-400 mt-2 ml-1">
+                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.3em] text-slate-600 mt-2 ml-1">
                         {format(selectedDate, "EEEE, MMMM do, yyyy")}
                     </p>
                 </div>
 
                 <div className="flex items-center justify-between md:justify-end gap-4 w-full md:w-auto">
                     {/* Helper Day Nav for Mobile */}
-                    <div className="flex md:hidden items-center bg-white/80 backdrop-blur-md rounded-2xl shadow-sm border border-white/50 p-1">
-                        <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-400" onClick={() => setSelectedDate(d => addDays(d, -1))}><ChevronLeft className="w-5 h-5" /></Button>
-                        <span className="text-xs font-black uppercase tracking-widest w-24 text-center text-slate-700">{format(selectedDate, "MMM d")}</span>
-                        <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-400" onClick={() => setSelectedDate(d => addDays(d, 1))}><ChevronRight className="w-5 h-5" /></Button>
+                    <div className="flex md:hidden items-center bg-white/90 backdrop-blur-md rounded-2xl shadow-sm border border-slate-200 p-1">
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-600" onClick={() => setSelectedDate(d => addDays(d, -1))}><ChevronLeft className="w-5 h-5" /></Button>
+                        <span className="text-xs font-black uppercase tracking-widest w-24 text-center text-slate-900">{format(selectedDate, "MMM d")}</span>
+                        <Button variant="ghost" size="icon" className="h-9 w-9 text-slate-600" onClick={() => setSelectedDate(d => addDays(d, 1))}><ChevronRight className="w-5 h-5" /></Button>
                     </div>
 
                     <div className="flex items-center gap-3">
-                        {/* Animated Segmented Control */}
-                        <div className="bg-slate-100/50 backdrop-blur-sm p-1.5 rounded-2xl flex gap-1 border border-slate-200/50">
+                        {/* Desktop View Toggle */}
+                        <div className="hidden md:flex bg-slate-100/50 backdrop-blur-sm p-1.5 rounded-2xl gap-1 border border-slate-200/50">
                             {['list', 'board'].map((mode) => (
                                 <button
                                     key={mode}
@@ -108,38 +111,118 @@ export function AppointmentsHub() {
                 </div>
             </div>
 
+            {/* Mobile Tab Bar (Floating) - Only Visible on Mobile */}
+            <div className="md:hidden flex overflow-x-auto gap-2 pb-2 scrollbar-hide snap-x">
+                {[
+                    { id: 'upcoming', label: 'Upcoming', count: buckets.upcoming.length },
+                    { id: 'queue', label: 'In Queue', count: buckets.arrived.length },
+                    { id: 'ongoing', label: 'Ongoing', count: buckets.ongoing.length },
+                    { id: 'completed', label: 'Done', count: buckets.completed.length }
+                ].map((tab) => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveMobileTab(tab.id as any)}
+                        className={cn(
+                            "flex-shrink-0 px-5 py-3 rounded-2xl border text-xs font-bold uppercase tracking-wider transition-all snap-start",
+                            activeMobileTab === tab.id
+                                ? "bg-slate-900 text-white border-slate-900 shadow-xl shadow-slate-900/20 scale-100"
+                                : "bg-white text-slate-400 border-slate-100 scale-95 opacity-80"
+                        )}
+                    >
+                        {tab.label} <span className={cn("ml-2 px-1.5 py-0.5 rounded-md text-[9px]", activeMobileTab === tab.id ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500")}>{tab.count}</span>
+                    </button>
+                ))}
+            </div>
+
             {/* Main Content Grid */}
             <div className="flex flex-col md:grid md:grid-cols-12 gap-6 lg:gap-8 flex-1 min-h-0">
 
                 {/* Right Column (Queue) - Shows FIRST on Mobile */}
-                <div className="order-1 md:order-2 md:col-span-9 flex flex-col h-full min-h-0 bg-white/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/40 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden relative">
+                <div className="order-1 md:order-2 md:col-span-9 flex flex-col h-full min-h-0 bg-white/60 md:bg-white/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 md:border-white/40 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] overflow-hidden relative">
 
                     <AnimatePresence mode="wait">
-                        {viewMode === 'list' ? (
+                        {/* Mobile: Show Single Column based on Tab */}
+                        {/* Desktop: Show List or Board based on ViewMode */}
+
+                        {(viewMode === 'list' && window.innerWidth >= 768) ? (
                             <motion.div
-                                key="list"
+                                key="list-desktop"
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: 20 }}
-                                transition={{ duration: 0.3 }}
-                                className="flex-1 overflow-y-auto p-4 md:p-8 space-y-4 custom-scrollbar scrollbar-hide"
+                                className="flex-1 overflow-y-auto p-8 space-y-4 custom-scrollbar scrollbar-hide"
                             >
-                                <h3 className="hidden md:block text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 mb-6 px-2">Master List</h3>
-                                {todaysAppointments.length === 0 ? <EmptyState /> : todaysAppointments.map(appt => (
+                                <h3 className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-6 px-2">Master List</h3>
+                                {todaysAppointments.length === 0 ? (
+                                    <div className="flex flex-col items-center justify-center h-64 text-slate-400">
+                                        <Search className="w-8 h-8 mb-4 opacity-50" />
+                                        <p className="text-xs font-bold uppercase tracking-widest">No appointments today</p>
+                                    </div>
+                                ) : todaysAppointments.map(appt => (
                                     <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={(id) => setRescheduleData({ open: true, apptId: id })} />
                                 ))}
                             </motion.div>
                         ) : (
                             <motion.div
-                                key="board"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.3 }}
-                                className="flex-1 overflow-x-auto p-4 md:p-8 custom-scrollbar scrollbar-hide snap-x snap-mandatory"
+                                key="board-view"
+                                className="flex-1 h-full flex flex-col md:flex-row md:overflow-x-auto md:p-8 custom-scrollbar scrollbar-hide"
                             >
-                                <div className="flex gap-4 md:gap-8 h-full min-w-full md:min-w-[1000px]">
-                                    {/* Column 1: Upcoming */}
+                                {/* Mobile: Conditional Rendering of Columns */}
+                                <div className="md:hidden flex-1 p-4 h-full overflow-y-auto scrollbar-hide">
+                                    <AnimatePresence mode="wait">
+                                        {activeMobileTab === 'upcoming' && (
+                                            <motion.div key="upcoming" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="h-full">
+                                                <KanbanColumn
+                                                    title="Upcoming"
+                                                    color="bg-transparent border-none"
+                                                    headerColor="text-slate-600"
+                                                    appointments={buckets.upcoming}
+                                                    store={store}
+                                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                                />
+                                            </motion.div>
+                                        )}
+                                        {activeMobileTab === 'queue' && (
+                                            <motion.div key="queue" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="h-full">
+                                                <KanbanColumn
+                                                    title="In Queue"
+                                                    color="bg-transparent border-none"
+                                                    headerColor="text-amber-600"
+                                                    appointments={buckets.arrived}
+                                                    store={store}
+                                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                                />
+                                            </motion.div>
+                                        )}
+                                        {activeMobileTab === 'ongoing' && (
+                                            <motion.div key="ongoing" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="h-full">
+                                                <KanbanColumn
+                                                    title="Ongoing"
+                                                    color="bg-transparent border-none"
+                                                    headerColor="text-indigo-600"
+                                                    appointments={buckets.ongoing}
+                                                    store={store}
+                                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                                />
+                                            </motion.div>
+                                        )}
+                                        {activeMobileTab === 'completed' && (
+                                            <motion.div key="completed" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="h-full">
+                                                <KanbanColumn
+                                                    title="Completed"
+                                                    color="bg-transparent border-none"
+                                                    headerColor="text-emerald-600"
+                                                    appointments={buckets.completed}
+                                                    store={store}
+                                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                                />
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </div>
+
+                                {/* Desktop: All Columns Side-by-Side */}
+                                <div className="hidden md:flex gap-8 h-full min-w-[1000px]">
                                     <KanbanColumn
                                         title="Upcoming"
                                         color="bg-slate-50/50 border-slate-100"
@@ -148,7 +231,6 @@ export function AppointmentsHub() {
                                         store={store}
                                         onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
                                     />
-                                    {/* Column 2: In Queue */}
                                     <KanbanColumn
                                         title="In Queue"
                                         color="bg-amber-50/50 border-amber-100"
@@ -157,7 +239,6 @@ export function AppointmentsHub() {
                                         store={store}
                                         onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
                                     />
-                                    {/* Column 3: Ongoing */}
                                     <KanbanColumn
                                         title="Ongoing"
                                         color="bg-indigo-50/50 border-indigo-100"
@@ -166,7 +247,6 @@ export function AppointmentsHub() {
                                         store={store}
                                         onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
                                     />
-                                    {/* Column 4: Completed */}
                                     <KanbanColumn
                                         title="Completed"
                                         color="bg-emerald-50/50 border-emerald-100"
@@ -183,18 +263,18 @@ export function AppointmentsHub() {
 
                 {/* Left Column (Calendar & Info) - Shows LAST on Mobile */}
                 <div className="order-2 md:order-1 md:col-span-3 flex flex-col gap-6 lg:gap-8">
-                    {/* Mini Calendar Widget */}
-                    <PanzeCard className="bg-white/60 backdrop-blur-xl border border-white/60 shadow-xl shadow-slate-200/50 rounded-[2.5rem] p-6 overflow-hidden relative hidden md:block group hover:shadow-2xl transition-all duration-500">
+                    {/* Mini Calendar Widget - Improved Visibility */}
+                    <PanzeCard className="bg-white border border-slate-200 shadow-xl shadow-slate-200/50 rounded-[2.5rem] p-6 overflow-hidden relative hidden md:block group hover:shadow-2xl transition-all duration-500">
                         <div className="flex items-center justify-between mb-8">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Calendar</h3>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Calendar</h3>
                             <div className="flex gap-1">
-                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-400" onClick={() => setSelectedDate(d => addDays(d, -1))}>
+                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-500" onClick={() => setSelectedDate(d => addDays(d, -1))}>
                                     <ChevronLeft className="w-4 h-4" />
                                 </Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-400" onClick={() => setSelectedDate(new Date())}>
+                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-500" onClick={() => setSelectedDate(new Date())}>
                                     <CalendarIcon className="w-3.5 h-3.5" />
                                 </Button>
-                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-400" onClick={() => setSelectedDate(d => addDays(d, 1))}>
+                                <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-slate-100 text-slate-500" onClick={() => setSelectedDate(d => addDays(d, 1))}>
                                     <ChevronRight className="w-4 h-4" />
                                 </Button>
                             </div>
@@ -203,7 +283,7 @@ export function AppointmentsHub() {
                         {/* Week Strip */}
                         <div className="grid grid-cols-7 gap-1 mb-3">
                             {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
-                                <div key={i} className="text-[9px] font-bold text-center text-slate-300 uppercase tracking-wider">{d}</div>
+                                <div key={i} className="text-[9px] font-bold text-center text-slate-400 uppercase tracking-wider">{d}</div>
                             ))}
                         </div>
                         <div className="grid grid-cols-7 gap-2">
@@ -218,7 +298,7 @@ export function AppointmentsHub() {
                                         className={cn(
                                             "aspect-square rounded-2xl flex flex-col items-center justify-center relative transition-all duration-300",
                                             isSelected ? "bg-slate-900 text-white shadow-xl shadow-slate-900/30 scale-110" :
-                                                isTodayDate ? "bg-indigo-50 text-indigo-600 border border-indigo-100" : "hover:bg-slate-50 text-slate-400"
+                                                isTodayDate ? "bg-indigo-600 text-white border border-indigo-600" : "hover:bg-slate-100 text-slate-600"
                                         )}
                                     >
                                         <span className={cn("text-xs font-bold", isSelected && "font-serif italic text-lg")}>
@@ -232,8 +312,8 @@ export function AppointmentsHub() {
                     </PanzeCard>
 
                     {/* Quick Stats (Vertical Stack) */}
-                    <PanzeCard className="bg-white/60 backdrop-blur-xl border border-white/60 shadow-xl shadow-slate-200/50 rounded-[2.5rem] p-6 flex-1 hidden md:block">
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-8">Patient Flow</h3>
+                    <PanzeCard className="bg-white border border-slate-200 shadow-xl shadow-slate-200/50 rounded-[2.5rem] p-6 flex-1 hidden md:block">
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-8">Patient Flow</h3>
                         <div className="space-y-6">
                             <StatRow icon={CalendarIcon} color="slate" label="Upcoming" value={stats.confirmed} total={todaysAppointments.length} />
                             <StatRow icon={User} color="amber" label="In Clinic" value={buckets.arrived.length + buckets.ongoing.length} total={todaysAppointments.length} />
