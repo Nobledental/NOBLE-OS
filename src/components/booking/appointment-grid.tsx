@@ -44,8 +44,8 @@ export function AppointmentGrid() {
     );
 
     return (
-        <div className="h-screen overflow-hidden bg-slate-50 flex items-center justify-center p-4 lg:p-8 font-sans">
-            <div className="bg-white w-full max-w-7xl min-h-[85vh] rounded-[2.5rem] shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row relative ring-1 ring-slate-900/5">
+        <div className="h-screen w-full bg-slate-50 flex items-center justify-center p-4 lg:p-6 font-sans overflow-hidden">
+            <div className="bg-white w-full max-w-6xl h-[90vh] rounded-[2rem] shadow-2xl shadow-slate-200/50 flex flex-col lg:flex-row relative ring-1 ring-slate-900/5 overflow-hidden">
 
                 {/* --- Left Panel: Steps & Interaction --- */}
                 <div className="flex-1 flex flex-col relative z-10">
