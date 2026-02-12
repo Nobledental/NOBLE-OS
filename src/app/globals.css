@@ -286,3 +286,25 @@
 .card-glow-info {
     box-shadow: 0 0 30px -10px rgba(10, 132, 255, 0.2);
 }
+
+/* --- GLOBAL SCROLLBAR HIDE (User Request: "No scroll bar options ever") --- */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Enforce global scrollbar hiding */
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    background: transparent;
+    display: none;
+}
+
+* {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
