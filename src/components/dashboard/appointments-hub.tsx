@@ -34,6 +34,7 @@ export function AppointmentsHub() {
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
     const [viewMode, setViewMode] = useState<'board' | 'list'>('board');
+    const [showCalendarMobile, setShowCalendarMobile] = useState(false);
 
     // --- Calendar Logic ---
     const weekStart = startOfWeek(selectedDate);
@@ -63,45 +64,113 @@ export function AppointmentsHub() {
     };
 
     return (
-        <div className="flex-1 space-y-6 h-full flex flex-col">
+        <div className="flex-1 space-y-4 md:space-y-6 h-full flex flex-col pb-20 md:pb-0"> {/* Mobile PB for safe area */}
             {/* Header Section */}
-            <div className="flex items-center justify-between shrink-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-between shrink-0 gap-4">
                 <div>
-                    <h2 className="text-4xl lg:text-5xl font-serif italic tracking-tighter text-slate-900">Appointments</h2>
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-2">
+                    <h2 className="text-3xl md:text-5xl font-serif italic tracking-tighter text-slate-900">Appointments</h2>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mt-1 md:mt-2">
                         {format(selectedDate, "EEEE, MMMM do, yyyy")}
                     </p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setViewMode('list')}
-                            className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'list' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
-                        >
-                            List
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setViewMode('board')}
-                            className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'board' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
-                        >
-                            Board
-                        </Button>
+
+                <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
+                    {/* Helper Day Nav for Mobile */}
+                    <div className="flex md:hidden items-center bg-white rounded-xl shadow-sm border border-slate-100 p-1">
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedDate(d => addDays(d, -1))}><ChevronLeft className="w-4 h-4" /></Button>
+                        <span className="text-xs font-bold w-20 text-center">{format(selectedDate, "MMM d")}</span>
+                        <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setSelectedDate(d => addDays(d, 1))}><ChevronRight className="w-4 h-4" /></Button>
                     </div>
-                    <NewAppointmentDialog />
+
+                    <div className="flex items-center gap-2">
+                        <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setViewMode('list')}
+                                className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'list' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
+                            >
+                                List
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setViewMode('board')}
+                                className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'board' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
+                            >
+                                Board
+                            </Button>
+                        </div>
+                        <NewAppointmentDialog />
+                    </div>
                 </div>
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1 min-h-0">
+            <div className="flex flex-col md:grid md:grid-cols-12 gap-6 flex-1 min-h-0">
 
-                {/* Left Column: Calendar & Filters (4 cols) */}
-                <div className="md:col-span-3 flex flex-col gap-6">
+                {/* Right Column (Queue) - Shows FIRST on Mobile */}
+                <div className="order-1 md:order-2 md:col-span-9 flex flex-col h-full min-h-0 bg-slate-50/50 rounded-[2rem] md:rounded-[2.5rem] border border-slate-200 overflow-hidden relative">
+
+                    {viewMode === 'list' ? (
+                        <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-3 custom-scrollbar">
+                            <h3 className="hidden md:block text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 px-2">Master List</h3>
+                            <AnimatePresence mode="popLayout">
+                                {todaysAppointments.length === 0 ? <EmptyState /> : todaysAppointments.map(appt => (
+                                    <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={(id) => setRescheduleData({ open: true, apptId: id })} />
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    ) : (
+                        <div className="flex-1 overflow-x-auto p-4 md:p-6 custom-scrollbar snap-x snap-mandatory">
+                            <div className="flex gap-4 md:gap-6 h-full min-w-full md:min-w-[1000px]">
+                                {/* Column 1: Upcoming (Pastel Blue) */}
+                                <KanbanColumn
+                                    title="Upcoming / Confirmed"
+                                    color="bg-blue-50/50 border-blue-100"
+                                    headerColor="text-blue-500"
+                                    appointments={buckets.upcoming}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 2: In Queue (Pastel Amber) */}
+                                <KanbanColumn
+                                    title="In Queue / Arrived"
+                                    color="bg-amber-50/50 border-amber-100"
+                                    headerColor="text-amber-500"
+                                    appointments={buckets.arrived}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 3: Ongoing (Pastel Green - Live Timer) */}
+                                <KanbanColumn
+                                    title="Ongoing Procedure"
+                                    color="bg-green-50/50 border-green-100"
+                                    headerColor="text-green-500"
+                                    appointments={buckets.ongoing}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 4: Completed (Pastel Slate) */}
+                                <KanbanColumn
+                                    title="Completed"
+                                    color="bg-slate-100/50 border-slate-200"
+                                    headerColor="text-slate-500"
+                                    appointments={buckets.completed}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Left Column (Calendar & Info) - Shows LAST on Mobile */}
+                <div className="order-2 md:order-1 md:col-span-3 flex flex-col gap-6">
+                    {/* Toggle to show calendar on mobile? For now just stacked at bottom */}
+
                     {/* Mini Calendar Widget */}
-                    <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 overflow-hidden relative">
+                    <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 overflow-hidden relative hidden md:block">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400">Calendar</h3>
                             <div className="flex gap-1">
@@ -149,7 +218,7 @@ export function AppointmentsHub() {
                     </PanzeCard>
 
                     {/* Quick Stats (Vertical Stack) */}
-                    <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 flex-1">
+                    <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 flex-1 hidden md:block">
                         <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6">Patient Flow</h3>
                         <div className="space-y-4">
                             <StatRow icon={CalendarIcon} color="emerald" label="Upcoming" value={stats.confirmed} total={todaysAppointments.length} />
@@ -162,62 +231,6 @@ export function AppointmentsHub() {
                             <LiveLocationSharer />
                         </div>
                     </PanzeCard>
-                </div>
-
-                {/* Right Column: View Mode Switcher (9 cols) */}
-                <div className="md:col-span-9 flex flex-col h-full min-h-0 bg-slate-50/50 rounded-[2.5rem] border border-slate-200 overflow-hidden">
-
-                    {viewMode === 'list' ? (
-                        <div className="flex-1 overflow-y-auto p-6 space-y-3 custom-scrollbar">
-                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 px-2">Master List</h3>
-                            <AnimatePresence mode="popLayout">
-                                {todaysAppointments.length === 0 ? <EmptyState /> : todaysAppointments.map(appt => (
-                                    <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={(id) => setRescheduleData({ open: true, apptId: id })} />
-                                ))}
-                            </AnimatePresence>
-                        </div>
-                    ) : (
-                        <div className="flex-1 overflow-x-auto p-6 custom-scrollbar">
-                            <div className="flex gap-6 h-full min-w-[1000px]">
-                                {/* Column 1: Upcoming (Pastel Blue) */}
-                                <KanbanColumn
-                                    title="Upcoming / Confirmed"
-                                    color="bg-blue-50/50 border-blue-100"
-                                    headerColor="text-blue-500"
-                                    appointments={buckets.upcoming}
-                                    store={store}
-                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
-                                />
-                                {/* Column 2: In Queue (Pastel Amber) */}
-                                <KanbanColumn
-                                    title="In Queue / Arrived"
-                                    color="bg-amber-50/50 border-amber-100"
-                                    headerColor="text-amber-500"
-                                    appointments={buckets.arrived}
-                                    store={store}
-                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
-                                />
-                                {/* Column 3: Ongoing (Pastel Green - Live Timer) */}
-                                <KanbanColumn
-                                    title="Ongoing Procedure"
-                                    color="bg-green-50/50 border-green-100"
-                                    headerColor="text-green-500"
-                                    appointments={buckets.ongoing}
-                                    store={store}
-                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
-                                />
-                                {/* Column 4: Completed (Pastel Slate) */}
-                                <KanbanColumn
-                                    title="Completed"
-                                    color="bg-slate-100/50 border-slate-200"
-                                    headerColor="text-slate-500"
-                                    appointments={buckets.completed}
-                                    store={store}
-                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
-                                />
-                            </div>
-                        </div>
-                    )}
                 </div>
             </div>
 
@@ -235,8 +248,11 @@ export function AppointmentsHub() {
 
 function KanbanColumn({ title, color, headerColor, appointments, store, onReschedule }: any) {
     return (
-        <div className={cn("flex-1 flex flex-col rounded-3xl border h-full transition-colors", color)}>
-            <div className="p-4 border-b border-white/50 flex items-center justify-between shrink-0">
+        <div className={cn(
+            "flex flex-col rounded-[1.5rem] md:rounded-3xl border h-full transition-colors flex-shrink-0 snap-center min-w-[85vw] md:min-w-0 md:flex-1",
+            color
+        )}>
+            <div className="p-4 border-b border-white/50 flex items-center justify-between shrink-0 sticky top-0 bg-inherit/50 backdrop-blur-md z-10 rounded-t-[1.5rem]">
                 <h4 className={cn("text-[11px] font-black uppercase tracking-[0.1em] flex items-center gap-2", headerColor)}>
                     <span className="w-2 h-2 rounded-full bg-current opacity-50" /> {title}
                 </h4>
@@ -274,7 +290,7 @@ function LiveTimer({ startTime }: { startTime: string }) {
     });
 
     return (
-        <div className="font-mono text-sm font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded-md flex items-center gap-1 animate-pulse">
+        <div className="font-mono text-xs md:text-sm font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded-md flex items-center gap-1 animate-pulse">
             <Clock className="w-3 h-3" />
             {elapsed}
         </div>
@@ -332,50 +348,50 @@ function AppointmentCard({ appt, store, onReschedule, isBoard }: { appt: any, st
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className={cn(
-                "group relative bg-white border border-slate-100 rounded-[1.2rem] p-3 hover:shadow-lg hover:border-indigo-100 hover:-translate-y-0.5 transition-all duration-300",
+                "group relative bg-white border border-slate-100 rounded-[1.2rem] p-3 md:p-4 hover:shadow-lg hover:border-indigo-100 hover:-translate-y-0.5 transition-all duration-300",
                 isBoard ? "flex flex-col gap-3" : "flex items-center justify-between"
             )}
         >
-            <div className="flex items-start gap-3 w-full">
+            <div className="flex items-start gap-4 w-full">
                 {/* Time Slot */}
                 <div className={cn(
                     "flex flex-col items-center justify-center rounded-xl bg-slate-50 border border-slate-100 transition-colors shrink-0",
-                    isBoard ? "w-10 h-10" : "w-12 h-12"
+                    isBoard ? "w-10 h-10" : "w-14 h-14"
                 )}>
                     <span className={cn("font-black text-slate-900", isBoard ? "text-[10px]" : "text-xs")}>{appt.slot}</span>
                 </div>
 
                 {/* Patient Info */}
                 <div className="flex-1 min-w-0">
-                    <h4 className="text-xs font-bold text-slate-900 mb-0.5 truncate flex items-center justify-between">
-                        {patient?.name || "Unknown"}
+                    <h4 className="text-sm font-bold text-slate-900 mb-0.5 truncate flex items-center justify-between">
+                        <span className="truncate">{patient?.name || "Unknown"}</span>
                         {appt.status === 'ongoing' && appt.startedAt && <LiveTimer startTime={appt.startedAt} />}
                     </h4>
                     <p className="text-[10px] text-slate-400 font-medium truncate mb-1">
-                        {label} • w/ {doctor?.name || "Unassigned"}
+                        {label} <span className="text-slate-300">•</span> w/ {doctor?.name || "Unassigned"}
                     </p>
 
                     {/* Action Bar (Board Mode) */}
                     {isBoard && (
-                        <div className="flex gap-1 mt-2">
-                            {/* STATUS TRANSITIONS */}
+                        <div className="flex gap-1 mt-3">
+                            {/* ACTION BUTTONS - Touch Optimized */}
                             {(!appt.status || appt.status === 'confirmed' || appt.status === 'pending') && (
-                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'arrived')} className="h-6 text-[10px] bg-amber-50 text-amber-600 hover:bg-amber-100 border-amber-200 w-full">
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'arrived')} className="h-8 text-xs font-bold bg-amber-50 text-amber-600 hover:bg-amber-100 border-amber-200 w-full rounded-lg">
                                     Check In
                                 </Button>
                             )}
                             {appt.status === 'arrived' && (
-                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'ongoing')} className="h-6 text-[10px] bg-green-50 text-green-600 hover:bg-green-100 border-green-200 w-full animate-pulse">
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'ongoing')} className="h-8 text-xs font-bold bg-green-50 text-green-600 hover:bg-green-100 border-green-200 w-full animate-pulse rounded-lg">
                                     Start Case
                                 </Button>
                             )}
                             {appt.status === 'ongoing' && (
-                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'completed')} className="h-6 text-[10px] bg-slate-900 text-white hover:bg-slate-800 w-full">
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'completed')} className="h-8 text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 w-full rounded-lg">
                                     Complete
                                 </Button>
                             )}
                             {appt.status === 'completed' && (
-                                <span className="text-[9px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full border border-green-100">Done</span>
+                                <span className="text-[10px] text-green-600 font-bold bg-green-50 px-3 py-1 rounded-full border border-green-100 w-full text-center block">Done</span>
                             )}
                         </div>
                     )}
