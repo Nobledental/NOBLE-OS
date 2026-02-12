@@ -216,10 +216,10 @@ export function AppointmentGrid() {
                                                         {availableSlots.map(slot => (
                                                             <button
                                                                 key={slot.start}
-                                                                onClick={() => actions.selectSlot(slot.start)}
+                                                                onClick={() => actions.selectSlot(slot.time)}
                                                                 className={cn(
                                                                     "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
-                                                                    state.selectedSlot === slot.start
+                                                                    state.selectedSlot === slot.time
                                                                         ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
                                                                         : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
                                                                 )}

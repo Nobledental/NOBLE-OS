@@ -49,6 +49,7 @@ export async function GET(request: NextRequest) {
             }).length;
 
             return {
+                start: slotStart.toISOString(),
                 time: slotTime,
                 capacity: activeChairs,
                 available: Math.max(0, activeChairs - overlaps),
