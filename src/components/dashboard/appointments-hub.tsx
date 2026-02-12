@@ -306,154 +306,113 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
     );
 }
 
-// --- Kanban Components (Premium Polish) ---
+// --- Helper Components ---
 
-function KanbanColumn({ title, color, headerColor, appointments, store, onReschedule }: any) {
+function StatRow({ icon: Icon, color, label, value, total }: any) {
+    const percentage = total > 0 ? (value / total) * 100 : 0;
+
+    const colors: any = {
+        emerald: "bg-emerald-500 text-emerald-600",
+        amber: "bg-amber-500 text-amber-600",
+        indigo: "bg-indigo-500 text-indigo-600",
+        slate: "bg-slate-500 text-slate-600",
+    };
+
     return (
-        <div className={cn(
-            "flex flex-col rounded-[2rem] border h-full transition-all duration-500 hover:shadow-xl flex-shrink-0 snap-center min-w-[85vw] md:min-w-0 md:flex-1 group/col",
-            color, "backdrop-blur-md bg-opacity-40 border-white/20"
-        )}>
-            <div className="p-5 border-b border-white/20 flex items-center justify-between shrink-0 sticky top-0 bg-white/10 backdrop-blur-md z-10 rounded-t-[2rem]">
-                <h4 className={cn("text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2.5", headerColor)}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-current opacity-60" /> {title}
-                </h4>
-                <span className="text-[10px] font-bold bg-white/40 backdrop-blur-sm px-2.5 py-1 rounded-full text-slate-600 shadow-sm">{appointments.length}</span>
-            </div>
-            <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 custom-scrollbar scrollbar-hide">
-                {appointments.map((appt: any) => (
-                    <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={onReschedule} isBoard />
-                ))}
-                {appointments.length === 0 && (
-                    <div className="h-40 flex flex-col items-center justify-center text-center p-4 border-2 border-dashed border-white/30 rounded-3xl opacity-50 group-hover/col:opacity-80 transition-opacity">
-                        <div className="w-10 h-10 rounded-full bg-white/30 flex items-center justify-center mb-2">
-                            <MoreHorizontal className="w-4 h-4 text-slate-400" />
-                        </div>
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Empty</span>
+        <div className="group">
+            <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-4">
+                    <div className={cn("w-9 h-9 rounded-2xl flex items-center justify-center shadow-sm transition-transform group-hover:scale-110 duration-300 bg-white border border-slate-100")}>
+                        <Icon className={cn("w-4 h-4 opacity-60", colors[color].split(" ")[1])} />
                     </div>
-                )}
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 group-hover:text-slate-700 transition-colors">{label}</span>
+                </div>
+                <span className="text-2xl font-serif italic text-slate-900">{value}</span>
             </div>
-        </div>
-    )
-}
-
-
-function LiveTimer({ startTime }: { startTime: string }) {
-    const [elapsed, setElapsed] = useState("00:00");
-
-    useState(() => {
-        const interval = setInterval(() => {
-            const start = new Date(startTime).getTime();
-            const now = new Date().getTime();
-            const diff = Math.max(0, now - start);
-
-            const minutes = Math.floor(diff / 60000);
-            const seconds = Math.floor((diff % 60000) / 1000);
-            setElapsed(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
-        }, 1000);
-        return () => clearInterval(interval);
-    });
-
-    return (
-        <div className="font-mono text-xs font-bold text-emerald-600 bg-emerald-50/80 border border-emerald-100 px-2 py-0.5 rounded-lg flex items-center gap-1.5 shadow-sm animate-pulse">
-            <Clock className="w-3 h-3" />
-            {elapsed}
+            {/* Tiny Bar */}
+            <div className="h-1.5 w-full bg-slate-50 rounded-full overflow-hidden">
+                <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${percentage}%` }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                    className={cn("h-full rounded-full opacity-60", colors[color].split(" ")[0])}
+                />
+            </div>
         </div>
     );
 }
 
-// --- Updated Sub Components ---
+function RescheduleDialog({ open, onOpenChange, apptId, store }: any) {
+    const [date, setDate] = useState("");
+    const [slot, setSlot] = useState("");
+    const [availableSlots, setAvailableSlots] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
 
-function StatRow({ icon: Icon, color, label, value, total }: any) {
-    const percentage = total > 0 ? (value / total) * 100 : 0;
-    // --- End of SuperAppCard ---
+    const handleDateChange = async (e: any) => {
+        const d = e.target.value;
+        setDate(d);
+        if (!d) return;
+        setLoading(true);
+        // Simplified fetch for reschedule
+        const slots = await store.fetchAvailableSlots(d, store.activeChairs || 3);
+        setAvailableSlots(slots);
+        setLoading(false);
+    };
 
+    const handleConfirm = () => {
+        if (!apptId || !date || !slot) return;
+        store.rescheduleAppointment(apptId, date, slot);
+        toast.success("Appointment Rescheduled");
+        onOpenChange(false);
+    };
 
-    function EmptyState() {
-        return (
-            <div className="flex flex-col items-center justify-center h-[300px] text-center p-8 opacity-60">
-                <div className="w-20 h-20 bg-slate-50 rounded-[2rem] flex items-center justify-center mb-4 border border-slate-100">
-                    <Clock className="w-8 h-8 text-slate-300" />
-                </div>
-                <h3 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-1">No Appointments</h3>
-                <p className="text-xs text-slate-400 max-w-[200px]">
-                    Enjoy the free time or schedule a new patient.
-                </p>
-            </div>
-        );
-    }
-
-    function RescheduleDialog({ open, onOpenChange, apptId, store }: any) {
-        const [date, setDate] = useState("");
-        const [slot, setSlot] = useState("");
-        const [availableSlots, setAvailableSlots] = useState<any[]>([]);
-        const [loading, setLoading] = useState(false);
-
-        const handleDateChange = async (e: any) => {
-            const d = e.target.value;
-            setDate(d);
-            if (!d) return;
-            setLoading(true);
-            // Simplified fetch for reschedule
-            const slots = await store.fetchAvailableSlots(d, store.activeChairs || 3);
-            setAvailableSlots(slots);
-            setLoading(false);
-        };
-
-        const handleConfirm = () => {
-            if (!apptId || !date || !slot) return;
-            store.rescheduleAppointment(apptId, date, slot);
-            toast.success("Appointment Rescheduled");
-            onOpenChange(false);
-        };
-
-        return (
-            <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="bg-white rounded-[2rem] shadow-2xl border-none p-6 text-slate-900 sm:max-w-[425px]">
-                    <DialogHeader className="mb-4">
-                        <DialogTitle className="text-xl font-serif italic">Reschedule Appointment</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                        <div className="space-y-2">
-                            <Label>New Date</Label>
-                            <Input type="date" className="rounded-xl border-slate-200" onChange={handleDateChange} />
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label>Available Slots</Label>
-                            <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-1">
-                                {loading ? (
-                                    <div className="col-span-3 text-center py-4 text-xs text-slate-400">Checking...</div>
-                                ) : availableSlots.length === 0 ? (
-                                    <div className="col-span-3 text-center py-4 text-xs text-slate-400">Select date to see slots</div>
-                                ) : (
-                                    availableSlots.map(s => (
-                                        <button
-                                            key={s.time}
-                                            onClick={() => setSlot(s.time)}
-                                            className={cn(
-                                                "px-2 py-2 rounded-lg text-xs font-bold border transition-all",
-                                                slot === s.time
-                                                    ? "bg-indigo-600 text-white border-indigo-600"
-                                                    : "bg-slate-50 text-slate-600 border-slate-100 hover:border-indigo-200"
-                                            )}
-                                        >
-                                            {s.time}
-                                        </button>
-                                    ))
-                                )}
-                            </div>
-                        </div>
-
-                        <Button
-                            className="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase tracking-widest text-xs mt-4"
-                            disabled={!slot || !date}
-                            onClick={handleConfirm}
-                        >
-                            Confirm Reschedule
-                        </Button>
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="bg-white rounded-[2rem] shadow-2xl border-none p-6 text-slate-900 sm:max-w-[425px]">
+                <DialogHeader className="mb-4">
+                    <DialogTitle className="text-xl font-serif italic">Reschedule Appointment</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>New Date</Label>
+                        <Input type="date" className="rounded-xl border-slate-200" onChange={handleDateChange} />
                     </div>
-                </DialogContent>
-            </Dialog>
-        );
-    }
+
+                    <div className="space-y-2">
+                        <Label>Available Slots</Label>
+                        <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-1">
+                            {loading ? (
+                                <div className="col-span-3 text-center py-4 text-xs text-slate-400">Checking...</div>
+                            ) : availableSlots.length === 0 ? (
+                                <div className="col-span-3 text-center py-4 text-xs text-slate-400">Select date to see slots</div>
+                            ) : (
+                                availableSlots.map(s => (
+                                    <button
+                                        key={s.time}
+                                        onClick={() => setSlot(s.time)}
+                                        className={cn(
+                                            "px-2 py-2 rounded-lg text-xs font-bold border transition-all",
+                                            slot === s.time
+                                                ? "bg-indigo-600 text-white border-indigo-600"
+                                                : "bg-slate-50 text-slate-600 border-slate-100 hover:border-indigo-200"
+                                        )}
+                                    >
+                                        {s.time}
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    <Button
+                        className="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase tracking-widest text-xs mt-4"
+                        disabled={!slot || !date}
+                        onClick={handleConfirm}
+                    >
+                        Confirm Reschedule
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+}
