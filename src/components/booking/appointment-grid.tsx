@@ -6,6 +6,7 @@ import { PROCEDURE_TYPES, useSchedulingStore } from '@/lib/scheduling-store';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarIcon, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import { format, addDays, isSameDay } from 'date-fns';
 
 // --- Improved Asset Mapping ---
@@ -43,7 +44,7 @@ export function AppointmentGrid() {
     );
 
     return (
-        <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4 lg:p-8 font-sans">
+        <div className="h-screen overflow-hidden bg-slate-50 flex items-center justify-center p-4 lg:p-8 font-sans">
             <div className="bg-white w-full max-w-7xl min-h-[85vh] rounded-[2.5rem] shadow-2xl shadow-slate-200/50 overflow-hidden flex flex-col lg:flex-row relative ring-1 ring-slate-900/5">
 
                 {/* --- Left Panel: Steps & Interaction --- */}
@@ -75,7 +76,7 @@ export function AppointmentGrid() {
                     </header>
 
                     {/* Main Scrollable Content */}
-                    <div className="flex-1 overflow-y-auto px-8 pb-8 custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto px-8 pb-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:none]">
                         <AnimatePresence mode="wait">
 
                             {/* STEP 1: SERVICE */}
