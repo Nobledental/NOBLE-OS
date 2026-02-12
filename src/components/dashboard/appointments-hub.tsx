@@ -12,8 +12,14 @@ import {
     Search,
     User,
     MoreHorizontal,
-    Phone
+    Phone,
+    CalendarClock,
+    X
 } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import { NewAppointmentDialog } from "@/components/appointments/new-appointment-dialog";
 import { LiveLocationSharer } from "@/components/communication/live-location-sharer";
 import { useSchedulingStore, PROCEDURE_TYPES } from "@/lib/scheduling-store";
@@ -26,6 +32,7 @@ import { Button } from "@/components/ui/button";
 export function AppointmentsHub() {
     const store = useSchedulingStore();
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
 
     // --- Calendar Logic ---
     const weekStart = startOfWeek(selectedDate);
@@ -174,7 +181,12 @@ export function AppointmentsHub() {
                                     <EmptyState />
                                 ) : (
                                     todaysAppointments.map((appt, i) => (
-                                        <AppointmentCard key={appt.id || i} appt={appt} store={store} />
+                                        <AppointmentCard
+                                            key={appt.id || i}
+                                            appt={appt}
+                                            store={store}
+                                            onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                        />
                                     ))
                                 )}
                             </AnimatePresence>
@@ -182,6 +194,13 @@ export function AppointmentsHub() {
                     </PanzeCard>
                 </div>
             </div>
+
+            <RescheduleDialog
+                open={rescheduleData.open}
+                onOpenChange={(open) => setRescheduleData(prev => ({ ...prev, open }))}
+                apptId={rescheduleData.apptId}
+                store={store}
+            />
         </div>
     );
 }
@@ -221,7 +240,7 @@ function StatRow({ icon: Icon, color, label, value, total }: any) {
 }
 
 
-function AppointmentCard({ appt, store }: any) {
+function AppointmentCard({ appt, store, onReschedule }: { appt: any, store: any, onReschedule: (id: string) => void }) {
     const patient = store.patients.find((p: any) => p.id === appt.patientId);
     const doctor = store.doctors.find((d: any) => d.id === appt.doctorId);
 
@@ -302,8 +321,14 @@ function AppointmentCard({ appt, store }: any) {
                     </Button>
                 )}
 
-                <Button variant="ghost" size="sm" className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-slate-900 hover:bg-slate-100">
-                    <MoreHorizontal className="w-4 h-4" />
+                <Button
+                    onClick={() => onReschedule(appt.id)}
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-amber-600 hover:bg-amber-50"
+                    title="Reschedule"
+                >
+                    <CalendarClock className="w-4 h-4" />
                 </Button>
             </div>
         </motion.div>
@@ -321,5 +346,80 @@ function EmptyState() {
                 Enjoy the free time or schedule a new patient.
             </p>
         </div>
+    );
+}
+
+function RescheduleDialog({ open, onOpenChange, apptId, store }: any) {
+    const [date, setDate] = useState("");
+    const [slot, setSlot] = useState("");
+    const [availableSlots, setAvailableSlots] = useState<any[]>([]);
+    const [loading, setLoading] = useState(false);
+
+    const handleDateChange = async (e: any) => {
+        const d = e.target.value;
+        setDate(d);
+        if (!d) return;
+        setLoading(true);
+        // Simplified fetch for reschedule
+        const slots = await store.fetchAvailableSlots(d, store.activeChairs || 3);
+        setAvailableSlots(slots);
+        setLoading(false);
+    };
+
+    const handleConfirm = () => {
+        if (!apptId || !date || !slot) return;
+        store.rescheduleAppointment(apptId, date, slot);
+        toast.success("Appointment Rescheduled");
+        onOpenChange(false);
+    };
+
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="bg-white rounded-[2rem] shadow-2xl border-none p-6 text-slate-900 sm:max-w-[425px]">
+                <DialogHeader className="mb-4">
+                    <DialogTitle className="text-xl font-serif italic">Reschedule Appointment</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                    <div className="space-y-2">
+                        <Label>New Date</Label>
+                        <Input type="date" className="rounded-xl border-slate-200" onChange={handleDateChange} />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label>Available Slots</Label>
+                        <div className="grid grid-cols-3 gap-2 max-h-[200px] overflow-y-auto p-1">
+                            {loading ? (
+                                <div className="col-span-3 text-center py-4 text-xs text-slate-400">Checking...</div>
+                            ) : availableSlots.length === 0 ? (
+                                <div className="col-span-3 text-center py-4 text-xs text-slate-400">Select date to see slots</div>
+                            ) : (
+                                availableSlots.map(s => (
+                                    <button
+                                        key={s.time}
+                                        onClick={() => setSlot(s.time)}
+                                        className={cn(
+                                            "px-2 py-2 rounded-lg text-xs font-bold border transition-all",
+                                            slot === s.time
+                                                ? "bg-indigo-600 text-white border-indigo-600"
+                                                : "bg-slate-50 text-slate-600 border-slate-100 hover:border-indigo-200"
+                                        )}
+                                    >
+                                        {s.time}
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    <Button
+                        className="w-full h-12 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase tracking-widest text-xs mt-4"
+                        disabled={!slot || !date}
+                        onClick={handleConfirm}
+                    >
+                        Confirm Reschedule
+                    </Button>
+                </div>
+            </DialogContent>
+        </Dialog>
     );
 }

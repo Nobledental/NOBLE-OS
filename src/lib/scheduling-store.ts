@@ -74,6 +74,7 @@ interface SchedulingState extends SchedulingConfig {
     fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>;
     updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
     updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => void;
+    rescheduleAppointment: (id: string, newDate: string, newSlot: string) => void;
     importFromGoogle: () => Promise<boolean>;
 }
 
@@ -279,6 +280,12 @@ export const useSchedulingStore = create<SchedulingState>()(
             updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => set((state) => ({
                 appointments: state.appointments.map(a =>
                     a.id === id ? { ...a, status } : a
+                )
+            })),
+
+            rescheduleAppointment: (id: string, newDate: string, newSlot: string) => set((state) => ({
+                appointments: state.appointments.map(a =>
+                    a.id === id ? { ...a, date: newDate, slot: newSlot, status: 'confirmed' } : a
                 )
             })),
 
