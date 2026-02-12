@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { PanzeCard } from "@/components/ui/panze-card";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,101 +16,44 @@ import {
     Plus,
     Search,
     AlertCircle,
-    Loader2
+    Loader2,
+    Trash2
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { supabase } from "@/lib/supabase";
-
-// Chair Type Definition
-type ChairStatus = 'ACTIVE' | 'AVAILABLE' | 'MAINTENANCE' | 'IDLE';
-
-interface Chair {
-    id: string;
-    name: string;
-    status: ChairStatus;
-    location: string;
-    operator_id?: string;
-    total_hours_used: number;
-    efficiency?: number; // Calculated or mock for now
-    procedure_context?: { // JSONB metadata
-        procedure_name?: string;
-        patient_name?: string;
-        start_time?: string;
-        duration?: string;
-    };
-    maintenance_due?: boolean;
-}
+import { useSchedulingStore, DentalChair } from "@/lib/scheduling-store"; // Import from Store
 
 export function ChairManagementHub() {
+    const store = useSchedulingStore(); // Use Store
     const [searchTerm, setSearchTerm] = useState("");
-    const [chairs, setChairs] = useState<Chair[]>([]);
-    const [loading, setLoading] = useState(true);
     const [isAddOpen, setIsAddOpen] = useState(false);
 
     // New Chair Form State
     const [newChairName, setNewChairName] = useState("");
     const [newChairLocation, setNewChairLocation] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // Fetch Chairs
-    const fetchChairs = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('chairs')
-                .select('*')
-                .order('created_at', { ascending: true });
-
-            if (error) throw error;
-            setChairs(data || []);
-        } catch (error) {
-            console.error("Error fetching chairs:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchChairs();
-    }, []);
+    const [newChairType, setNewChairType] = useState<DentalChair['type']>('surgical');
 
     // Add Chair Action
-    const handleAddChair = async () => {
+    const handleAddChair = () => {
         if (!newChairName) return;
 
-        setIsSubmitting(true);
-        try {
-            // Mock Clinic ID for now - in production this comes from Auth Context
-            // Using a resilient fallback if auth is missing during dev
-            const { data: { user } } = await supabase.auth.getUser();
+        store.addChair({
+            name: newChairName,
+            location: newChairLocation,
+            type: newChairType,
+            efficiency: 100,
+            metadata: {}
+        });
 
-            // For now, we'll try to get the first clinic or use a placeholder
-            // This ensures the insertion works even if auth context is partial
-            const clinicId = user?.user_metadata?.clinic_id || "clinic_1";
-
-            const { error } = await supabase.from('chairs').insert({
-                name: newChairName,
-                location: newChairLocation,
-                status: 'AVAILABLE',
-                clinic_id: 'CLINIC-001', // Hardcoded for this phase until Auth context is fully unified
-                metadata: { efficiency: 100 }
-            });
-
-            if (error) throw error;
-
-            await fetchChairs();
-            setIsAddOpen(false);
-            setNewChairName("");
-            setNewChairLocation("");
-        } catch (error) {
-            console.error("Error adding chair:", error);
-            alert("Failed to add chair. Please try again.");
-        } finally {
-            setIsSubmitting(false);
-        }
+        setIsAddOpen(false);
+        setNewChairName("");
+        setNewChairLocation("");
+        setNewChairType('surgical');
     };
 
     // Derived Metrics
+    // Ensure chairs array exists (fallback to empty if store init issue)
+    const chairs = store.chairs || [];
     const totalChairs = chairs.length;
     const activeChairs = chairs.filter(c => c.status === 'ACTIVE').length;
     const utilization = totalChairs > 0 ? Math.round((activeChairs / totalChairs) * 100) : 0;
@@ -168,15 +110,28 @@ export function ChairManagementHub() {
                                         onChange={(e) => setNewChairLocation(e.target.value)}
                                     />
                                 </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="type" className="text-xs font-bold uppercase tracking-widest text-slate-500">Function Type</Label>
+                                    <Select value={newChairType} onValueChange={(v: any) => setNewChairType(v)}>
+                                        <SelectTrigger className="h-11 rounded-xl border-slate-200 bg-slate-50">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="surgical">Surgical Suite</SelectItem>
+                                            <SelectItem value="hygiene">Hygiene / Cleaning</SelectItem>
+                                            <SelectItem value="consultation">Consultation Room</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </div>
                             <DialogFooter>
                                 <Button variant="ghost" onClick={() => setIsAddOpen(false)} className="rounded-xl">Cancel</Button>
                                 <Button
                                     onClick={handleAddChair}
-                                    disabled={!newChairName || isSubmitting}
+                                    disabled={!newChairName}
                                     className="bg-slate-900 text-white rounded-xl hover:bg-slate-800"
                                 >
-                                    {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : <Plus className="w-4 h-4 mr-2" />}
+                                    <Plus className="w-4 h-4 mr-2" />
                                     Register Asset
                                 </Button>
                             </DialogFooter>
@@ -207,11 +162,7 @@ export function ChairManagementHub() {
 
             {/* Chairs Grid */}
             <div className="grid grid-cols-1 gap-4">
-                {loading ? (
-                    <div className="flex items-center justify-center h-40">
-                        <Loader2 className="w-8 h-8 animate-spin text-slate-300" />
-                    </div>
-                ) : chairs.length === 0 ? (
+                {chairs.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-60 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50/50">
                         <Armchair className="w-12 h-12 text-slate-300 mb-4" />
                         <p className="text-slate-400 font-medium text-sm">No chairs registered yet.</p>
@@ -226,9 +177,25 @@ export function ChairManagementHub() {
                             whileHover={{ y: -2 }}
                             className="group bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden"
                         >
-                            <div className="absolute top-0 right-0 p-6">
-                                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-slate-900">
-                                    <MoreVertical className="w-4 h-4" />
+                            <div className="absolute top-0 right-0 p-6 flex gap-2">
+                                {/* Quick Status Toggles */}
+                                <Select
+                                    value={chair.status}
+                                    onValueChange={(v: any) => store.updateChairStatus(chair.id, v)}
+                                >
+                                    <SelectTrigger className="h-8 w-[130px] rounded-lg border-slate-200 bg-slate-50 text-[10px] font-bold uppercase tracking-wider">
+                                        <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="AVAILABLE">Available</SelectItem>
+                                        <SelectItem value="ACTIVE">Active</SelectItem>
+                                        <SelectItem value="CLEANING">Cleaning</SelectItem>
+                                        <SelectItem value="MAINTENANCE">Maintenance</SelectItem>
+                                    </SelectContent>
+                                </Select>
+
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-slate-400 hover:text-red-600" onClick={() => store.removeChair(chair.id)}>
+                                    <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
 
@@ -238,7 +205,8 @@ export function ChairManagementHub() {
                                     "w-16 h-16 rounded-2xl flex items-center justify-center text-2xl shadow-inner",
                                     chair.status === "ACTIVE" ? "bg-emerald-50 text-emerald-600" :
                                         chair.status === "MAINTENANCE" ? "bg-amber-50 text-amber-600" :
-                                            "bg-slate-50 text-slate-400"
+                                            chair.status === "CLEANING" ? "bg-blue-50 text-blue-600" :
+                                                "bg-slate-50 text-slate-400"
                                 )}>
                                     <Armchair className="w-8 h-8" />
                                 </div>
@@ -251,19 +219,15 @@ export function ChairManagementHub() {
                                             "text-[9px] px-2 py-0.5 font-black uppercase tracking-wider border-0",
                                             chair.status === "ACTIVE" ? "bg-emerald-100 text-emerald-700" :
                                                 chair.status === "MAINTENANCE" ? "bg-amber-100 text-amber-700" :
-                                                    "bg-slate-100 text-slate-600"
+                                                    chair.status === "CLEANING" ? "bg-blue-100 text-blue-700" :
+                                                        "bg-slate-100 text-slate-600"
                                         )}>
                                             {chair.status}
                                         </Badge>
                                     </div>
                                     <p className="text-xs text-slate-500 font-medium flex items-center gap-2">
                                         {chair.location && <span className="text-slate-400">{chair.location} • </span>}
-                                        {chair.status === "ACTIVE" ? (
-                                            <>
-                                                <span className="w-1 h-1 rounded-full bg-slate-300" />
-                                                <span>{chair.operator_id ? "Occupied" : "Active"}</span>
-                                            </>
-                                        ) : "Ready for use"}
+                                        <span className="uppercase text-[9px] font-bold tracking-widest text-slate-300">{chair.type}</span>
                                     </p>
                                 </div>
 
