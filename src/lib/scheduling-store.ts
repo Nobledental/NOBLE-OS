@@ -218,16 +218,28 @@ const generateFallbackSlots = (
         });
         if (inBreak) isAvailable = false;
 
-        // 3. Check Chair Capacity (Concept: Count overlapping appointments)
-        // Simplified: Random simulation for demo, but structure is here for real logic
-        // In real app: Filter appointments where (appt.start < slotEnd && appt.end > currentTime)
-        // If count >= activeChairs, isAvailable = false.
-
-        // For User Demo: We simulate "Busy" slots randomly if it's not a break
+        // 3. Check Chair Capacity (Real Logic using Local Store)
         if (isAvailable) {
-            // Deterministic pseudo-random based on time (so it doesn't flicker on re-render)
-            const entropy = currentTime.getHours() + currentTime.getMinutes();
-            const bookedChairs = entropy % (activeChairs + 1); // Mock utilization
+            // Count overlapping appointments in local store
+            const bookedChairs = config.appointments.filter(appt => {
+                if (appt.status === 'canceled' || appt.status === 'no-show') return false;
+
+                // Parse appt time
+                // appt.date is YYYY-MM-DD
+                // appt.slot is HH:mm
+                if (appt.date !== dateStr) return false;
+
+                const apptStart = new Date(`${appt.date}T${appt.slot}:00`);
+                // Assume default 30 min duration if not specified in appt
+                // In real app, appt usually has duration or end time. 
+                // We'll use PROCEDURES map if possible, or default 30.
+                const procDuration = 30; // Simplify for now
+                const apptEnd = new Date(apptStart.getTime() + procDuration * 60000);
+
+                // Overlap Check: StartA < EndB && EndA > StartB
+                return (apptStart < slotEnd && apptEnd > currentTime);
+            }).length;
+
             const availableChairs = Math.max(0, activeChairs - bookedChairs);
 
             if (availableChairs > 0) {
@@ -311,10 +323,18 @@ export const useSchedulingStore = create<SchedulingState>()(
             updateClinicDetails: (details) => set({ clinicDetails: details }),
 
 
-            updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => set((state) => ({
-                appointments: state.appointments.map(a =>
-                    a.id === id ? { ...a, status } : a
-                )
+            updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing') => set((state) => ({
+                appointments: state.appointments.map(a => {
+                    if (a.id !== id) return a;
+                    const updates: any = { status };
+                    const now = new Date().toISOString();
+
+                    if (status === 'arrived') updates.arrivedAt = now;
+                    if (status === 'ongoing') updates.startedAt = now;
+                    if (status === 'completed') updates.completedAt = now;
+
+                    return { ...a, ...updates };
+                })
             })),
 
             rescheduleAppointment: (id: string, newDate: string, newSlot: string) => set((state) => ({

@@ -33,6 +33,7 @@ export function AppointmentsHub() {
     const store = useSchedulingStore();
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
+    const [viewMode, setViewMode] = useState<'board' | 'list'>('board');
 
     // --- Calendar Logic ---
     const weekStart = startOfWeek(selectedDate);
@@ -40,18 +41,25 @@ export function AppointmentsHub() {
     const weekDays = eachDayOfInterval({ start: weekStart, end: weekEnd });
 
     // --- Filter Appointments for Selected Date ---
-    // Note: Store dates are strings "YYYY-MM-DD". We need to match reliable.
     const selectedDateString = format(selectedDate, "yyyy-MM-dd");
 
-    // Sort logic: Confirmed first, then by time
     const todaysAppointments = store.appointments
         .filter(appt => appt.date === selectedDateString)
         .sort((a, b) => a.slot.localeCompare(b.slot));
 
+    // --- Bucket Logic ---
+    const buckets = {
+        upcoming: todaysAppointments.filter(a => !a.status || a.status === 'confirmed' || a.status === 'pending'),
+        arrived: todaysAppointments.filter(a => a.status === 'arrived'),
+        ongoing: todaysAppointments.filter(a => a.status === 'ongoing'),
+        completed: todaysAppointments.filter(a => a.status === 'completed'),
+        canceled: todaysAppointments.filter(a => a.status === 'canceled'),
+    };
+
     const stats = {
-        confirmed: todaysAppointments.filter(a => !a.status || a.status === 'confirmed').length,
-        pending: todaysAppointments.filter(a => a.status === 'pending').length,
-        canceled: todaysAppointments.filter(a => a.status === 'canceled').length
+        confirmed: buckets.upcoming.length,
+        pending: buckets.arrived.length, // Treating Arrived as "Pending Action"
+        canceled: buckets.canceled.length
     };
 
     return (
@@ -64,14 +72,34 @@ export function AppointmentsHub() {
                         {format(selectedDate, "EEEE, MMMM do, yyyy")}
                     </p>
                 </div>
-                <NewAppointmentDialog />
+                <div className="flex items-center gap-4">
+                    <div className="bg-slate-100 p-1 rounded-xl flex gap-1">
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setViewMode('list')}
+                            className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'list' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
+                        >
+                            List
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => setViewMode('board')}
+                            className={cn("h-8 px-3 rounded-lg text-xs font-bold", viewMode === 'board' ? "bg-white shadow-sm text-slate-900" : "text-slate-400 hover:text-slate-600")}
+                        >
+                            Board
+                        </Button>
+                    </div>
+                    <NewAppointmentDialog />
+                </div>
             </div>
 
             {/* Main Content Grid */}
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 flex-1 min-h-0">
 
                 {/* Left Column: Calendar & Filters (4 cols) */}
-                <div className="md:col-span-4 flex flex-col gap-6">
+                <div className="md:col-span-3 flex flex-col gap-6">
                     {/* Mini Calendar Widget */}
                     <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 overflow-hidden relative">
                         <div className="flex items-center justify-between mb-6">
@@ -122,29 +150,11 @@ export function AppointmentsHub() {
 
                     {/* Quick Stats (Vertical Stack) */}
                     <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-6 flex-1">
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6">Day Pulse</h3>
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-6">Patient Flow</h3>
                         <div className="space-y-4">
-                            <StatRow
-                                icon={CheckCircle2}
-                                color="emerald"
-                                label="Confirmed"
-                                value={stats.confirmed}
-                                total={todaysAppointments.length}
-                            />
-                            <StatRow
-                                icon={Clock}
-                                color="amber"
-                                label="Pending"
-                                value={stats.pending}
-                                total={todaysAppointments.length}
-                            />
-                            <StatRow
-                                icon={AlertCircle}
-                                color="rose"
-                                label="Canceled"
-                                value={stats.canceled}
-                                total={todaysAppointments.length}
-                            />
+                            <StatRow icon={CalendarIcon} color="emerald" label="Upcoming" value={stats.confirmed} total={todaysAppointments.length} />
+                            <StatRow icon={User} color="amber" label="In Clinic" value={buckets.arrived.length + buckets.ongoing.length} total={todaysAppointments.length} />
+                            <StatRow icon={CheckCircle2} color="indigo" label="Completed" value={buckets.completed.length} total={todaysAppointments.length} />
                         </div>
 
                         {/* Location Sharer tucked at bottom */}
@@ -154,44 +164,60 @@ export function AppointmentsHub() {
                     </PanzeCard>
                 </div>
 
-                {/* Right Column: Appointment Feed (8 cols) */}
-                <div className="md:col-span-8 flex flex-col h-full min-h-0">
-                    <PanzeCard className="bg-white border border-slate-200 shadow-xl rounded-[2.5rem] p-0 flex flex-col h-full overflow-hidden">
-                        {/* Feed Header */}
-                        <div className="p-6 border-b border-slate-50 bg-slate-50/30 flex items-center justify-between shrink-0">
-                            <div className="flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-indigo-500 animate-pulse" />
-                                <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500">
-                                    Queue ({todaysAppointments.length})
-                                </h3>
-                            </div>
-                            <div className="bg-white rounded-full px-3 py-1.5 border border-slate-100 flex items-center gap-2 shadow-sm">
-                                <Search className="w-3 h-3 text-slate-400" />
-                                <input
-                                    placeholder="Filter list..."
-                                    className="text-[11px] font-medium text-slate-600 placeholder:text-slate-300 bg-transparent outline-none w-24"
+                {/* Right Column: View Mode Switcher (9 cols) */}
+                <div className="md:col-span-9 flex flex-col h-full min-h-0 bg-slate-50/50 rounded-[2.5rem] border border-slate-200 overflow-hidden">
+
+                    {viewMode === 'list' ? (
+                        <div className="flex-1 overflow-y-auto p-6 space-y-3 custom-scrollbar">
+                            <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-slate-400 mb-4 px-2">Master List</h3>
+                            <AnimatePresence mode="popLayout">
+                                {todaysAppointments.length === 0 ? <EmptyState /> : todaysAppointments.map(appt => (
+                                    <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={(id) => setRescheduleData({ open: true, apptId: id })} />
+                                ))}
+                            </AnimatePresence>
+                        </div>
+                    ) : (
+                        <div className="flex-1 overflow-x-auto p-6 custom-scrollbar">
+                            <div className="flex gap-6 h-full min-w-[1000px]">
+                                {/* Column 1: Upcoming (Pastel Blue) */}
+                                <KanbanColumn
+                                    title="Upcoming / Confirmed"
+                                    color="bg-blue-50/50 border-blue-100"
+                                    headerColor="text-blue-500"
+                                    appointments={buckets.upcoming}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 2: In Queue (Pastel Amber) */}
+                                <KanbanColumn
+                                    title="In Queue / Arrived"
+                                    color="bg-amber-50/50 border-amber-100"
+                                    headerColor="text-amber-500"
+                                    appointments={buckets.arrived}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 3: Ongoing (Pastel Green - Live Timer) */}
+                                <KanbanColumn
+                                    title="Ongoing Procedure"
+                                    color="bg-green-50/50 border-green-100"
+                                    headerColor="text-green-500"
+                                    appointments={buckets.ongoing}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
+                                />
+                                {/* Column 4: Completed (Pastel Slate) */}
+                                <KanbanColumn
+                                    title="Completed"
+                                    color="bg-slate-100/50 border-slate-200"
+                                    headerColor="text-slate-500"
+                                    appointments={buckets.completed}
+                                    store={store}
+                                    onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
                                 />
                             </div>
                         </div>
-
-                        {/* Scrollable Feed */}
-                        <div className="flex-1 overflow-y-auto p-6 space-y-3 custom-scrollbar">
-                            <AnimatePresence mode="popLayout">
-                                {todaysAppointments.length === 0 ? (
-                                    <EmptyState />
-                                ) : (
-                                    todaysAppointments.map((appt, i) => (
-                                        <AppointmentCard
-                                            key={appt.id || i}
-                                            appt={appt}
-                                            store={store}
-                                            onReschedule={(id) => setRescheduleData({ open: true, apptId: id })}
-                                        />
-                                    ))
-                                )}
-                            </AnimatePresence>
-                        </div>
-                    </PanzeCard>
+                    )}
                 </div>
             </div>
 
@@ -205,7 +231,57 @@ export function AppointmentsHub() {
     );
 }
 
-// --- Sub Components ---
+// --- Kanban Components ---
+
+function KanbanColumn({ title, color, headerColor, appointments, store, onReschedule }: any) {
+    return (
+        <div className={cn("flex-1 flex flex-col rounded-3xl border h-full transition-colors", color)}>
+            <div className="p-4 border-b border-white/50 flex items-center justify-between shrink-0">
+                <h4 className={cn("text-[11px] font-black uppercase tracking-[0.1em] flex items-center gap-2", headerColor)}>
+                    <span className="w-2 h-2 rounded-full bg-current opacity-50" /> {title}
+                </h4>
+                <span className="text-[10px] font-bold bg-white/50 px-2 py-0.5 rounded-full text-slate-500">{appointments.length}</span>
+            </div>
+            <div className="flex-1 overflow-y-auto p-3 space-y-3 custom-scrollbar">
+                {appointments.map((appt: any) => (
+                    <AppointmentCard key={appt.id} appt={appt} store={store} onReschedule={onReschedule} isBoard />
+                ))}
+                {appointments.length === 0 && (
+                    <div className="h-32 flex items-center justify-center text-[10px] font-bold uppercase tracking-widest text-slate-300 border-2 border-dashed border-slate-200/50 rounded-2xl">
+                        Empty
+                    </div>
+                )}
+            </div>
+        </div>
+    )
+}
+
+
+function LiveTimer({ startTime }: { startTime: string }) {
+    const [elapsed, setElapsed] = useState("00:00");
+
+    useState(() => {
+        const interval = setInterval(() => {
+            const start = new Date(startTime).getTime();
+            const now = new Date().getTime();
+            const diff = Math.max(0, now - start);
+
+            const minutes = Math.floor(diff / 60000);
+            const seconds = Math.floor((diff % 60000) / 1000);
+            setElapsed(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
+        }, 1000);
+        return () => clearInterval(interval);
+    });
+
+    return (
+        <div className="font-mono text-sm font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded-md flex items-center gap-1 animate-pulse">
+            <Clock className="w-3 h-3" />
+            {elapsed}
+        </div>
+    );
+}
+
+// --- Updated Sub Components ---
 
 function StatRow({ icon: Icon, color, label, value, total }: any) {
     const percentage = total > 0 ? (value / total) * 100 : 0;
@@ -214,6 +290,7 @@ function StatRow({ icon: Icon, color, label, value, total }: any) {
         emerald: "bg-emerald-500 text-emerald-600 border-emerald-500/20 bg-emerald-50",
         amber: "bg-amber-500 text-amber-600 border-amber-500/20 bg-amber-50",
         rose: "bg-rose-500 text-rose-600 border-rose-500/20 bg-rose-50",
+        indigo: "bg-indigo-500 text-indigo-600 border-indigo-500/20 bg-indigo-50",
     };
 
     return (
@@ -240,13 +317,12 @@ function StatRow({ icon: Icon, color, label, value, total }: any) {
 }
 
 
-function AppointmentCard({ appt, store, onReschedule }: { appt: any, store: any, onReschedule: (id: string) => void }) {
+function AppointmentCard({ appt, store, onReschedule, isBoard }: { appt: any, store: any, onReschedule: (id: string) => void, isBoard?: boolean }) {
     const patient = store.patients.find((p: any) => p.id === appt.patientId);
     const doctor = store.doctors.find((d: any) => d.id === appt.doctorId);
 
     // Dynamic Style Lookup
     const procedure = PROCEDURE_TYPES.find(p => p.id === appt.type);
-    const badgeStyle = procedure ? procedure.color : "bg-slate-50 text-slate-500 border-slate-200";
     const label = procedure ? procedure.label : (appt.type || 'Appointment');
 
     return (
@@ -255,82 +331,65 @@ function AppointmentCard({ appt, store, onReschedule }: { appt: any, store: any,
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="group relative bg-white border border-slate-100 rounded-[1.5rem] p-4 flex items-center justify-between hover:shadow-lg hover:border-indigo-100 hover:-translate-y-0.5 transition-all duration-300"
+            className={cn(
+                "group relative bg-white border border-slate-100 rounded-[1.2rem] p-3 hover:shadow-lg hover:border-indigo-100 hover:-translate-y-0.5 transition-all duration-300",
+                isBoard ? "flex flex-col gap-3" : "flex items-center justify-between"
+            )}
         >
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-3 w-full">
                 {/* Time Slot */}
-                <div className="flex flex-col items-center justify-center w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 group-hover:bg-indigo-50 group-hover:border-indigo-100 transition-colors">
-                    <span className="text-[13px] font-black text-slate-900">{appt.slot}</span>
+                <div className={cn(
+                    "flex flex-col items-center justify-center rounded-xl bg-slate-50 border border-slate-100 transition-colors shrink-0",
+                    isBoard ? "w-10 h-10" : "w-12 h-12"
+                )}>
+                    <span className={cn("font-black text-slate-900", isBoard ? "text-[10px]" : "text-xs")}>{appt.slot}</span>
                 </div>
 
                 {/* Patient Info */}
-                <div>
-                    <h4 className="text-sm font-bold text-slate-900 mb-0.5 flex items-center gap-2">
-                        {patient?.name || "Unknown Patient"}
-                        {patient?.phone && (
-                            <span className="text-[10px] font-medium text-slate-400 bg-slate-50 px-1.5 rounded-md flex items-center gap-1">
-                                <Phone className="w-2.5 h-2.5" /> {patient.phone}
-                            </span>
-                        )}
+                <div className="flex-1 min-w-0">
+                    <h4 className="text-xs font-bold text-slate-900 mb-0.5 truncate flex items-center justify-between">
+                        {patient?.name || "Unknown"}
+                        {appt.status === 'ongoing' && appt.startedAt && <LiveTimer startTime={appt.startedAt} />}
                     </h4>
-                    <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={cn(
-                            "text-[9px] font-black uppercase tracking-wider px-1.5 py-0 h-4 border",
-                            badgeStyle.replace('bg-', 'bg-opacity-20 border-opacity-20 ') // Adjust to be outline-ish
-                        )}>
-                            {label}
-                        </Badge>
-                        <span className="text-[10px] text-slate-400 font-medium truncate max-w-[150px]">
-                            w/ {doctor?.name || "Any Doctor"}
-                        </span>
-                    </div>
+                    <p className="text-[10px] text-slate-400 font-medium truncate mb-1">
+                        {label} • w/ {doctor?.name || "Unassigned"}
+                    </p>
+
+                    {/* Action Bar (Board Mode) */}
+                    {isBoard && (
+                        <div className="flex gap-1 mt-2">
+                            {/* STATUS TRANSITIONS */}
+                            {(!appt.status || appt.status === 'confirmed' || appt.status === 'pending') && (
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'arrived')} className="h-6 text-[10px] bg-amber-50 text-amber-600 hover:bg-amber-100 border-amber-200 w-full">
+                                    Check In
+                                </Button>
+                            )}
+                            {appt.status === 'arrived' && (
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'ongoing')} className="h-6 text-[10px] bg-green-50 text-green-600 hover:bg-green-100 border-green-200 w-full animate-pulse">
+                                    Start Case
+                                </Button>
+                            )}
+                            {appt.status === 'ongoing' && (
+                                <Button size="sm" onClick={() => store.updateAppointmentStatus(appt.id, 'completed')} className="h-6 text-[10px] bg-slate-900 text-white hover:bg-slate-800 w-full">
+                                    Complete
+                                </Button>
+                            )}
+                            {appt.status === 'completed' && (
+                                <span className="text-[9px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-full border border-green-100">Done</span>
+                            )}
+                        </div>
+                    )}
                 </div>
             </div>
 
-
-            {/* Actions */}
-            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                {(!appt.status || appt.status === 'pending') && (
-                    <>
-                        <Button
-                            onClick={() => store.updateAppointmentStatus(appt.id, 'confirmed')}
-                            size="sm"
-                            className="h-8 rounded-full bg-green-50 text-green-600 hover:bg-green-100 hover:text-green-700 border border-green-200 text-xs font-bold px-3"
-                        >
-                            Confirm
-                        </Button>
-                        <Button
-                            onClick={() => store.updateAppointmentStatus(appt.id, 'canceled')}
-                            variant="ghost"
-                            size="sm"
-                            className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-red-600 hover:bg-red-50"
-                            title="Cancel"
-                        >
-                            <AlertCircle className="w-4 h-4" />
-                        </Button>
-                    </>
-                )}
-
-                {appt.status === 'confirmed' && (
-                    <Button
-                        onClick={() => store.updateAppointmentStatus(appt.id, 'completed')}
-                        size="sm"
-                        className="h-8 rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 hover:text-blue-700 border border-blue-200 text-xs font-bold px-3"
-                    >
-                        Complete
+            {/* List Mode Actions */}
+            {!isBoard && (
+                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Button onClick={() => onReschedule(appt.id)} variant="ghost" size="sm" className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-amber-600">
+                        <CalendarClock className="w-4 h-4" />
                     </Button>
-                )}
-
-                <Button
-                    onClick={() => onReschedule(appt.id)}
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 w-8 rounded-full p-0 text-slate-400 hover:text-amber-600 hover:bg-amber-50"
-                    title="Reschedule"
-                >
-                    <CalendarClock className="w-4 h-4" />
-                </Button>
-            </div>
+                </div>
+            )}
         </motion.div>
     );
 }

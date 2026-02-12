@@ -244,20 +244,44 @@ export function AppointmentGrid() {
                                                                 }
                                                                 return true;
                                                             })
-                                                            .map(slot => (
-                                                                <button
-                                                                    key={slot.start}
-                                                                    onClick={() => actions.selectSlot(slot.start)}
-                                                                    className={cn(
-                                                                        "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
-                                                                        state.selectedSlot === slot.start
-                                                                            ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
-                                                                            : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
-                                                                    )}
-                                                                >
-                                                                    {format(new Date(slot.start), 'h:mm a')}
-                                                                </button>
-                                                            ))}
+                                                            .map((slot, i) => {
+                                                                const isFull = slot.available === 0;
+                                                                const isEmergency = state.selectedService === 'emergency';
+                                                                const isDisabled = isFull && !isEmergency;
+
+                                                                return (
+                                                                    <motion.div
+                                                                        key={i}
+                                                                        initial={{ opacity: 0, scale: 0.9 }}
+                                                                        animate={{ opacity: 1, scale: 1 }}
+                                                                        transition={{ delay: i * 0.05 }}
+                                                                    >
+                                                                        <button
+                                                                            onClick={() => actions.selectSlot(slot.start)}
+                                                                            disabled={isDisabled}
+                                                                            className={cn(
+                                                                                "w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all border-2 relative overflow-hidden",
+                                                                                state.selectedSlot === slot.start
+                                                                                    ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
+                                                                                    : isDisabled
+                                                                                        ? "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed hidden" // Hide fully booked slots instead of disabled? Or show disabled. User didn't specify. Let's keep disabled but visible for context.
+                                                                                        : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md",
+                                                                                isFull && isEmergency && "border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:border-red-300"
+                                                                            )}
+                                                                        >
+                                                                            <div className="flex flex-col items-center gap-0.5">
+                                                                                <span>{format(new Date(slot.start), 'h:mm a')}</span>
+                                                                                {isFull && isEmergency && (
+                                                                                    <span className="text-[9px] font-black uppercase tracking-wider text-red-500">
+                                                                                        Overbook
+                                                                                    </span>
+                                                                                )}
+                                                                                {!isFull && <span className="text-[9px] font-medium text-slate-400">{slot.available} Left</span>}
+                                                                            </div>
+                                                                        </button>
+                                                                    </motion.div>
+                                                                );
+                                                            })}
                                                     </div>
                                                 ) : (
                                                     <div className="flex flex-col items-center justify-center h-full text-slate-400">

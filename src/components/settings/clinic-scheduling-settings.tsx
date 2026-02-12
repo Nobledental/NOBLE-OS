@@ -155,7 +155,8 @@ export function ClinicSchedulingSettings() {
                                 type="number"
                                 placeholder="e.g. 5"
                                 className="w-full"
-                            // In a real app, bind to store state
+                                value={store.operationalChairs}
+                                onChange={(e) => store.setChairCapacity(parseInt(e.target.value) || 0, store.activeChairs)}
                             />
                             <p className="text-xs text-gray-400">Total physical chairs installed in the clinic.</p>
                         </div>
@@ -165,7 +166,8 @@ export function ClinicSchedulingSettings() {
                                 type="number"
                                 placeholder="e.g. 3"
                                 className="w-full border-brand-primary ring-1 ring-brand-primary/20"
-                            // In a real app, bind to store state
+                                value={store.activeChairs}
+                                onChange={(e) => store.setChairCapacity(store.operationalChairs, parseInt(e.target.value) || 0)}
                             />
                             <p className="text-xs text-gray-400">
                                 This number controls the <b>Automated Booking System</b>.
