@@ -113,8 +113,28 @@ const DEFAULT_CONFIG: SchedulingConfig = {
             specialty: "CMD & Oral Maxillofacial Surgeon",
             image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=300&h=300",
             rating: 5.0,
-            experience: 15, // Updated to reflect seniority
+            experience: 15,
             languages: ["English", "Tamil", "Hindi"],
+            isAvailable: true
+        },
+        {
+            id: "STF-001",
+            name: "Dr. Sarah Wilson",
+            specialty: "Orthodontics",
+            image: "https://i.pravatar.cc/150?u=STF001",
+            rating: 4.8,
+            experience: 8,
+            languages: ["English", "Spanish"],
+            isAvailable: true
+        },
+        {
+            id: "STF-004",
+            name: "Dr. James Carter",
+            specialty: "General Dentistry",
+            image: "https://i.pravatar.cc/150?u=STF004",
+            rating: 4.9,
+            experience: 12,
+            languages: ["English"],
             isAvailable: true
         }
     ],

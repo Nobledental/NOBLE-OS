@@ -407,9 +407,9 @@ export function AppointmentGrid() {
                                 <div>
                                     <p className="text-xs font-semibold text-slate-500 uppercase">Schedule</p>
                                     <p className="text-lg font-bold text-slate-900">
-                                        {state.selectedDate ? format(state.selectedDate, 'MMM do') : '--'}
+                                        {state.selectedDate ? format(new Date(state.selectedDate), 'MMM do') : '--'}
                                         <span className="text-slate-400 font-normal"> at </span>
-                                        {state.selectedSlot || '--'}
+                                        {state.selectedSlot ? format(new Date(`2000-01-01T${state.selectedSlot}`), 'h:mm a') : '--'}
                                     </p>
                                 </div>
                             </div>
