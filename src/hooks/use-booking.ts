@@ -205,18 +205,21 @@ export function useBooking() {
         state,
         availableSlots,
         loadingSlots,
-        actions: {
-            setBookingType,
-            selectService,
-            selectDoctor,
-            selectDate,
-            selectSlot,
-            updatePatientDetails,
-            startVoiceInput,
-            confirmBooking,
-            // @ts-ignore
-            setStep: (step: BookingStep) => setState(prev => ({ ...prev, step })),
-            resetRaw: () => setState(INITIAL_STATE)
-        }
-    };
+        setLoadingSlots, // Expose for immediate UI feedback
+        setBookingType,
+        selectService,
+        selectDoctor,
+        selectDate: (date: Date) => {
+            setLoadingSlots(true); // Immediate feedback
+            selectDate(date);
+        },
+        selectSlot,
+        updatePatientDetails,
+        startVoiceInput,
+        confirmBooking,
+        // @ts-ignore
+        setStep: (step: BookingStep) => setState(prev => ({ ...prev, step })),
+        resetRaw: () => setState(INITIAL_STATE)
+    }
+};
 }

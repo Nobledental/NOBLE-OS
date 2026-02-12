@@ -184,70 +184,144 @@ export function AppointmentGrid() {
                                     </Button>
                                     <SectionHeader step={3} title="When works best?" subtitle="Book a guaranteed slot. No wait times." />
 
-                                    {/* Date Picker */}
-                                    <div className="mb-8">
-                                        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide snap-x">
-                                            {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(offset => {
-                                                const d = new Date();
-                                                d.setDate(d.getDate() + offset);
-                                                const isSelected = state.selectedDate?.toDateString() === d.toDateString();
-                                                const isToday = isSameDay(d, new Date());
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        {/* Date Calendar */}
+                                        <div>
+                                            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Select Date</h3>
+                                            <div className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm inline-block">
+                                                <Calendar
+                                                    mode="single"
+                                                    selected={state.selectedDate || undefined}
+                                                    onSelect={(date) => date && actions.selectDate(date)}
+                                                    className="rounded-md border-0"
+                                                    disabled={(date) => date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))}
+                                                />
+                                            </div>
+                                        </div>
 
-                                                return (
-                                                    <button
-                                                        key={offset}
-                                                        onClick={() => actions.selectDate(d)}
-                                                        className={cn(
-                                                            "snap-start flex-none flex flex-col items-center justify-center w-[4.5rem] h-24 rounded-2xl border transition-all duration-300",
-                                                            isSelected
-                                                                ? "bg-slate-900 text-white border-slate-900 shadow-xl shadow-slate-900/20 scale-105"
-                                                                : "bg-white border-slate-100 text-slate-500 hover:border-slate-300 hover:bg-slate-50"
-                                                        )}
-                                                    >
-                                                        <span className="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">
-                                                            {isToday ? 'Today' : format(d, 'EEE')}
-                                                        </span>
-                                                        <span className="text-2xl font-bold">{format(d, 'd')}</span>
-                                                    </button>
-                                                )
-                                            })}
+                                        {/* Time Slots */}
+                                        <div>
+                                            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Available Slots</h3>
+
+                                            <div className="bg-slate-50/50 rounded-3xl p-6 min-h-[300px]">
+                                                {loadingSlots ? (
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        {[1, 2, 3, 4, 5, 6].map(i => (
+                                                            <div key={i} className="h-10 bg-slate-200 rounded-xl animate-pulse" />
+                                                        ))}
+                                                    </div>
+                                                ) : availableSlots.length > 0 ? (
+                                                    <div className="grid grid-cols-2 gap-3">
+                                                        {availableSlots.map(slot => (
+                                                            <button
+                                                                key={slot.start}
+                                                                onClick={() => actions.selectSlot(slot.start)}
+                                                                className={cn(
+                                                                    "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
+                                                                    state.selectedSlot === slot.start
+                                                                        ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
+                                                                        : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
+                                                                )}
+                                                            >
+                                                                {format(new Date(slot.start), 'h:mm a')}
+                                                            </button>
+                                                        ))}
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex flex-col items-center justify-center h-full text-slate-400">
+                                                        <Clock className="w-8 h-8 mb-2 opacity-50" />
+                                                        <p className="text-sm">No slots available for this date.</p>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
+                                </motion.div>
+                            )}
 
-                                    {/* Slots Grid */}
-                                    <div>
-                                        <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">
-                                            Available Slots {state.selectedDate && <span className="text-slate-400 font-normal">on {format(state.selectedDate, 'MMMM do')}</span>}
+                            {/* STEP 4: SUMMARY & FORM */}
+                            {state.step === 'summary' && (
+                                <motion.div
+                                    key="step-summary"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="max-w-3xl mt-8 pt-8 border-t border-slate-100"
+                                >
+                                    <div className="bg-slate-50 rounded-3xl p-8 border border-slate-100">
+                                        <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                                            <ShieldCheck className="w-5 h-5 text-brand-primary" />
+                                            Confirm Details
                                         </h3>
 
-                                        {loadingSlots ? (
-                                            <div className="flex items-center justify-center p-12">
-                                                <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Full Name</label>
+                                                    <Input
+                                                        placeholder="Enter your name"
+                                                        className="h-12 rounded-xl border-slate-200 bg-white text-slate-900 font-medium text-lg placeholder:text-slate-300 focus-visible:ring-brand-primary"
+                                                        value={state.patientDetails.name}
+                                                        onChange={(e) => actions.updatePatientDetails('name', e.target.value)}
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Phone Number</label>
+                                                    <Input
+                                                        placeholder="10-digit number"
+                                                        className="h-12 rounded-xl border-slate-200 bg-white text-slate-900 font-medium text-lg placeholder:text-slate-300 focus-visible:ring-brand-primary"
+                                                        value={state.patientDetails.phone}
+                                                        onChange={(e) => actions.updatePatientDetails('phone', e.target.value)}
+                                                    />
+                                                </div>
                                             </div>
-                                        ) : availableSlots.length === 0 ? (
-                                            <div className="flex flex-col items-center justify-center p-12 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
-                                                <Clock className="w-8 h-8 text-slate-300 mb-2" />
-                                                <p className="text-slate-500 font-medium">No slots available for this date.</p>
+
+                                            <div className="space-y-4">
+                                                <div>
+                                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Email (Optional)</label>
+                                                    <Input
+                                                        placeholder="For confirmation"
+                                                        className="h-12 rounded-xl border-slate-200 bg-white text-slate-900 font-medium text-lg placeholder:text-slate-300 focus-visible:ring-brand-primary"
+                                                        value={state.patientDetails.email || ''}
+                                                        onChange={(e) => actions.updatePatientDetails('email', e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="relative">
+                                                    <label className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1 block">Notes / Symptoms</label>
+                                                    <div className="relative">
+                                                        <Input
+                                                            placeholder="Describe pain, etc."
+                                                            className="h-12 rounded-xl border-slate-200 bg-white text-slate-900 font-medium text-lg placeholder:text-slate-300 focus-visible:ring-brand-primary pr-12"
+                                                            value={state.patientDetails.notes}
+                                                            onChange={(e) => actions.updatePatientDetails('notes', e.target.value)}
+                                                        />
+                                                        <button
+                                                            onClick={actions.startVoiceInput}
+                                                            className={cn(
+                                                                "absolute right-2 top-2 p-2 rounded-lg transition-all",
+                                                                state.voiceListening ? "bg-red-50 text-red-500 animate-pulse" : "bg-slate-100 text-slate-400 hover:text-brand-primary"
+                                                            )}
+                                                        >
+                                                            <Mic className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        ) : (
-                                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
-                                                {availableSlots.map((slot: any) => (
-                                                    <motion.button
-                                                        key={slot.time}
-                                                        onClick={() => actions.selectSlot(slot.time)}
-                                                        whileTap={{ scale: 0.95 }}
-                                                        className={cn(
-                                                            "py-3 px-2 rounded-xl text-sm font-bold border transition-all duration-200",
-                                                            state.selectedSlot === slot.time
-                                                                ? "bg-brand-primary text-white border-brand-primary shadow-lg shadow-brand-primary/25 ring-2 ring-brand-primary ring-offset-2"
-                                                                : "bg-white text-slate-600 border-slate-200 hover:border-brand-primary hover:text-brand-primary"
-                                                        )}
-                                                    >
-                                                        {slot.time}
-                                                    </motion.button>
-                                                ))}
-                                            </div>
-                                        )}
+                                        </div>
+
+                                        <div className="mt-8">
+                                            <Button
+                                                onClick={actions.confirmBooking}
+                                                disabled={state.isSubmitting || !state.patientDetails.name || !state.patientDetails.phone}
+                                                className="w-full h-14 rounded-2xl bg-brand-primary hover:bg-brand-primary/90 text-white text-lg font-bold shadow-lg shadow-brand-primary/25 transition-all hover:scale-[1.01]"
+                                            >
+                                                {state.isSubmitting ? (
+                                                    <span className="flex items-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> Confirming...</span>
+                                                ) : "Confirm Appointment"}
+                                            </Button>
+                                            <p className="text-center text-xs text-slate-400 mt-4">
+                                                By booking, you agree to our terms. No payment required now.
+                                            </p>
+                                        </div>
                                     </div>
                                 </motion.div>
                             )}
@@ -297,7 +371,7 @@ export function AppointmentGrid() {
                         <div className={cn("transition-all duration-500 delay-200", state.selectedSlot ? "opacity-100 translate-x-0" : "opacity-30 translate-x-4 blur-[1px]")}>
                             <div className="flex items-start gap-4">
                                 <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center shrink-0">
-                                    <Calendar className="w-5 h-5 text-rose-500" />
+                                    <CalendarIcon className="w-5 h-5 text-rose-500" />
                                 </div>
                                 <div>
                                     <p className="text-xs font-semibold text-slate-400 uppercase">Schedule</p>
@@ -326,14 +400,14 @@ export function AppointmentGrid() {
                                         placeholder="Full Name"
                                         value={state.patientDetails.name}
                                         onChange={(e) => actions.updatePatientDetails('name', e.target.value)}
-                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400"
+                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400 text-slate-900"
                                     />
                                     <input
                                         type="tel"
                                         placeholder="Phone Number"
                                         value={state.patientDetails.phone}
                                         onChange={(e) => actions.updatePatientDetails('phone', e.target.value)}
-                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400"
+                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400 text-slate-900"
                                     />
                                 </div>
 
@@ -402,7 +476,7 @@ export function AppointmentGrid() {
                             <h2 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">You're Booked!</h2>
                             <p className="text-slate-500 mb-8 leading-relaxed">
                                 We've sent a confirmation to <span className="text-slate-900 font-semibold">{state.patientDetails.phone}</span>.
-                                See you on <span className="text-brand-primary font-bold">{format(state.selectedDate!, 'EEEE, d MMM')}</span>.
+                                See you on <span className="text-brand-primary font-bold">{state.selectedDate && format(state.selectedDate, 'EEEE, d MMM')}</span>.
                             </p>
 
                             <Button
