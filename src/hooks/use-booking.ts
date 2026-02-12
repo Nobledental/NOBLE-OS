@@ -3,7 +3,8 @@
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from 'sonner';
 import { createBooking } from '@/app/actions/booking'; // We will create this next
-import { PROCEDURE_TYPES } from '@/lib/scheduling-store';
+import { PROCEDURE_TYPES, useSchedulingStore } from '@/lib/scheduling-store';
+import { format } from 'date-fns';
 
 export type BookingStep = 'service' | 'doctor' | 'date' | 'summary' | 'success';
 
@@ -41,6 +42,7 @@ const INITIAL_STATE: BookingState = {
 };
 
 export function useBooking() {
+    const store = useSchedulingStore();
     const [state, setState] = useState<BookingState>(INITIAL_STATE);
     const [availableSlots, setAvailableSlots] = useState<any[]>([]);
     const [loadingSlots, setLoadingSlots] = useState(false);
@@ -189,6 +191,30 @@ export function useBooking() {
             });
 
             if (result.success) {
+                // Sync with local store for Dashboard visibility
+                const slotDate = new Date(state.selectedSlot);
+                const dateStr = format(slotDate, 'yyyy-MM-dd');
+                const timeStr = format(slotDate, 'HH:mm');
+                const patientId = `p-${Date.now()}`;
+
+                // Add Patient
+                store.addPatient({
+                    id: patientId,
+                    name: state.patientDetails.name,
+                    phone: state.patientDetails.phone,
+                    isNew: true
+                });
+
+                // Add Appointment
+                store.addAppointment({
+                    patientId,
+                    doctorId: state.selectedDoctor,
+                    type: state.selectedService,
+                    date: dateStr,
+                    slot: timeStr,
+                    status: 'confirmed'
+                });
+
                 setState(prev => ({ ...prev, step: 'success' }));
                 toast.success("Appointment Confirmed!");
             } else {
