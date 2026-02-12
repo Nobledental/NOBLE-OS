@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useBooking } from '@/hooks/use-booking';
 import { PROCEDURE_TYPES, useSchedulingStore } from '@/lib/scheduling-store';
 import { cn } from '@/lib/utils';
-import { Calendar as CalendarIcon, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles } from 'lucide-react';
+import { Calendar as CalendarIcon, Clock, Mic, CheckCircle, ChevronRight, AlertCircle, Phone, CreditCard, Star, User, MapPin, ArrowLeft, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { format, addDays, isSameDay } from 'date-fns';
+// import { Calendar } from '@/components/ui/calendar'; // Removed as per request for horizontal row
+import { format, addDays, isSameDay, isBefore, startOfDay } from 'date-fns';
 
 // --- Improved Asset Mapping ---
 const SERVICE_IMAGES: Record<string, string> = {
@@ -187,16 +187,29 @@ export function AppointmentGrid() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                         {/* Date Calendar */}
+                                        {/* Date Scroller */}
                                         <div>
                                             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">Select Date</h3>
-                                            <div className="bg-white border border-slate-100 rounded-3xl p-4 shadow-sm inline-block">
-                                                <Calendar
-                                                    mode="single"
-                                                    selected={state.selectedDate || undefined}
-                                                    onSelect={(date) => date && actions.selectDate(date)}
-                                                    className="rounded-md border-0"
-                                                    disabled={(date) => date < new Date() || date > new Date(new Date().setMonth(new Date().getMonth() + 2))}
-                                                />
+                                            <div className="flex overflow-x-auto gap-3 pb-4 custom-scrollbar snap-x">
+                                                {Array.from({ length: 14 }).map((_, i) => {
+                                                    const date = addDays(new Date(), i);
+                                                    const isSelected = state.selectedDate && isSameDay(date, state.selectedDate);
+                                                    return (
+                                                        <button
+                                                            key={i}
+                                                            onClick={() => actions.selectDate(date)}
+                                                            className={cn(
+                                                                "flex flex-col items-center justify-center min-w-[70px] h-20 rounded-2xl border transition-all snap-start",
+                                                                isSelected
+                                                                    ? "bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/20 scale-105"
+                                                                    : "bg-white border-slate-200 text-slate-500 hover:border-slate-900 hover:text-slate-900"
+                                                            )}
+                                                        >
+                                                            <span className="text-xs font-semibold uppercase">{format(date, 'EEE')}</span>
+                                                            <span className="text-xl font-bold">{format(date, 'd')}</span>
+                                                        </button>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
 
@@ -211,22 +224,39 @@ export function AppointmentGrid() {
                                                             <div key={i} className="h-10 bg-slate-200 rounded-xl animate-pulse" />
                                                         ))}
                                                     </div>
-                                                ) : availableSlots.length > 0 ? (
+                                                ) : availableSlots.filter(slot => {
+                                                    if (!state.selectedDate) return false;
+                                                    // Filter past slots if today
+                                                    if (isSameDay(state.selectedDate, new Date())) {
+                                                        const slotDate = new Date(slot.start);
+                                                        return isBefore(new Date(), slotDate);
+                                                    }
+                                                    return true;
+                                                }).length > 0 ? (
                                                     <div className="grid grid-cols-2 gap-3">
-                                                        {availableSlots.map(slot => (
-                                                            <button
-                                                                key={slot.start}
-                                                                onClick={() => actions.selectSlot(slot.time)}
-                                                                className={cn(
-                                                                    "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
-                                                                    state.selectedSlot === slot.time
-                                                                        ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
-                                                                        : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
-                                                                )}
-                                                            >
-                                                                {format(new Date(slot.start), 'h:mm a')}
-                                                            </button>
-                                                        ))}
+                                                        {availableSlots
+                                                            .filter(slot => {
+                                                                if (!state.selectedDate) return false;
+                                                                if (isSameDay(state.selectedDate, new Date())) {
+                                                                    const slotDate = new Date(slot.start);
+                                                                    return isBefore(new Date(), slotDate);
+                                                                }
+                                                                return true;
+                                                            })
+                                                            .map(slot => (
+                                                                <button
+                                                                    key={slot.start}
+                                                                    onClick={() => actions.selectSlot(slot.time)}
+                                                                    className={cn(
+                                                                        "py-2 px-4 rounded-xl text-sm font-semibold transition-all border-2",
+                                                                        state.selectedSlot === slot.time
+                                                                            ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
+                                                                            : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md"
+                                                                    )}
+                                                                >
+                                                                    {format(new Date(slot.start), 'h:mm a')}
+                                                                </button>
+                                                            ))}
                                                     </div>
                                                 ) : (
                                                     <div className="flex flex-col items-center justify-center h-full text-slate-400">
