@@ -204,14 +204,14 @@ const MANAGEMENT_FEATURES: ManagementFeature[] = [
 const ACTION_ROUTES: Record<string, string> = {
     "STERILIZATION": "/dashboard/sterilization",
     "BILLING": "/dashboard/billing",
-    "STAFF": "/dashboard/settings/staff",
+    "STAFF": "/dashboard/staff", // Updated to point to dedicated staff page
     "QUEUE": "/dashboard/appointments",
     "SCHEDULING": "/dashboard/settings/scheduling",
     "DEPARTMENTS": "/dashboard/clinical",
     "TARIFF": "/dashboard/tariff",
     "SPECIALISTS": "/dashboard/settlement",
     "CHAIRS": "/dashboard/admin/chairs", // Placeholder route
-    "WORKFLOW": "/dashboard/admin/workflow", // Placeholder route
+    "WORKFLOW": "/dashboard/admin/workflow", //Placeholder route
 };
 
 export function ClinicManagementDeck() {
@@ -227,7 +227,14 @@ export function ClinicManagementDeck() {
                             whileHover={{ y: -8, scale: 1.01 }}
                             transition={{ type: "spring", stiffness: 400, damping: 25 }}
                             className="h-full cursor-pointer relative group"
-                            onClick={() => feature.action && !feature.locked && setActiveAction(feature.action)}
+                            onClick={() => {
+                                // For STAFF, navigate directly to dedicated page
+                                if (feature.action === "STAFF" && ACTION_ROUTES["STAFF"]) {
+                                    window.location.href = ACTION_ROUTES["STAFF"];
+                                } else if (feature.action && !feature.locked) {
+                                    setActiveAction(feature.action);
+                                }
+                            }}
                         >
                             {/* Medizinisch Solid Layer - White Theme */}
                             <div className="bg-white rounded-2xl overflow-hidden relative p-5 h-full flex flex-col min-h-[140px] mb-0 border border-slate-200 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-500 group-hover:bg-white">
@@ -353,7 +360,7 @@ export function ClinicManagementDeck() {
                                 <ArrowLeft className="w-4 h-4" /> Back to Dashboard
                             </Button>
 
-                            {activeAction === "STAFF" && <StaffSettings />}
+                            {/* Staff now navigates to dedicated page - no dialog needed */}
                             {activeAction === "BILLING" && <BillingSettings />}
                             {activeAction === "INTEGRATIONS" && <UniversalBridgeHub />}
                             {activeAction === "IDENTITY" && <ClinicBrandingSettings onSave={() => setActiveAction(null)} />}
