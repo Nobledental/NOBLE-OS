@@ -1,6 +1,5 @@
 import { FloatingSidebar } from "@/components/layout/floating-sidebar";
 import { CommandPalette } from "@/components/shared/command-palette";
-import { CommandPalette } from "@/components/shared/command-palette";
 import { BackgroundParticles } from "@/components/layout/background-particles";
 
 export const dynamic = 'force-dynamic';
