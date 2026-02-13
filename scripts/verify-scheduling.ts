@@ -19,7 +19,12 @@ const mockConfig: SchedulingConfig = {
     patients: [],
     appointments: [],
     operationalChairs: 5,
-    activeChairs: 3
+    activeChairs: 3,
+    chairs: [
+        { id: 'c1', name: 'Surgical Suite A', location: 'Floor 1', type: 'surgical', status: 'ACTIVE', efficiency: 95 },
+        { id: 'c2', name: 'Hygiene Bay 1', location: 'Floor 1', type: 'hygiene', status: 'ACTIVE', efficiency: 88 },
+        { id: 'c3', name: 'Consult Room 1', location: 'Ground', type: 'consultation', status: 'AVAILABLE', efficiency: 100 },
+    ]
 };
 
 console.log(`\nPARAMS:
