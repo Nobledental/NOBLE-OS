@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { GoogleCalendarService } from '@/lib/google-calendar';
+import { getISTStartOfDay, getISTEndOfDay } from '@/lib/timezone';
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
@@ -24,8 +24,8 @@ export async function GET(request: NextRequest) {
         // Ideally, we handle timezones. For now, assuming naive composition works if events are also returned in consistent TZ or we compare mostly relative.
         // Actually, let's use a wide range to catch everything for the day.
 
-        const dayStart = new Date(`${date}T00:00:00`);
-        const dayEnd = new Date(`${date}T23:59:59`);
+        const dayStart = getISTStartOfDay(date);
+        const dayEnd = getISTEndOfDay(date);
 
         // Fetch busy slots from Google Calendar
         const busySlots = await calendarService.getBusySlots(dayStart.toISOString(), dayEnd.toISOString());

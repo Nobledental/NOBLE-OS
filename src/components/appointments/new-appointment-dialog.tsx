@@ -29,8 +29,6 @@ export function NewAppointmentDialog() {
         doctorId: "any",
         date: "",
         time: "",
-        date: "",
-        time: "",
         googleMeet: false,
         locationShare: true // Default to true if user has GMB
     });

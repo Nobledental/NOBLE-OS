@@ -28,8 +28,9 @@ export async function createBooking(data: BookingRequest) {
         if (!service) return { success: false, error: "Invalid Service ID" };
 
         const duration = service.duration;
-        // startTime is now an ISO string from the frontend, preserving timezone info
-        const startDate = new Date(data.startTime);
+        // Ensure IST offset if not present in the string
+        const startStr = data.startTime.includes('Z') || data.startTime.includes('+') ? data.startTime : `${data.startTime}+05:30`;
+        const startDate = new Date(startStr);
         const endDate = new Date(startDate.getTime() + duration * 60000);
 
         // 3. Teleconsult Logic

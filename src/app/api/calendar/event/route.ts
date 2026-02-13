@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
         const calendarService = new GoogleCalendarService();
 
-        const startTime = new Date(start);
+        const startTime = new Date(start.includes('Z') || start.includes('+') ? start : `${start}+05:30`);
         const endTime = new Date(startTime.getTime() + durationMinutes * 60000);
 
         const event = await calendarService.createEvent({
