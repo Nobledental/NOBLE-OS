@@ -24,6 +24,9 @@ import {
 import { PatientFileManager } from "@/components/patients/patient-file-manager";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { PatientClinicalProfile } from "@/components/clinical/patient-clinical-profile";
+import { Card } from "@/components/ui/card";
+import { AbhaCard } from "@/components/patient/abha-card";
 
 export default function PatientsPage() {
     const [searchTerm, setSearchTerm] = useState("");
@@ -146,16 +149,39 @@ export default function PatientsPage() {
                                 </TabsContent>
 
                                 <TabsContent value="history" className="mt-4">
-                                    <ScrollArea className="h-[400px] border rounded-lg p-4">
-                                        <div className="relative pl-4 border-l border-slate-200 space-y-6">
+                                    <ScrollArea className="h-[400px] border rounded-3xl p-6 bg-slate-50/50">
+                                        <div className="relative pl-6 border-l-2 border-slate-200 space-y-8">
                                             {selectedPatient.history.map((record, i) => (
                                                 <div key={i} className="relative">
-                                                    <div className="absolute -left-[21px] top-1.5 w-3 h-3 rounded-full bg-slate-200 border-2 border-white" />
-                                                    <p className="text-xs text-slate-400 font-mono mb-1">{record.date}</p>
-                                                    <h4 className="font-bold text-slate-800">{record.treatment}</h4>
-                                                    <p className="text-xs text-slate-500">Treated by {record.doctor}</p>
+                                                    <div className="absolute -left-[33px] top-1.5 w-4 h-4 rounded-full bg-white border-4 border-indigo-500 shadow-sm" />
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">{record.date}</p>
+                                                    <h4 className="text-sm font-black text-slate-900 tracking-tight">{record.treatment}</h4>
+                                                    <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Treated by {record.doctor}</p>
                                                 </div>
                                             ))}
+                                        </div>
+                                    </ScrollArea>
+                                </TabsContent>
+
+                                <TabsContent value="profile" className="flex-1 mt-4">
+                                    <ScrollArea className="h-full pr-4">
+                                        <PatientClinicalProfile
+                                            patientId={selectedPatient.id}
+                                            patientName={selectedPatient.name}
+                                            uhid={selectedPatient.healthFloId}
+                                        />
+                                        <div className="mt-8 space-y-4">
+                                            <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 px-2">Account Intelligence</h4>
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <Card className="p-4 rounded-3xl border-slate-100 bg-slate-50/50">
+                                                    <p className="text-[8px] font-black uppercase text-slate-400">Join Date</p>
+                                                    <p className="text-xs font-bold">Jan 12, 2024</p>
+                                                </Card>
+                                                <Card className="p-4 rounded-3xl border-slate-100 bg-slate-50/50">
+                                                    <p className="text-[8px] font-black uppercase text-slate-400">Referral</p>
+                                                    <p className="text-xs font-bold text-indigo-600">Google Search</p>
+                                                </Card>
+                                            </div>
                                         </div>
                                     </ScrollArea>
                                 </TabsContent>

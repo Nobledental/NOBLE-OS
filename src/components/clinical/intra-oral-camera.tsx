@@ -19,6 +19,7 @@ export function IntraOralCamera({ patientId }: { patientId: string }) {
 
     // 1. List Cameras
     const getCameras = useCallback(async () => {
+        if (typeof window === 'undefined' || !navigator.mediaDevices) return;
         try {
             const devices = await navigator.mediaDevices.enumerateDevices();
             const videoDevices = devices.filter(device => device.kind === 'videoinput');
@@ -28,7 +29,6 @@ export function IntraOralCamera({ patientId }: { patientId: string }) {
             }
         } catch (err) {
             console.error("Error listing cameras:", err);
-            toast.error("Could not access camera list. Check permissions.");
         }
     }, [activeDeviceId]);
 
@@ -44,17 +44,25 @@ export function IntraOralCamera({ patientId }: { patientId: string }) {
             return;
         }
 
+        if (typeof window === 'undefined' || !navigator.mediaDevices) {
+            toast.error("Camera API not supported in this environment.");
+            return;
+        }
+
         if (videoRef.current && activeDeviceId) {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { deviceId: { exact: activeDeviceId }, width: 1280, height: 720 }
                 });
                 videoRef.current.srcObject = stream;
-                videoRef.current.play();
+                videoRef.current.play().catch(e => {
+                    console.error("Video play error:", e);
+                    toast.error("Camera playback failed.");
+                });
                 setIsStreamActive(true);
             } catch (err) {
                 console.error("Error starting stream:", err);
-                toast.error("Failed to start camera feed.");
+                toast.error("Failed to start camera feed. Please check permissions.");
             }
         }
     };
