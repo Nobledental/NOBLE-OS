@@ -234,7 +234,7 @@ export function AppointmentGrid() {
                                                     }
                                                     return true;
                                                 }).length > 0 ? (
-                                                    <div className="grid grid-cols-2 gap-3">
+                                                    <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3">
                                                         {availableSlots
                                                             .filter(slot => {
                                                                 if (!state.selectedDate) return false;
@@ -254,30 +254,23 @@ export function AppointmentGrid() {
                                                                         key={i}
                                                                         initial={{ opacity: 0, scale: 0.9 }}
                                                                         animate={{ opacity: 1, scale: 1 }}
-                                                                        transition={{ delay: i * 0.05 }}
+                                                                        transition={{ delay: i * 0.02 }}
                                                                     >
                                                                         <button
                                                                             onClick={() => actions.selectSlot(slot.start)}
                                                                             disabled={isDisabled}
                                                                             className={cn(
-                                                                                "w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all border-2 relative overflow-hidden",
+                                                                                "w-full h-14 rounded-xl text-xs font-bold transition-all border-2 relative overflow-hidden flex flex-col items-center justify-center gap-0.5",
                                                                                 state.selectedSlot === slot.start
                                                                                     ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
                                                                                     : isDisabled
-                                                                                        ? "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed hidden" // Hide fully booked slots instead of disabled? Or show disabled. User didn't specify. Let's keep disabled but visible for context.
-                                                                                        : "bg-white border-transparent text-slate-700 hover:border-brand-primary/30 hover:shadow-md",
-                                                                                isFull && isEmergency && "border-red-200 bg-red-50 text-red-600 hover:bg-red-100 hover:border-red-300"
+                                                                                        ? "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50"
+                                                                                        : "bg-white border-slate-200 text-slate-600 hover:border-brand-primary/50 hover:shadow-md hover:-translate-y-0.5"
                                                                             )}
                                                                         >
-                                                                            <div className="flex flex-col items-center gap-0.5">
-                                                                                <span>{format(new Date(slot.start), 'h:mm a')}</span>
-                                                                                {isFull && isEmergency && (
-                                                                                    <span className="text-[9px] font-black uppercase tracking-wider text-red-500">
-                                                                                        Overbook
-                                                                                    </span>
-                                                                                )}
-                                                                                {!isFull && <span className="text-[9px] font-medium text-slate-400">{slot.available} Left</span>}
-                                                                            </div>
+                                                                            <span className="text-sm">{format(new Date(slot.start), 'h:mm a')}</span>
+                                                                            {!isFull && state.selectedSlot !== slot.start && <span className="text-[9px] font-medium opacity-50">{slot.available} Left</span>}
+                                                                            {isFull && isEmergency && <span className="text-[9px] text-red-500">OVERBOOK</span>}
                                                                         </button>
                                                                     </motion.div>
                                                                 );
@@ -361,6 +354,23 @@ export function AppointmentGrid() {
                                                         </button>
                                                     </div>
                                                 </div>
+
+                                                {/* Family Checkbox */}
+                                                <div className="flex items-center gap-3 p-4 rounded-xl bg-indigo-50/50 border border-indigo-100/50">
+                                                    <div className="flex items-center h-5">
+                                                        <input
+                                                            id="family-mode"
+                                                            type="checkbox"
+                                                            checked={state.patientDetails.isFamily}
+                                                            onChange={(e) => actions.updatePatientDetails('isFamily', e.target.checked)}
+                                                            className="w-5 h-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+                                                        />
+                                                    </div>
+                                                    <div className="text-sm">
+                                                        <label htmlFor="family-mode" className="font-bold text-slate-700 block">Booking for a family member?</label>
+                                                        <p className="text-slate-500 text-xs">We'll ask for their specific details when you arrive.</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
 
@@ -442,50 +452,7 @@ export function AppointmentGrid() {
 
                     </div>
 
-                    {/* Final Action Area */}
-                    <AnimatePresence>
-                        {state.selectedSlot && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-white rounded-3xl p-6 shadow-xl shadow-slate-200/50 border border-slate-100 space-y-4"
-                            >
-                                <div className="space-y-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Full Name"
-                                        value={state.patientDetails.name}
-                                        onChange={(e) => actions.updatePatientDetails('name', e.target.value)}
-                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400 text-slate-900"
-                                    />
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone Number"
-                                        value={state.patientDetails.phone}
-                                        onChange={(e) => actions.updatePatientDetails('phone', e.target.value)}
-                                        className="w-full bg-slate-50 border-0 rounded-xl px-4 py-3 text-sm font-medium focus:ring-2 focus:ring-brand-primary/20 transition-all placeholder:text-slate-400 text-slate-900"
-                                    />
-                                </div>
 
-                                <Button
-                                    onClick={actions.confirmBooking}
-                                    disabled={state.isSubmitting || !state.patientDetails.name || !state.patientDetails.phone}
-                                    className="w-full h-14 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-lg font-bold shadow-lg shadow-slate-900/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                                >
-                                    {state.isSubmitting ? (
-                                        <span className="flex items-center gap-2">
-                                            <Loader2 className="w-5 h-5 animate-spin" /> Confirming...
-                                        </span>
-                                    ) : (
-                                        "Book Appointment"
-                                    )}
-                                </Button>
-                                <p className="text-xs text-center text-slate-400">
-                                    Trusted by 5000+ happy smiles
-                                </p>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
 
                     {/* Location Badge */}
                     {!state.selectedSlot && clinicDetails && (

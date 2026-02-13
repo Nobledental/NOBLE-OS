@@ -239,9 +239,9 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
     const isUpcoming = !appt.status || appt.status === 'confirmed';
 
     // Mock Data for "Advanced" Feel
-    const isNewPatient = Math.random() > 0.7;
-    const hasBalance = Math.random() > 0.8;
-    const isFamily = Math.random() > 0.85; // Mock Family Mode
+    const isNewPatient = Math.random() > 0.7; // Keep mock for now
+    const hasBalance = Math.random() > 0.8; // Keep mock for now
+    const isFamily = appt.isFamily; // Real Data coming from Booking Flow
     const balanceAmount = 1500;
 
     return (

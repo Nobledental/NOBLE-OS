@@ -20,6 +20,7 @@ interface BookingState {
         phone: string;
         email?: string;
         notes: string;
+        isFamily: boolean;
     };
     voiceListening: boolean;
     isSubmitting: boolean;
@@ -35,7 +36,8 @@ const INITIAL_STATE: BookingState = {
     patientDetails: {
         name: '',
         phone: '',
-        notes: ''
+        notes: '',
+        isFamily: false
     },
     voiceListening: false,
     isSubmitting: false
@@ -130,7 +132,7 @@ export function useBooking() {
         setState(prev => ({ ...prev, selectedSlot: slotTime, step: 'summary' }));
     };
 
-    const updatePatientDetails = (field: string, value: string) => {
+    const updatePatientDetails = (field: string, value: any) => {
         setState(prev => ({
             ...prev,
             patientDetails: { ...prev.patientDetails, [field]: value }
@@ -178,6 +180,10 @@ export function useBooking() {
         setState(prev => ({ ...prev, isSubmitting: true }));
 
         try {
+            const finalNotes = state.patientDetails.isFamily
+                ? `[FAMILY BOOKING] ${state.patientDetails.notes}`
+                : state.patientDetails.notes;
+
             const result = await createBooking({
                 patientName: state.patientDetails.name,
                 patientPhone: state.patientDetails.phone,
@@ -186,7 +192,7 @@ export function useBooking() {
                 doctorId: state.selectedDoctor || undefined,
                 date: state.selectedDate.toISOString(),
                 startTime: state.selectedSlot,
-                notes: state.patientDetails.notes,
+                notes: finalNotes,
                 type: state.bookingType
             });
 
@@ -212,7 +218,8 @@ export function useBooking() {
                     type: state.selectedService,
                     date: dateStr,
                     slot: timeStr,
-                    status: 'confirmed'
+                    status: 'confirmed',
+                    isFamily: state.patientDetails.isFamily // New Flag
                 });
 
                 setState(prev => ({ ...prev, step: 'success' }));
