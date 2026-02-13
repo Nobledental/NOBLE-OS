@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Calendar, Phone, Mail, MapPin, Activity, TrendingUp, LayoutGrid, ClipboardCheck } from "lucide-react";
 import { VitalsChart } from "@/components/clinical/vitals-chart";
 import { ClinicalTimeline } from "@/components/clinical/timeline";
-import { DentalChart } from "@/components/clinical/dental-chart";
 import { ClinicalConsultation } from "@/components/clinical/consultation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VitalsHUD } from "@/components/clinical/vitals-hud";
