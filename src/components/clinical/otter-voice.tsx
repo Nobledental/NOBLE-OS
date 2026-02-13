@@ -14,7 +14,7 @@ export function OtterVoice() {
 
     useEffect(() => {
         if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-            // @ts-ignore
+            // @ts-expect-error - WebkitSpeechRecognition is not in standard lib
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             recognitionRef.current = new SpeechRecognition();
             recognitionRef.current.continuous = true;

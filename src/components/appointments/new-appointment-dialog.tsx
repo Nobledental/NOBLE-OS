@@ -51,7 +51,7 @@ export function NewAppointmentDialog() {
         if (!date) return;
 
         setIsLoadingSlots(true);
-        // @ts-ignore - We added this to the store but TS might complain until full restart
+        // @ts-expect-error - We added this to the store but TS might complain until full restart
         const slots = await store.fetchAvailableSlots(date, store.activeChairs || 3);
         setAvailableSlots(slots);
         setIsLoadingSlots(false);

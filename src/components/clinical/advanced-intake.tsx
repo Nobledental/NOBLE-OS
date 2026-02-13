@@ -146,7 +146,7 @@ export function AdvancedIntake({ data, onChange }: AdvancedIntakeProps) {
                     </div>
                 </Card>
 
-// Lifestyle Section
+                {/* Lifestyle Section */}
                 <Card className="rounded-[2.5rem] border-slate-100 shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm">
                     <div className="p-6 space-y-4">
                         <div className="flex items-center gap-2 mb-2">

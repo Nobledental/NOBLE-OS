@@ -121,7 +121,10 @@ export function FloatingSidebar() {
 
                     <div className="w-px h-6 bg-slate-200 mx-2 shrink-0" />
 
-                    <button className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-all duration-500 group shrink-0">
+                    <button
+                        onClick={logout}
+                        className="w-12 h-12 rounded-2xl flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-all duration-500 group shrink-0"
+                    >
                         <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     </button>
                 </div>
@@ -216,7 +219,10 @@ export function FloatingSidebar() {
                                         );
                                     })}
                                 </div>
-                                <button className="w-full flex items-center justify-center gap-4 p-5 rounded-[2rem] bg-red-500/10 text-red-400 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-red-500/20 transition-all border border-red-500/10">
+                                <button
+                                    onClick={logout}
+                                    className="w-full flex items-center justify-center gap-4 p-5 rounded-[2rem] bg-red-500/10 text-red-400 font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-red-500/20 transition-all border border-red-500/10"
+                                >
                                     <LogOut className="w-4 h-4" />
                                     Logout
                                 </button>

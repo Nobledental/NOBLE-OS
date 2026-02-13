@@ -1,8 +1,15 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { setCookie, getCookie, deleteCookie } from "cookies-next";
 
 export type Role = "ADMIN" | "DOCTOR" | "CONSULTANT" | "RECEPTIONIST" | "ASSISTANT" | "OWNER";
+
+interface ClinicBranch {
+    id: string;
+    name: string;
+    location: string;
+}
 
 interface FeaturePermissions {
     can_view_revenue: boolean;
@@ -19,6 +26,8 @@ interface User {
     role: Role;
     modulePermissions: string[];
     featurePermissions: FeaturePermissions;
+    selectedClinic?: ClinicBranch;
+    availableClinics?: ClinicBranch[];
 }
 
 interface AuthContextType {
@@ -27,6 +36,7 @@ interface AuthContextType {
     logout: () => void;
     setRole: (role: Role) => void;
     updateFeaturePermissions: (permissions: Partial<FeaturePermissions>) => void;
+    selectClinic: (clinic: ClinicBranch) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -52,42 +62,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const cachedUser = sessionStorage.getItem("healthflo_user");
+        const cachedUser = getCookie("healthflo_user");
         if (cachedUser) {
             try {
-                setUser(JSON.parse(cachedUser));
+                setUser(JSON.parse(cachedUser as string));
             } catch (e) {
                 console.error("Failed to parse auth session", e);
             }
-        } else {
-            // Default to OWNER for development
-            const defaultUser: User = {
-                id: "u1",
-                email: "dhivakaran@healthflo.ai",
-                full_name: "Dr. Dhivakaran",
-                role: "OWNER",
-                modulePermissions: ROLE_MODULES["OWNER"],
-                featurePermissions: {
-                    can_view_revenue: true,
-                    can_edit_inventory: true,
-                    can_view_clinical: true,
-                    can_manage_staff: true,
-                    solo_mode: true
-                }
-            };
-            setUser(defaultUser);
-            sessionStorage.setItem("healthflo_user", JSON.stringify(defaultUser));
         }
     }, []);
 
     const login = (newUser: User) => {
         setUser(newUser);
-        sessionStorage.setItem("healthflo_user", JSON.stringify(newUser));
+        setCookie("healthflo_user", JSON.stringify(newUser), { maxAge: 60 * 60 * 24 * 7 }); // 7 days
     };
 
     const logout = () => {
         setUser(null);
-        sessionStorage.removeItem("healthflo_user");
+        deleteCookie("healthflo_user");
     };
 
     const setRole = (newRole: Role) => {
@@ -98,7 +90,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             modulePermissions: ROLE_MODULES[newRole] || [],
         };
         setUser(updatedUser);
-        sessionStorage.setItem("healthflo_user", JSON.stringify(updatedUser));
+        setCookie("healthflo_user", JSON.stringify(updatedUser), { maxAge: 60 * 60 * 24 * 7 });
     };
 
     const updateFeaturePermissions = (newPerms: Partial<FeaturePermissions>) => {
@@ -108,11 +100,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             featurePermissions: { ...user.featurePermissions, ...newPerms },
         };
         setUser(updatedUser);
-        sessionStorage.setItem("healthflo_user", JSON.stringify(updatedUser));
+        setCookie("healthflo_user", JSON.stringify(updatedUser), { maxAge: 60 * 60 * 24 * 7 });
+    };
+
+    const selectClinic = (clinic: ClinicBranch) => {
+        if (!user) return;
+        const updatedUser = {
+            ...user,
+            selectedClinic: clinic
+        };
+        setUser(updatedUser);
+        setCookie("healthflo_user", JSON.stringify(updatedUser), { maxAge: 60 * 60 * 24 * 7 });
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, setRole, updateFeaturePermissions }}>
+        <AuthContext.Provider value={{ user, login, logout, setRole, updateFeaturePermissions, selectClinic }}>
             {children}
         </AuthContext.Provider>
     );

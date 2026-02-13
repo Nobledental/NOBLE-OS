@@ -1,0 +1,19 @@
+﻿
+C:\Users\Dhivakaran\Desktop\CORE\NOBLE-OS\src\components\appointments\new-appointment-dialog.tsx
+  54:9  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\Dhivakaran\Desktop\CORE\NOBLE-OS\src\components\clinical\advanced-intake.tsx
+  147:24  error  Comments inside children section of tag should be placed inside braces  react/jsx-no-comment-textnodes
+
+C:\Users\Dhivakaran\Desktop\CORE\NOBLE-OS\src\components\clinical\otter-voice.tsx
+  17:13  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+C:\Users\Dhivakaran\Desktop\CORE\NOBLE-OS\src\components\ui\scroll-area.tsx
+  6:11  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\Dhivakaran\Desktop\CORE\NOBLE-OS\src\hooks\use-booking.ts
+   59:9   error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+  254:13  error  Use "@ts-expect-error" instead of "@ts-ignore", as "@ts-ignore" will do nothing if the following line is error-free  @typescript-eslint/ban-ts-comment
+
+Γ£û 6 problems (6 errors, 0 warnings)
+

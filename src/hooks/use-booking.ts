@@ -56,7 +56,7 @@ export function useBooking() {
             return;
         }
 
-        // @ts-ignore - Web Speech API
+        // @ts-expect-error - Web Speech API
         const recognition = new window.webkitSpeechRecognition();
         recognition.continuous = false;
         recognition.interimResults = false;
@@ -251,7 +251,7 @@ export function useBooking() {
             updatePatientDetails,
             startVoiceInput,
             confirmBooking,
-            // @ts-ignore
+            // @ts-expect-error - Legacy step type mapping
             setStep: (step: BookingStep) => setState(prev => ({ ...prev, step })),
             resetRaw: () => setState(INITIAL_STATE)
         }

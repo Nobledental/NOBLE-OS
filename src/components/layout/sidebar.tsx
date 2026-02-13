@@ -19,7 +19,10 @@ import {
     BarChart3,
     ShieldCheck,
     Briefcase,
-    TrendingUp
+    TrendingUp,
+    ChevronDown,
+    Building2,
+    MapPin
 } from "lucide-react";
 import { PermissionGuard } from "@/components/security/permission-guard";
 import { useAuth } from "@/lib/auth-context";
@@ -47,7 +50,7 @@ const sidebarItems: SidebarItem[] = [
 
 export function AppSidebar() {
     const pathname = usePathname();
-    const { user, updatePermissions } = useAuth();
+    const { user, updateFeaturePermissions, selectClinic } = useAuth();
 
     return (
         <div className="hidden md:flex flex-col h-screen w-64 border-r border-white/5 glass-frost relative overflow-hidden backdrop-blur-[100px]">
@@ -55,6 +58,29 @@ export function AppSidebar() {
             <div className="absolute inset-0 bg-slate-950/40 pointer-events-none" />
 
             <div className="flex-1 space-y-4 py-4 overflow-y-auto relative z-10">
+                {/* Branch Switcher */}
+                <div className="px-6 mb-6">
+                    <div className="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 transition-all cursor-pointer group">
+                        <div className="flex items-center justify-between group-hover:bg-white/5 p-1 rounded-xl transition-all">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                                    <Building2 className="w-5 h-5" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[10px] font-black text-white uppercase tracking-tighter truncate max-w-[120px]">
+                                        {user?.selectedClinic?.name || "Select Branch"}
+                                    </span>
+                                    <span className="text-[9px] text-slate-500 font-bold uppercase tracking-widest flex items-center gap-1">
+                                        <MapPin className="w-2 h-2" />
+                                        {user?.selectedClinic?.location || "No location"}
+                                    </span>
+                                </div>
+                            </div>
+                            <ChevronDown className="w-4 h-4 text-slate-600 group-hover:text-white transition-colors" />
+                        </div>
+                    </div>
+                </div>
+
                 <div className="px-3 py-2">
                     <h2 className="mb-1 px-4 text-base font-black tracking-tighter text-white uppercase">
                         HealthFlo
@@ -109,8 +135,8 @@ export function AppSidebar() {
                         </div>
                     </div>
                     <Switch
-                        checked={user?.permissions?.solo_mode || false}
-                        onCheckedChange={(checked) => updatePermissions({ solo_mode: checked })}
+                        checked={user?.featurePermissions?.solo_mode || false}
+                        onCheckedChange={(checked) => updateFeaturePermissions({ solo_mode: checked })}
                     />
                 </div>
             </div>
