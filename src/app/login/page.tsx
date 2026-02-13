@@ -56,12 +56,13 @@ export default function LoginPage() {
             toast.error("Please enter the 6-digit OTP");
             return;
         }
+        // 🔓 DEV MODE: Accept any 6-digit code
         setIsLoading(true);
         setTimeout(() => {
             setIsLoading(false);
-            // Simulate multi-branch user for specific numbers or just everyone for demo
+            toast.success("✅ OTP verified (dev mode - any code accepted)");
             setStep("BRANCH");
-        }, 1000);
+        }, 800);
     };
 
     const handleGoogleLogin = () => {

@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/lib/auth-context";
 import {
     Calendar as CalendarIcon, CheckCircle2, Clock, AlertCircle, ChevronLeft, ChevronRight,
     Search, User, MoreHorizontal, Phone, CalendarClock, X, Bell, ShieldCheck, FileText, Receipt, Eye, EyeOff, Plus, Check, MessageCircle, Mic, Sparkles
@@ -228,9 +229,13 @@ export function AppointmentsHub() {
 
 // --- NEW CARD COMPONENT (Super App Style) ---
 function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, onReschedule: (id: string) => void }) {
+    const { user } = useAuth();
     const patient = store.patients.find((p: any) => p.id === appt.patientId);
     const doctor = store.doctors.find((d: any) => d.id === appt.doctorId);
     const procedure = PROCEDURE_TYPES.find(p => p.id === appt.type);
+
+    // RBAC: Only doctors and owners can start consultations
+    const canStartConsultation = user?.role === 'DOCTOR' || user?.role === 'OWNER';
 
     // Status Logic
     const isOngoing = appt.status === 'ongoing';
@@ -368,11 +373,26 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
                     )}
                     {isArrived && (
                         <Button
-                            className="w-full bg-amber-500 hover:bg-amber-600 text-white h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg shadow-amber-200 transition-all flex items-center justify-center gap-2"
-                            onClick={() => store.updateAppointmentStatus(appt.id, 'ongoing')}
+                            className={cn(
+                                "w-full h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg transition-all flex items-center justify-center gap-2",
+                                canStartConsultation
+                                    ? "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
+                                    : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-slate-100"
+                            )}
+                            onClick={() => {
+                                if (!canStartConsultation) {
+                                    toast.error("Only doctors can start consultations", {
+                                        description: "Please notify a doctor to begin the patient examination."
+                                    });
+                                    return;
+                                }
+                                store.updateAppointmentStatus(appt.id, 'ongoing');
+                            }}
+                            disabled={!canStartConsultation}
                         >
-                            <span>Start Consultation</span>
-                            <ChevronRight className="w-4 h-4 opacity-70" />
+                            <span>{canStartConsultation ? "Start Consultation" : "Doctor Required"}</span>
+                            {canStartConsultation && <ChevronRight className="w-4 h-4 opacity-70" />}
+                            {!canStartConsultation && <ShieldCheck className="w-4 h-4 opacity-70" />}
                         </Button>
                     )}
                     {isOngoing && (

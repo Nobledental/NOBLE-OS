@@ -44,12 +44,12 @@ export function ClinicalMasterHub() {
             <div className="flex items-center justify-between shrink-0 max-w-7xl mx-auto w-full">
                 <div>
                     <h2 className="text-5xl lg:text-7xl font-sans font-black tracking-tighter text-slate-900">
-                        {selectedPatient ? "Cockpit" : "Pulse"}
+                        {selectedPatient ? "Cockpit" : "Select Patient"}
                         <span className="text-indigo-600">.</span>
                     </h2>
                     <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-2 flex items-center gap-2">
                         <Activity className="w-3 h-3 text-indigo-500" />
-                        {selectedPatient ? `Live Record: ${selectedPatient.uhid}` : "Global Clinical Command Center"}
+                        {selectedPatient ? `Live Record: ${selectedPatient.uhid}` : "Choose from active case queue below"}
                     </p>
                 </div>
                 {selectedPatient && (
