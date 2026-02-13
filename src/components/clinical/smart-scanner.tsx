@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -104,7 +105,7 @@ export function SmartScanner({ patientId }: { patientId: string }) {
                                         )}
 
                                         <div className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-lg group">
-                                            <img src={image} alt="Report Preview" className="max-h-[300px] object-contain opacity-90 transition-opacity" />
+                                            <Image src={image} alt="Report Preview" width={600} height={300} className="max-h-[300px] object-contain opacity-90 transition-opacity" />
                                             {/* Overlay Actions */}
                                             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                                                 <Button variant="secondary" size="icon" onClick={() => setImage(null)}>

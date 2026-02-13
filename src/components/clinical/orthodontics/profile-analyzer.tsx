@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Upload, Trash2, Info } from 'lucide-react';
 import { toast } from 'sonner';
+import Image from 'next/image';
 import { ProfileAnalysis, Point } from '@/types/orthodontic.types';
 import { calculateAngle, distancePointToLine } from '@/utils/cephalometric-calculations';
 import { NORMAL_RANGES, classifyProfile } from '@/types/orthodontic.types';
@@ -175,9 +176,11 @@ export default function ProfileAnalyzer({ onAnalysisComplete }: ProfileAnalyzerP
                                 className="relative cursor-crosshair"
                                 onClick={handleCanvasClick}
                             >
-                                <img
+                                <Image
                                     src={image}
                                     alt="Profile view"
+                                    width={800}
+                                    height={600}
                                     className="w-full h-auto select-none"
                                     draggable={false}
                                 />
@@ -276,10 +279,10 @@ export default function ProfileAnalyzer({ onAnalysisComplete }: ProfileAnalyzerP
                                             key={name}
                                             onClick={() => setSelectedLandmark(name)}
                                             className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${selectedLandmark === name
-                                                    ? 'bg-blue-500 text-white'
-                                                    : placed
-                                                        ? 'bg-green-100 dark:bg-green-900/30'
-                                                        : 'bg-muted hover:bg-muted/80'
+                                                ? 'bg-blue-500 text-white'
+                                                : placed
+                                                    ? 'bg-green-100 dark:bg-green-900/30'
+                                                    : 'bg-muted hover:bg-muted/80'
                                                 }`}
                                         >
                                             <div className="flex items-center justify-between">

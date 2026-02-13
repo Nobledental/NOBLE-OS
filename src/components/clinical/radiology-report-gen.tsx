@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface Finding {
     tooth: string | string[];
@@ -84,10 +85,12 @@ export function RadiologyReportGen() {
                             <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500 z-20 shadow-[0_0_20px_rgba(99,102,241,0.8)] animate-[scan_2s_ease-in-out_infinite]" />
                         )}
 
-                        <img
+                        <Image
                             src={selectedXray || ""}
+                            alt="X-Ray"
+                            fill
                             className={cn(
-                                "w-full h-full object-cover opacity-60 grayscale transition-all duration-1000",
+                                "object-cover opacity-60 grayscale transition-all duration-1000",
                                 analysisComplete && "grayscale-0 opacity-80"
                             )}
                         />

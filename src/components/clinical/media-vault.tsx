@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Upload, Image as ImageIcon, FileImage, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 interface Asset {
     id: string;
@@ -114,10 +115,11 @@ export default function MediaVault({ patientId }: { patientId: string }) {
                         {assets.map((asset: Asset) => (
                             <div key={asset.id} className="relative group">
                                 <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                                    <img
+                                    <Image
                                         src={asset.url}
                                         alt={asset.type}
-                                        className="w-full h-full object-cover"
+                                        fill
+                                        className="object-cover"
                                     />
                                 </div>
                                 <div className="absolute top-2 left-2">
