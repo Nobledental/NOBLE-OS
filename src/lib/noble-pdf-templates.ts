@@ -45,7 +45,7 @@ export const NOBLE_CLINIC_BRAND = {
         facility: 'HEALTHFLO HOSPITAL & CLINIC',
         address: '1ST Floor, ICA CLINIC, HUDA LAYOUT, NALLAGANDLA, HYDERABAD -500019',
         phone: '+91-8610-425342',
-        doctor: 'DR DHIVAKARAN',
+        doctor: 'CLINIC PRACTITIONER',
         doctorTitle: 'DOCTOR',
     },
 

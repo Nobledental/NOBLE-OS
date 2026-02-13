@@ -8,9 +8,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
         locations: [{
             name: "locations/4527181657920795054",
-            title: "Noble Dental Care",
+            title: "Demo Dental Clinic",
             storefrontAddress: {
-                addressLines: ["1st Floor, ICA Clinic, Plot no. 151/2, Huda Layout, Water Tank Road"],
+                addressLines: ["1st Floor, Demo Plaza, Main Road"],
                 locality: "Nallagandla",
                 administrativeArea: "Telangana",
                 postalCode: "500019"

@@ -43,7 +43,21 @@ export interface DentalChair {
     status: 'ACTIVE' | 'AVAILABLE' | 'MAINTENANCE' | 'CLEANING' | 'IDLE'; // Aligned with Hub
     currentAppointmentId?: string;
     efficiency?: number;
-    metadata?: any;
+    metadata?: Record<string, string | number | boolean | null>;
+}
+
+export interface Appointment {
+    id: string;
+    patientId: string;
+    doctorId?: string | null;
+    type: string;
+    date: string;
+    slot: string;
+    status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing';
+    isFamily?: boolean;
+    arrivedAt?: string;
+    startedAt?: string;
+    completedAt?: string;
 }
 
 export interface SchedulingConfig {
@@ -54,7 +68,7 @@ export interface SchedulingConfig {
     slotDurationMinutes: number;
     doctors: Doctor[];
     patients: PatientShort[];
-    appointments: any[];
+    appointments: Appointment[];
     // Deprecating strict numbers in favor of Chairs array, but keeping for backward compat if needed or calculating from array
     operationalChairs: number;
     activeChairs: number;
@@ -85,7 +99,7 @@ interface SchedulingState extends SchedulingConfig {
     toggleAvailabilityVisibility: () => void;
     toggleDoctorAvailability: (id: string) => void;
     addPatient: (patient: PatientShort) => void;
-    addAppointment: (appt: any) => void;
+    addAppointment: (appt: Omit<Appointment, 'id'>) => void;
     assignDoctor: (apptId: string, doctorId: string) => void;
 
     // Chair Actions
@@ -94,7 +108,7 @@ interface SchedulingState extends SchedulingConfig {
     updateChairStatus: (id: string, status: DentalChair['status']) => void;
     removeChair: (id: string) => void;
 
-    fetchAvailableSlots: (date: string, activeChairs: number) => Promise<any[]>;
+    fetchAvailableSlots: (date: string, activeChairs: number, duration?: number) => Promise<{ time: string; capacity: number; available: number }[]>;
     updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
     updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => void;
     rescheduleAppointment: (id: string, newDate: string, newSlot: string) => void;
@@ -112,8 +126,8 @@ const DEFAULT_CONFIG: SchedulingConfig = {
     doctors: [
         {
             id: 'd1',
-            name: "Dr. Dhivakaran R",
-            specialty: "CMD & Oral Maxillofacial Surgeon",
+            name: "Dr. Lead Dentist",
+            specialty: "Clinical Director",
             image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300", // Updated to a more professional headshot if needed, or keep existing
             rating: 5.0,
             experience: 15,
@@ -161,7 +175,7 @@ export const fetchAvailableSlots = async (dateStr: string, activeChairs: number,
         if (!res.ok) throw new Error("Failed to fetch slots");
         const data = await res.json();
         return data.slots;
-    } catch (err) {
+    } catch (_err) {
         // Fallback Simulation
         return generateFallbackSlots(dateStr, activeChairs, duration, config);
     }
@@ -189,7 +203,7 @@ const generateFallbackSlots = (
     const { start: startStr, end: endStr } = config.operatingHours;
 
     // Use "Real" Active Chairs from store if available, otherwise fallback to prop
-    const realActiveChairs = config.chairs && config.chairs.length > 0
+    const _realActiveChairs = config.chairs && config.chairs.length > 0
         ? config.chairs.filter(c => c.status === 'ACTIVE' || c.status === 'AVAILABLE').length
         : activeChairs;
 
@@ -199,7 +213,7 @@ const generateFallbackSlots = (
     const now = new Date();
 
     // Loop through day in 15-min intervals
-    let currentTime = new Date(startTime);
+    const currentTime = new Date(startTime);
 
     while (currentTime.getTime() + (durationMinutes * 60000) <= endTime.getTime()) {
         const slotEnd = new Date(currentTime.getTime() + (durationMinutes * 60000));
@@ -329,7 +343,7 @@ export const useSchedulingStore = create<SchedulingState>()(
             updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing') => set((state) => ({
                 appointments: state.appointments.map(a => {
                     if (a.id !== id) return a;
-                    const updates: any = { status };
+                    const updates: Partial<Appointment> = { status };
                     const now = new Date().toISOString();
 
                     if (status === 'arrived') updates.arrivedAt = now;

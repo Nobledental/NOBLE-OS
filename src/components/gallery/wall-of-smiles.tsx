@@ -11,6 +11,7 @@ import {
     Star, Check, X, Eye
 } from 'lucide-react';
 import { hapticPatterns } from '@/components/gestures/ios-gestures';
+import Image from 'next/image';
 
 // =============================================================================
 // TYPES
@@ -83,10 +84,11 @@ export function BeforeAfterSlider({
             onTouchMove={handleDrag}
         >
             {/* After Image (Bottom) */}
-            <img
+            <Image
                 src={afterUrl}
                 alt="After"
-                className="absolute inset-0 w-full h-full object-cover"
+                fill
+                className="object-cover"
             />
 
             {/* Before Image (Top, clipped) */}
@@ -94,10 +96,11 @@ export function BeforeAfterSlider({
                 className="absolute inset-0"
                 style={{ clipPath }}
             >
-                <img
+                <Image
                     src={beforeUrl}
                     alt="Before"
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                 />
             </motion.div>
 
@@ -325,9 +328,11 @@ export function PhotoUploadPrompt({
                 <div>
                     <p className="text-xs text-muted-foreground mb-2 text-center">Pre-Op</p>
                     {preOpPhotoUrl ? (
-                        <img
+                        <Image
                             src={preOpPhotoUrl}
                             alt="Pre-op"
+                            width={300}
+                            height={300}
                             className="w-full aspect-square object-cover rounded-lg"
                         />
                     ) : (
@@ -344,15 +349,16 @@ export function PhotoUploadPrompt({
                         onDrop={handleDrop}
                         onClick={() => fileInputRef.current?.click()}
                         className={`w-full aspect-square rounded-lg border-2 border-dashed flex flex-col items-center justify-center cursor-pointer transition-colors ${dragActive
-                                ? 'border-primary bg-primary/5'
-                                : 'border-muted hover:border-primary/50'
+                            ? 'border-primary bg-primary/5'
+                            : 'border-muted hover:border-primary/50'
                             }`}
                     >
                         {preview ? (
-                            <img
+                            <Image
                                 src={preview}
                                 alt="Preview"
-                                className="w-full h-full object-cover rounded-lg"
+                                fill
+                                className="object-cover rounded-lg"
                             />
                         ) : (
                             <>
@@ -426,9 +432,11 @@ export function SplitScreenView({
             <div className="grid grid-cols-2">
                 {/* Before */}
                 <div className="relative">
-                    <img
+                    <Image
                         src={beforeUrl}
                         alt="Before"
+                        width={600}
+                        height={450}
                         className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">
@@ -438,9 +446,11 @@ export function SplitScreenView({
 
                 {/* After */}
                 <div className="relative">
-                    <img
+                    <Image
                         src={afterUrl}
                         alt="After"
+                        width={600}
+                        height={450}
                         className="w-full aspect-[4/3] object-cover"
                     />
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-3">

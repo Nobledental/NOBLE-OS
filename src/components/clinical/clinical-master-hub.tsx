@@ -109,7 +109,7 @@ export function ClinicalMasterHub() {
                                 <Badge variant="outline" className="rounded-full px-4 h-8 font-black text-[10px] uppercase tracking-widest border-slate-100">3 ACTIVE</Badge>
                             </div>
                             <div className="flex-1 space-y-4">
-                                <CaseQueue />
+                                <CaseQueue onSelectPatient={setSelectedPatient} />
                             </div>
                             <div className="mt-8 pt-8 border-t border-slate-50 flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 <p className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-500 animate-pulse">Click list to activate cockpit</p>

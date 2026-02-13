@@ -147,7 +147,7 @@ export default function CaseSheetRenderer({
                 const result = smartStockService.decrementStockForTreatment(
                     proc,
                     `SESS-${patientId}-${Date.now()}`,
-                    'Dr. Dhivakaran',
+                    'System Auto',
                     'demo-clinic'
                 );
                 itemsUsed += result.movements.length;
@@ -324,9 +324,9 @@ export default function CaseSheetRenderer({
             <Dialog open={showSuccessCard} onOpenChange={setShowSuccessCard}>
                 <DialogContent className="sm:max-w-[480px] rounded-[3rem] p-8 overflow-hidden border-none shadow-2xl">
                     <SuccessCardGenerator
-                        patientName="Demo Patient"
+                        patientName={selectedDepartment === 'GENERAL' ? "Patient Record" : "Demo Patient"}
                         procedure={pendingArchiveNotes?.plan.split('\n')[0] || "Dental Treatment"}
-                        doctorName="Dr. Dhivakaran"
+                        doctorName="Clinic Practitioner"
                         clinicName="Noble Dental Care"
                     />
                 </DialogContent>

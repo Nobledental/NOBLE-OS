@@ -221,7 +221,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
             <div className="hidden">
                 <PrintableRx
                     ref={componentRef}
-                    patientName="Dhivakaran"
+                    patientName="Patient Record"
                     date={new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                     toothData={toothData}
                     prescriptions={prescriptions}
@@ -235,7 +235,7 @@ export default function PrescriptionEngine({ patientId, toothData, clinicalNotes
                     <div className="transform scale-[0.95] origin-top p-6">
                         <div className="rounded-[2.5rem] overflow-hidden shadow-2xl relative">
                             <PrintableRx
-                                patientName="Dhivakaran"
+                                patientName="Patient Record"
                                 date={new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}
                                 toothData={toothData}
                                 prescriptions={prescriptions}

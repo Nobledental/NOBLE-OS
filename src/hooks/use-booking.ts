@@ -46,7 +46,7 @@ const INITIAL_STATE: BookingState = {
 export function useBooking() {
     const store = useSchedulingStore();
     const [state, setState] = useState<BookingState>(INITIAL_STATE);
-    const [availableSlots, setAvailableSlots] = useState<any[]>([]);
+    const [availableSlots, setAvailableSlots] = useState<{ time: string; capacity: number; available: number }[]>([]);
     const [loadingSlots, setLoadingSlots] = useState(false);
 
     // --- Voice Input Logic ---
@@ -67,7 +67,7 @@ export function useBooking() {
             toast.info("Listening... Describe your symptoms.");
         };
 
-        recognition.onresult = (event: any) => {
+        recognition.onresult = (event: { results: { transcript: string }[][] }) => {
             const transcript = event.results[0][0].transcript;
 
             // Simple keyword parsing for "Reason for visit"
@@ -93,7 +93,7 @@ export function useBooking() {
             toast.success("Note added from voice!");
         };
 
-        recognition.onerror = (event: any) => {
+        recognition.onerror = (event: { error: string }) => {
             console.error(event.error);
             setState(prev => ({ ...prev, voiceListening: false }));
             toast.error("Voice recognition failed.");
@@ -132,7 +132,7 @@ export function useBooking() {
         setState(prev => ({ ...prev, selectedSlot: slotTime, step: 'summary' }));
     };
 
-    const updatePatientDetails = (field: string, value: any) => {
+    const updatePatientDetails = (field: string, value: string | boolean | undefined) => {
         setState(prev => ({
             ...prev,
             patientDetails: { ...prev.patientDetails, [field]: value }
@@ -145,9 +145,9 @@ export function useBooking() {
         if (state.selectedDate && state.selectedService) {
             fetchSlots();
         }
-    }, [state.selectedDate, state.selectedService, state.bookingType, state.selectedDoctor]);
+    }, [state.selectedDate, state.selectedService, state.bookingType, state.selectedDoctor, fetchSlots]);
 
-    const fetchSlots = async () => {
+    const fetchSlots = useCallback(async () => {
         if (!state.selectedDate || !state.selectedService) return;
 
         setLoadingSlots(true);
@@ -170,7 +170,7 @@ export function useBooking() {
         } finally {
             setLoadingSlots(false);
         }
-    };
+    }, [state.selectedDate, state.selectedService, state.selectedDoctor]);
 
     // --- Submission ---
 

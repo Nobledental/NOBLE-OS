@@ -16,6 +16,7 @@ import {
     Image as ImageIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import { motion } from "framer-motion";
 
 // Mock Templates (In reality, these would be SVG paths or transparent PNGs)
@@ -111,9 +112,11 @@ export function SmileDesigner() {
                 {image ? (
                     <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-black">
                         {/* Base Image */}
-                        <img
+                        <Image
                             src="https://images.unsplash.com/photo-1588776814546-1b98f553e817?q=80&w=2000&auto=format&fit=crop"
                             alt="Patient Smile"
+                            width={2000}
+                            height={1333}
                             className="max-w-full max-h-full object-contain opacity-90"
                         />
 

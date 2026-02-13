@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { MoveHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface TreatmentSimulatorProps {
     type: 'whitening' | 'veneers' | 'aligners';
@@ -71,10 +72,11 @@ export function TreatmentSimulator({ type, className }: TreatmentSimulatorProps)
                 onTouchMove={handleTouchMove}
             >
                 {/* AFTER Image (Background) */}
-                <img
+                <Image
                     src={currentConfig.after}
                     alt="After Treatment"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                 />
 
                 {/* BEFORE Image (Clipped overlay) */}
@@ -82,10 +84,11 @@ export function TreatmentSimulator({ type, className }: TreatmentSimulatorProps)
                     className="absolute inset-0 w-full h-full overflow-hidden"
                     style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                 >
-                    <img
+                    <Image
                         src={currentConfig.before}
                         alt="Before Treatment"
-                        className="absolute inset-0 w-full h-full object-cover"
+                        fill
+                        className="object-cover"
                     />
 
                     {/* Before Label */}

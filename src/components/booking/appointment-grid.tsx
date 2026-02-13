@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 // import { Calendar } from '@/components/ui/calendar'; // Removed as per request for horizontal row
 import { format, addDays, isSameDay, isBefore, startOfDay } from 'date-fns';
+import Image from 'next/image';
 
 // --- Improved Asset Mapping ---
 const SERVICE_IMAGES: Record<string, string> = {
@@ -101,10 +102,11 @@ export function AppointmentGrid() {
                                                 className="group relative flex flex-col text-left bg-white border border-slate-100 rounded-3xl p-2 hover:border-brand-primary/20 transition-all shadow-sm"
                                             >
                                                 <div className="aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-3 relative">
-                                                    <img
+                                                    <Image
                                                         src={SERVICE_IMAGES[service.id] || SERVICE_IMAGES['consultation']}
                                                         alt={service.label}
-                                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                        fill
+                                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
                                                     />
                                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                                     <div className="absolute bottom-3 left-3 text-white opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
@@ -145,10 +147,11 @@ export function AppointmentGrid() {
                                                 className="group flex flex-col sm:flex-row items-center gap-6 bg-white border border-slate-100 p-6 rounded-[2rem] cursor-pointer hover:border-brand-primary/30 hover:shadow-xl hover:shadow-brand-primary/5 transition-all relative overflow-hidden"
                                             >
                                                 <div className="w-24 h-24 rounded-2xl overflow-hidden shrink-0 shadow-md">
-                                                    <img
+                                                    <Image
                                                         src={doctor.image || `https://api.dicebear.com/7.x/avataaars/svg?seed=${doctor.id}`}
                                                         alt={doctor.name}
-                                                        className="w-full h-full object-cover"
+                                                        fill
+                                                        className="object-cover"
                                                     />
                                                 </div>
                                                 <div className="flex-1 text-center sm:text-left">
@@ -229,7 +232,7 @@ export function AppointmentGrid() {
                                                     if (!state.selectedDate) return false;
                                                     // Filter past slots if today
                                                     if (isSameDay(state.selectedDate, new Date())) {
-                                                        const slotDate = new Date(slot.start);
+                                                        const slotDate = new Date(slot.time);
                                                         return isBefore(new Date(), slotDate);
                                                     }
                                                     return true;
@@ -239,7 +242,7 @@ export function AppointmentGrid() {
                                                             .filter(slot => {
                                                                 if (!state.selectedDate) return false;
                                                                 if (isSameDay(state.selectedDate, new Date())) {
-                                                                    const slotDate = new Date(slot.start);
+                                                                    const slotDate = new Date(slot.time);
                                                                     return isBefore(new Date(), slotDate);
                                                                 }
                                                                 return true;
@@ -257,19 +260,19 @@ export function AppointmentGrid() {
                                                                         transition={{ delay: i * 0.02 }}
                                                                     >
                                                                         <button
-                                                                            onClick={() => actions.selectSlot(slot.start)}
+                                                                            onClick={() => actions.selectSlot(slot.time)}
                                                                             disabled={isDisabled}
                                                                             className={cn(
                                                                                 "w-full h-14 rounded-xl text-xs font-bold transition-all border-2 relative overflow-hidden flex flex-col items-center justify-center gap-0.5",
-                                                                                state.selectedSlot === slot.start
+                                                                                state.selectedSlot === slot.time
                                                                                     ? "bg-brand-primary border-brand-primary text-white shadow-lg shadow-brand-primary/30 scale-105"
                                                                                     : isDisabled
                                                                                         ? "bg-slate-50 border-slate-100 text-slate-300 cursor-not-allowed opacity-50"
                                                                                         : "bg-white border-slate-200 text-slate-600 hover:border-brand-primary/50 hover:shadow-md hover:-translate-y-0.5"
                                                                             )}
                                                                         >
-                                                                            <span className="text-sm">{format(new Date(slot.start), 'h:mm a')}</span>
-                                                                            {!isFull && state.selectedSlot !== slot.start && <span className="text-[9px] font-medium opacity-50">{slot.available} Left</span>}
+                                                                            <span className="text-sm">{format(new Date(slot.time), 'h:mm a')}</span>
+                                                                            {!isFull && state.selectedSlot !== slot.time && <span className="text-[9px] font-medium opacity-50">{slot.available} Left</span>}
                                                                             {isFull && isEmergency && <span className="text-[9px] text-red-500">OVERBOOK</span>}
                                                                         </button>
                                                                     </motion.div>
@@ -496,7 +499,7 @@ export function AppointmentGrid() {
                                 <div className="absolute inset-0 border-4 border-green-100 rounded-full animate-ping opacity-20" />
                             </div>
 
-                            <h2 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">You're Booked!</h2>
+                            <h2 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">You&apos;re Booked!</h2>
                             <p className="text-slate-500 mb-8 leading-relaxed">
                                 We've sent a confirmation to <span className="text-slate-900 font-semibold">{state.patientDetails.phone}</span>.
                                 See you on <span className="text-brand-primary font-bold">{state.selectedDate && format(state.selectedDate, 'EEEE, d MMM')}</span>.

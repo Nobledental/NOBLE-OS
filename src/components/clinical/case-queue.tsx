@@ -7,10 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import { Users, UserPlus, Clock, ArrowRight } from "lucide-react";
 import { toast } from "sonner";
 
-export function CaseQueue() {
+export interface CaseQueueProps {
+    onSelectPatient?: (patient: { id: string; name: string; uhid: string }) => void;
+}
+
+export function CaseQueue({ onSelectPatient }: CaseQueueProps) {
     const store = useSchedulingStore();
 
-    // Mock Current Doctor Login
+    // Mock Current Doctor Login - Should be from Auth Context in production
     const currentDoctorId = "d1";
     const currentDoctorName = store.doctors.find(d => d.id === currentDoctorId)?.name || "Me";
 
@@ -30,6 +34,25 @@ export function CaseQueue() {
     const handleTakeCase = (apptId: string) => {
         store.assignDoctor(apptId, currentDoctorId);
         toast.success("Case assigned to you successfully.");
+        
+        // Auto-select if requested
+        const appt = store.appointments.find(a => a.id === apptId);
+        if (appt && onSelectPatient) {
+            const patient = store.patients.find(p => p.id === appt.patientId);
+            if (patient) {
+                onSelectPatient({ id: patient.id, name: patient.name, uhid: `P-${patient.id.toUpperCase()}` });
+            }
+        }
+    };
+
+    const handleConsult = (apptId: string) => {
+        const appt = store.appointments.find(a => a.id === apptId);
+        if (appt && onSelectPatient) {
+            const patient = store.patients.find(p => p.id === appt.patientId);
+            if (patient) {
+                onSelectPatient({ id: patient.id, name: patient.name, uhid: `P-${patient.id.toUpperCase()}` });
+            }
+        }
     };
 
     const getPatientName = (id: string) => store.patients.find(p => p.id === id)?.name || "Unknown";
@@ -57,7 +80,11 @@ export function CaseQueue() {
                                     <div className="font-bold text-sm text-slate-900">{getPatientName(appt.patientId)}</div>
                                     <div className="text-[10px] text-slate-400 font-black uppercase tracking-widest mt-1">{appt.reason} • {appt.slot}</div>
                                 </div>
-                                <Button size="sm" className="h-9 px-4 rounded-xl text-xs bg-indigo-600 text-white hover:bg-indigo-700 font-black uppercase tracking-widest">
+                                <Button 
+                                    size="sm" 
+                                    className="h-9 px-4 rounded-xl text-xs bg-indigo-600 text-white hover:bg-indigo-700 font-black uppercase tracking-widest"
+                                    onClick={() => handleConsult(appt.id)}
+                                >
                                     Consult <ArrowRight className="ml-2 w-3 h-3 text-white" />
                                 </Button>
                             </div>

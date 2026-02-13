@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 type MediaCategory = "ALL" | "XRAY" | "CLINICAL" | "REPORTS";
 
@@ -128,10 +129,11 @@ export function ClinicalMediaGallery() {
                                     </div>
                                 ) : (
                                     <>
-                                        <img
+                                        <Image
                                             src={item.thumbnail}
                                             alt={item.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                                            fill
+                                            className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-90 group-hover:opacity-100"
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
                                             <p className="text-[10px] font-black uppercase tracking-widest text-white">{item.title}</p>
@@ -218,7 +220,7 @@ export function ClinicalMediaGallery() {
                                     </div>
                                 </div>
                             ) : (
-                                <img src={selectedItem.thumbnail} alt="" className="max-h-full max-w-full object-contain rounded-xl shadow-2xl" />
+                                <Image src={selectedItem.thumbnail} alt="" width={1200} height={800} className="max-h-full max-w-full object-contain rounded-xl shadow-2xl" />
                             )}
                         </div>
 

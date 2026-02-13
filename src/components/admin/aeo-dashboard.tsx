@@ -16,6 +16,7 @@ import {
     BarChart3
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const doctors = [
     { id: '1', name: 'Dr. Dhivakaran', specialty: 'Implantologist', image: '/docs/doc1.jpg', rating: 4.9 },
@@ -71,7 +72,7 @@ export default function AEODashboard() {
                                 <div className="flex -space-x-3">
                                     {doctors.slice(0, 4).map((d, i) => (
                                         <div key={i} className="w-10 h-10 rounded-full border-2 border-blue-500 bg-blue-100 overflow-hidden relative">
-                                            <img src={d.image} alt="" className="object-cover" />
+                                            <Image src={d.image} alt="" fill className="object-cover" />
                                         </div>
                                     ))}
                                 </div>
@@ -120,7 +121,7 @@ export default function AEODashboard() {
                         <div className="space-y-4">
                             {[
                                 { type: 'success', msg: "Google Gemini successfully extracted 'Implantology' expertise from clinic metadata.", icon: CheckCircle2, color: 'text-emerald-500' },
-                                { type: 'warning', msg: insightMessage, icon: AlertCircle, color: 'text-amber-500' },
+                                { type: 'warning', msg: `Dr. Sarah's certifications to boost 'Pediatric' authority.`, icon: AlertCircle, color: 'text-amber-500' },
                                 { type: 'info', msg: "Search volume for 'Aligners' increased by 15%. New landing page recommended.", icon: TrendingUp, color: 'text-blue-500' }
                             ].map((item, i) => (
                                 <div key={i} className="flex gap-4 p-4 rounded-3xl bg-slate-50 border border-slate-100">
@@ -159,7 +160,7 @@ export default function AEODashboard() {
                                             <td className="px-8 py-4">
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-12 h-12 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 relative shadow-sm">
-                                                        <img src={doc.image} alt="" className="object-cover" />
+                                                        <Image src={doc.image} alt="" fill className="object-cover" />
                                                     </div>
                                                     <div>
                                                         <div className="font-bold text-slate-900 text-sm">{doc.name}</div>

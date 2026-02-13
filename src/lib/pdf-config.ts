@@ -271,7 +271,7 @@ export const DEFAULT_CLINIC_BRANDING: ClinicBranding = {
     phone: '+91-8610-425342',
     email: 'info@nobledental.in',
     website: 'www.nobledental.in',
-    primaryDoctor: 'DR DHIVAKARAN',
+    primaryDoctor: 'DR LEAD DENTIST',
     doctorTitle: 'DOCTOR',
     latitude: 17.4834,
     longitude: 78.3155,

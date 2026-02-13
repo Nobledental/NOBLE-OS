@@ -70,11 +70,11 @@ export const PrintableRx = React.forwardRef<HTMLDivElement, PrintableRxProps>((p
             {/* Header / Branding */}
             <div className="flex justify-between items-start border-b border-slate-200 pb-8 mb-8">
                 <div className="space-y-2">
-                    <h1 className="text-4xl font-black tracking-tighter text-slate-900">{clinicInfo?.name || "Noble Dental Care"}</h1>
+                    <h1 className="text-4xl font-black tracking-tighter text-slate-900">{clinicInfo?.name || "Clinic Record"}</h1>
                     <p className="text-xs font-bold text-slate-500 max-w-sm leading-relaxed uppercase tracking-widest">
-                        {clinicInfo?.address || "123 Healthcare Blvd, Bangalore, KA 560001"}
+                        {clinicInfo?.address || "Clinic Address Placeholder"}
                     </p>
-                    <p className="text-xs font-black text-slate-900">Phone: {clinicInfo?.phone || "+91 98765 43210"}</p>
+                    <p className="text-xs font-black text-slate-900">Phone: {clinicInfo?.phone || "+91 00000 00000"}</p>
                 </div>
                 <div className="text-right space-y-1">
                     <div className="inline-block px-4 py-2 bg-slate-100 text-slate-900 border border-slate-200 text-xs font-black uppercase tracking-widest rounded-lg">Prescription</div>

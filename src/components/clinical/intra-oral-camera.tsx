@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { PanzeCard } from "@/components/ui/panze-card";
@@ -197,7 +198,7 @@ export function IntraOralCamera({ patientId }: { patientId: string }) {
                         <div className="flex-1 overflow-y-auto p-2 grid grid-cols-2 gap-2 content-start">
                             {capturedImages.map((img, idx) => (
                                 <div key={idx} className="aspect-video bg-black rounded-lg overflow-hidden relative group">
-                                    <img src={img} alt="Capture" className="w-full h-full object-cover" />
+                                    <Image src={img} alt="Capture" fill className="object-cover" />
                                     <button
                                         className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
                                         onClick={() => setCapturedImages(prev => prev.filter((_, i) => i !== idx))}

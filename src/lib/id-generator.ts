@@ -22,5 +22,5 @@ export const parseHealthFloID = (id: string) => {
     };
 };
 
-// Hardcoded ID for Noble Dental Care (Nallagandla)
-export const NOBLE_DENTAL_ID = "HFD-HYD-NLG-001";
+// Hardcoded ID for Demo Clinic
+export const DEMO_CLINIC_ID = "HFD-HYD-DEM-001";

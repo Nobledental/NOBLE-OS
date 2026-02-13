@@ -493,13 +493,13 @@ export const ClinicBrandingSettings: React.FC<{
                                         <div className="flex-1 overflow-hidden">
                                             <p className="text-[10px] font-black uppercase text-slate-400 tracking-widest mb-1">Your Unique Booking Link</p>
                                             <p className="font-mono text-slate-900 font-bold truncate text-sm">
-                                                {typeof window !== 'undefined' ? `${window.location.origin}/book/${store.clinicDetails?.googleLocationId ? "HFD-HYD-NLG-001" : "HFD-HYD-NLG-001"}` : '...'}
+                                                {typeof window !== 'undefined' ? `${window.location.origin}/book/${store.clinicDetails?.googleLocationId || "DEMO-001"}` : '...'}
                                             </p>
                                         </div>
                                         <div className="flex gap-2">
                                             <button
                                                 onClick={() => {
-                                                    const url = `${window.location.origin}/book/HFD-HYD-NLG-001`; // Hardcoded for Noble
+                                                    const url = `${window.location.origin}/book/${store.clinicDetails?.googleLocationId || "DEMO-001"}`;
                                                     navigator.clipboard.writeText(url);
                                                     alert("Link copied to clipboard!");
                                                 }}
@@ -509,7 +509,7 @@ export const ClinicBrandingSettings: React.FC<{
                                                 <Copy className="w-5 h-5" />
                                             </button>
                                             <button
-                                                onClick={() => window.open(`/book/HFD-HYD-NLG-001`, '_blank')}
+                                                onClick={() => window.open(`/book/${store.clinicDetails?.googleLocationId || "DEMO-001"}`, '_blank')}
                                                 className="w-12 h-12 bg-blue-600 hover:bg-blue-700 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-500/30 transition-all"
                                                 title="Open Page"
                                             >

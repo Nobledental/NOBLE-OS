@@ -6,6 +6,7 @@ import { QrCode, ArrowRight, CheckCircle2, Copy } from "lucide-react";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface UpiPaymentCardProps {
     amount: number;
@@ -117,10 +118,13 @@ export function UpiPaymentCard({
 
                 {/* QR Code Placeholder (Using API for Realism) */}
                 <div className="bg-white p-3 rounded-xl shadow-sm border border-slate-100 flex flex-col items-center gap-2">
-                    <img
+                    <Image
                         src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiLink)}`}
                         alt="UPI QR Code"
-                        className="w-32 h-32 object-contain mix-blend-multiply opacity-90"
+                        width={128}
+                        height={128}
+                        unoptimized
+                        className="object-contain mix-blend-multiply opacity-90"
                     />
                     <span className="text-[10px] text-slate-400 font-medium">Scan with any UPI App</span>
                 </div>
