@@ -9,23 +9,25 @@ import {
     CalendarDays,
     Stethoscope,
     Users,
-    BarChart3,
     Receipt,
-    Wallet,
-    UserPlus,
-    ScrollText,
     Settings,
     Store,
     Activity,
     LogOut,
     ShieldCheck,
     Grid,
-    FlaskConical
+    ChevronRight,
+    Calendar,
+    Package,
+    Microscope,
+    Share2,
+    Sparkles,
+    Box
 } from "lucide-react";
+import { useAuth, HasPermission } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useAuth } from "@/hooks/use-auth";
 
 const NAV_ITEMS = [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard, id: "dashboard" },
@@ -49,13 +51,14 @@ const PRIORITY_ITEMS: Record<string, string[]> = {
 
 export function FloatingSidebar() {
     const pathname = usePathname();
-    const { role, permissions } = useAuth();
+    const { logout, user } = useAuth();
+    const permissions = user?.modulePermissions || [];
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Force show all items for maximum visibility as requested by user
     const filteredItems = NAV_ITEMS;
 
-    const priorityIds = PRIORITY_ITEMS[role] || ["dashboard", "appointments", "clinical", "patients"];
+    const priorityIds = PRIORITY_ITEMS[user?.role || ""] || ["dashboard", "appointments", "clinical", "patients"];
     const topBarItems = filteredItems.filter(item => priorityIds.includes(item.id)).slice(0, 4);
     const moreItems = filteredItems.filter(item => !topBarItems.some(ti => ti.id === item.id));
 

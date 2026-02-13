@@ -1,12 +1,13 @@
 "use client";
 
-import { useAuth, Role } from "@/hooks/use-auth";
+import { useAuth, Role } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { UserCircle, Shield, Stethoscope, Users, User, ChevronDown } from "lucide-react";
+import { UserCircle, Shield, Stethoscope, Users, User, ChevronDown, Crown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ROLE_ICONS: Record<Role, any> = {
+    OWNER: Crown,
     ADMIN: Shield,
     DOCTOR: Stethoscope,
     CONSULTANT: UserCircle,
@@ -15,10 +16,11 @@ const ROLE_ICONS: Record<Role, any> = {
 };
 
 export function RoleSwitcher() {
-    const { role, setRole } = useAuth();
+    const { user, setRole } = useAuth();
+    const role = user?.role || "DOCTOR";
     const Icon = ROLE_ICONS[role] || User;
 
-    const roles: Role[] = ["ADMIN", "DOCTOR", "CONSULTANT", "RECEPTIONIST", "ASSISTANT"];
+    const roles: Role[] = ["OWNER", "ADMIN", "DOCTOR", "CONSULTANT", "RECEPTIONIST", "ASSISTANT"];
 
     return (
         <DropdownMenu>

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { RoleSwitcher } from "@/components/shared/role-switcher";
-import { useAuth } from "@/hooks/use-auth";
+import { useAuth } from "@/lib/auth-context";
 import { AdminDashboardView } from "@/components/dashboard/admin-view";
 import { DoctorDashboardView } from "@/components/dashboard/doctor-view";
 import { ReceptionistDashboardView } from "@/components/dashboard/receptionist-view";
@@ -47,7 +47,8 @@ const containerVariants: Variants = {
 export default function DashboardPage() {
     const [viewMode, setViewMode] = useState<'overview' | 'treatment'>('overview');
     const [activeFilter, setActiveFilter] = useState('This Month');
-    const { role } = useAuth();
+    const { user } = useAuth();
+    const role = user?.role || "DOCTOR";
     const filters = ['Today', 'This Week', 'This Month', 'Reports'];
 
     // Map role to view component

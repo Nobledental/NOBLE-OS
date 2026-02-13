@@ -15,6 +15,7 @@ import { ClinicalConsultation } from "@/components/clinical/consultation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VitalsHUD } from "@/components/clinical/vitals-hud";
 import { PreOpChecklist } from "@/components/clinical/pre-op-checklist";
+import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 
 export default function PatientDetailPage() {
     const { id } = useParams();
