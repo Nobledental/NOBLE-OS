@@ -31,6 +31,7 @@ import { TreatmentEstimator } from './treatment-estimator';
 import { SurgicalSafetyChecklist } from './surgical-checklist';
 import { DentalGrowthHub } from './dental-growth-hub';
 import { SuccessCardGenerator } from './success-card-generator';
+import { IDACaseSheet } from './ida-case-sheet';
 import {
     Dialog,
     DialogContent
@@ -177,15 +178,20 @@ export default function CaseSheetRenderer({
             default:
                 return (
                     <div className="space-y-12 animate-ios-reveal">
-                        <Tabs defaultValue="exam" className="w-full">
+                        <Tabs defaultValue="ida" className="w-full">
                             <div className="flex items-center justify-between mb-8">
                                 <TabsList className="bg-slate-100/50 p-1.5 rounded-2xl h-12">
+                                    <TabsTrigger value="ida" className="rounded-xl px-6 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm">IDA Case Sheet</TabsTrigger>
                                     <TabsTrigger value="exam" className="rounded-xl px-6 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm">Exam & Notes</TabsTrigger>
                                     <TabsTrigger value="intake" className="rounded-xl px-6 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm">Intake & Risks</TabsTrigger>
                                     <TabsTrigger value="growth" className="rounded-xl px-6 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm">Logistics & Growth</TabsTrigger>
                                     <TabsTrigger value="rx" className="rounded-xl px-6 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-white data-[state=active]:shadow-sm">Prescription (Rx)</TabsTrigger>
                                 </TabsList>
                             </div>
+
+                            <TabsContent value="ida" className="mt-0 outline-none animate-ios-reveal">
+                                <IDACaseSheet />
+                            </TabsContent>
 
                             <TabsContent value="exam" className="mt-0 outline-none">
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

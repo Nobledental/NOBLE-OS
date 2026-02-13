@@ -146,7 +146,7 @@ export function AdvancedIntake({ data, onChange }: AdvancedIntakeProps) {
                     </div>
                 </Card>
 
-                {/* Lifestyle Section */}
+// Lifestyle Section
                 <Card className="rounded-[2.5rem] border-slate-100 shadow-sm overflow-hidden bg-white/50 backdrop-blur-sm">
                     <div className="p-6 space-y-4">
                         <div className="flex items-center gap-2 mb-2">
@@ -155,24 +155,55 @@ export function AdvancedIntake({ data, onChange }: AdvancedIntakeProps) {
                         </div>
 
                         <div className="space-y-3">
+                            <div className="space-y-2">
+                                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+                                    <span className="text-xs font-bold text-slate-700">Tobacco / Smoking</span>
+                                    <Switch
+                                        checked={state.usesTobacco}
+                                        onCheckedChange={(val) => updateState({ usesTobacco: val })}
+                                    />
+                                </div>
+                                {state.usesTobacco && (
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. 5 Bidi/day since 10yrs"
+                                        className="w-full bg-white border border-slate-100 rounded-xl p-2 text-[10px] font-bold uppercase tracking-tight"
+                                        onChange={(e) => updateState({ tobaccoFrequency: e.target.value as any })}
+                                    />
+                                )}
+                            </div>
+
+                            <div className="space-y-2">
+                                <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
+                                    <span className="text-xs font-bold text-slate-700">Alcohol</span>
+                                    <Switch
+                                        checked={state.usesAlcohol}
+                                        onCheckedChange={(val) => updateState({ usesAlcohol: val })}
+                                    />
+                                </div>
+                                {state.usesAlcohol && (
+                                    <input
+                                        type="text"
+                                        placeholder="Frequency per day/week"
+                                        className="w-full bg-white border border-slate-100 rounded-xl p-2 text-[10px] font-bold uppercase tracking-tight"
+                                        onChange={(e) => updateState({ alcoholFrequency: e.target.value as any })}
+                                    />
+                                )}
+                            </div>
+
                             <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
-                                <span className="text-xs font-bold text-slate-700">Tobacco / Smoking</span>
+                                <span className="text-xs font-bold text-slate-700">Head/Neck Trauma</span>
                                 <Switch
-                                    checked={state.usesTobacco}
-                                    onCheckedChange={(val) => updateState({ usesTobacco: val })}
+                                    checked={false}
+                                    onCheckedChange={(val) => { }}
                                 />
                             </div>
+
                             <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
-                                <span className="text-xs font-bold text-slate-700">Alcohol Consumption</span>
+                                <span className="text-xs font-bold text-slate-700">Clenching / Bruxism</span>
                                 <Switch
-                                    checked={state.usesAlcohol}
-                                    onCheckedChange={(val) => updateState({ usesAlcohol: val })}
-                                />
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
-                                <span className="text-xs font-bold text-slate-700">History of Trauma</span>
-                                <Switch
-                                    checked={false} // Placeholder for expansion
+                                    checked={false}
+                                    onCheckedChange={(val) => { }}
                                 />
                             </div>
                         </div>
