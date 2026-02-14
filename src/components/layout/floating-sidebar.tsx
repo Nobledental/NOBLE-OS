@@ -55,8 +55,12 @@ export function FloatingSidebar() {
     const permissions = user?.modulePermissions || [];
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // Force show all items for maximum visibility as requested by user
-    const filteredItems = NAV_ITEMS;
+    // RBAC-enforced navigation filtering
+    const filteredItems = NAV_ITEMS.filter(item => {
+        if (item.id === 'dashboard') return true; // Dashboard always visible
+        if (permissions.includes('all')) return true; // OWNER/ADMIN see everything
+        return permissions.includes(item.id);
+    });
 
     // Ensure priority items appear first
     const priorityIds = PRIORITY_ITEMS[user?.role || ""] || ["dashboard", "appointments", "clinical", "patients"];

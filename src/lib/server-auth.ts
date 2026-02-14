@@ -254,27 +254,71 @@ export async function validateRequest<T>(
 }
 
 // ============================================================================
-// Audit Logging
+// Audit Logging (Durable — Supabase Persistence)
 // ============================================================================
 
+import { getSupabaseAdmin } from "./supabase-admin";
+
+interface AuditTrailParams {
+    userId: string;
+    action: string;
+    resource: string;
+    details?: Record<string, any>;
+    request?: NextRequest;
+    clinicId?: string;
+    status?: 'SUCCESS' | 'FAILURE';
+    error?: any;
+}
+
 /**
- * Logs sensitive actions for audit trail
+ * Persists audit trail entries to the `audit_logs` Supabase table.
+ * Fail-safe: never crashes the primary request path.
  */
-export function logAuditTrail(
-    userId: string,
-    action: string,
-    resource: string,
+export async function logAuditTrail(params: AuditTrailParams): Promise<void>;
+export async function logAuditTrail(userId: string, action: string, resource: string, details?: Record<string, any>): Promise<void>;
+export async function logAuditTrail(
+    paramsOrUserId: AuditTrailParams | string,
+    action?: string,
+    resource?: string,
     details?: Record<string, any>
-) {
+): Promise<void> {
+    // Normalize arguments (support both old and new call signatures)
+    const params: AuditTrailParams = typeof paramsOrUserId === 'string'
+        ? { userId: paramsOrUserId, action: action!, resource: resource!, details }
+        : paramsOrUserId;
+
     const auditEntry = {
-        timestamp: new Date().toISOString(),
-        userId,
-        action,
-        resource,
-        details,
-        ip: "TODO: Extract from request" // Will add in production
+        user_id: params.userId,
+        action: params.action,
+        resource: params.resource,
+        details: params.details || null,
+        ip_address: params.request?.headers?.get('x-forwarded-for')?.split(',')[0]?.trim() || null,
+        user_agent: params.request?.headers?.get('user-agent') || null,
+        clinic_id: params.clinicId || null,
+        status: params.status || 'SUCCESS',
+        error_details: params.error
+            ? { message: params.error?.message || String(params.error), stack: params.error?.stack }
+            : null,
     };
 
-    // TODO: Replace with actual database logging
-    console.log("[AUDIT]", JSON.stringify(auditEntry));
+    try {
+        const supabase = getSupabaseAdmin();
+
+        if (supabase) {
+            // Durable DB write
+            const { error } = await supabase.from('audit_logs').insert(auditEntry);
+
+            if (error) {
+                // Fail-safe: log metric but don't crash business logic
+                console.error('[AUDIT_WRITE_FAILURE]', JSON.stringify({ error: error.message, entry: auditEntry }));
+            }
+        } else {
+            // Fallback: structured log when Supabase not configured (dev/demo)
+            console.log('[AUDIT]', JSON.stringify(auditEntry));
+        }
+    } catch (err) {
+        // Swallow audit errors to prevent breaking business logic
+        console.error('[AUDIT_EXCEPTION]', err instanceof Error ? err.message : String(err));
+    }
 }
+

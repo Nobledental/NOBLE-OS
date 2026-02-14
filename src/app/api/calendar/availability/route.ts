@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
 
     const { date, chairs: activeChairs, duration } = parseResult.data;
 
-    console.log(`[Availability API] User=${user.email}, Date=${date}, Chairs=${activeChairs}, Duration=${duration}`);
+
 
     try {
         const calendarService = new GoogleCalendarService();
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
 
         // Fetch busy slots from Google Calendar
         const busySlots = await calendarService.getBusySlots(dayStart.toISOString(), dayEnd.toISOString());
-        console.log(`[Availability API] Busy Slots Found: ${busySlots.length}`);
+
 
         // Generate slots every 30 minutes (clinic hours: 09:00-18:00 IST)
         const step = 30;

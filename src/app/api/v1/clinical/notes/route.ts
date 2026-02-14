@@ -1,16 +1,17 @@
 /**
- * SECURED Clinical Notes API Route
+ * DURABLE Clinical Notes API v1
  * 
- * Changes from original:
- * - Added server-side RBAC (requires clinical permission)
- * - Added Zod validation for request body
- * - Added audit trail logging
- * - Replaced generic error with specific validation errors
+ * Supabase persistence with:
+ * - Server-side RBAC (requires clinical permission)
+ * - Zod validation for request body
+ * - Durable audit trail logging
+ * - Graceful fallback for unconfigured environments
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { requirePermission, validateRequest, logAuditTrail } from '@/lib/server-auth';
 import { createClinicalNoteSchema } from '@/lib/validations';
+import { getSupabaseAdmin } from '@/lib/supabase-admin';
 
 export async function POST(request: NextRequest) {
     // SECURITY: Require clinical access permission
@@ -32,42 +33,46 @@ export async function POST(request: NextRequest) {
     const body = validationResult;
 
     try {
-        // TODO: Replace with actual Supabase insert
-        /* Production code:
-        const { data, error } = await supabase
-            .from('clinical_notes')
-            .insert({
+        const supabase = getSupabaseAdmin();
+        let note: Record<string, any>;
+
+        if (supabase) {
+            // DURABLE: Persist to Supabase
+            const { data: inserted, error } = await supabase
+                .from('clinical_notes')
+                .insert({
+                    ...body,
+                    created_by: user.id,
+                    created_at: new Date().toISOString()
+                })
+                .select()
+                .single();
+
+            if (error) throw error;
+            note = inserted;
+        } else {
+            // FALLBACK: Mock when Supabase not configured (dev/demo)
+            note = {
+                id: crypto.randomUUID(),
                 ...body,
-                created_by: user.id,
+                createdBy: user.id,
                 created_at: new Date().toISOString()
-            })
-            .select()
-            .single();
-            
-        if (error) throw error;
-        */
+            };
+        }
 
-        // Mock response (preserves original behavior)
-        console.log("Mock Saving Clinical Note:", body);
-
-        const note = {
-            id: crypto.randomUUID(),
-            ...body,
-            createdBy: user.id,
-            created_at: new Date().toISOString()
-        };
-
-        // AUDIT: Log PII access for medical records compliance
-        logAuditTrail(
-            user.id,
-            'CREATE_CLINICAL_NOTE',
-            `patient:${body.patientId}`,
-            {
+        // AUDIT: Durable PII access log for medical records compliance
+        await logAuditTrail({
+            userId: user.id,
+            action: 'CREATE_CLINICAL_NOTE',
+            resource: `patient:${body.patientId}`,
+            details: {
                 noteId: note.id,
                 diagnosis: body.diagnosis,
                 teethAffected: body.teethAffected
-            }
-        );
+            },
+            request,
+            status: 'SUCCESS'
+        });
 
         return NextResponse.json({
             success: true,
@@ -75,6 +80,15 @@ export async function POST(request: NextRequest) {
         });
 
     } catch (error) {
+        await logAuditTrail({
+            userId: user.id,
+            action: 'CREATE_CLINICAL_NOTE',
+            resource: `patient:${body.patientId}`,
+            request,
+            status: 'FAILURE',
+            error
+        });
+
         console.error('Clinical note creation error:', error);
 
         return NextResponse.json(

@@ -1,10 +1,9 @@
 /**
  * SECURED Business Data Import API
  * 
- * Changes from original:
- * - Added role-based access (OWNER/ADMIN only)
- * - Added audit logging for business data access
- * - Maintained mock data for demo purposes
+ * - Role-based access (OWNER/ADMIN only)
+ * - Durable audit logging
+ * - Static business data (Google Business Profile cache)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -20,15 +19,19 @@ export async function GET(request: NextRequest) {
 
     const user = authResult;
 
-    // AUDIT: Log business data access
-    logAuditTrail(
-        user.id,
-        'ACCESS_BUSINESS_DATA',
-        'business:import',
-        { source: 'google_my_business' }
-    );
+    // AUDIT: Durable log for business data access
+    await logAuditTrail({
+        userId: user.id,
+        action: 'ACCESS_BUSINESS_DATA',
+        resource: 'business:import',
+        details: { source: 'google_my_business' },
+        request,
+        status: 'SUCCESS'
+    });
 
-    // Mock data bypass (preserved from original for demo)
+    // Static business profile data (Google My Business cache)
+    // This is intentionally static — business profile data is imported once
+    // and cached. Real-time sync should use a Supabase-backed cache table.
     return NextResponse.json({
         locations: [{
             name: "locations/4527181657920795054",

@@ -24,9 +24,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-type MediaCategory = "ALL" | "XRAY" | "CLINICAL" | "REPORTS";
+export type MediaCategory = "ALL" | "XRAY" | "CLINICAL" | "REPORTS";
 
-interface MediaItem {
+export interface MediaItem {
     id: string;
     type: MediaCategory;
     title: string;
@@ -44,12 +44,19 @@ const MOCK_MEDIA: MediaItem[] = [
     { id: "4", type: "XRAY", title: "IOPA - Tooth 46", date: "2024-02-12", url: "#", thumbnail: "/assets/images/treatments/rct.webp", size: "800 KB", author: "Dr. Dhivakaran" },
 ];
 
-export function ClinicalMediaGallery() {
+interface ClinicalMediaGalleryProps {
+    items?: MediaItem[];
+    onUploadClick?: () => void;
+    onCaptureClick?: () => void;
+}
+
+export function ClinicalMediaGallery({ items, onUploadClick, onCaptureClick }: ClinicalMediaGalleryProps) {
     const [category, setCategory] = useState<MediaCategory>("ALL");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedItem, setSelectedItem] = useState<MediaItem | null>(null);
 
-    const filteredMedia = MOCK_MEDIA.filter(item => {
+    const displayMedia = items || MOCK_MEDIA;
+    const filteredMedia = displayMedia.filter(item => {
         const matchesCategory = category === "ALL" || item.type === category;
         const matchesSearch = item.title.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesCategory && matchesSearch;
@@ -69,10 +76,10 @@ export function ClinicalMediaGallery() {
                     />
                 </div>
                 <div className="flex items-center gap-3 w-full md:w-auto">
-                    <Button variant="outline" className="flex-1 md:flex-none h-14 rounded-2xl border-slate-100 gap-2 font-black text-[10px] uppercase tracking-widest">
+                    <Button variant="outline" onClick={onUploadClick} className="flex-1 md:flex-none h-14 rounded-2xl border-slate-100 gap-2 font-black text-[10px] uppercase tracking-widest">
                         <Upload className="w-4 h-4" /> Bulk Upload
                     </Button>
-                    <Button className="flex-1 md:flex-none h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 gap-2 font-black text-[10px] uppercase tracking-widest">
+                    <Button onClick={onCaptureClick} className="flex-1 md:flex-none h-14 rounded-2xl bg-indigo-600 hover:bg-indigo-700 gap-2 font-black text-[10px] uppercase tracking-widest">
                         <Camera className="w-4 h-4" /> Live Capture
                     </Button>
                 </div>

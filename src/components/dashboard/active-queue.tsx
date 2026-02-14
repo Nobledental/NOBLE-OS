@@ -24,7 +24,11 @@ interface QueuePatient {
     }
 }
 
-export function ActiveQueue() {
+interface ActiveQueueProps {
+    onPatientSelect?: (patient: { id: string; name: string; age?: number; gender?: string; phone?: string }) => void;
+}
+
+export function ActiveQueue({ onPatientSelect }: ActiveQueueProps) {
     const queryClient = useQueryClient()
     const clinicId = "noble-dental-primary"
 
@@ -79,6 +83,10 @@ export function ActiveQueue() {
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, scale: 0.95 }}
                                 key={item.id}
+                                onClick={() => onPatientSelect?.({
+                                    id: item.id,
+                                    name: item.patient.user.full_name,
+                                })}
                                 className={cn(
                                     "p-4 rounded-2xl flex items-center gap-4 transition-all cursor-pointer border relative overflow-hidden group/item",
                                     i === 0

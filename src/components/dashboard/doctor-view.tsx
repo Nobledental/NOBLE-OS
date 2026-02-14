@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ActiveQueue } from "./active-queue";
 import { PatientTracker } from "./patient-tracker";
 import { PanzeCard } from "@/components/ui/panze-card";
@@ -12,11 +13,14 @@ import {
     Zap,
     Activity,
     Thermometer,
-    HeartPulse
+    HeartPulse,
+    ArrowLeft
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { CaseSheetContainer } from "@/components/clinical/cockpit/case-sheet-container";
+import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-store";
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -34,6 +38,73 @@ const itemVariants = {
 };
 
 export function DoctorDashboardView() {
+    const [cockpitOpen, setCockpitOpen] = useState(false);
+    const selectPatient = useCockpitStore(s => s.selectPatient);
+    const clearSession = useCockpitStore(s => s.clearSession);
+    const cockpitPatient = useCockpitStore(s => s.patient);
+
+    // Bridge: queue patient click → cockpit
+    const handlePatientSelect = (queuePatient: {
+        id: string;
+        name: string;
+        age?: number;
+        gender?: string;
+        phone?: string;
+    }) => {
+        const patient: PatientContext = {
+            id: queuePatient.id,
+            name: queuePatient.name,
+            age: queuePatient.age || 30,
+            gender: (queuePatient.gender as 'MALE' | 'FEMALE' | 'OTHER') || 'MALE',
+            phone: queuePatient.phone || '',
+            isRegistered: true,
+        };
+        selectPatient(patient);
+        setCockpitOpen(true);
+    };
+
+    const handleNewSession = () => {
+        clearSession();
+        setCockpitOpen(true);
+    };
+
+    const handleExitCockpit = () => {
+        setCockpitOpen(false);
+    };
+
+    // ──── Cockpit Mode: Full-screen Clinical Workflow ────
+    if (cockpitOpen) {
+        return (
+            <motion.div
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col h-full"
+            >
+                <div className="flex items-center gap-3 mb-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={handleExitCockpit}
+                        className="rounded-xl gap-2 text-xs font-bold uppercase tracking-widest border-slate-200 hover:bg-slate-50"
+                    >
+                        <ArrowLeft className="w-4 h-4" /> Dashboard
+                    </Button>
+                    {cockpitPatient && (
+                        <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs font-bold px-3 py-1">
+                            {cockpitPatient.name} • {cockpitPatient.age}y {cockpitPatient.gender}
+                        </Badge>
+                    )}
+                </div>
+                <div className="flex-1 overflow-hidden">
+                    <CaseSheetContainer />
+                </div>
+            </motion.div>
+        );
+    }
+
+    // ──── Dashboard Mode: Stats + Queue + Auditor ────
     return (
         <motion.div
             variants={containerVariants}
@@ -51,7 +122,10 @@ export function DoctorDashboardView() {
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Real-time Procedural Audit Active</p>
                         </div>
                     </div>
-                    <Button className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[10px] tracking-widest px-6 h-12 shadow-xl shadow-indigo-100 gap-2">
+                    <Button
+                        onClick={handleNewSession}
+                        className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[10px] tracking-widest px-6 h-12 shadow-xl shadow-indigo-100 gap-2"
+                    >
                         <Zap size={14} className="fill-white" /> Start New Session
                     </Button>
                 </div>
@@ -87,7 +161,7 @@ export function DoctorDashboardView() {
                     />
                 </div>
 
-                <ActiveQueue />
+                <ActiveQueue onPatientSelect={handlePatientSelect} />
             </motion.div>
 
             {/* Sidebar: Clinical Intelligence & Audits */}
@@ -156,3 +230,4 @@ function AuditItem({ title, status, sub }: any) {
         </div>
     );
 }
+
