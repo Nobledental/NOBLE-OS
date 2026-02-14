@@ -155,7 +155,7 @@ export function FloatingSidebar() {
             >
                 {/* Active Shape Indicator (Organic Blob) */}
                 <div className="absolute inset-x-4 h-full pointer-events-none flex items-center justify-around">
-                    {topBarItems.map((item) => {
+                    {sortedItems.slice(0, 4).map((item) => {
                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                         return isActive && (
                             <motion.div
@@ -167,7 +167,7 @@ export function FloatingSidebar() {
                     })}
                 </div>
 
-                {topBarItems.map((item) => {
+                {sortedItems.slice(0, 4).map((item) => {
                     const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                     const Icon = item.icon;
 
@@ -217,7 +217,7 @@ export function FloatingSidebar() {
                                 className="absolute bottom-24 right-0 w-80 glass-neo shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] border-white/10 p-8 origin-bottom-right"
                             >
                                 <div className="grid grid-cols-2 gap-6 mb-6">
-                                    {moreItems.map((item) => {
+                                    {sortedItems.slice(4).map((item) => {
                                         const Icon = item.icon;
                                         const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                                         return (
