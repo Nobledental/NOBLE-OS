@@ -51,11 +51,11 @@ export default function DashboardPage() {
     const filters = ['Today', 'This Week', 'This Month', 'Reports'];
 
     // Map role to view component
-    const renderRoleView = () => {
+    const renderRoleView = (isTreatmentMode = false) => {
         switch (role) {
             case "DOCTOR":
             case "CONSULTANT":
-                return <DoctorDashboardView />;
+                return <DoctorDashboardView startInCockpit={isTreatmentMode} />;
             case "RECEPTIONIST":
                 return <ReceptionistDashboardView />;
             case "ASSISTANT":
@@ -142,42 +142,15 @@ export default function DashboardPage() {
             )}
 
             <AnimatePresence mode="wait">
-                {viewMode === 'overview' ? (
-                    <motion.div
-                        key={role}
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="hidden"
-                    >
-                        {renderRoleView()}
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        key="treatment"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="min-h-[600px] flex items-center justify-center"
-                    >
-                        <PanzeCard className="w-full max-w-2xl h-[400px] flex items-center justify-center border-dashed border-2 bg-slate-50/50">
-                            <div className="text-center space-y-6">
-                                <div className="w-20 h-20 bg-brand-primary/10 rounded-full flex items-center justify-center mx-auto animate-pulse">
-                                    <Armchair className="w-10 h-10 text-brand-primary" />
-                                </div>
-                                <div className="space-y-2">
-                                    <h3 className="text-2xl font-black italic tracking-tighter text-slate-900 uppercase">Treatment Mode</h3>
-                                    <p className="text-slate-500 max-w-xs mx-auto text-sm">
-                                        You are currently in the treatment focus zone. Select a patient from your queue to open the full surgical chair view.
-                                    </p>
-                                </div>
-                                <Button className="bg-slate-900 text-white rounded-full px-8 h-12 font-bold uppercase tracking-widest text-[10px]" onClick={() => setViewMode('overview')}>
-                                    Return to Overview
-                                </Button>
-                            </div>
-                        </PanzeCard>
-                    </motion.div>
-                )}
+                <motion.div
+                    key={role + viewMode}
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                >
+                    {renderRoleView(viewMode === 'treatment')}
+                </motion.div>
             </AnimatePresence>
         </div>
     );

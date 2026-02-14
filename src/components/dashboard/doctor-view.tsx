@@ -37,8 +37,8 @@ const itemVariants = {
     visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } as any }
 };
 
-export function DoctorDashboardView() {
-    const [cockpitOpen, setCockpitOpen] = useState(false);
+export function DoctorDashboardView({ startInCockpit = false }: { startInCockpit?: boolean }) {
+    const [cockpitOpen, setCockpitOpen] = useState(startInCockpit);
     const selectPatient = useCockpitStore(s => s.selectPatient);
     const clearSession = useCockpitStore(s => s.clearSession);
     const cockpitPatient = useCockpitStore(s => s.patient);
