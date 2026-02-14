@@ -12,7 +12,6 @@ import { AdminDashboardView } from "@/components/dashboard/admin-view";
 import { DoctorDashboardView } from "@/components/dashboard/doctor-view";
 import { ReceptionistDashboardView } from "@/components/dashboard/receptionist-view";
 import { AssistantDashboardView } from "@/components/dashboard/assistant-view";
-import { MobileBottomDock } from "@/components/layout/mobile-bottom-dock";
 import { VerifiedBadge } from "@/components/ui/verified-badge";
 
 // Enhanced NEO Orb with Layered Rings
@@ -180,7 +179,6 @@ export default function DashboardPage() {
                     </motion.div>
                 )}
             </AnimatePresence>
-            <MobileBottomDock />
         </div>
     );
 }

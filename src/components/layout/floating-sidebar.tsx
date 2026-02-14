@@ -65,12 +65,12 @@ export function FloatingSidebar() {
     return (
         <TooltipProvider>
             {/* Desktop Dock (Apple Organic Bottom Dock) */}
-            <motion.div
-                initial={{ y: 100, x: "-50%", opacity: 0 }}
-                animate={{ y: 0, x: "-50%", opacity: 1 }}
-                className="fixed bottom-8 left-1/2 z-50 hidden lg:flex flex-row items-center gap-2 p-2 bg-white/60 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-200 rounded-[2.5rem] transition-all duration-700 hover:border-slate-300"
+            <motion.aside
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="fixed bottom-6 left-6 z-50 hidden md:flex flex-col items-center gap-2 p-2 bg-white/60 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-200 rounded-[2.5rem] transition-all duration-700 hover:border-slate-300"
             >
-                <div className="flex flex-row items-center h-full px-2 gap-2">
+                <div className="flex flex-col items-center h-full px-2 gap-2">
                     <div className="group relative shrink-0 mr-2">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-xl shadow-neo-vibrant-blue/20 group-hover:scale-105 transition-all duration-700 cursor-pointer">
                             <Activity className="w-5 h-5 drop-shadow-md" />

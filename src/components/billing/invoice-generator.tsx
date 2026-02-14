@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { PDFDownloadButton } from "@/components/billing/pdf-download-button";
 import { Trash2, Printer, Share2, CreditCard, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UpiPaymentCard } from "@/components/billing/upi-payment-card";
@@ -124,15 +125,27 @@ export function InvoiceGenerator() {
                     )}
                 </div>
 
-                <div className="grid grid-cols-4 gap-2">
-                    <Button variant="outline" className="col-span-1" onClick={() => window.print()}>
-                        <Printer className="w-4 h-4" />
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-2">
+                    <Button variant="outline" onClick={() => window.print()}>
+                        <Printer className="w-4 h-4 mr-2" />
+                        Print
                     </Button>
-                    <Button onClick={handleFinalize} className={cn("col-span-3", enableEmi ? "bg-indigo-600 hover:bg-indigo-700" : "bg-black hover:bg-slate-800")}>
-                        <Share2 className="w-4 h-4 mr-2" />
-                        {enableEmi ? "Start EMI Application" : "Finalize & WhatsApp"}
-                    </Button>
+
+                    <PDFDownloadButton
+                        patientName="John Doe"
+                        patientPhone="+91 98765 43210"
+                        patientHealthFloId="HFL0-8821"
+                    />
                 </div>
+
+                <Button
+                    onClick={handleFinalize}
+                    className={cn("w-full", enableEmi ? "bg-indigo-600 hover:bg-indigo-700" : "bg-black hover:bg-slate-800")}
+                >
+                    <Share2 className="w-4 h-4 mr-2" />
+                    {enableEmi ? "Start EMI Application" : "Finalize & WhatsApp"}
+                </Button>
             </div>
         </div>
     );
