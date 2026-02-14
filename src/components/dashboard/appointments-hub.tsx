@@ -18,9 +18,6 @@ import {
     Search, User, MoreHorizontal, Phone, CalendarClock, X, Bell, ShieldCheck, FileText, Receipt, Eye, EyeOff, Plus, Check, MessageCircle, Mic, Sparkles
 } from "lucide-react";
 
-// --- Constants ---
-const MOCK_REVENUE = 12500; // Daily Goal Mock
-
 // --- Animation Variants ---
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -371,29 +368,29 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
                             <ChevronRight className="w-4 h-4 opacity-70" />
                         </Button>
                     )}
-                    {isArrived && (
+
+                    {/* Start Consultation - Only shown to doctors/owners */}
+                    {isArrived && canStartConsultation && (
                         <Button
-                            className={cn(
-                                "w-full h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg transition-all flex items-center justify-center gap-2",
-                                canStartConsultation
-                                    ? "bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
-                                    : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-slate-100"
-                            )}
+                            className="w-full h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg transition-all flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
                             onClick={() => {
-                                if (!canStartConsultation) {
-                                    toast.error("Only doctors can start consultations", {
-                                        description: "Please notify a doctor to begin the patient examination."
-                                    });
-                                    return;
-                                }
                                 store.updateAppointmentStatus(appt.id, 'ongoing');
                             }}
-                            disabled={!canStartConsultation}
                         >
-                            <span>{canStartConsultation ? "Start Consultation" : "Doctor Required"}</span>
-                            {canStartConsultation && <ChevronRight className="w-4 h-4 opacity-70" />}
-                            {!canStartConsultation && <ShieldCheck className="w-4 h-4 opacity-70" />}
+                            <span>Start Consultation</span>
+                            <ChevronRight className="w-4 h-4 opacity-70" />
                         </Button>
+                    )}
+
+                    {/* Info message for non-doctors when patient has arrived */}
+                    {isArrived && !canStartConsultation && (
+                        <div className="w-full p-3 rounded-xl bg-blue-50 border border-blue-200 flex items-start gap-2">
+                            <ShieldCheck className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                            <div className="text-xs text-blue-700">
+                                <span className="font-semibold block">Waiting for doctor</span>
+                                <p className="text-blue-600 mt-0.5">Patient is ready. Doctor will start consultation.</p>
+                            </div>
+                        </div>
                     )}
                     {isOngoing && (
                         <Button

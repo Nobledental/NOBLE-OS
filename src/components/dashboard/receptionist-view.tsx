@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ActiveQueue } from "./active-queue";
 import { RevenueChart } from "./revenue-chart";
+import { QuickBookingWidget } from "./quick-booking-widget";
 import { PanzeCard } from "@/components/ui/panze-card";
 import { Receipt, Calendar, Users, Wallet } from "lucide-react";
 
@@ -16,7 +17,7 @@ export function ReceptionistDashboardView() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 p-1">
             {/* Appointment & Flow Focus */}
             <motion.div variants={itemVariants} className="lg:col-span-8 flex flex-col gap-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <PanzeCard className="p-4 flex flex-col items-center justify-center text-center gap-1 border-t-4 border-green-500">
                         <Users className="w-6 h-6 text-green-500" />
                         <span className="text-xl font-bold">24</span>
@@ -38,6 +39,9 @@ export function ReceptionistDashboardView() {
                         <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Daily Cash</span>
                     </PanzeCard>
                 </div>
+
+                {/* Quick Booking Widget */}
+                <QuickBookingWidget />
 
                 <ActiveQueue />
             </motion.div>

@@ -1,7 +1,18 @@
+import { NextRequest, NextResponse } from 'next/server';
 import { GoogleCalendarService } from '@/lib/google-calendar';
 import { getISTStartOfDay, getISTEndOfDay } from '@/lib/timezone';
+import { requireAuth } from '@/lib/server-auth';
 
 export async function GET(request: NextRequest) {
+    // SECURITY: Require authentication
+    const authResult = await requireAuth(request);
+
+    if (authResult instanceof NextResponse) {
+        return authResult;
+    }
+
+    const user = authResult;
+
     const searchParams = request.nextUrl.searchParams;
     const date = searchParams.get('date'); // YYYY-MM-DD
     const activeChairs = parseInt(searchParams.get('chairs') || '3');

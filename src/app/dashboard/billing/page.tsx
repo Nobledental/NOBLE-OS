@@ -23,14 +23,14 @@ export default function BillingPage() {
                     <div className="flex justify-between items-start">
                         <div>
                             <p className="text-xs font-medium opacity-80 uppercase tracking-widest">Today's Revenue</p>
-                            <h3 className="text-2xl font-black mt-1">₹42,500</h3>
+                            <h3 className="text-2xl font-black mt-1">₹0</h3>
                         </div>
                         <div className="p-2 bg-white/10 rounded-lg">
                             <TrendingUp className="w-5 h-5 text-indigo-100" />
                         </div>
                     </div>
                     <div className="text-[10px] bg-white/10 px-2 py-1 rounded inline-self-start w-fit">
-                        +12% vs Yesterday
+                        No transactions yet
                     </div>
                 </PanzeCard>
 
@@ -66,7 +66,7 @@ export default function BillingPage() {
                         <Receipt className="w-5 h-5 text-slate-400" />
                     </div>
                     <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">Pending Invoices</p>
-                    <span className="text-xl font-black text-slate-900">3</span>
+                    <span className="text-xl font-black text-slate-900">0</span>
                 </PanzeCard>
             </div>
 

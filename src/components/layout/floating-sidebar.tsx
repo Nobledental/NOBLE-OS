@@ -112,7 +112,19 @@ export function FloatingSidebar() {
                                         </Link>
                                     </TooltipTrigger>
                                     <TooltipContent side="top" className="glass-white border-white/40 text-[9px] font-black uppercase tracking-widest text-slate-900 px-3 py-1.5 mb-2">
-                                        {item.label}
+                                        <div className="space-y-0.5">
+                                            <div>{item.label}</div>
+                                            {item.id === 'clinical' && (
+                                                <div className="text-[8px] font-normal normal-case tracking-normal text-slate-600 mt-1">
+                                                    Requires clinical access
+                                                </div>
+                                            )}
+                                            {item.id === 'staff' && (
+                                                <div className="text-[8px] font-normal normal-case tracking-normal text-slate-600 mt-1">
+                                                    Requires staff management permission
+                                                </div>
+                                            )}
+                                        </div>
                                     </TooltipContent>
                                 </Tooltip>
                             );
