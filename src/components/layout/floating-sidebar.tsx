@@ -58,9 +58,14 @@ export function FloatingSidebar() {
     // Force show all items for maximum visibility as requested by user
     const filteredItems = NAV_ITEMS;
 
+    // Ensure priority items appear first
     const priorityIds = PRIORITY_ITEMS[user?.role || ""] || ["dashboard", "appointments", "clinical", "patients"];
-    const topBarItems = filteredItems.filter(item => priorityIds.includes(item.id)).slice(0, 4);
-    const moreItems = filteredItems.filter(item => !topBarItems.some(ti => ti.id === item.id));
+
+    // Sort items: priority items first, then others
+    const sortedItems = [
+        ...filteredItems.filter(item => priorityIds.includes(item.id)),
+        ...filteredItems.filter(item => !priorityIds.includes(item.id))
+    ];
 
     return (
         <TooltipProvider>
@@ -68,17 +73,17 @@ export function FloatingSidebar() {
             <motion.div
                 initial={{ y: 100, x: "-50%", opacity: 0 }}
                 animate={{ y: 0, x: "-50%", opacity: 1 }}
-                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden lg:flex flex-row items-center gap-2 p-2 bg-white/60 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-200 rounded-[2.5rem] transition-all duration-700 hover:border-slate-300"
+                className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden lg:flex flex-row flex-wrap items-center justify-center gap-2 p-3 bg-white/60 backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.15)] border border-slate-200 rounded-[2.5rem] transition-all duration-700 hover:border-slate-300 max-w-[90vw]"
             >
-                <div className="flex flex-row items-center h-full px-2 gap-2">
-                    <div className="group relative shrink-0 mr-2">
+                <div className="flex flex-row flex-wrap items-center justify-center gap-2 px-2">
+                    <div className="group relative shrink-0">
                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-neo-vibrant-blue to-neo-electric-blue flex items-center justify-center text-white shadow-xl shadow-neo-vibrant-blue/20 group-hover:scale-105 transition-all duration-700 cursor-pointer">
                             <Activity className="w-5 h-5 drop-shadow-md" />
                         </div>
                     </div>
 
-                    <div className="flex flex-row items-center gap-2">
-                        {filteredItems.map((item) => {
+                    <div className="flex flex-row flex-wrap items-center justify-center gap-2">
+                        {sortedItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = pathname === item.href;
 
