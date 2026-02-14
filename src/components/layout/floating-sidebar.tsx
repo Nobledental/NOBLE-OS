@@ -147,22 +147,23 @@ export function FloatingSidebar() {
                 </div>
             </motion.div>
 
-            {/* Mobile/Tablet Bottom Bar - Full Width Scrollable */}
+            {/* Mobile/Tablet Bottom Bar - 4 Items + More Menu */}
             <motion.div
                 initial={{ y: 100 }}
                 animate={{ y: 0 }}
                 className="fixed bottom-4 left-0 right-0 z-50 flex lg:hidden px-2"
             >
-                <div className="w-full overflow-x-auto scrollbar-hide">
-                    <div className="flex items-center gap-2 p-2 bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200/50 min-w-min">
-                        {sortedItems.map((item) => {
+                <div className="w-full max-w-2xl mx-auto">
+                    <div className="flex items-center justify-around gap-1 p-2 bg-white/90 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border border-slate-200/50">
+                        {/* First 4 Priority Items */}
+                        {sortedItems.slice(0, 4).map((item) => {
                             const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
                             const Icon = item.icon;
 
                             return (
-                                <Link key={item.href} href={item.href} className="shrink-0">
+                                <Link key={item.href} href={item.href} className="flex-1">
                                     <div className={cn(
-                                        "flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-xl transition-all duration-300 min-w-[70px]",
+                                        "flex flex-col items-center justify-center gap-1 py-2 px-2 rounded-xl transition-all duration-300",
                                         isActive ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:bg-slate-100"
                                     )}>
                                         <Icon className={cn(
@@ -170,7 +171,7 @@ export function FloatingSidebar() {
                                             isActive ? "w-6 h-6" : "w-5 h-5"
                                         )} />
                                         <span className={cn(
-                                            "text-[8px] font-bold uppercase tracking-wider truncate max-w-[60px] text-center",
+                                            "text-[8px] font-bold uppercase tracking-wider truncate w-full text-center",
                                             isActive ? "text-white" : "text-slate-600"
                                         )}>
                                             {item.label}
@@ -180,21 +181,70 @@ export function FloatingSidebar() {
                             );
                         })}
 
-                        <div className="w-px h-8 bg-slate-200 mx-1 shrink-0" />
+                        {/* More Menu Button */}
+                        <div className="flex-1">
+                            <button
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                                className={cn(
+                                    "w-full flex flex-col items-center justify-center gap-1 py-2 px-2 rounded-xl transition-all duration-300",
+                                    isMenuOpen ? "bg-slate-900 text-white shadow-lg" : "text-slate-500 hover:bg-slate-100"
+                                )}
+                            >
+                                <Grid className={cn(
+                                    "transition-all",
+                                    isMenuOpen ? "w-6 h-6 rotate-90" : "w-5 h-5"
+                                )} />
+                                <span className={cn(
+                                    "text-[8px] font-bold uppercase tracking-wider",
+                                    isMenuOpen ? "text-white" : "text-slate-600"
+                                )}>
+                                    More
+                                </span>
+                            </button>
 
-        
-                        <button
-                            onClick={logout}
-                            className="flex flex-col items-center justify-center gap-1 py-2 px-3 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-500 transition-all shrink-0 min-w-[70px]"
-                        >
-                            <LogOut className="w-5 h-5" />
-                            <span className="text-[8px] font-bold uppercase tracking-wider">
-                                Logout
-                            </span>
-                        </button>
+                            {/* More Menu Popup */}
+                            <AnimatePresence>
+                                {isMenuOpen && (
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                                        className="absolute bottom-20 right-2 left-2 max-w-md mx-auto bg-white/95 backdrop-blur-2xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)] border border-slate-200 rounded-2xl p-4"
+                                    >
+                                        <div className="grid grid-cols-2 gap-3 mb-3">
+                                            {sortedItems.slice(4).map((item) => {
+                                                const Icon = item.icon;
+                                                const isActive = pathname === item.href || (item.href !== "/dashboard" && pathname?.startsWith(item.href));
+                                                return (
+                                                    <Link
+                                                        key={item.href}
+                                                        href={item.href}
+                                                        onClick={() => setIsMenuOpen(false)}
+                                                        className={cn(
+                                                            "flex flex-col items-center gap-2 p-4 rounded-xl transition-all duration-300",
+                                                            isActive ? "bg-slate-900 text-white shadow-lg" : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                                                        )}
+                                                    >
+                                                        <Icon className="w-6 h-6" />
+                                                        <span className="text-[9px] font-bold text-center uppercase tracking-wider">{item.label}</span>
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                        <button
+                                            onClick={logout}
+                                            className="w-full flex items-center justify-center gap-3 p-3 rounded-xl bg-red-50 text-red-500 hover:bg-red-100 font-bold text-[9px] uppercase tracking-wider transition-all"
+                                        >
+                                            <LogOut className="w-4 h-4" />
+                                            Logout
+                                        </button>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
                     </div>
                 </div>
             </motion.div>
-                </TooltipProvider>
-                );
+        </TooltipProvider>
+    );
 }
