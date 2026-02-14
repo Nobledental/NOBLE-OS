@@ -1,0 +1,32 @@
+
+> manager@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 3.1min
+  Running TypeScript ...
+
+<--- Last few GCs --->
+
+[15668:000002363A8A0000]    79647 ms: Mark-Compact 2040.9 (2050.9) -> 2038.9 (2047.7) MB, pooled: 6 MB, 1136.22 / 0.00 ms  (average mu = 0.196, current mu = 0.015) allocation failure; scavenge might not succeed
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 00007FF6E1057F8F node::OnFatalError+1343
+ 2: 00007FF6E1C9B1E7 v8::Function::NewInstance+423
+ 3: 00007FF6E1A9BA97 v8::base::AddressSpaceReservation::AddressSpaceReservation+322071
+ 4: 00007FF6E1A9F7A4 v8::base::AddressSpaceReservation::AddressSpaceReservation+337700
+ 5: 00007FF6E1AAE73C v8::internal::StrongRootAllocatorBase::deallocate_impl+16604
+ 6: 00007FF6E1AADF7B v8::internal::StrongRootAllocatorBase::deallocate_impl+14619
+ 7: 00007FF6E2F15D2D v8::base::UnsignedDivisionByConstant<unsigned __int64>+2791341
+ 8: 00007FF6E1A99560 v8::base::AddressSpaceReservation::AddressSpaceReservation+312544
+ 9: 00007FF6E1AB3DEA X509_STORE_set_cleanup+5098
+10: 00007FF6E1AC0206 uv_timer_set_repeat+20566
+11: 00007FF6E1693137 v8::String::Value::~Value+143495
+12: 00000236727F733A 
+Next.js build worker exited with code: 134 and signal: null

@@ -49,7 +49,7 @@ export function NewAppointmentDialog() {
         if (!date) return;
 
         setIsLoadingSlots(true);
-        // @ts-expect-error - We added this to the store but TS might complain until full restart
+
         const slots = await store.fetchAvailableSlots(date, store.activeChairs || 3);
         setAvailableSlots(slots);
         setIsLoadingSlots(false);
@@ -87,6 +87,7 @@ export function NewAppointmentDialog() {
             slot: bookingDetails.time,
             reason: bookingDetails.reason,
             type: 'consultation',
+            status: 'confirmed', // Required by Appointment interface
             googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined,
             locationLink: bookingDetails.locationShare ? store.clinicDetails?.googleMapsUrl : undefined
         });
@@ -124,6 +125,7 @@ export function NewAppointmentDialog() {
             slot: bookingDetails.time,
             reason: bookingDetails.reason,
             type: 'new',
+            status: 'confirmed', // Required by Appointment interface
             googleMeetLink: bookingDetails.googleMeet ? `https://meet.google.com/${crypto.randomUUID().slice(0, 3)}-${crypto.randomUUID().slice(0, 4)}-${crypto.randomUUID().slice(0, 3)}` : undefined,
             locationLink: bookingDetails.locationShare ? store.clinicDetails?.googleMapsUrl : undefined
         });

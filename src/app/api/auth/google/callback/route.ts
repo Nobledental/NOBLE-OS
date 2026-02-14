@@ -1,17 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { z } from 'zod';
 import { GoogleCalendarService } from '@/lib/google-calendar';
+
+// Zod schema for OAuth callback query parameters
+const CallbackQuerySchema = z.object({
+    code: z.string().min(1, 'Authorization code is required').optional(),
+    error: z.string().optional(),
+});
 
 export async function GET(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
-    const code = searchParams.get('code');
-    const error = searchParams.get('error');
+    const rawQuery = {
+        code: searchParams.get('code'),
+        error: searchParams.get('error'),
+    };
+
+    // Validate query parameters
+    const parseResult = CallbackQuerySchema.safeParse(rawQuery);
+
+    if (!parseResult.success) {
+        return NextResponse.json(
+            {
+                error: 'Invalid callback parameters',
+                details: parseResult.error.flatten()
+            },
+            { status: 400 }
+        );
+    }
+
+    const { code, error } = parseResult.data;
 
     if (error) {
         return NextResponse.json({ error: 'Google Auth Failed', details: error }, { status: 400 });
     }
 
     if (!code) {
-        return NextResponse.json({ error: 'No code provided' }, { status: 400 });
+        return NextResponse.json({ error: 'No authorization code provided' }, { status: 400 });
     }
 
     try {
@@ -24,7 +48,13 @@ export async function GET(request: NextRequest) {
 
         return NextResponse.redirect(url);
     } catch (err: any) {
-        console.error('Token Exchange Error:', err);
-        return NextResponse.json({ error: 'Failed to exchange token', details: err.message }, { status: 500 });
+        console.error('[Google OAuth] Token Exchange Error:', err);
+        return NextResponse.json(
+            {
+                error: 'Failed to exchange authorization token',
+                message: err.message
+            },
+            { status: 500 }
+        );
     }
 }

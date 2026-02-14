@@ -19,7 +19,7 @@ export function PermissionGuard({ permission, children, fallback = null }: Permi
     const { user } = useAuth();
 
     // Solo Mode Bypass or Permission Check
-    const hasPermission = user?.permissions?.solo_mode || user?.permissions?.[permission] === true;
+    const hasPermission = user?.featurePermissions?.solo_mode || user?.featurePermissions?.[permission] === true;
 
     if (!hasPermission) {
         return <>{fallback}</>;

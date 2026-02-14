@@ -1,0 +1,42 @@
+﻿[96msrc/components/appointments/new-appointment-dialog.tsx[0m:[93m121[0m:[93m30[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ patientId: string; doctorId: string | undefined; date: string; slot: string; reason: string; type: string; googleMeetLink: string | undefined; locationLink: string | undefined; }' is not assignable to parameter of type 'Omit<Appointment, "id">'.
+  Property 'status' is missing in type '{ patientId: string; doctorId: string | undefined; date: string; slot: string; reason: string; type: string; googleMeetLink: string | undefined; locationLink: string | undefined; }' but required in type 'Omit<Appointment, "id">'.
+
+[7m121[0m         store.addAppointment({
+[7m   [0m [91m                             ~[0m
+[7m122[0m             patientId: newId,
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m129[0m             locationLink: bookingDetails.locationShare ? store.clinicDetails?.googleMapsUrl : undefined
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m130[0m         });
+[7m   [0m [91m~~~~~~~~~[0m
+
+  [96msrc/lib/scheduling-store.ts[0m:[93m56[0m:[93m5[0m
+    [7m56[0m     status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing';
+    [7m  [0m [96m    ~~~~~~[0m
+    'status' is declared here.
+
+[96msrc/components/billing/smart-billing-demo.tsx[0m:[93m67[0m:[93m26[0m - [91merror[0m[90m TS2345: [0mArgument of type '{ appointmentId: string; patientId: string; doctorId: string; procedure: { id: string; name: string; category: "preventive"; } | { id: string; name: string; category: "prosthodontic"; } | { id: string; name: string; category: "diagnostic"; }; ... 5 more ...; totalSessions: number | undefined; }' is not assignable to parameter of type 'Omit<TreatmentRecord, "id" | "createdAt" | "updatedAt" | "autoAddedToBilling">'.
+  Property 'teethCount' is missing in type '{ appointmentId: string; patientId: string; doctorId: string; procedure: { id: string; name: string; category: "preventive"; } | { id: string; name: string; category: "prosthodontic"; } | { id: string; name: string; category: "diagnostic"; }; ... 5 more ...; totalSessions: number | undefined; }' but required in type 'Omit<TreatmentRecord, "id" | "createdAt" | "updatedAt" | "autoAddedToBilling">'.
+
+[7m 67[0m             addTreatment({
+[7m   [0m [91m                         ~[0m
+[7m 68[0m                 appointmentId: demoAppointmentId,
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m...[0m 
+[7m 77[0m                 totalSessions: sample.totalSessions
+[7m   [0m [91m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[7m 78[0m             });
+[7m   [0m [91m~~~~~~~~~~~~~[0m
+
+  [96msrc/types/treatment-record.ts[0m:[93m38[0m:[93m5[0m
+    [7m38[0m     teethCount: number; // Auto-calculated from teethAffected.length
+    [7m  [0m [96m    ~~~~~~~~~~[0m
+    'teethCount' is declared here.
+
+
+Found 2 errors in 2 files.
+
+Errors  Files
+     1  src/components/appointments/new-appointment-dialog.tsx[90m:121[0m
+     1  src/components/billing/smart-billing-demo.tsx[90m:67[0m

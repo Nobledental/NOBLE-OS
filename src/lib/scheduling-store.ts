@@ -55,6 +55,9 @@ export interface Appointment {
     slot: string;
     status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing';
     isFamily?: boolean;
+    reason?: string; // Added for dialog usage
+    googleMeetLink?: string; // Added for virtual appointments
+    locationLink?: string; // Added for location sharing
     arrivedAt?: string;
     startedAt?: string;
     completedAt?: string;

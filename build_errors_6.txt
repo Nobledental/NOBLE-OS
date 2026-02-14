@@ -1,0 +1,20 @@
+src/app/api/calendar/event/route.ts(72,13): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/components/appointments/new-appointment-dialog.tsx(88,13): error TS2353: Object literal may only specify known properties, and 'reason' does not exist in type 'Omit<Appointment, "id">'.
+src/components/appointments/new-appointment-dialog.tsx(125,13): error TS2353: Object literal may only specify known properties, and 'reason' does not exist in type 'Omit<Appointment, "id">'.
+src/components/billing/smart-billing-demo.tsx(67,26): error TS2345: Argument of type '{ appointmentId: string; patientId: string; doctorId: string; procedure: { id: string; name: string; category: "preventive"; } | { id: string; name: string; category: "prosthodontic"; } | { id: string; name: string; category: "diagnostic"; }; ... 5 more ...; totalSessions: number | undefined; }' is not assignable to parameter of type 'Omit<TreatmentRecord, "id" | "createdAt" | "updatedAt" | "autoAddedToBilling">'.
+  Property 'teethCount' is missing in type '{ appointmentId: string; patientId: string; doctorId: string; procedure: { id: string; name: string; category: "preventive"; } | { id: string; name: string; category: "prosthodontic"; } | { id: string; name: string; category: "diagnostic"; }; ... 5 more ...; totalSessions: number | undefined; }' but required in type 'Omit<TreatmentRecord, "id" | "createdAt" | "updatedAt" | "autoAddedToBilling">'.
+src/components/clinical/case-queue.tsx(81,129): error TS2339: Property 'reason' does not exist on type 'Appointment'.
+src/components/clinical/case-queue.tsx(116,91): error TS2339: Property 'reason' does not exist on type 'Appointment'.
+src/components/dashboard/appointments-hub.tsx(66,90): error TS2367: This comparison appears to be unintentional because the types '"canceled" | "completed" | "no-show" | "arrived" | "ongoing"' and '"pending"' have no overlap.
+src/components/dashboard/appointments-hub.tsx(105,56): error TS2304: Cannot find name 'MOCK_REVENUE'.
+src/components/dashboard/appointments-hub.tsx(219,32): error TS7006: Parameter 'open' implicitly has an 'any' type.
+src/components/security/permission-guard.tsx(22,33): error TS2339: Property 'permissions' does not exist on type 'User'.
+src/components/security/permission-guard.tsx(22,65): error TS2339: Property 'permissions' does not exist on type 'User'.
+src/components/security/with-permission.tsx(19,19): error TS2339: Property 'permissions' does not exist on type 'User'.
+src/components/security/with-permission.tsx(21,19): error TS2339: Property 'permissions' does not exist on type 'User'.
+src/components/staff/staff-id-card.tsx(19,9): error TS2561: Object literal may only specify known properties, but 'contentRef' does not exist in type 'IReactToPrintProps'. Did you mean to write 'content'?
+src/components/theme-provider.tsx(5,41): error TS2307: Cannot find module 'next-themes/dist/types' or its corresponding type declarations.
+src/components/ui/calendar.tsx(57,17): error TS2353: Object literal may only specify known properties, and 'IconLeft' does not exist in type 'Partial<CustomComponents>'.
+src/hooks/use-booking.ts(148,93): error TS2448: Block-scoped variable 'fetchSlots' used before its declaration.
+src/hooks/use-booking.ts(148,93): error TS2454: Variable 'fetchSlots' is used before being assigned.

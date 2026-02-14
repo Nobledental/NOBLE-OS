@@ -37,7 +37,7 @@ interface User {
 }
 
 // Role-based permission matrix
-const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
+export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
     OWNER: [
         "can_view_revenue",
         "can_edit_inventory",
@@ -237,7 +237,7 @@ export async function validateRequest<T>(
                 {
                     error: "Validation Error",
                     message: "Invalid request data",
-                    issues: error.errors.map(err => ({
+                    issues: (error as any).errors.map((err: any) => ({
                         path: err.path.join('.'),
                         message: err.message
                     }))

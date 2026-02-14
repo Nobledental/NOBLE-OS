@@ -70,6 +70,7 @@ export function SmartBillingDemo() {
                 doctorId: demoDoctorId,
                 procedure: sample.procedure,
                 teethAffected: sample.teethAffected,
+                teethCount: sample.teethAffected.length, // Required by TreatmentRecord interface
                 status: 'planned',
                 notes: sample.notes,
                 isMultiSession: sample.isMultiSession,

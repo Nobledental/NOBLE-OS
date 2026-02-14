@@ -10,7 +10,7 @@ const SCOPES = [
 
 interface CalendarEvent {
     summary: string;
-    description: string;
+    description?: string;
     start: { dateTime: string };
     end: { dateTime: string };
     attendees?: { email: string }[];
@@ -19,8 +19,8 @@ interface CalendarEvent {
 }
 
 export class GoogleCalendarService {
-    private oauth2Client;
-    private supabase;
+    private oauth2Client: any;
+    private supabase: any;
 
     constructor() {
         const clientId = process.env.GOOGLE_CLIENT_ID;

@@ -16,9 +16,9 @@ export function withPermission<P extends object>(
 
         // Admin/Owner Bypass or Solo Mode Bypass
         const isAuthorized =
-            user?.permissions?.solo_mode ||
+            user?.featurePermissions?.solo_mode ||
             user?.role === "OWNER" ||
-            user?.permissions?.[permissionKey] === true;
+            user?.featurePermissions?.[permissionKey] === true;
 
         if (!isAuthorized) {
             // Hard removal from Virtual DOM for security (returns null)

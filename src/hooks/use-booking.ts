@@ -141,11 +141,7 @@ export function useBooking() {
 
     // --- Data Fetching ---
 
-    useEffect(() => {
-        if (state.selectedDate && state.selectedService) {
-            fetchSlots();
-        }
-    }, [state.selectedDate, state.selectedService, state.bookingType, state.selectedDoctor, fetchSlots]);
+
 
     const fetchSlots = useCallback(async () => {
         if (!state.selectedDate || !state.selectedService) return;
@@ -171,6 +167,12 @@ export function useBooking() {
             setLoadingSlots(false);
         }
     }, [state.selectedDate, state.selectedService, state.selectedDoctor]);
+
+    useEffect(() => {
+        if (state.selectedDate && state.selectedService) {
+            fetchSlots();
+        }
+    }, [state.selectedDate, state.selectedService, state.bookingType, state.selectedDoctor, fetchSlots]);
 
     // --- Submission ---
 
@@ -251,7 +253,7 @@ export function useBooking() {
             updatePatientDetails,
             startVoiceInput,
             confirmBooking,
-            // @ts-expect-error - Legacy step type mapping
+
             setStep: (step: BookingStep) => setState(prev => ({ ...prev, step })),
             resetRaw: () => setState(INITIAL_STATE)
         }

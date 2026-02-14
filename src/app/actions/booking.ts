@@ -8,6 +8,7 @@ interface BookingRequest {
     patientPhone: string;
     patientEmail?: string;
     serviceId: string;
+    doctorId?: string; // Added to match usage
     date: string; // ISO String
     startTime: string; // HH:mm
     notes?: string;

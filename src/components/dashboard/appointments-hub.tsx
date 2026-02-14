@@ -63,7 +63,7 @@ export function AppointmentsHub() {
         if (filter === 'all') return true;
         if (filter === 'waiting') return appt.status === 'arrived';
         if (filter === 'done') return appt.status === 'completed';
-        if (filter === 'upcoming') return !appt.status || appt.status === 'confirmed' || appt.status === 'pending';
+        if (filter === 'upcoming') return !appt.status || appt.status === 'confirmed';
         return true;
     });
 
@@ -102,7 +102,7 @@ export function AppointmentsHub() {
                                     "text-sm font-black transition-all",
                                     showRevenue ? "text-emerald-600" : "text-slate-200 bg-slate-100 rounded px-1 filter blur-[2px]"
                                 )}>
-                                    {showRevenue ? `₹${MOCK_REVENUE.toLocaleString()}` : "₹12,450"}
+                                    {showRevenue ? `₹${(12450).toLocaleString()}` : "₹12,450"}
                                 </span>
                             </div>
                             <NewAppointmentDialog />
@@ -216,7 +216,7 @@ export function AppointmentsHub() {
 
             <RescheduleDialog
                 open={rescheduleData.open}
-                onOpenChange={(open) => setRescheduleData(prev => ({ ...prev, open }))}
+                onOpenChange={(open: boolean) => setRescheduleData(prev => ({ ...prev, open }))}
                 apptId={rescheduleData.apptId}
                 store={store}
             />
@@ -467,6 +467,13 @@ function RescheduleDialog({ open, onOpenChange, apptId, store }: any) {
         const slots = await store.fetchAvailableSlots(d, store.activeChairs || 3);
         setAvailableSlots(slots);
         setLoading(false);
+    };
+
+    const toggleExtrasDialog = (open: boolean) => {
+        if (!apptId || !date || !slot) return;
+        store.rescheduleAppointment(apptId, date, slot);
+        toast.success("Appointment Rescheduled");
+        onOpenChange(false);
     };
 
     const handleConfirm = () => {

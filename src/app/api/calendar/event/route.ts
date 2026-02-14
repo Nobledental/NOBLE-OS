@@ -10,7 +10,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleCalendarService } from '@/lib/google-calendar';
-import { requireAuth, validateRequest, logAuditTrail } from '@/lib/server-auth';
+import { requireAuth, validateRequest, logAuditTrail, ROLE_PERMISSIONS } from '@/lib/server-auth';
 import { z } from 'zod';
 
 // Validation schema for calendar event creation
@@ -33,6 +33,19 @@ export async function POST(request: NextRequest) {
 
     const user = authResult;
 
+    // SECURITY: Require permission to create appointments
+    const rolePermissions = ROLE_PERMISSIONS[user.role] || [];
+    if (!rolePermissions.includes('can_create_appointments')) {
+        return NextResponse.json(
+            {
+                error: 'Forbidden',
+                message: 'You don\'t have permission to create calendar events',
+                role: user.role
+            },
+            { status: 403 }
+        );
+    }
+
     // VALIDATION: Validate request body
     const validationResult = await validateRequest(request, createEventSchema);
 
@@ -45,7 +58,7 @@ export async function POST(request: NextRequest) {
     try {
         const calendarService = new GoogleCalendarService();
 
-        // Parse start time with timezone handling
+        // Parse start time - if no timezone specified, assume Asia/Kolkata (IST +05:30)
         const startTime = new Date(
             start.includes('Z') || start.includes('+')
                 ? start
