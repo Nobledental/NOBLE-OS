@@ -11,7 +11,7 @@ import { Lock, Skull, Syringe, Activity, FileText } from "lucide-react";
 
 // Clinical Specialties & Components
 import { CaseQueue } from "@/components/clinical/case-queue";
-import { AbhaCard } from "@/components/patient/abha-card";
+// ABHA Card removed
 import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 import CaseSheetRenderer from "@/components/clinical/case-sheet-renderer";
 import PrescriptionEngine from "@/components/clinical/prescription-engine";
@@ -68,7 +68,30 @@ export function ClinicalMasterHub() {
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-7xl mx-auto w-full">
                         {/* Bento Metrics Cell */}
                         <div className="lg:col-span-4 space-y-6">
-                            <AbhaCard />
+                            <Card className="p-6 bg-gradient-to-br from-indigo-600 to-violet-700 text-white rounded-[2.5rem] shadow-xl relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:scale-110 transition-transform duration-700">
+                                    <Activity className="w-32 h-32" />
+                                </div>
+                                <div className="relative z-10 space-y-6">
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-indigo-200 mb-1">Clinic Pulse</p>
+                                        <h3 className="text-3xl font-black tracking-tight">System Optimal</h3>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                                        <div>
+                                            <p className="text-[9px] font-bold uppercase tracking-wider text-indigo-200">Active</p>
+                                            <p className="text-2xl font-black">12</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-[9px] font-bold uppercase tracking-wider text-indigo-200">Completed</p>
+                                            <p className="text-2xl font-black">48</p>
+                                        </div>
+                                    </div>
+                                    <Badge className="bg-emerald-400/20 text-emerald-300 border-none px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                        98% Efficiency
+                                    </Badge>
+                                </div>
+                            </Card>
 
                             <div className="grid grid-cols-2 gap-4">
                                 <Card className="p-6 bg-white rounded-[2.5rem] border-slate-100 shadow-sm transition-all hover:shadow-md">
