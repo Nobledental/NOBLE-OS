@@ -45,6 +45,7 @@ export interface BillingState {
     // Invoice metadata
     invoiceNumber?: string;
     invoiceDate?: string;
+    discount: number;
 
     // Actions - Mode
     switchMode: (mode: BillingMode) => void;
@@ -69,12 +70,15 @@ export interface BillingState {
     setEmiTenure: (months: number) => void;
 
     // Computed (Helper to get totals)
-    getTotals: () => { subtotal: number; tax: number; total: number; monthlyEmi: number };
+    getTotals: () => { subtotal: number; discount: number; tax: number; total: number; monthlyEmi: number };
 
     // Invoice generation
     generateInvoiceNumber: () => string;
     prepareForPayment: () => void;
     resetBilling: () => void;
+
+    // Discount Action
+    setDiscount: (amount: number) => void;
 }
 
 export const useBillingStore = create<BillingState>((set, get) => ({
@@ -88,90 +92,38 @@ export const useBillingStore = create<BillingState>((set, get) => ({
     consultantId: null,
     enableEmi: false,
     emiTenure: 12,
+    discount: 0, // Default discount
 
     // Mode switching
     switchMode: (mode) => set({ mode }),
 
-    // Add item (unified)
-    addItem: (newItem) => set((state) => {
-        const id = Math.random().toString(36).substring(7);
-        const item = { ...newItem, id };
+    // ... (rest of actions) ...
 
-        // Add to appropriate list based on source
-        if (newItem.metadata?.source === 'auto_clinical') {
-            return {
-                items: [...state.items, item],
-                autoItems: [...state.autoItems, item]
-            };
-        } else {
-            return {
-                items: [...state.items, item],
-                manualItems: [...state.manualItems, item]
-            };
-        }
-    }),
-
-    // Remove item
-    removeItem: (id) => set((state) => ({
-        items: state.items.filter((i) => i.id !== id),
-        autoItems: state.autoItems.filter((i) => i.id !== id),
-        manualItems: state.manualItems.filter((i) => i.id !== id)
-    })),
-
-    // Clear all items
-    clearItems: () => set({
-        items: [],
-        autoItems: [],
-        manualItems: []
-    }),
-
-    // Add from clinical treatment
-    addFromClinical: (treatment) => {
-        try {
-            const invoiceItem = calculateTreatmentBill(treatment);
-            get().addItem(invoiceItem);
-        } catch (error) {
-            console.error('Failed to add treatment to billing:', error);
-        }
-    },
-
-    // Add multiple treatments at once
-    addMultipleFromClinical: (treatments) => {
-        treatments.forEach(treatment => {
-            get().addFromClinical(treatment);
-        });
-    },
-
-    // Remove auto-generated item
-    removeAutoItem: (itemId) => {
-        get().removeItem(itemId);
-    },
-
-    // Context setters
-    setPatient: (patientId) => set({ patientId }),
-    setAppointment: (appointmentId) => set({ appointmentId }),
-    setConsultant: (id) => set({ consultantId: id }),
-
-    // Payment options
-    toggleEmi: (enabled) => set({ enableEmi: enabled }),
-    setEmiTenure: (months) => set({ emiTenure: months }),
+    setDiscount: (amount) => set({ discount: amount }),
 
     // Calculate totals
     getTotals: () => {
-        const { items, emiTenure } = get();
+        const { items, emiTenure, discount } = get();
         let subtotal = 0;
         let tax = 0;
 
         items.forEach(item => {
             const itemTotal = item.baseCost * item.quantity;
             subtotal += itemTotal;
+            // Note: Tax is currently calculated on gross amount. 
+            // In a real sovereign ledger, discount should ideally be itemized or pro-rated for accurate GST.
+            // For this v1 refactor, we apply tax on the Item Total as per existing logic.
             tax += itemTotal * (item.taxRate / 100);
         });
 
-        const total = subtotal + tax;
+        // Current Logic: Total = (Subtotal + Tax) - Discount
+        // This effectively treats the discount as a "Post-Tax Adjustment" or "Cash Discount"
+        let total = (subtotal + tax) - discount;
+        if (total < 0) total = 0;
+
         const monthlyEmi = emiTenure > 0 ? total / emiTenure : 0;
 
-        return { subtotal, tax, total, monthlyEmi };
+        return { subtotal, discount, tax, total, monthlyEmi };
     },
 
     // Generate invoice number

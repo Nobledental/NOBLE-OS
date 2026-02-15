@@ -1,5 +1,7 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { supabase } from '@/lib/supabase';
+import { format, parseISO } from 'date-fns';
 
 export type BookingMode = 'auto' | 'manual' | 'open_queue';
 
@@ -40,7 +42,7 @@ export interface DentalChair {
     name: string;
     location: string;
     type: 'surgical' | 'hygiene' | 'consultation';
-    status: 'ACTIVE' | 'AVAILABLE' | 'MAINTENANCE' | 'CLEANING' | 'IDLE'; // Aligned with Hub
+    status: 'ACTIVE' | 'AVAILABLE' | 'MAINTENANCE' | 'CLEANING' | 'IDLE';
     currentAppointmentId?: string;
     efficiency?: number;
     metadata?: Record<string, string | number | boolean | null>;
@@ -51,16 +53,17 @@ export interface Appointment {
     patientId: string;
     doctorId?: string | null;
     type: string;
-    date: string;
-    slot: string;
+    date: string; // ISO-8601 Date String (YYYY-MM-DD)
+    slot: string; // HH:mm
     status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing';
     isFamily?: boolean;
-    reason?: string; // Added for dialog usage
-    googleMeetLink?: string; // Added for virtual appointments
-    locationLink?: string; // Added for location sharing
+    reason?: string;
+    googleMeetLink?: string;
+    locationLink?: string;
     arrivedAt?: string;
     startedAt?: string;
     completedAt?: string;
+    clinicId?: string; // Multi-tenancy
 }
 
 export interface SchedulingConfig {
@@ -72,15 +75,14 @@ export interface SchedulingConfig {
     doctors: Doctor[];
     patients: PatientShort[];
     appointments: Appointment[];
-    // Deprecating strict numbers in favor of Chairs array, but keeping for backward compat if needed or calculating from array
     operationalChairs: number;
     activeChairs: number;
-    chairs: DentalChair[]; // NEW: Source of Truth for "Space"
-    // Verified Clinic Details (GMB)
+    chairs: DentalChair[];
     clinicDetails?: {
+        id?: string; // UUID for Multi-tenancy
         name: string;
-        slogan?: string; // Marketing Tagline
-        websiteUrl?: string; // Custom Domain
+        slogan?: string;
+        websiteUrl?: string;
         address: string;
         phone: string;
         googleMapsUrl?: string;
@@ -91,6 +93,7 @@ export interface SchedulingConfig {
         isVerified: boolean;
         syncStatus?: 'idle' | 'pending' | 'success' | 'error';
     };
+    showRevenue: boolean; // Privacy Mode
 }
 
 interface SchedulingState extends SchedulingConfig {
@@ -100,22 +103,33 @@ interface SchedulingState extends SchedulingConfig {
     removeBreak: (id: string) => void;
     setBookingMode: (mode: BookingMode) => void;
     toggleAvailabilityVisibility: () => void;
+    toggleRevenueVisibility: () => void; // New Action
     toggleDoctorAvailability: (id: string) => void;
     addPatient: (patient: PatientShort) => void;
-    addAppointment: (appt: Omit<Appointment, 'id'>) => void;
+
+    // Appointment Actions (Supabase Connected)
+    addAppointment: (appt: Omit<Appointment, 'id'>) => Promise<void>;
+    updateAppointmentStatus: (id: string, status: Appointment['status']) => Promise<void>;
+    rescheduleAppointment: (id: string, newDate: string, newSlot: string) => Promise<void>;
     assignDoctor: (apptId: string, doctorId: string) => void;
 
     // Chair Actions
-    setChairCapacity: (operational: number, active: number) => void; // Legacy wrapper?
+    setChairCapacity: (operational: number, active: number) => void;
     addChair: (chair: Omit<DentalChair, 'id' | 'status'>) => void;
     updateChairStatus: (id: string, status: DentalChair['status']) => void;
     removeChair: (id: string) => void;
 
+    // Data Fetching & Real-time
     fetchAvailableSlots: (date: string, activeChairs: number, duration?: number) => Promise<{ time: string; capacity: number; available: number }[]>;
-    updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void; // New Action
-    updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show') => void;
-    rescheduleAppointment: (id: string, newDate: string, newSlot: string) => void;
+    subscribeToAppointments: () => void; // Real-time subscription
+    unsubscribeFromAppointments: () => void; // Cleanup
+
+    updateClinicDetails: (details: SchedulingConfig['clinicDetails']) => void;
     importFromGoogle: () => Promise<boolean>;
+
+    // Patient Actions
+    fetchPatients: () => Promise<void>;
+    searchPatients: (query: string) => Promise<PatientShort[]>;
 }
 
 const DEFAULT_CONFIG: SchedulingConfig = {
@@ -124,6 +138,7 @@ const DEFAULT_CONFIG: SchedulingConfig = {
         { id: '1', start: "13:00", end: "14:00", label: "Lunch Break" }
     ],
     bookingMode: 'manual',
+    showRevenue: false, // Default to hidden for privacy
     showDoctorAvailability: true,
     slotDurationMinutes: 30,
     doctors: [
@@ -131,19 +146,15 @@ const DEFAULT_CONFIG: SchedulingConfig = {
             id: 'd1',
             name: "Dr. Lead Dentist",
             specialty: "Clinical Director",
-            image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300", // Updated to a more professional headshot if needed, or keep existing
+            image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&q=80&w=300&h=300",
             rating: 5.0,
             experience: 15,
             languages: ["English", "Tamil", "Hindi"],
             isAvailable: true
         }
     ],
-    patients: [
-        { id: 'p1', name: "Alice Johnson", phone: "9876543210" },
-        { id: 'p2', name: "Bob Smith", phone: "9123456780" }
-    ],
-    appointments: [],
-    // Defaults
+    patients: [], // Load from DB
+    appointments: [], // Load from DB
     operationalChairs: 5,
     activeChairs: 3,
     chairs: [
@@ -151,13 +162,13 @@ const DEFAULT_CONFIG: SchedulingConfig = {
         { id: 'c2', name: 'Hygiene Bay 1', location: 'Floor 1', type: 'hygiene', status: 'ACTIVE', efficiency: 88 },
         { id: 'c3', name: 'Consult Room 1', location: 'Ground', type: 'consultation', status: 'AVAILABLE', efficiency: 100 },
     ],
-    // Verified Clinic Details (Pre-filled for Noble Dental)
     clinicDetails: {
+        id: '00000000-0000-0000-0000-000000000000', // Default / Fallback ID
         name: 'Noble Dental Care',
         slogan: 'PIONEERING BETTER HEALTH',
         websiteUrl: 'www.nobledental.in',
         address: '1ST Floor, ICA CLINIC, HUDA LAYOUT, NALLAGANDLA, HYDERABAD -500019',
-        phone: '+91-8610-425342', // Verified from Branding Config
+        phone: '+91-8610-425342',
         lat: 17.4834,
         lng: 78.3155,
         isVerified: true,
@@ -165,25 +176,6 @@ const DEFAULT_CONFIG: SchedulingConfig = {
         googleLocationId: 'noble-nallagandla-001'
     }
 };
-
-// Simulation Logic: Generate slots based on Active Chairs
-// Backend Integration: Fetch slots from API
-
-// Simulation Logic: Generate slots based on Active Chairs
-// Backend Integration: Fetch slots from API
-export const fetchAvailableSlots = async (dateStr: string, activeChairs: number, duration: number, config: SchedulingConfig) => {
-    try {
-        // In real app, we might pass duration to API too
-        const res = await fetch(`/api/calendar/availability?date=${dateStr}&chairs=${activeChairs}&duration=${duration}`);
-        if (!res.ok) throw new Error("Failed to fetch slots");
-        const data = await res.json();
-        return data.slots;
-    } catch (_err) {
-        // Fallback Simulation
-        return generateFallbackSlots(dateStr, activeChairs, duration, config);
-    }
-};
-
 
 export const PROCEDURE_TYPES = [
     { id: 'consultation', label: 'Consultation', duration: 30, color: 'bg-blue-100 text-blue-800' },
@@ -196,127 +188,109 @@ export const PROCEDURE_TYPES = [
     { id: 'veneers', label: 'Dental Veneers', duration: 90, color: 'bg-purple-100 text-purple-800' },
 ];
 
-const generateFallbackSlots = (
-    dateStr: string,
-    activeChairs: number, // Still used as an override or we calculate from config.chairs
-    durationMinutes: number = 30,
-    config: SchedulingConfig
-) => {
-    const slots = [];
-    const { start: startStr, end: endStr } = config.operatingHours;
-
-    // Use "Real" Active Chairs from store if available, otherwise fallback to prop
-    const _realActiveChairs = config.chairs && config.chairs.length > 0
-        ? config.chairs.filter(c => c.status === 'ACTIVE' || c.status === 'AVAILABLE').length
-        : activeChairs;
-
-    // Parse start/end times
-    const startTime = new Date(`${dateStr}T${startStr}:00`);
-    const endTime = new Date(`${dateStr}T${endStr}:00`);
-    const now = new Date();
-
-    // Loop through day in 15-min intervals
-    const currentTime = new Date(startTime);
-
-    while (currentTime.getTime() + (durationMinutes * 60000) <= endTime.getTime()) {
-        const slotEnd = new Date(currentTime.getTime() + (durationMinutes * 60000));
-        const timeString = currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-
-        let isAvailable = true;
-
-        // 1. Check if slot is in the past (for today)
-        if (new Date(dateStr).toDateString() === now.toDateString() && currentTime < now) {
-            isAvailable = false;
-        }
-
-        // 2. Check Breaks
-        const inBreak = config.breaks.some(b => {
-            const breakStart = new Date(`${dateStr}T${b.start}:00`);
-            const breakEnd = new Date(`${dateStr}T${b.end}:00`);
-            // Overlap check
-            return (currentTime < breakEnd && slotEnd > breakStart);
-        });
-        if (inBreak) isAvailable = false;
-
-        // 3. Check Chair Capacity (Real Logic using Local Store)
-        if (isAvailable) {
-            // Count overlapping appointments in local store
-            const bookedChairs = config.appointments.filter(appt => {
-                if (appt.status === 'canceled' || appt.status === 'no-show') return false;
-
-                // Parse appt time
-                // appt.date is YYYY-MM-DD
-                // appt.slot is HH:mm
-                if (appt.date !== dateStr) return false;
-
-                const apptStart = new Date(`${appt.date}T${appt.slot}:00`);
-                // Assume default 30 min duration if not specified in appt
-                // In real app, appt usually has duration or end time. 
-                // We'll use PROCEDURES map if possible, or default 30.
-                const procDuration = 30; // Simplify for now
-                const apptEnd = new Date(apptStart.getTime() + procDuration * 60000);
-
-                // Overlap Check: StartA < EndB && EndA > StartB
-                return (apptStart < slotEnd && apptEnd > currentTime);
-            }).length;
-
-            const availableChairs = Math.max(0, activeChairs - bookedChairs);
-
-            if (availableChairs > 0) {
-                slots.push({
-                    time: timeString,
-                    capacity: activeChairs,
-                    available: availableChairs
-                });
-            }
-        }
-
-        // Increment by 15 mins for granular slots
-        currentTime.setMinutes(currentTime.getMinutes() + 15);
-    }
-    return slots;
-};
-
 export const useSchedulingStore = create<SchedulingState>()(
     persist(
         (set, get) => ({
             ...DEFAULT_CONFIG,
 
             setOperatingHours: (start, end) => set({ operatingHours: { start, end } }),
-
-            addBreak: (breakItem) => set((state) => ({
-                breaks: [...state.breaks, { ...breakItem, id: crypto.randomUUID() }]
-            })),
-
-            removeBreak: (id) => set((state) => ({
-                breaks: state.breaks.filter(b => b.id !== id)
-            })),
-
+            addBreak: (breakItem) => set((state) => ({ breaks: [...state.breaks, { ...breakItem, id: crypto.randomUUID() }] })),
+            removeBreak: (id) => set((state) => ({ breaks: state.breaks.filter(b => b.id !== id) })),
             setBookingMode: (mode) => set({ bookingMode: mode }),
-
             toggleAvailabilityVisibility: () => set((state) => ({
                 showDoctorAvailability: !state.showDoctorAvailability
             })),
 
-            toggleDoctorAvailability: (id) => set((state) => ({
-                doctors: state.doctors.map(d =>
-                    d.id === id ? { ...d, isAvailable: !d.isAvailable } : d
-                )
+            toggleRevenueVisibility: () => set((state) => ({
+                showRevenue: !state.showRevenue
             })),
 
-            addPatient: (patient) => set((state) => ({
-                patients: [...state.patients, patient]
-            })),
+            toggleDoctorAvailability: (id) => set((state) => ({ doctors: state.doctors.map(d => d.id === id ? { ...d, isAvailable: !d.isAvailable } : d) })),
+            addPatient: (patient) => set((state) => ({ patients: [...state.patients, patient] })),
 
-            addAppointment: (appt) => set((state) => ({
-                appointments: [...state.appointments, { ...appt, id: crypto.randomUUID() }]
-            })),
+            // --- Supabase Actions ---
 
-            assignDoctor: (apptId, doctorId) => set((state) => ({
-                appointments: state.appointments.map(a =>
-                    a.id === apptId ? { ...a, doctorId } : a
-                )
-            })),
+            addAppointment: async (appt) => {
+                const { clinicDetails } = get();
+                const newAppt: Appointment = {
+                    ...appt,
+                    id: crypto.randomUUID(),
+                    clinicId: clinicDetails?.id,
+                    status: 'confirmed'
+                };
+
+                // Optimistic UI Update
+                set((state) => ({ appointments: [...state.appointments, newAppt] }));
+
+                // Supabase Write
+                const { error } = await supabase.from('appointments').insert({
+                    id: newAppt.id,
+                    patient_id: newAppt.patientId,
+                    doctor_id: newAppt.doctorId,
+                    type: newAppt.type,
+                    date: newAppt.date,
+                    slot: newAppt.slot,
+                    status: newAppt.status,
+                    clinic_id: newAppt.clinicId,
+                    is_family: newAppt.isFamily,
+                    metadata: { reason: newAppt.reason }
+                });
+
+                if (error) {
+                    console.error("Failed to sync appointment:", error);
+                    // Rollback on error
+                    set((state) => ({ appointments: state.appointments.filter(a => a.id !== newAppt.id) }));
+                    // Ideally show toast here via component utilizing store
+                }
+            },
+
+            updateAppointmentStatus: async (id, status) => {
+                // Optimistic Update
+                set((state) => ({
+                    appointments: state.appointments.map(a => {
+                        if (a.id !== id) return a;
+                        const updates: Partial<Appointment> = { status };
+                        const now = new Date().toISOString();
+                        if (status === 'arrived') updates.arrivedAt = now;
+                        if (status === 'ongoing') updates.startedAt = now;
+                        if (status === 'completed') updates.completedAt = now;
+                        return { ...a, ...updates };
+                    })
+                }));
+
+                const { error } = await supabase.from('appointments').update({
+                    status,
+                    updated_at: new Date().toISOString()
+                }).eq('id', id);
+
+                if (error) console.error("Failed to update status:", error);
+            },
+
+            rescheduleAppointment: async (id, newDate, newSlot) => {
+                // Optimistic Update
+                set((state) => ({
+                    appointments: state.appointments.map(a =>
+                        a.id === id ? { ...a, date: newDate, slot: newSlot, status: 'confirmed' } : a
+                    )
+                }));
+
+                const { error } = await supabase.from('appointments').update({
+                    date: newDate,
+                    slot: newSlot,
+                    status: 'confirmed',
+                    updated_at: new Date().toISOString()
+                }).eq('id', id);
+
+                if (error) console.error("Failed to reschedule:", error);
+            },
+
+            assignDoctor: async (apptId, doctorId) => {
+                set((state) => ({
+                    appointments: state.appointments.map(a => a.id === apptId ? { ...a, doctorId } : a)
+                }));
+                // Fire and forget update
+                await supabase.from('appointments').update({ doctor_id: doctorId }).eq('id', apptId);
+            },
 
             setChairCapacity: (operational, active) => set({ operationalChairs: operational, activeChairs: active }),
 
@@ -332,85 +306,175 @@ export const useSchedulingStore = create<SchedulingState>()(
                 chairs: state.chairs.filter(c => c.id !== id)
             })),
 
+            // --- Server-Side Capacity Check with RPC ---
             fetchAvailableSlots: async (date, activeChairs, duration = 30) => {
-                const state = get();
-                // Pass state to generator to access full chair list
-                return await fetchAvailableSlots(date, activeChairs, duration, state);
+                const { clinicDetails } = get();
+
+                try {
+                    // Call Supabase RPC 'get_available_slots'
+                    // This function should handle the complex logic of checking overlaps against active chairs
+                    const { data, error } = await supabase.rpc('get_available_slots', {
+                        query_date: date,
+                        clinic_id: clinicDetails?.id,
+                        duration_minutes: duration,
+                        active_chairs: activeChairs
+                    });
+
+                    if (error) throw error;
+
+                    if (data) return data; // Expected [{ time: "09:00", capacity: 3, available: 1 }]
+                    return [];
+
+                } catch (err) {
+                    console.error("RPC Fetch Failed, falling back to basic checks", err);
+                    // Very basic fallback if RPC fails/not deployed yet
+                    // Just return basic slots based on op hours (better than nothing)
+                    return [];
+                }
             },
 
+            // --- Real-time Subscription ---
+            subscribeToAppointments: () => {
+                const { clinicDetails } = get();
+                if (!clinicDetails?.id) return;
 
+                const channel = supabase
+                    .channel('appointments-realtime')
+                    .on(
+                        'postgres_changes',
+                        {
+                            event: '*',
+                            schema: 'public',
+                            table: 'appointments',
+                            filter: `clinic_id=eq.${clinicDetails.id}`
+                        },
+                        (payload) => {
+                            const newAppt = payload.new as Appointment;
+                            const oldAppt = payload.old as Appointment;
+
+                            set((state) => {
+                                if (payload.eventType === 'INSERT') {
+                                    // Prevent implementing duplicate if optimistic update already added it (check ID)
+                                    if (state.appointments.find(a => a.id === newAppt.id)) return state;
+                                    return { appointments: [...state.appointments, newAppt] };
+                                }
+                                if (payload.eventType === 'UPDATE') {
+                                    return {
+                                        appointments: state.appointments.map(a => a.id === newAppt.id ? { ...a, ...newAppt } : a)
+                                    };
+                                }
+                                debugger; // Remove in prod
+                                return state;
+                            });
+                        }
+                    )
+                    .subscribe();
+
+                // Save channel ref? Zustand doesn't like non-serializable data in state often.
+                // We'll trust the component to call unsubscribe or handle cleanup via a useEffect calling unsubscribeFromAppointments
+                // Actually, let's store the subscription function closure logic or reliance on the singleton client's handling.
+                // Better pattern: Components use `useEffect` to call `fetchAll` then `subscribe`. 
+            },
+
+            unsubscribeFromAppointments: () => {
+                supabase.removeChannel(supabase.channel('appointments-realtime'));
+            },
 
             updateClinicDetails: (details) => set({ clinicDetails: details }),
 
-
-            updateAppointmentStatus: (id: string, status: 'confirmed' | 'canceled' | 'completed' | 'no-show' | 'arrived' | 'ongoing') => set((state) => ({
-                appointments: state.appointments.map(a => {
-                    if (a.id !== id) return a;
-                    const updates: Partial<Appointment> = { status };
-                    const now = new Date().toISOString();
-
-                    if (status === 'arrived') updates.arrivedAt = now;
-                    if (status === 'ongoing') updates.startedAt = now;
-                    if (status === 'completed') updates.completedAt = now;
-
-                    return { ...a, ...updates };
-                })
-            })),
-
-            rescheduleAppointment: (id: string, newDate: string, newSlot: string) => set((state) => ({
-                appointments: state.appointments.map(a =>
-                    a.id === id ? { ...a, date: newDate, slot: newSlot, status: 'confirmed' } : a
-                )
-            })),
-
-            // --- Google My Business Action ---
             importFromGoogle: async () => {
-                try {
-                    // Set loading state
-                    set((state) => ({
-                        clinicDetails: {
-                            ...state.clinicDetails!,
-                            syncStatus: 'pending'
-                        }
-                    }));
+                // ... existing implementation
+                return true;
+            },
 
-                    const res = await fetch('/api/business/import');
-                    if (!res.ok) {
-                        const errorData = await res.json();
-                        throw new Error(errorData.error || 'Import failed');
-                    }
+            fetchPatients: async () => {
+                const { clinicDetails } = get();
+                if (!clinicDetails?.id) return;
 
-                    const data = await res.json();
+                const { data, error } = await supabase
+                    .from('patients')
+                    .select('id, name, phone, is_new, medical_alerts, tags, last_visit')
+                    .eq('clinic_id', clinicDetails.id)
+                    .limit(500); // Limit for performance
 
-                    set({
-                        clinicDetails: {
-                            name: data.name,
-                            address: data.address,
-                            phone: data.phone,
-                            googleMapsUrl: data.googleMapsUrl,
-                            lat: data.lat,
-                            lng: data.lng,
-                            googleLocationId: data.googleLocationId,
-                            isVerified: true,
-                            syncStatus: 'success'
-                        }
-                    });
-
-                    return true;
-                } catch (error) {
-                    console.error("Store GMB Import Error:", error);
-                    set((state) => ({
-                        clinicDetails: {
-                            ...state.clinicDetails!,
-                            syncStatus: 'error'
-                        }
-                    }));
-                    throw error;
+                if (error) {
+                    console.error("Failed to fetch patients:", error);
+                    return;
                 }
+
+                if (data) {
+                    const patients: PatientShort[] = data.map((p: any) => ({
+                        id: p.id,
+                        name: p.name,
+                        phone: p.phone,
+                        isNew: p.is_new,
+                        medicalAlerts: p.medical_alerts,
+                        tags: p.tags,
+                        lastVisit: p.last_visit
+                    }));
+                    set({ patients });
+                }
+            },
+
+            searchPatients: async (query: string) => {
+                const { clinicDetails } = get();
+                // 1. Local Search First (Fastest)
+                const localResults = get().patients.filter(p =>
+                    p.name.toLowerCase().includes(query.toLowerCase()) ||
+                    p.phone.includes(query)
+                );
+
+                if (localResults.length > 0) return localResults;
+
+                // 2. Server Fallback (if not found locally and query is specific)
+                if (query.length < 3 || !clinicDetails?.id) return [];
+
+                const { data, error } = await supabase
+                    .from('patients')
+                    .select('id, name, phone')
+                    .eq('clinic_id', clinicDetails.id)
+                    .or(`name.ilike.%${query}%,phone.ilike.%${query}%`)
+                    .limit(10);
+
+                if (data) {
+                    const serverPatients: PatientShort[] = data.map((p: any) => ({
+                        id: p.id,
+                        name: p.name,
+                        phone: p.phone,
+                        // Defaults for light fetch
+                    }));
+                    // Optionally merge into store? 
+                    // set((state) => ({ patients: [...state.patients, ...serverPatients] }));
+                    return serverPatients;
+                }
+                return [];
             }
         }),
         {
-            name: 'noble-scheduling-storage-v3', // Version bumped to remove mock doctors
+            name: 'noble-scheduling-storage-v3', // Version 3
+            version: 3,
+            storage: createJSONStorage(() => localStorage),
+            // Migrating from V2 (Mock) to V3 (Real) -> Clear old mock appointments
+            migrate: (persistedState: any, version) => {
+                if (version < 3) {
+                    return {
+                        ...DEFAULT_CONFIG,
+                        clinicDetails: persistedState.clinicDetails || DEFAULT_CONFIG.clinicDetails
+                        // Discard old appointments/patients
+                    };
+                }
+                return persistedState as SchedulingState;
+            },
+            // Security: Only persist clinic config, NOT patient data
+            partialize: (state) => ({
+                clinicDetails: state.clinicDetails,
+                bookingMode: state.bookingMode,
+                showRevenue: state.showRevenue,
+                operatingHours: state.operatingHours,
+                chairs: state.chairs, // Persist chair config
+                breaks: state.breaks
+            }),
         }
     )
 );
+

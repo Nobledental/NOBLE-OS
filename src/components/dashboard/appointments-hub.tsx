@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -40,40 +40,57 @@ export function AppointmentsHub() {
     const [filter, setFilter] = useState<'all' | 'upcoming' | 'waiting' | 'done'>('all');
     const [searchQuery, setSearchQuery] = useState("");
     const [rescheduleData, setRescheduleData] = useState<{ open: boolean, apptId: string | null }>({ open: false, apptId: null });
-    const [showRevenue, setShowRevenue] = useState(false); // Privacy Mode
+
+    // Preload Patients for Smart Search
+    useEffect(() => {
+        store.fetchPatients();
+    }, []);
+
+    // Real-time Sync Status
+    const isSyncing = store.clinicDetails?.syncStatus === 'pending';
 
     // --- Date Logic ---
     const weekStart = startOfWeek(selectedDate);
     const weekDays = eachDayOfInterval({ start: weekStart, end: endOfWeek(selectedDate) });
 
     // --- Filter Logic ---
+    // --- Filter Logic (Memoized for Performance) ---
     const selectedDateString = format(selectedDate, "yyyy-MM-dd");
-    const todaysAppointments = store.appointments
-        .filter(appt => appt.date === selectedDateString)
-        .sort((a, b) => a.slot.localeCompare(b.slot));
 
-    const filteredAppointments = todaysAppointments.filter(appt => {
-        // Search Filter
-        if (searchQuery) {
-            const patient = store.patients.find(p => p.id === appt.patientId);
-            const query = searchQuery.toLowerCase();
-            return patient?.name.toLowerCase().includes(query) || patient?.phone.includes(query);
-        }
-        // Category Filter
-        if (filter === 'all') return true;
-        if (filter === 'waiting') return appt.status === 'arrived';
-        if (filter === 'done') return appt.status === 'completed';
-        if (filter === 'upcoming') return !appt.status || appt.status === 'confirmed';
-        return true;
-    });
+    const filteredAppointments = useMemo(() => {
+        const todays = store.appointments
+            .filter(appt => appt.date === selectedDateString)
+            .sort((a, b) => a.slot.localeCompare(b.slot));
+
+        return todays.filter(appt => {
+            // Search Filter
+            if (searchQuery) {
+                const patient = store.patients.find(p => p.id === appt.patientId);
+                const query = searchQuery.toLowerCase();
+                return patient?.name.toLowerCase().includes(query) || patient?.phone.includes(query);
+            }
+            // Category Filter
+            if (filter === 'all') return true;
+            if (filter === 'waiting') return appt.status === 'arrived';
+            if (filter === 'done') return appt.status === 'completed';
+            if (filter === 'upcoming') return !appt.status || appt.status === 'confirmed';
+            return true;
+        });
+    }, [store.appointments, selectedDateString, searchQuery, filter, store.patients]);
+
+    const todaysCount = store.appointments.filter(a => a.date === selectedDateString).length;
 
     // Counts for Badges
-    const counts = {
-        all: todaysAppointments.length,
-        upcoming: todaysAppointments.filter(a => !a.status || a.status === 'confirmed').length,
-        waiting: todaysAppointments.filter(a => a.status === 'arrived').length,
-        done: todaysAppointments.filter(a => a.status === 'completed').length,
-    };
+    // Counts for Badges (Memoized)
+    const counts = useMemo(() => {
+        const todays = store.appointments.filter(a => a.date === selectedDateString);
+        return {
+            all: todays.length,
+            upcoming: todays.filter(a => !a.status || a.status === 'confirmed').length,
+            waiting: todays.filter(a => a.status === 'arrived').length,
+            done: todays.filter(a => a.status === 'completed').length,
+        };
+    }, [store.appointments, selectedDateString]);
 
     return (
         <div className="flex flex-col h-full bg-slate-50 relative overflow-hidden">
@@ -93,16 +110,16 @@ export function AppointmentsHub() {
                         </div>
                         <div className="flex items-center gap-2">
                             {/* Daily Goal Widget (Privacy Mode) */}
-                            <div className="hidden md:flex flex-col items-end mr-4 group cursor-pointer" onClick={() => setShowRevenue(!showRevenue)}>
+                            <div className="hidden md:flex flex-col items-end mr-4 group cursor-pointer" onClick={store.toggleRevenueVisibility}>
                                 <div className="flex items-center gap-1">
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Daily Revenue</span>
-                                    {showRevenue ? <EyeOff className="w-3 h-3 text-slate-300" /> : <Eye className="w-3 h-3 text-slate-300" />}
+                                    {store.showRevenue ? <EyeOff className="w-3 h-3 text-slate-300" /> : <Eye className="w-3 h-3 text-slate-300" />}
                                 </div>
                                 <span className={cn(
                                     "text-sm font-black transition-all",
-                                    showRevenue ? "text-emerald-600" : "text-slate-200 bg-slate-100 rounded px-1 filter blur-[2px]"
+                                    store.showRevenue ? "text-emerald-600" : "text-slate-200 bg-slate-100 rounded px-1 filter blur-[2px]"
                                 )}>
-                                    {showRevenue ? `₹${(12450).toLocaleString()}` : "₹12,450"}
+                                    {store.showRevenue ? `₹${(12450).toLocaleString()}` : "₹12,450"}
                                 </span>
                             </div>
                             <NewAppointmentDialog />
@@ -180,7 +197,7 @@ export function AppointmentsHub() {
             </div>
 
             {/* --- MAIN FEED CONTENT --- */}
-            <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 p-4 md:p-6 pb-24">
+            <div className="flex-1 overflow-y-auto custom-scrollbar bg-slate-50 p-4 md:p-6 pb-24 cockpit-safe-area">
                 <div className="max-w-3xl mx-auto space-y-4">
                     <AnimatePresence mode="popLayout">
                         {filteredAppointments.length === 0 ? (
@@ -240,11 +257,11 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
     const isCompleted = appt.status === 'completed';
     const isUpcoming = !appt.status || appt.status === 'confirmed';
 
-    // Mock Data for "Advanced" Feel
-    const isNewPatient = Math.random() > 0.7; // Keep mock for now
-    const hasBalance = Math.random() > 0.8; // Keep mock for now
-    const isFamily = appt.isFamily; // Real Data coming from Booking Flow
-    const balanceAmount = 1500;
+    // Data Hardening: No Math.random()
+    const isNewPatient = patient?.isNew || false;
+    const hasBalance = false; // TODO: Link to Billing Store
+    const isFamily = appt.isFamily;
+    const balanceAmount = 0;
 
     return (
         <motion.div
@@ -266,7 +283,7 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
             {/* 1. Header: Time & Status */}
             <div className={cn(
                 "px-5 py-3 flex items-center justify-between border-b border-slate-50",
-                isOngoing ? "bg-indigo-50/50" : isArrived ? "bg-amber-50/50" : isCompleted ? "bg-emerald-50/50" : "bg-white"
+                isOngoing ? "bg-clinical-risk/10" : isArrived ? "bg-amber-50/50" : isCompleted ? "bg-emerald-50/50" : "bg-white"
             )}>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-2 px-2.5 py-1 bg-slate-900 rounded-lg text-white">
@@ -341,16 +358,16 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
 
                     {/* Patient Phone / Contact Actions */}
                     <div className="flex items-center gap-3">
-                        <a href={`tel:${patient?.phone}`} className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors bg-slate-50 hover:bg-indigo-50 px-3 py-1.5 rounded-lg border border-slate-100">
-                            <Phone className="w-3 h-3" /> Call
+                        <a href={`tel:${patient?.phone}`} className="flex items-center justify-center w-12 h-12 md:w-auto md:h-auto md:gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-indigo-600 transition-colors bg-slate-50 hover:bg-indigo-50 rounded-xl border border-slate-100">
+                            <Phone className="w-5 h-5 md:w-3 md:h-3" /> <span className="hidden md:inline">Call</span>
                         </a>
                         <a
                             href={`https://wa.me/${patient?.phone?.replace(/\D/g, '')}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-emerald-600 transition-colors bg-slate-50 hover:bg-emerald-50 px-3 py-1.5 rounded-lg border border-slate-100"
+                            className="flex items-center justify-center w-12 h-12 md:w-auto md:h-auto md:gap-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 hover:text-emerald-600 transition-colors bg-slate-50 hover:bg-emerald-50 rounded-xl border border-slate-100"
                         >
-                            <span className="w-3 h-3 rounded-full bg-current opacity-50" /> WhatsApp
+                            <span className="w-5 h-5 md:w-3 md:h-3 rounded-full bg-emerald-500/20 flex items-center justify-center"><div className="w-2 h-2 bg-emerald-500 rounded-full" /></span> <span className="hidden md:inline">WhatsApp</span>
                         </a>
                     </div>
                 </div>

@@ -24,7 +24,7 @@ import {
 
 export function InvoiceGenerator() {
     const { items, removeItem, enableEmi, toggleEmi, getTotals } = useBillingStore();
-    const { subtotal, tax, total, monthlyEmi } = getTotals();
+    const { subtotal, tax, total, monthlyEmi, discount } = getTotals();
     const [open, setOpen] = useState(false);
 
     const handleFinalize = () => {
@@ -116,25 +116,39 @@ export function InvoiceGenerator() {
                 </div>
 
                 <div className="space-y-2 text-sm">
-                    <div className="flex justify-between text-muted-foreground">
+                    <div className="flex justify-between text-slate-500">
                         <span>Subtotal</span>
-                        <span>₹{subtotal.toLocaleString()}</span>
+                        <span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(subtotal)}</span>
                     </div>
-                    <div className="flex justify-between text-muted-foreground">
+
+                    {/* Discount Row (Interactive-ish) */}
+                    <div className="flex justify-between text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md">
+                        <span className="text-xs font-semibold flex items-center gap-1">
+                            Current Discount
+                            {getTotals().discount === 0 && <span className="text-[10px] font-normal opacity-50 ml-1">(None)</span>}
+                        </span>
+                        <span className="font-bold">
+                            - {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(getTotals().discount)}
+                        </span>
+                    </div>
+
+                    <div className="flex justify-between text-slate-500">
                         <span>GST Total</span>
-                        <span>₹{tax.toLocaleString()}</span>
+                        <span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(tax)}</span>
                     </div>
+
                     <Separator />
-                    <div className="flex justify-between font-bold text-lg">
+
+                    <div className="flex justify-between font-black text-lg text-slate-900">
                         <span>Total Payable</span>
-                        <span>₹{total.toLocaleString()}</span>
+                        <span>{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(total)}</span>
                     </div>
 
                     {/* EMI Calculation */}
                     {enableEmi && (
-                        <div className="flex justify-between items-center text-xs bg-green-50 text-green-700 p-2 rounded animate-in fade-in slide-in-from-bottom-2">
+                        <div className="flex justify-between items-center text-xs bg-indigo-50 text-indigo-700 p-2 rounded animate-in fade-in slide-in-from-bottom-2 border border-indigo-100">
                             <span>12-Month EMI @ 0%</span>
-                            <span className="font-bold">₹{Math.ceil(monthlyEmi).toLocaleString()}/mo</span>
+                            <span className="font-bold">{new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(monthlyEmi)}/mo</span>
                         </div>
                     )}
                 </div>
