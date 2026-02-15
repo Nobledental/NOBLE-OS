@@ -84,12 +84,17 @@ const departmentConfig = {
     }
 };
 
+import { GeneralizedToothChart } from './generalized-tooth-chart';
+
+// ... existing imports
+
 export default function CaseSheetRenderer({
     patientId,
     userPermissions = {}
 }: CaseSheetRendererProps) {
     const [selectedDepartment, setSelectedDepartment] = useState<Department>('GENERAL');
     const [toothData, setToothData] = useState<Record<string, ToothState>>({});
+    const [selectedTooth, setSelectedTooth] = useState<string | null>(null); // New state for selected tooth
     const [clinicalNotes, setClinicalNotes] = useState({
         subjective: "",
         objective: "",
@@ -207,11 +212,43 @@ export default function CaseSheetRenderer({
                                                 </TabsList>
                                             </div>
 
-                                            <TabsContent value="teeth" className="mt-0 outline-none">
-                                                <AdultToothChart
-                                                    data={toothData}
-                                                    onChange={setToothData}
-                                                />
+                                            <TabsContent value="teeth" className="mt-0 outline-none space-y-8">
+                                                {/* Generalized Chart (Overview) */}
+                                                <div className="bg-white rounded-[2.5rem] p-6 shadow-sm border border-slate-100">
+                                                    <div className="flex items-center justify-between mb-4">
+                                                        <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-400">General Assessment</h5>
+                                                        <span className="text-[9px] text-slate-400">Select a tooth to view details</span>
+                                                    </div>
+                                                    <GeneralizedToothChart
+                                                        data={toothData}
+                                                        selectedTooth={selectedTooth}
+                                                        onToothClick={setSelectedTooth}
+                                                        onStatusChange={(id, status) => {
+                                                            setToothData(prev => ({
+                                                                ...prev,
+                                                                [id]: { ...(prev[id] || { id, surfaces: { m: false, o: false, d: false, b: false, l: false }, status: 'healthy', notes: '' }), status }
+                                                            }));
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Specific Chart (Detailed Surface Mapping) - Only visible/highlighted if a tooth is selected or always visible but focused? 
+                                                    User asked for "both". Let's show specific chart below.
+                                                */}
+                                                {selectedTooth && (
+                                                    <div className="bg-slate-50/50 rounded-[2.5rem] p-6 border border-slate-100 animate-in fade-in slide-in-from-top-4 duration-300">
+                                                        <div className="flex items-center gap-3 mb-4">
+                                                            <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs">
+                                                                {selectedTooth}
+                                                            </div>
+                                                            <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-400">Surface Mapping (Digital Twin)</h5>
+                                                        </div>
+                                                        <AdultToothChart
+                                                            data={toothData}
+                                                            onChange={setToothData}
+                                                        />
+                                                    </div>
+                                                )}
                                             </TabsContent>
 
                                             <TabsContent value="perio" className="mt-0 outline-none">
