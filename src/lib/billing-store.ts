@@ -134,32 +134,7 @@ export const useBillingStore = create<BillingState>((set, get) => ({
     toggleEmi: (enabled) => set({ enableEmi: enabled }),
     setEmiTenure: (months) => set({ emiTenure: months }),
 
-    // Computed (Helper to get totals)
-    getTotals: () => {
-        const { items, discount } = get();
-        const subtotal = items.reduce((sum, item) => sum + (item.baseCost * item.quantity), 0);
-        const tax = 0; // Simplified for now
-        const total = subtotal - discount + tax;
-        const monthlyEmi = get().enableEmi ? total / get().emiTenure : 0;
-        return { subtotal, discount, tax, total, monthlyEmi };
-    },
 
-    // Invoice generation
-    generateInvoiceNumber: () => `INV-${Date.now()}`,
-    prepareForPayment: () => {
-        // Logic to lock items and move to payment gateway
-    },
-    resetBilling: () => set({
-        items: [],
-        autoItems: [],
-        manualItems: [],
-        patientId: null,
-        appointmentId: null,
-        consultantId: null,
-        enableEmi: false,
-        emiTenure: 12,
-        discount: 0
-    }),
 
     // Discount Action
     setDiscount: (amount) => set({ discount: amount }),
