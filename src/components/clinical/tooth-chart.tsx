@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { cn } from "@/lib/utils";
-import { ToothState, ToothSurface, FDI_PERMANENT_TEETH, INITIAL_TOOTH_STATE } from '@/types/clinical';
+import { ToothState, ToothSurface, FDI_PERMANENT_TEETH, FDI_DECIDUOUS_TEETH, INITIAL_TOOTH_STATE, DentitionMode } from '@/types/clinical';
 
 interface ToothProps {
     state: ToothState;
@@ -146,6 +146,137 @@ export const AdultToothChart: React.FC<{
                 <div className="w-[1px] bg-slate-200 my-4" />
                 {renderQuadrant(FDI_PERMANENT_TEETH.LL, "justify-items-start")}
             </div>
+
+            {/* Legend */}
+            <div className="flex flex-wrap gap-6 justify-center pt-4 border-t border-slate-100">
+                <div className="flex items-center gap-2 group">
+                    <div className="w-3 h-3 bg-red-500 rounded-full group-hover:scale-125 transition-transform" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Caries</span>
+                </div>
+                <div className="flex items-center gap-2 group">
+                    <div className="w-3 h-3 bg-indigo-500 rounded-full group-hover:scale-125 transition-transform" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Restored</span>
+                </div>
+                <div className="flex items-center gap-2 group">
+                    <div className="w-3 h-3 border-2 border-slate-300 rounded-full group-hover:scale-125 transition-transform" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Healthy</span>
+                </div>
+                <div className="flex items-center gap-2 group">
+                    <div className="w-3 h-0.5 bg-red-600 group-hover:scale-x-125 transition-transform" />
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">RCT Done</span>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+/**
+ * DentitionChart — Unified Age-Aware Dental Chart
+ * 
+ * Renders ADULT (permanent only), CHILD (deciduous only), or MIXED (both) dentition.
+ * Uses the same 5-surface Tooth component for consistent interaction.
+ */
+export const DentitionChart: React.FC<{
+    data: Record<string, ToothState>;
+    onChange: (data: Record<string, ToothState>) => void;
+    mode?: DentitionMode;
+    readOnly?: boolean;
+}> = ({ data, onChange, mode = 'ADULT', readOnly = false }) => {
+
+    const toggleSurface = (toothId: string, surface: keyof ToothSurface) => {
+        if (readOnly) return;
+        const tooth = data[toothId] || INITIAL_TOOTH_STATE(toothId);
+        const newState = {
+            ...data,
+            [toothId]: {
+                ...tooth,
+                surfaces: {
+                    ...tooth.surfaces,
+                    [surface]: !tooth.surfaces[surface]
+                },
+                status: tooth.status === 'healthy' ? 'decayed' : tooth.status
+            }
+        };
+        onChange(newState);
+    };
+
+    const updateStatus = (toothId: string, status: ToothState['status']) => {
+        if (readOnly) return;
+        const tooth = data[toothId] || INITIAL_TOOTH_STATE(toothId);
+        onChange({
+            ...data,
+            [toothId]: { ...tooth, status }
+        });
+    };
+
+    const renderQuadrant = (ids: string[], cols: number, toothSize: number, className?: string) => (
+        <div className={cn(`grid gap-1.5`, className)} style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
+            {ids.map(id => (
+                <Tooth
+                    key={id}
+                    state={data[id] || INITIAL_TOOTH_STATE(id)}
+                    onSurfaceClick={toggleSurface}
+                    onStatusChange={updateStatus}
+                    size={toothSize}
+                />
+            ))}
+        </div>
+    );
+
+    const showPermanent = mode === 'ADULT' || mode === 'MIXED';
+    const showDeciduous = mode === 'CHILD' || mode === 'MIXED';
+
+    const modeLabel = mode === 'ADULT' ? 'Permanent Dentition' : mode === 'CHILD' ? 'Deciduous Dentition' : 'Mixed Dentition';
+
+    return (
+        <div className="p-6 bg-slate-50/50 rounded-[2.5rem] border border-slate-100 space-y-6 overflow-x-auto">
+            {/* Permanent Teeth (ADULT / MIXED) */}
+            {showPermanent && (
+                <div className="space-y-3">
+                    {mode === 'MIXED' && (
+                        <div className="text-center">
+                            <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 bg-white px-3 py-1 rounded-full border border-slate-100">Permanent</span>
+                        </div>
+                    )}
+                    {/* Upper Arch */}
+                    <div className="flex gap-8 justify-center min-w-[700px]">
+                        {renderQuadrant(FDI_PERMANENT_TEETH.UR, 8, 48)}
+                        <div className="w-[1px] bg-slate-200 my-3" />
+                        {renderQuadrant(FDI_PERMANENT_TEETH.UL, 8, 48)}
+                    </div>
+                    {/* Midline */}
+                    <div className="h-[1px] bg-indigo-100/50 w-full relative">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-[10px] font-black text-indigo-300 uppercase tracking-widest">Midline</div>
+                    </div>
+                    {/* Lower Arch */}
+                    <div className="flex gap-8 justify-center min-w-[700px]">
+                        {renderQuadrant(FDI_PERMANENT_TEETH.LR, 8, 48)}
+                        <div className="w-[1px] bg-slate-200 my-3" />
+                        {renderQuadrant(FDI_PERMANENT_TEETH.LL, 8, 48)}
+                    </div>
+                </div>
+            )}
+
+            {/* Deciduous Teeth (CHILD / MIXED) */}
+            {showDeciduous && (
+                <div className="bg-white/80 rounded-2xl border border-dashed border-slate-200 p-4 space-y-3">
+                    <div className="text-center">
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-slate-400 bg-slate-50 px-3 py-1 rounded-full">Deciduous</span>
+                    </div>
+                    {/* Upper Deciduous */}
+                    <div className="flex gap-6 justify-center">
+                        {renderQuadrant(FDI_DECIDUOUS_TEETH.UR, 5, 38)}
+                        <div className="w-[1px] bg-slate-200 my-2" />
+                        {renderQuadrant(FDI_DECIDUOUS_TEETH.UL, 5, 38)}
+                    </div>
+                    {/* Lower Deciduous */}
+                    <div className="flex gap-6 justify-center">
+                        {renderQuadrant(FDI_DECIDUOUS_TEETH.LR, 5, 38)}
+                        <div className="w-[1px] bg-slate-200 my-2" />
+                        {renderQuadrant(FDI_DECIDUOUS_TEETH.LL, 5, 38)}
+                    </div>
+                </div>
+            )}
 
             {/* Legend */}
             <div className="flex flex-wrap gap-6 justify-center pt-4 border-t border-slate-100">

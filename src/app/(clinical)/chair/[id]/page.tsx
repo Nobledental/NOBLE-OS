@@ -1,7 +1,8 @@
 "use client";
 
 
-import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
+import { DentitionChart } from "@/components/clinical/tooth-chart";
+import { getDentitionMode } from "@/types/clinical";
 import { useChairStore } from "@/lib/store";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -29,7 +30,7 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
         }
     });
 
-    const chartMode = (!patient) ? "ADULT" : (patient.age < 6) ? "CHILD" : (patient.age < 13) ? "MIXED" : "ADULT";
+    const chartMode = getDentitionMode(patient?.age ?? 30);
 
     // Mock Voice Dictation (Web Speech API Wrapper)
     const toggleVoice = () => {
@@ -96,7 +97,7 @@ export default function ChairPage({ params }: { params: Promise<{ id: string }> 
                 </div>
 
                 <div className="scale-90 origin-center max-h-screen overflow-auto">
-                    <UniversalToothChart mode={chartMode as any} className="shadow-2xl" />
+                    <DentitionChart mode={chartMode} data={{}} onChange={() => { }} />
                 </div>
             </div>
 

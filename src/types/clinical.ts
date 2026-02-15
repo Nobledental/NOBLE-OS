@@ -34,6 +34,22 @@ export const FDI_PERMANENT_TEETH = {
     LR: ["48", "47", "46", "45", "44", "43", "42", "41"],
 };
 
+export const FDI_DECIDUOUS_TEETH = {
+    UR: ["55", "54", "53", "52", "51"],
+    UL: ["61", "62", "63", "64", "65"],
+    LL: ["71", "72", "73", "74", "75"],
+    LR: ["85", "84", "83", "82", "81"],
+};
+
+export type DentitionMode = 'ADULT' | 'CHILD' | 'MIXED';
+
+/** Compute dentition mode from patient age */
+export function getDentitionMode(age: number): DentitionMode {
+    if (age < 6) return 'CHILD';
+    if (age < 13) return 'MIXED';
+    return 'ADULT';
+}
+
 export interface ConsentTemplate {
     id: string;
     title: string;

@@ -12,7 +12,8 @@ import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-sto
 
 // Clinical Specialties & Components
 import { CaseQueue } from "@/components/clinical/case-queue";
-import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
+import { DentitionChart } from "@/components/clinical/tooth-chart";
+import { getDentitionMode } from "@/types/clinical";
 import CaseSheetRenderer from "@/components/clinical/case-sheet-renderer";
 import PrescriptionEngine from "@/components/clinical/prescription-engine";
 import { SurgeryNote } from "@/components/clinical/surgery-note";
@@ -270,7 +271,12 @@ export function ClinicalMasterHub() {
                                 </h3>
                                 <div className="flex items-center justify-center py-6">
                                     <div className="scale-110 cursor-crosshair">
-                                        <UniversalToothChart mode="MIXED" className="border-none shadow-none p-0 bg-transparent" />
+                                        <DentitionChart
+                                            data={useCockpitStore.getState().toothState}
+                                            onChange={useCockpitStore.getState().setToothState}
+                                            mode={getDentitionMode(cockpitPatient?.age ?? 30)}
+                                            readOnly
+                                        />
                                     </div>
                                 </div>
 

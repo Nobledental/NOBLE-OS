@@ -16,7 +16,8 @@ import { ClinicalConsultation } from "@/components/clinical/consultation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { VitalsHUD } from "@/components/clinical/vitals-hud";
 import { PreOpChecklist } from "@/components/clinical/pre-op-checklist";
-import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
+import { DentitionChart } from "@/components/clinical/tooth-chart";
+import { getDentitionMode } from "@/types/clinical";
 
 export default function PatientDetailPage() {
     const { id } = useParams();
@@ -64,7 +65,7 @@ export default function PatientDetailPage() {
         .reverse() || [];
 
     // Determine Dentition Mode based on Age
-    const chartMode = (patient.age < 6) ? "CHILD" : (patient.age < 13) ? "MIXED" : "ADULT";
+    const chartMode = getDentitionMode(patient.age ?? 30);
 
     return (
         <div className="flex flex-col h-full bg-slate-50/30">
@@ -200,7 +201,7 @@ export default function PatientDetailPage() {
                             </TabsContent>
 
                             <TabsContent value="charts">
-                                <UniversalToothChart mode={chartMode as any} />
+                                <DentitionChart mode={chartMode} data={{}} onChange={() => { }} readOnly />
                             </TabsContent>
 
                             <TabsContent value="vitals">
