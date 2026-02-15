@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Search, Calendar, User, Phone, Video, MapPin, RefreshCw, Clock, Stethoscope, Sparkles } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useSchedulingStore } from "@/lib/scheduling-store"; // IMPORT STORE
+import { useSchedulingStore, PROCEDURE_TYPES } from "@/lib/scheduling-store"; // IMPORT STORE
 import { toast } from "sonner";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";

@@ -478,3 +478,16 @@ export const useSchedulingStore = create<SchedulingState>()(
     )
 );
 
+export const PROCEDURE_TYPES = [
+    { id: 'consultation', label: 'New Consultation', duration: 30, color: 'bg-blue-100 text-blue-700' },
+    { id: 'checkup', label: 'Routine Checkup', duration: 15, color: 'bg-green-100 text-green-700' },
+    { id: 'cleaning', label: 'Scaling & Polishing', duration: 45, color: 'bg-teal-100 text-teal-700' },
+    { id: 'rct', label: 'Root Canal Treatment', duration: 60, color: 'bg-red-100 text-red-700' },
+    { id: 'extraction', label: 'Extraction', duration: 45, color: 'bg-orange-100 text-orange-700' },
+    { id: 'filling', label: 'Restoration (Filling)', duration: 30, color: 'bg-indigo-100 text-indigo-700' },
+    { id: 'crown', label: 'Crown Preparation', duration: 60, color: 'bg-purple-100 text-purple-700' },
+    { id: 'implants', label: 'Implant Surgery', duration: 90, color: 'bg-slate-800 text-white' },
+    { id: 'whitening', label: 'Teeth Whitening', duration: 60, color: 'bg-yellow-100 text-yellow-700' },
+    { id: 'ortho', label: 'Ortho Adjustment', duration: 15, color: 'bg-pink-100 text-pink-700' }
+];
+
