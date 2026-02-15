@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PermissionGuard } from "@/components/security/permission-guard";
-import { Lock, Skull, Syringe, Activity, FileText, Clock } from "lucide-react";
+import { Lock, Skull, Syringe, Activity, FileText, Clock, Calendar, Phone, Package, CheckCircle2 } from "lucide-react";
 
 // Clinical Specialties & Components
 import { CaseQueue } from "@/components/clinical/case-queue";
@@ -121,30 +121,77 @@ export function ClinicalMasterHub() {
                                 </div>
                             </Card>
 
-                            {/* 2. PRODUCTION TARGETS */}
-                            <Card className="p-8 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-                                <div className="relative z-10">
-                                    <div className="flex justify-between items-end mb-6">
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">Daily Production</p>
-                                            <h3 className="text-3xl font-black text-slate-900">₹12,450</h3>
+                            {/* 2. APPOINTMENT HORIZON (Past & Future) */}
+                            <Card className="p-6 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm">
+                                <div className="flex justify-between items-center mb-4">
+                                    <div>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Schedule Horizon</p>
+                                        <h3 className="text-lg font-black tracking-tight text-slate-900">Patient Flow</h3>
+                                    </div>
+                                    <Badge variant="outline" className="rounded-full border-slate-200 text-slate-500 font-bold px-3 py-1 text-[10px] uppercase">
+                                        4 Remaining
+                                    </Badge>
+                                </div>
+
+                                <div className="space-y-4 relative">
+                                    {/* Timeline Line */}
+                                    <div className="absolute left-[19px] top-2 bottom-2 w-0.5 bg-slate-100" />
+
+                                    {/* Past Appt */}
+                                    <div className="relative flex items-center gap-4 opacity-50">
+                                        <div className="w-10 h-10 rounded-full bg-slate-100 border-4 border-white flex items-center justify-center z-10">
+                                            <CheckCircle2 className="w-4 h-4 text-slate-400" />
                                         </div>
-                                        <Badge variant="outline" className="rounded-full border-emerald-200 text-emerald-700 bg-emerald-50 font-bold px-3 py-1 text-[10px] uppercase">
-                                            24% of Goal
-                                        </Badge>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-900 line-through">Arjun Kapoor</p>
+                                            <p className="text-[10px] font-bold text-slate-400">10:00 AM • Gen. Checkup</p>
+                                        </div>
                                     </div>
 
-                                    {/* Progress Bar */}
-                                    <div className="h-4 w-full bg-slate-100 rounded-full overflow-hidden mb-2">
-                                        <div className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 w-[24%]" />
+                                    {/* Current/Next Appt */}
+                                    <div className="relative flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-indigo-600 border-4 border-indigo-100 flex items-center justify-center z-10 shadow-lg shadow-indigo-200">
+                                            <Clock className="w-4 h-4 text-white" />
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-black text-slate-900">Sarah Jenkins</p>
+                                            <p className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">11:30 AM • Root Canal (Active)</p>
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                        <span>₹0</span>
-                                        <span>Target: ₹50k</span>
+
+                                    {/* Future Appt */}
+                                    <div className="relative flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-white border-4 border-slate-100 flex items-center justify-center z-10">
+                                            <Calendar className="w-4 h-4 text-slate-400" />
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-900">Michael Ross</p>
+                                            <p className="text-[10px] font-bold text-slate-400">02:00 PM • Aligners</p>
+                                        </div>
                                     </div>
                                 </div>
                             </Card>
+
+                            {/* 3. CLINICAL INTELLIGENCE (Lab & Follow-up) */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <Card className="p-5 rounded-[2rem] bg-indigo-50/50 border border-indigo-100 hover:bg-indigo-50 transition-colors cursor-pointer group">
+                                    <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                        <Package className="w-5 h-5 text-indigo-600" />
+                                    </div>
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-indigo-400 mb-1">Lab Works</p>
+                                    <p className="text-2xl font-black text-slate-900">02</p>
+                                    <p className="text-[10px] font-bold text-slate-500 mt-1">Arriving Today</p>
+                                </Card>
+
+                                <Card className="p-5 rounded-[2rem] bg-emerald-50/50 border border-emerald-100 hover:bg-emerald-50 transition-colors cursor-pointer group">
+                                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                        <Phone className="w-5 h-5 text-emerald-600" />
+                                    </div>
+                                    <p className="text-[9px] font-black uppercase tracking-widest text-emerald-500 mb-1">Follow-ups</p>
+                                    <p className="text-2xl font-black text-slate-900">05</p>
+                                    <p className="text-[10px] font-bold text-slate-500 mt-1">Post-op Calls</p>
+                                </Card>
+                            </div>
 
                             {/* 3. QUICK ACTIONS */}
                             <div className="grid grid-cols-2 gap-4">
