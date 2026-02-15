@@ -15,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
             <StoreHydration />
             <ThemeProvider
                 attribute="class"
-                defaultTheme="dark"
+                forcedTheme="light"
                 enableSystem={false}
                 disableTransitionOnChange
             >

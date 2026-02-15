@@ -10,7 +10,7 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="flex h-screen overflow-hidden bg-aurora relative">
+        <div className="flex h-screen overflow-hidden bg-slate-50 relative">
             {/* Apple-inspired Motion Particles */}
             <BackgroundParticles />
 

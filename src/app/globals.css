@@ -4,68 +4,69 @@
 
 @layer base {
     :root {
-        /* Core System Palette */
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
-        --primary: 210 40% 98%;
-        --primary-foreground: 222.2 47.4% 11.2%;
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
-        --accent: 217.2 32.6% 17.5%;
-        --accent-foreground: 210 40% 98%;
-        --destructive: 0 62.8% 30.6%;
+        /* ═══════════════════════════════════════════════════
+           NOBLE WHITE — Clinical SaaS Light-Only Foundation
+           ═══════════════════════════════════════════════════ */
+
+        /* Core System Palette (Light-First) */
+        --background: 210 40% 98%;
+        --foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
+        --primary: 222.2 47.4% 11.2%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 212.7 26.8% 83.9%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 222.2 84% 4.9%;
         --radius: 1.25rem;
-        /* Smoother, more organic corners for Bento */
 
         /* Noble Clinical Semantics (STRICT GOVERNANCE) */
-        --noble-clinical-risk: #f59e0b;
+        --noble-clinical-risk: #d97706;
         /* Amber: Risk/Warning ONLY */
-        --noble-clinical-progress: #0ea5e9;
-        /* Sky: In-Flight Procedures */
+        --noble-clinical-progress: #0d9488;
+        /* Teal: Active procedures, in-progress */
         --noble-clinical-complete: #10b981;
         /* Emerald: Success/Finalized */
         --noble-neutral-action: #6366f1;
-        /* Indigo: Routine Navigation */
+        /* Indigo: Navigation/CTA */
 
-        /* Glass Intensity Tokens */
-        --surface-glass-low: rgba(255, 255, 255, 0.03);
-        --surface-glass-med: rgba(255, 255, 255, 0.08);
-        --surface-glass-high: rgba(255, 255, 255, 0.15);
+        /* Glass Intensity Tokens (Bento-Glass: White) */
+        --surface-glass-low: rgba(255, 255, 255, 0.6);
+        --surface-glass-med: rgba(255, 255, 255, 0.8);
+        --surface-glass-high: rgba(255, 255, 255, 0.95);
         --medizinisch-glass-blur: blur(24px);
 
         /* Layout Constants */
         --dock-mobile-height: 80px;
     }
-
-    /* Light Mode Overrides */
-    .light {
-        --background: 210 40% 98%;
-        --foreground: 222.2 84% 4.9%;
-        --surface-glass-low: rgba(0, 0, 0, 0.02);
-        --surface-glass-med: rgba(0, 0, 0, 0.05);
-        --surface-glass-high: rgba(0, 0, 0, 0.08);
-        --noble-clinical-risk: #d97706;
-        /* Darker amber for readability */
-    }
 }
 
 @layer utilities {
 
-    /* The Master Glass Template */
+    /* The Master Bento-Glass Template */
     .noble-glass {
-        @apply backdrop-blur-[24px] border border-white/10 saturate-[1.1];
-        background: linear-gradient(135deg, var(--surface-glass-high), var(--surface-glass-low));
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        @apply backdrop-blur-xl border border-slate-200/60 saturate-[1.1];
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow:
+            0 1px 3px 0 rgba(0, 0, 0, 0.04),
+            0 1px 2px -1px rgba(0, 0, 0, 0.04);
+    }
+
+    /* White Glass Card */
+    .glass-white {
+        @apply backdrop-blur-xl border border-white/40;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
     }
 
     /* Surgical Cockpit Grid Safe-Zone */
@@ -73,9 +74,9 @@
         padding-bottom: calc(var(--dock-mobile-height) + env(safe-area-inset-bottom) + 2rem);
     }
 
-    /* High-Authority Typography */
+    /* High-Authority Typography (Light Mode) */
     .text-authority-h1 {
-        @apply font-[800] tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400;
+        @apply font-[800] tracking-tight text-slate-900;
     }
 
     /* Scrollbar Eraser */

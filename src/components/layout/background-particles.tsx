@@ -1,46 +1,23 @@
 "use client";
 
-import { motion } from "framer-motion";
-
+/**
+ * Noble White — Clean Static Background
+ * No animated blobs, vignettes, or scanner lines.
+ * Subtle grid texture on a clean white surface.
+ */
 export function BackgroundParticles() {
     return (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-background transition-colors duration-500">
-            {/* Medizinisch Core Radial Gradient (Ported from Reference) */}
-            <div className="absolute inset-0 bg-aurora opacity-100" />
-
-            {/* Subtle Noise Texture Overlay (Premium Matte Finish) */}
-            {/* Premium Scanner Line Overlay */}
-            <div className="absolute inset-x-0 top-0 h-screen pointer-events-none overflow-hidden z-0">
-                <div className="scanner-line w-full opacity-0 dark:opacity-100" />
-            </div>
-
-            <div className="absolute inset-0 bg-grid-bg opacity-[0.03] pointer-events-none" />
-            <div className="absolute inset-0 noise-texture opacity-[0.02] pointer-events-none" />
-
-            {/* Medizinisch Floor Mist / Bottom Glow - Precision Subtlety */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[200%] h-[40vh] bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.04)_0%,rgba(255,255,255,0.01)_40%,transparent_70%)] blur-[100px]" />
-            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-
-            {/* Room Framing (Natural Depth Vignette) */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.01)_0%,rgba(0,0,0,0.5)_100%)] pointer-events-none" />
-
-            {/* Subtle Deep Particles */}
-            <motion.div
-                animate={{
-                    opacity: [0.1, 0.2, 0.1],
-                    scale: [1, 1.1, 1],
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 bg-slate-50 transition-colors duration-300">
+            {/* Subtle Grid Texture (Clinical Precision) */}
+            <div
+                className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px',
                 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[140px]"
             />
-            <motion.div
-                animate={{
-                    opacity: [0.05, 0.1, 0.05],
-                    scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px]"
-            />
+            {/* Very subtle warm glow at top — clinical ambient light */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[30vh] bg-[radial-gradient(ellipse_at_top,rgba(99,102,241,0.03)_0%,transparent_70%)]" />
         </div>
     );
 }

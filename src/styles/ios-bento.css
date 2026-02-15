@@ -1,186 +1,78 @@
 /**
- * Phase 27: iOS Bento Polish
+ * Noble White: iOS Bento Polish
  * 
- * Premium visual effects - Frosted glass, Apple Mesh, and optimized interactions
+ * Premium visual effects — Frosted glass, touch optimization, and micro-animations
+ * Light mode only — all .dark overrides removed
  */
 
 /* =============================================================================
-   FROSTED GLASS EFFECTS (Glassmorphism)
+   FROSTED GLASS EFFECTS (Bento-Glass)
    ============================================================================= */
 
-/* Light Frosted Glass */
+/* Standard Frosted Glass */
 .glass-card {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 4px 6px -1px rgba(0, 0, 0, 0.04),
         0 2px 4px -1px rgba(0, 0, 0, 0.03),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.6);
-}
-
-.dark .glass-card {
-    background: rgba(30, 41, 59, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.2),
-        0 2px 4px -1px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
 }
 
 /* Heavy Frosted Glass */
 .glass-card-heavy {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(40px) saturate(180%);
     -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.08),
-        0 4px 12px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
-}
-
-.dark .glass-card-heavy {
-    background: rgba(30, 41, 59, 0.85);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 4px 12px rgba(0, 0, 0, 0.2),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+        0 8px 32px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.03),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Ultra Light Glass */
 .glass-card-light {
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.dark .glass-card-light {
-    background: rgba(30, 41, 59, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 /* =============================================================================
-   APPLE MESH GRADIENT BACKGROUNDS
+   APPLE MESH GRADIENT BACKGROUNDS (Light Only — Subtle)
    ============================================================================= */
 
 /* Primary Mesh - Blue/Purple */
 .apple-mesh-primary {
     background:
-        radial-gradient(ellipse at 0% 0%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(168, 85, 247, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(236, 72, 153, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 0%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(236, 72, 153, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
         linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-}
-
-.dark .apple-mesh-primary {
-    background:
-        radial-gradient(ellipse at 0% 0%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
 }
 
 /* Medical Mesh - Teal/Cyan */
 .apple-mesh-medical {
     background:
-        radial-gradient(ellipse at 0% 0%, rgba(20, 184, 166, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(34, 211, 238, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 0%, rgba(13, 148, 136, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(59, 130, 246, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 100%, rgba(16, 185, 129, 0.05) 0%, transparent 50%),
         linear-gradient(180deg, #f0fdfa 0%, #ecfeff 100%);
-}
-
-.dark .apple-mesh-medical {
-    background:
-        radial-gradient(ellipse at 0% 0%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(16, 185, 129, 0.12) 0%, transparent 50%),
-        linear-gradient(180deg, #042f2e 0%, #0f172a 100%);
 }
 
 /* Warm Mesh - Orange/Pink */
 .apple-mesh-warm {
     background:
-        radial-gradient(ellipse at 0% 0%, rgba(251, 146, 60, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(244, 114, 182, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(251, 113, 133, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(245, 158, 11, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 0%, rgba(251, 146, 60, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 0%, rgba(244, 114, 182, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(251, 113, 133, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 0% 100%, rgba(245, 158, 11, 0.04) 0%, transparent 50%),
         linear-gradient(180deg, #fffbeb 0%, #fff1f2 100%);
-}
-
-.dark .apple-mesh-warm {
-    background:
-        radial-gradient(ellipse at 0% 0%, rgba(251, 146, 60, 0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 0%, rgba(244, 114, 182, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(251, 113, 133, 0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 0% 100%, rgba(245, 158, 11, 0.08) 0%, transparent 50%),
-        linear-gradient(180deg, #1c1917 0%, #0f172a 100%);
-}
-
-/* Animated Mesh */
-.apple-mesh-animated {
-    background:
-        radial-gradient(ellipse at var(--mesh-x1, 0%) var(--mesh-y1, 0%), rgba(99, 102, 241, 0.3) 0%, transparent 50%),
-        radial-gradient(ellipse at var(--mesh-x2, 100%) var(--mesh-y2, 0%), rgba(168, 85, 247, 0.25) 0%, transparent 50%),
-        radial-gradient(ellipse at var(--mesh-x3, 100%) var(--mesh-y3, 100%), rgba(236, 72, 153, 0.2) 0%, transparent 50%),
-        radial-gradient(ellipse at var(--mesh-x4, 0%) var(--mesh-y4, 100%), rgba(59, 130, 246, 0.25) 0%, transparent 50%),
-        linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
-    animation: meshFloat 20s ease-in-out infinite;
-}
-
-@keyframes meshFloat {
-
-    0%,
-    100% {
-        --mesh-x1: 0%;
-        --mesh-y1: 0%;
-        --mesh-x2: 100%;
-        --mesh-y2: 0%;
-        --mesh-x3: 100%;
-        --mesh-y3: 100%;
-        --mesh-x4: 0%;
-        --mesh-y4: 100%;
-    }
-
-    25% {
-        --mesh-x1: 10%;
-        --mesh-y1: 5%;
-        --mesh-x2: 90%;
-        --mesh-y2: 10%;
-        --mesh-x3: 95%;
-        --mesh-y3: 90%;
-        --mesh-x4: 5%;
-        --mesh-y4: 95%;
-    }
-
-    50% {
-        --mesh-x1: 5%;
-        --mesh-y1: 10%;
-        --mesh-x2: 95%;
-        --mesh-y2: 5%;
-        --mesh-x3: 90%;
-        --mesh-y3: 95%;
-        --mesh-x4: 10%;
-        --mesh-y4: 90%;
-    }
-
-    75% {
-        --mesh-x1: 8%;
-        --mesh-y1: 3%;
-        --mesh-x2: 92%;
-        --mesh-y2: 8%;
-        --mesh-x3: 97%;
-        --mesh-y3: 92%;
-        --mesh-x4: 3%;
-        --mesh-y4: 97%;
-    }
 }
 
 /* =============================================================================
@@ -209,8 +101,8 @@
 .bento-item:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 20px 25px -5px rgba(0, 0, 0, 0.1),
-        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        0 20px 25px -5px rgba(0, 0, 0, 0.06),
+        0 10px 10px -5px rgba(0, 0, 0, 0.03);
 }
 
 /* Bento sizes */
@@ -269,13 +161,13 @@
 }
 
 /* =============================================================================
-   TOUCH-OPTIMIZED 3D MAP INTERACTIONS
+   TOUCH-OPTIMIZED INTERACTIONS — Glove-Ready (44-48px minimum)
    ============================================================================= */
 
 /* Touch targets */
 .touch-target {
-    min-width: 44px;
-    min-height: 44px;
+    min-width: 48px;
+    min-height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -337,20 +229,17 @@
 
     .hover-lift:hover {
         transform: translateY(-4px);
-        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1);
     }
 
-    /* Cursor pointer on interactive elements */
     .interactive {
         cursor: pointer;
     }
 
-    /* Tooltip hover delay */
     .tooltip-delay {
         --tooltip-delay: 0.3s;
     }
 
-    /* Subtle hover highlights */
     .hover-highlight {
         transition: background-color 0.15s ease;
     }
@@ -358,14 +247,10 @@
     .hover-highlight:hover {
         background-color: rgba(0, 0, 0, 0.03);
     }
-
-    .dark .hover-highlight:hover {
-        background-color: rgba(255, 255, 255, 0.03);
-    }
 }
 
 /* =============================================================================
-   PREMIUM MICRO-ANIMATIONS
+   ESSENTIAL MICRO-ANIMATIONS
    ============================================================================= */
 
 /* Smooth fade in */
@@ -385,7 +270,7 @@
     }
 }
 
-/* Pulse animation for alerts */
+/* Pulse animation for alerts only */
 .pulse-soft {
     animation: pulseSoft 2s ease-in-out infinite;
 }
@@ -419,40 +304,8 @@
     }
 }
 
-/* Slide in from right */
-.slide-in-right {
-    animation: slideInRight 0.3s ease-out;
-}
-
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-/* Bounce in */
-.bounce-in {
-    animation: bounceIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-@keyframes bounceIn {
-    from {
-        transform: scale(0);
-    }
-
-    to {
-        transform: scale(1);
-    }
-}
-
 /* =============================================================================
-   ACCESSIBILITY IMPROVEMENTS
+   ACCESSIBILITY
    ============================================================================= */
 
 /* Focus visible styles */
@@ -503,13 +356,4 @@
 /* Apple SF-style numbers */
 .tabular-nums {
     font-variant-numeric: tabular-nums;
-}
-
-/* Proper kerning */
-.tracking-tight {
-    letter-spacing: -0.025em;
-}
-
-.tracking-tighter {
-    letter-spacing: -0.05em;
 }
