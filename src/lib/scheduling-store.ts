@@ -120,6 +120,7 @@ interface SchedulingState extends SchedulingConfig {
     removeChair: (id: string) => void;
 
     // Data Fetching & Real-time
+    fetchClinicConfig: (clinicId: string) => Promise<void>;
     fetchAvailableSlots: (date: string, activeChairs: number, duration?: number) => Promise<{ time: string; capacity: number; available: number }[]>;
     subscribeToAppointments: () => void; // Real-time subscription
     unsubscribeFromAppointments: () => void; // Cleanup
@@ -193,10 +194,51 @@ export const useSchedulingStore = create<SchedulingState>()(
         (set, get) => ({
             ...DEFAULT_CONFIG,
 
-            setOperatingHours: (start, end) => set({ operatingHours: { start, end } }),
-            addBreak: (breakItem) => set((state) => ({ breaks: [...state.breaks, { ...breakItem, id: crypto.randomUUID() }] })),
-            removeBreak: (id) => set((state) => ({ breaks: state.breaks.filter(b => b.id !== id) })),
-            setBookingMode: (mode) => set({ bookingMode: mode }),
+            setOperatingHours: async (start, end) => {
+                set({ operatingHours: { start, end } });
+                const { clinicDetails } = get();
+                if (clinicDetails?.id) {
+                    await supabase.from('clinic_configs').update({
+                        operating_hours: { start, end }
+                    }).eq('clinic_id', clinicDetails.id);
+                }
+            },
+
+            addBreak: async (breakItem) => {
+                const newBreak = { ...breakItem, id: crypto.randomUUID() };
+                const updatedBreaks = [...get().breaks, newBreak];
+                set({ breaks: updatedBreaks });
+
+                const { clinicDetails } = get();
+                if (clinicDetails?.id) {
+                    await supabase.from('clinic_configs').update({
+                        breaks: updatedBreaks
+                    }).eq('clinic_id', clinicDetails.id);
+                }
+            },
+
+            removeBreak: async (id) => {
+                const updatedBreaks = get().breaks.filter(b => b.id !== id);
+                set({ breaks: updatedBreaks });
+
+                const { clinicDetails } = get();
+                if (clinicDetails?.id) {
+                    await supabase.from('clinic_configs').update({
+                        breaks: updatedBreaks
+                    }).eq('clinic_id', clinicDetails.id);
+                }
+            },
+
+            setBookingMode: async (mode) => {
+                set({ bookingMode: mode });
+                const { clinicDetails } = get();
+                if (clinicDetails?.id) {
+                    await supabase.from('clinic_configs').update({
+                        booking_mode: mode
+                    }).eq('clinic_id', clinicDetails.id);
+                }
+            },
+
             toggleAvailabilityVisibility: () => set((state) => ({
                 showDoctorAvailability: !state.showDoctorAvailability
             })),
@@ -209,6 +251,45 @@ export const useSchedulingStore = create<SchedulingState>()(
             addPatient: (patient) => set((state) => ({ patients: [...state.patients, patient] })),
 
             // --- Supabase Actions ---
+
+            fetchClinicConfig: async (clinicId: string) => {
+                const { data, error } = await supabase
+                    .from('clinic_configs')
+                    .select('*')
+                    .eq('clinic_id', clinicId)
+                    .single();
+
+                if (error) {
+                    console.error("Failed to fetch clinic config:", error);
+                    return;
+                }
+
+                if (data) {
+                    set({
+                        clinicDetails: {
+                            id: data.clinic_id,
+                            name: data.name,
+                            slogan: data.slogan,
+                            websiteUrl: data.website_url,
+                            address: data.address,
+                            phone: data.phone,
+                            googleMapsUrl: data.google_maps_url,
+                            googleLocationId: data.google_location_id,
+                            placeId: data.place_id,
+                            lat: data.lat,
+                            lng: data.lng,
+                            isVerified: data.is_verified,
+                            syncStatus: 'success'
+                        },
+                        operatingHours: data.operating_hours || { start: "09:00", end: "18:00" },
+                        bookingMode: data.booking_mode || 'manual',
+                        slotDurationMinutes: data.slot_duration || 30,
+                        activeChairs: data.active_chairs || 3,
+                        operationalChairs: data.operational_chairs || 5,
+                        breaks: data.breaks || []
+                    });
+                }
+            },
 
             addAppointment: async (appt) => {
                 const { clinicDetails } = get();
@@ -240,7 +321,6 @@ export const useSchedulingStore = create<SchedulingState>()(
                     console.error("Failed to sync appointment:", error);
                     // Rollback on error
                     set((state) => ({ appointments: state.appointments.filter(a => a.id !== newAppt.id) }));
-                    // Ideally show toast here via component utilizing store
                 }
             },
 
@@ -292,7 +372,16 @@ export const useSchedulingStore = create<SchedulingState>()(
                 await supabase.from('appointments').update({ doctor_id: doctorId }).eq('id', apptId);
             },
 
-            setChairCapacity: (operational, active) => set({ operationalChairs: operational, activeChairs: active }),
+            setChairCapacity: async (operational, active) => {
+                set({ operationalChairs: operational, activeChairs: active });
+                const { clinicDetails } = get();
+                if (clinicDetails?.id) {
+                    await supabase.from('clinic_configs').update({
+                        operational_chairs: operational,
+                        active_chairs: active
+                    }).eq('clinic_id', clinicDetails.id);
+                }
+            },
 
             addChair: (chair) => set((state) => ({
                 chairs: [...state.chairs, { ...chair, id: crypto.randomUUID(), status: 'AVAILABLE', efficiency: 100 }]
@@ -312,7 +401,6 @@ export const useSchedulingStore = create<SchedulingState>()(
 
                 try {
                     // Call Supabase RPC 'get_available_slots'
-                    // This function should handle the complex logic of checking overlaps against active chairs
                     const { data, error } = await supabase.rpc('get_available_slots', {
                         query_date: date,
                         clinic_id: clinicDetails?.id,
@@ -322,13 +410,11 @@ export const useSchedulingStore = create<SchedulingState>()(
 
                     if (error) throw error;
 
-                    if (data) return data; // Expected [{ time: "09:00", capacity: 3, available: 1 }]
+                    if (data) return data;
                     return [];
 
                 } catch (err) {
                     console.error("RPC Fetch Failed, falling back to basic checks", err);
-                    // Very basic fallback if RPC fails/not deployed yet
-                    // Just return basic slots based on op hours (better than nothing)
                     return [];
                 }
             },
@@ -354,7 +440,6 @@ export const useSchedulingStore = create<SchedulingState>()(
 
                             set((state) => {
                                 if (payload.eventType === 'INSERT') {
-                                    // Prevent implementing duplicate if optimistic update already added it (check ID)
                                     if (state.appointments.find(a => a.id === newAppt.id)) return state;
                                     return { appointments: [...state.appointments, newAppt] };
                                 }
@@ -363,27 +448,33 @@ export const useSchedulingStore = create<SchedulingState>()(
                                         appointments: state.appointments.map(a => a.id === newAppt.id ? { ...a, ...newAppt } : a)
                                     };
                                 }
-                                debugger; // Remove in prod
                                 return state;
                             });
                         }
                     )
                     .subscribe();
-
-                // Save channel ref? Zustand doesn't like non-serializable data in state often.
-                // We'll trust the component to call unsubscribe or handle cleanup via a useEffect calling unsubscribeFromAppointments
-                // Actually, let's store the subscription function closure logic or reliance on the singleton client's handling.
-                // Better pattern: Components use `useEffect` to call `fetchAll` then `subscribe`. 
             },
 
             unsubscribeFromAppointments: () => {
                 supabase.removeChannel(supabase.channel('appointments-realtime'));
             },
 
-            updateClinicDetails: (details) => set({ clinicDetails: details }),
+            updateClinicDetails: async (details) => {
+                set({ clinicDetails: details });
+                if (details?.id) {
+                    // We primarily assume update happens via specific setters or manual DB edits for now, 
+                    // but if we wanted full object sync:
+                    /*
+                    await supabase.from('clinic_configs').update({
+                        name: details.name,
+                        address: details.address,
+                        // ...
+                    }).eq('clinic_id', details.id);
+                    */
+                }
+            },
 
             importFromGoogle: async () => {
-                // ... existing implementation
                 return true;
             },
 
@@ -395,7 +486,7 @@ export const useSchedulingStore = create<SchedulingState>()(
                     .from('patients')
                     .select('id, name, phone, is_new, medical_alerts, tags, last_visit')
                     .eq('clinic_id', clinicDetails.id)
-                    .limit(500); // Limit for performance
+                    .limit(500);
 
                 if (error) {
                     console.error("Failed to fetch patients:", error);
@@ -418,7 +509,6 @@ export const useSchedulingStore = create<SchedulingState>()(
 
             searchPatients: async (query: string) => {
                 const { clinicDetails } = get();
-                // 1. Local Search First (Fastest)
                 const localResults = get().patients.filter(p =>
                     p.name.toLowerCase().includes(query.toLowerCase()) ||
                     p.phone.includes(query)
@@ -426,7 +516,6 @@ export const useSchedulingStore = create<SchedulingState>()(
 
                 if (localResults.length > 0) return localResults;
 
-                // 2. Server Fallback (if not found locally and query is specific)
                 if (query.length < 3 || !clinicDetails?.id) return [];
 
                 const { data, error } = await supabase
@@ -441,37 +530,31 @@ export const useSchedulingStore = create<SchedulingState>()(
                         id: p.id,
                         name: p.name,
                         phone: p.phone,
-                        // Defaults for light fetch
                     }));
-                    // Optionally merge into store? 
-                    // set((state) => ({ patients: [...state.patients, ...serverPatients] }));
                     return serverPatients;
                 }
                 return [];
             }
         }),
         {
-            name: 'noble-scheduling-storage-v3', // Version 3
+            name: 'noble-scheduling-storage-v3',
             version: 3,
             storage: createJSONStorage(() => localStorage),
-            // Migrating from V2 (Mock) to V3 (Real) -> Clear old mock appointments
             migrate: (persistedState: any, version) => {
                 if (version < 3) {
                     return {
                         ...DEFAULT_CONFIG,
                         clinicDetails: persistedState.clinicDetails || DEFAULT_CONFIG.clinicDetails
-                        // Discard old appointments/patients
                     };
                 }
                 return persistedState as SchedulingState;
             },
-            // Security: Only persist clinic config, NOT patient data
             partialize: (state) => ({
                 clinicDetails: state.clinicDetails,
-                bookingMode: state.bookingMode,
+                bookingMode: state.bookingMode, // We still persist locally for offline start, but fetchClinicConfig will override
                 showRevenue: state.showRevenue,
                 operatingHours: state.operatingHours,
-                chairs: state.chairs, // Persist chair config
+                chairs: state.chairs,
                 breaks: state.breaks
             }),
         }

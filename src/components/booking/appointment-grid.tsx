@@ -22,9 +22,52 @@ const SERVICE_IMAGES: Record<string, string> = {
     'emergency': 'https://images.unsplash.com/photo-1516574187841-693083f0cc8d?auto=format&fit=crop&q=80&w=400',
 };
 
-export function AppointmentGrid() {
+import { useEffect } from 'react';
+
+// ... (imports)
+
+interface AppointmentGridProps {
+    clinicId?: string;
+    initialConfig?: any; // Type as Schema or Partial<SchedulingConfig>
+}
+
+export function AppointmentGrid({ clinicId, initialConfig }: AppointmentGridProps) {
     const { state, availableSlots, loadingSlots, actions } = useBooking();
-    const { doctors, clinicDetails } = useSchedulingStore();
+    const store = useSchedulingStore();
+    const { doctors, clinicDetails } = store;
+
+    // Hydration & Real-time Init
+    useEffect(() => {
+        if (initialConfig) {
+            // Hydrate from Server
+            store.updateClinicDetails({
+                id: initialConfig.clinic_id,
+                name: initialConfig.name,
+                address: initialConfig.address,
+                phone: initialConfig.phone,
+                websiteUrl: initialConfig.website_url,
+                googleMapsUrl: initialConfig.google_maps_url,
+                lat: initialConfig.lat,
+                lng: initialConfig.lng,
+                isVerified: initialConfig.is_verified,
+                slogan: initialConfig.slogan
+            });
+            if (initialConfig.operating_hours) store.setOperatingHours(initialConfig.operating_hours.start, initialConfig.operating_hours.end);
+            if (initialConfig.booking_mode) store.setBookingMode(initialConfig.booking_mode);
+            if (initialConfig.active_chairs) store.setChairCapacity(initialConfig.operational_chairs, initialConfig.active_chairs);
+            if (initialConfig.breaks) useSchedulingStore.setState({ breaks: initialConfig.breaks });
+        } else if (clinicId) {
+            // Client-side fetch fallback
+            store.fetchClinicConfig(clinicId);
+        }
+
+        // Real-time subscription for slots/appointments
+        if (clinicId || initialConfig?.clinic_id) {
+            store.subscribeToAppointments();
+        }
+
+        return () => store.unsubscribeFromAppointments();
+    }, [clinicId, initialConfig]); // Run once on mount or if ID changes
 
     // Helper to calculate progress
     const getProgress = () => {

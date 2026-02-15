@@ -46,15 +46,15 @@ export function ClinicSchedulingSettings() {
                         <div className="flex items-center gap-2">
                             <Input
                                 type="time"
-                                value={store.operatingHours.start}
-                                onChange={(e) => store.setOperatingHours(e.target.value, store.operatingHours.end)}
+                                defaultValue={store.operatingHours.start}
+                                onBlur={(e) => store.setOperatingHours(e.target.value, store.operatingHours.end)}
                                 className="w-32"
                             />
                             <span className="text-gray-400">to</span>
                             <Input
                                 type="time"
-                                value={store.operatingHours.end}
-                                onChange={(e) => store.setOperatingHours(store.operatingHours.start, e.target.value)}
+                                defaultValue={store.operatingHours.end}
+                                onBlur={(e) => store.setOperatingHours(store.operatingHours.start, e.target.value)}
                                 className="w-32"
                             />
                         </div>
@@ -155,8 +155,8 @@ export function ClinicSchedulingSettings() {
                                 type="number"
                                 placeholder="e.g. 5"
                                 className="w-full"
-                                value={store.operationalChairs}
-                                onChange={(e) => store.setChairCapacity(parseInt(e.target.value) || 0, store.activeChairs)}
+                                defaultValue={store.operationalChairs}
+                                onBlur={(e) => store.setChairCapacity(parseInt(e.target.value) || 0, store.activeChairs)}
                             />
                             <p className="text-xs text-gray-400">Total physical chairs installed in the clinic.</p>
                         </div>
@@ -166,8 +166,8 @@ export function ClinicSchedulingSettings() {
                                 type="number"
                                 placeholder="e.g. 3"
                                 className="w-full border-brand-primary ring-1 ring-brand-primary/20"
-                                value={store.activeChairs}
-                                onChange={(e) => store.setChairCapacity(store.operationalChairs, parseInt(e.target.value) || 0)}
+                                defaultValue={store.activeChairs}
+                                onBlur={(e) => store.setChairCapacity(store.operationalChairs, parseInt(e.target.value) || 0)}
                             />
                             <p className="text-xs text-gray-400">
                                 This number controls the <b>Automated Booking System</b>.
