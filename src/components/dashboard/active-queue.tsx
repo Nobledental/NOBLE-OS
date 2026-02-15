@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabase"
 import api from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { Plus, CheckCircle2, Activity, Clock, Zap, User } from "lucide-react"
+import { useAuth } from "@/lib/auth-context"
 import { PanzeCard } from "@/components/ui/panze-card"
 import { Badge } from "@/components/ui/badge"
 import { motion, AnimatePresence } from "framer-motion"
@@ -30,7 +31,8 @@ interface ActiveQueueProps {
 
 export function ActiveQueue({ onPatientSelect }: ActiveQueueProps) {
     const queryClient = useQueryClient()
-    const clinicId = "noble-dental-primary"
+    const { user } = useAuth()
+    const clinicId = user?.clinicId || "noble-dental-primary"
 
     const { data: queue, isLoading } = useQuery({
         queryKey: ["activeQueue", clinicId],

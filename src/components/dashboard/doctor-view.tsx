@@ -118,13 +118,13 @@ export function DoctorDashboardView({ startInCockpit = false }: { startInCockpit
                     <div className="space-y-1">
                         <h2 className="text-3xl font-black tracking-tighter text-slate-900">Active Clinical Feed</h2>
                         <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                            <div className="w-2 h-2 rounded-full bg-clinical-progress animate-pulse" />
                             <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Real-time Procedural Audit Active</p>
                         </div>
                     </div>
                     <Button
                         onClick={handleNewSession}
-                        className="rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-black uppercase text-[10px] tracking-widest px-6 h-12 shadow-xl shadow-indigo-100 gap-2"
+                        className="rounded-2xl bg-clinical-action hover:bg-slate-800 text-white font-black uppercase text-[10px] tracking-widest px-6 h-12 shadow-xl shadow-indigo-100 gap-2 transition-all hover:scale-105 active:scale-95"
                     >
                         <Zap size={14} className="fill-white" /> Start New Session
                     </Button>
@@ -221,7 +221,7 @@ function AuditItem({ title, status, sub }: any) {
                 <span className="text-xs font-bold text-slate-200">{title}</span>
                 <Badge className={cn(
                     "text-[8px] font-black px-2 py-0.5 rounded uppercase",
-                    status === 'URGENT' ? "bg-rose-500 text-white" : "bg-indigo-500 text-white"
+                    status === 'URGENT' ? "bg-rose-500 text-white" : "bg-clinical-action text-white"
                 )}>
                     {status}
                 </Badge>

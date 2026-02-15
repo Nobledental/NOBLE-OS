@@ -27,9 +27,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-import {
-    useCockpitStore,
+useCockpitStore,
     type CockpitPhase,
+        PEDIATRIC_AGE_THRESHOLD
 } from '@/lib/clinical-cockpit-store';
 
 // Existing Components — Reused
@@ -470,7 +470,7 @@ function PediatricModule() {
                 <div className="bg-white/60 dark:bg-slate-800/50 rounded-lg p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Dentition Stage</p>
                     <p className="text-sm font-semibold text-slate-900 dark:text-white">
-                        {patient && patient.age < 6 ? 'Primary' : patient && patient.age < 12 ? 'Mixed' : 'Permanent'}
+                        {patient && patient.age < 6 ? 'Primary' : patient && patient.age < PEDIATRIC_AGE_THRESHOLD ? 'Mixed' : 'Permanent'}
                     </p>
                 </div>
                 <div className="bg-white/60 dark:bg-slate-800/50 rounded-lg p-3">
@@ -533,15 +533,15 @@ export function CaseSheetContainer() {
     const patient = useCockpitStore(s => s.patient);
 
     return (
-        <div className="flex flex-col gap-4 h-full">
+        <div className="flex flex-col gap-4 h-full pb-[var(--dock-mobile-height)] md:pb-0">
             {/* Phase Progress Bar */}
             <PhaseProgressBar />
 
             {/* Patient Header */}
             <PatientHeader />
 
-            {/* Pediatric Milestones (Age < 13 or Manual Toggle) */}
-            {((patient && patient.age < 13) || useCockpitStore.getState().showMilestones) && (
+            {/* Pediatric Milestones (Age < constant or Manual Toggle) */}
+            {((patient && patient.age < PEDIATRIC_AGE_THRESHOLD) || useCockpitStore.getState().showMilestones) && (
                 <PediatricMilestones />
             )}
 

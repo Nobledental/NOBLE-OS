@@ -39,6 +39,19 @@
         --white: #ffffff;
         --black: #000000;
 
+        /* Clinical Semantic Palette (Wave 0) */
+        --noble-clinical-risk: #f59e0b;
+        /* Amber-500 */
+        --noble-clinical-progress: #0ea5e9;
+        /* Sky-500 */
+        --noble-clinical-complete: #10b981;
+        /* Emerald-500 */
+        --noble-neutral-action: #6366f1;
+        /* Indigo-500 */
+
+        /* Layout Constants */
+        --dock-mobile-height: 96px;
+
         --neo-vibrant-blue: #007AFF;
         --neo-electric-blue: #5AC8FA;
         --neo-emerald: #34C759;
@@ -159,6 +172,23 @@
         box-shadow:
             0 40px 100px -20px rgba(0, 0, 0, 0.6),
             inset 0 0 0 1px var(--medizinisch-card-border);
+    }
+
+    /* Wave 0: Standard Surface Tokens */
+    .surface-glass-low {
+        @apply backdrop-blur-md bg-white/40 border border-white/20;
+    }
+
+    .surface-glass-med {
+        @apply backdrop-blur-lg bg-white/60 border border-white/30 shadow-sm;
+    }
+
+    .surface-glass-high {
+        @apply backdrop-blur-xl bg-white/80 border border-white/40 shadow-md;
+    }
+
+    .surface-modal {
+        @apply backdrop-blur-xl bg-white/90 border border-white/20 shadow-2xl rounded-[2.5rem];
     }
 
     .card-active-blue {

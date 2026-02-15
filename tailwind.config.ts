@@ -66,7 +66,16 @@ const config: Config = {
                     950: 'var(--slate-950)',
                 },
                 white: 'var(--white)',
+                white: 'var(--white)',
                 black: 'var(--black)',
+
+                // Clinical Semantics (Wave 0)
+                clinical: {
+                    risk: 'var(--noble-clinical-risk)',
+                    progress: 'var(--noble-clinical-progress)',
+                    complete: 'var(--noble-clinical-complete)',
+                    action: 'var(--noble-neutral-action)',
+                },
             },
             borderRadius: {
                 lg: "var(--radius)",

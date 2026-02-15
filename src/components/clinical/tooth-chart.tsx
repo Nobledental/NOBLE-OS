@@ -120,7 +120,7 @@ export const AdultToothChart: React.FC<{
                     state={data[id] || INITIAL_TOOTH_STATE(id)}
                     onSurfaceClick={toggleSurface}
                     onStatusChange={updateStatus}
-                    size={42}
+                    size={52}
                 />
             ))}
         </div>

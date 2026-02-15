@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useBillingStore } from "@/lib/billing-store";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
@@ -9,10 +10,22 @@ import { PDFDownloadButton } from "@/components/billing/pdf-download-button";
 import { Trash2, Printer, Share2, CreditCard, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { UpiPaymentCard } from "@/components/billing/upi-payment-card";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogClose
+} from "@/components/ui/dialog";
+import { useState } from "react";
 
 export function InvoiceGenerator() {
     const { items, removeItem, enableEmi, toggleEmi, getTotals } = useBillingStore();
     const { subtotal, tax, total, monthlyEmi } = getTotals();
+    const [open, setOpen] = useState(false);
 
     const handleFinalize = () => {
         // 1. Generate UPI Intent Link (Standard Format)
@@ -30,6 +43,7 @@ export function InvoiceGenerator() {
         window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
 
         console.log("BILL_FINALIZED", { items, total, upiLink });
+        setOpen(false);
         // toast.success("Invoice shared via WhatsApp!"); 
     }
 
@@ -38,7 +52,7 @@ export function InvoiceGenerator() {
             {/* Header */}
             <div className="p-4 border-b bg-white dark:bg-slate-900">
                 <h3 className="font-semibold text-lg">Invoice #INV-2024-001</h3>
-                <p className="text-xs text-muted-foreground">Dr. Dhivakaran • <span className="text-green-600">Active Session</span></p>
+                <p className="text-xs text-muted-foreground">Dr. Dhivakaran • <span className="text-clinical-complete font-semibold">Active Session</span></p>
             </div>
 
             {/* Line Items */}
@@ -139,13 +153,30 @@ export function InvoiceGenerator() {
                     />
                 </div>
 
-                <Button
-                    onClick={handleFinalize}
-                    className={cn("w-full", enableEmi ? "bg-indigo-600 hover:bg-indigo-700" : "bg-black hover:bg-slate-800")}
-                >
-                    <Share2 className="w-4 h-4 mr-2" />
-                    {enableEmi ? "Start EMI Application" : "Finalize & WhatsApp"}
-                </Button>
+                <Dialog open={open} onOpenChange={setOpen}>
+                    <DialogTrigger asChild>
+                        <Button
+                            className={cn("w-full transition-all active:scale-95", enableEmi ? "bg-clinical-action hover:bg-slate-800" : "bg-slate-900 hover:bg-slate-800 text-white")}
+                        >
+                            <Share2 className="w-4 h-4 mr-2" />
+                            {enableEmi ? "Start EMI Application" : "Finalize & WhatsApp"}
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent className="surface-modal">
+                        <DialogHeader>
+                            <DialogTitle>Finalize Invoice for ₹{total.toLocaleString()}?</DialogTitle>
+                            <DialogDescription>
+                                This will lock the invoice and generate a permanent record. A payment link will be shared via WhatsApp.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+                            <Button onClick={handleFinalize} className="bg-clinical-action text-white">
+                                Confirm & Send
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </div>
     );

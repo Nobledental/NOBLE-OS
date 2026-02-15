@@ -372,7 +372,7 @@ function SuperAppCard({ appt, store, onReschedule }: { appt: any, store: any, on
                     {/* Start Consultation - Only shown to doctors/owners */}
                     {isArrived && canStartConsultation && (
                         <Button
-                            className="w-full h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg transition-all flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white shadow-amber-200"
+                            className="w-full h-12 rounded-xl font-bold uppercase tracking-widest text-xs shadow-lg transition-all flex items-center justify-center gap-2 bg-clinical-action hover:bg-indigo-600 text-white shadow-indigo-200"
                             onClick={() => {
                                 store.updateAppointmentStatus(appt.id, 'ongoing');
                             }}
@@ -485,7 +485,7 @@ function RescheduleDialog({ open, onOpenChange, apptId, store }: any) {
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="bg-white rounded-[2rem] shadow-2xl border-none p-6 text-slate-900 sm:max-w-[425px]">
+            <DialogContent className="surface-modal border-none p-6 text-slate-900 sm:max-w-[425px]">
                 <DialogHeader className="mb-4">
                     <DialogTitle className="text-xl font-serif italic">Reschedule Appointment</DialogTitle>
                 </DialogHeader>

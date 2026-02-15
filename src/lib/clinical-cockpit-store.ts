@@ -22,6 +22,12 @@ import { ToothState } from '@/types/clinical';
 // PHASE & TYPE DEFINITIONS
 // ============================================================================
 
+// ============================================================================
+// PHASE & TYPE DEFINITIONS
+// ============================================================================
+
+export const PEDIATRIC_AGE_THRESHOLD = 14;
+
 export type CockpitPhase =
     | 'PATIENT_SELECT'    // Choose patient / view upcoming appointments
     | 'INTAKE'            // Personal + insurance + medical history + medications
@@ -467,7 +473,7 @@ export const useCockpitStore = create<CockpitState>((set, get) => ({
     selectPatient: (patient) => {
         const visitId = `visit_${Date.now()}_${Math.random().toString(36).substring(7)}`;
         const showMaternity = patient.gender === 'FEMALE';
-        const showMilestones = patient.age < 20;
+        const showMilestones = patient.age < PEDIATRIC_AGE_THRESHOLD;
 
         set({
             patient,
@@ -674,7 +680,7 @@ export const useCockpitStore = create<CockpitState>((set, get) => ({
         if (s.patient) {
             if (s.patient.age > 65) score += 20;
             else if (s.patient.age > 50) score += 10;
-            else if (s.patient.age < 12) score += 15;
+            else if (s.patient.age < PEDIATRIC_AGE_THRESHOLD) score += 15;
         }
 
         // Medication risks
