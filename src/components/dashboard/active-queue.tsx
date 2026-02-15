@@ -32,7 +32,7 @@ interface ActiveQueueProps {
 export function ActiveQueue({ onPatientSelect }: ActiveQueueProps) {
     const queryClient = useQueryClient()
     const { user } = useAuth()
-    const clinicId = user?.clinicId || "noble-dental-primary"
+    const clinicId = user?.selectedClinic?.id || "noble-dental-primary"
 
     const { data: queue, isLoading } = useQuery({
         queryKey: ["activeQueue", clinicId],
