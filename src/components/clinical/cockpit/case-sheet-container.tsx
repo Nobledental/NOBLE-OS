@@ -27,9 +27,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
-useCockpitStore,
+import {
+    useCockpitStore,
     type CockpitPhase,
-        PEDIATRIC_AGE_THRESHOLD
+    PEDIATRIC_AGE_THRESHOLD
 } from '@/lib/clinical-cockpit-store';
 
 // Existing Components — Reused
