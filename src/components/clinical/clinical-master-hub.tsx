@@ -11,7 +11,6 @@ import { Lock, Skull, Syringe, Activity, FileText, Clock, Calendar, Phone, Packa
 
 // Clinical Specialties & Components
 import { CaseQueue } from "@/components/clinical/case-queue";
-// ABHA Card removed
 import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart";
 import CaseSheetRenderer from "@/components/clinical/case-sheet-renderer";
 import PrescriptionEngine from "@/components/clinical/prescription-engine";
@@ -39,23 +38,23 @@ export function ClinicalMasterHub() {
     };
 
     return (
-        <div className="flex-1 space-y-8 min-h-screen flex flex-col p-4 lg:p-10 animate-ios-reveal bg-[#f8fafc]/50">
+        <div className="flex-1 space-y-6 min-h-screen flex flex-col p-4 lg:p-8 bg-white">
             {/* Dynamic Header */}
             <div className="flex items-center justify-between shrink-0 max-w-7xl mx-auto w-full">
                 <div>
-                    <h2 className="text-2xl lg:text-3xl font-sans font-black tracking-tighter text-slate-900">
+                    <h2 className="text-2xl lg:text-3xl font-sans font-extrabold tracking-tight text-slate-900">
                         {selectedPatient ? "Cockpit" : "Command Center"}
-                        <span className="text-indigo-600">.</span>
+                        <span className="text-clinical-action">.</span>
                     </h2>
-                    <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mt-2 flex items-center gap-2">
-                        <Activity className="w-3 h-3 text-indigo-500" />
+                    <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-slate-400 mt-1 flex items-center gap-2">
+                        <Activity className="w-3 h-3 text-clinical-action" />
                         {selectedPatient ? `Live Record: ${selectedPatient.uhid}` : "Choose from active case queue below"}
                     </p>
                 </div>
                 {selectedPatient && (
                     <Button
-                        variant="ghost"
-                        className="rounded-full border border-slate-200 h-14 px-8 font-black text-[11px] uppercase tracking-widest hover:bg-white shadow-sm transition-all"
+                        variant="outline"
+                        className="rounded-2xl border-slate-200 h-12 px-8 font-bold text-[11px] uppercase tracking-widest hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all"
                         onClick={() => setSelectedPatient(null)}
                     >
                         Close Session
@@ -65,68 +64,61 @@ export function ClinicalMasterHub() {
 
             <PermissionGuard permission="can_view_clinical">
                 {!selectedPatient ? (
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-[1600px] mx-auto w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 max-w-[1600px] mx-auto w-full">
                         {/* LEFT COLUMN: COMMAND CENTER WIDGETS */}
-                        <div className="lg:col-span-4 space-y-8">
+                        <div className="lg:col-span-4 space-y-6">
 
-                            {/* 1. CLINICAL RADAR (Status & Alerts) */}
-                            <Card className="p-1 rounded-[2.5rem] bg-white/50 border border-slate-100 backdrop-blur-md shadow-sm">
-                                <div className="bg-slate-900 rounded-[2rem] p-8 text-white relative overflow-hidden">
-                                    {/* Radar Animation Effect */}
-                                    <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-pulse" />
+                            {/* 1. CLINICAL RADAR — Bento-Glass */}
+                            <Card className="p-6 rounded-2xl bg-white/95 backdrop-blur-xl border border-slate-200/60 shadow-sm">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div>
+                                        <p className="text-[10px] font-bold uppercase tracking-widest text-clinical-action mb-1">Clinical Radar</p>
+                                        <h3 className="text-xl font-extrabold tracking-tight text-slate-900">System Optimal</h3>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <span className="relative flex h-2.5 w-2.5">
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-clinical-complete opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-clinical-complete"></span>
+                                        </span>
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">On Duty</span>
+                                    </div>
+                                </div>
 
-                                    <div className="relative z-10 flex flex-col h-full justify-between min-h-[200px]">
-                                        <div className="flex justify-between items-start">
+                                <div className="space-y-3">
+                                    <div className="flex items-center justify-between p-3 rounded-xl bg-amber-50/80 border border-amber-100 hover:bg-amber-50 transition-colors cursor-pointer">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center text-clinical-risk">
+                                                <Activity className="w-4 h-4" />
+                                            </div>
                                             <div>
-                                                <p className="text-[10px] font-black uppercase tracking-widest text-indigo-300 mb-1">Clinical Radar</p>
-                                                <h3 className="text-2xl font-black tracking-tight">System Optimal</h3>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="relative flex h-3 w-3">
-                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                                    <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-                                                </span>
-                                                <span className="text-[10px] font-bold uppercase tracking-widest">On Duty</span>
+                                                <p className="text-sm font-semibold text-slate-800">Medical Alerts</p>
+                                                <p className="text-[10px] text-slate-500">High Risk (HTN/Diabetic)</p>
                                             </div>
                                         </div>
+                                        <Badge className="bg-clinical-risk text-white border-none text-xs font-bold">02</Badge>
+                                    </div>
 
-                                        <div className="space-y-4">
-                                            <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 cursor-pointer">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400">
-                                                        <Activity className="w-4 h-4" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold">Medical Alerts</p>
-                                                        <p className="text-[10px] text-slate-400">High Risk (HTN/Diabetic)</p>
-                                                    </div>
-                                                </div>
-                                                <Badge className="bg-rose-500 text-white border-none">02</Badge>
+                                    <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100 hover:bg-slate-100/50 transition-colors cursor-pointer">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
+                                                <Clock className="w-4 h-4" />
                                             </div>
-
-                                            <div className="flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 cursor-pointer">
-                                                <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400">
-                                                        <Clock className="w-4 h-4" />
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-bold">In-Chair Wait</p>
-                                                        <p className="text-[10px] text-slate-400">Exceeding 15 mins</p>
-                                                    </div>
-                                                </div>
-                                                <Badge className="bg-amber-500 text-black border-none">1</Badge>
+                                            <div>
+                                                <p className="text-sm font-semibold text-slate-800">In-Chair Wait</p>
+                                                <p className="text-[10px] text-slate-500">Exceeding 15 mins</p>
                                             </div>
                                         </div>
+                                        <Badge variant="outline" className="border-slate-200 text-slate-600 text-xs font-bold">1</Badge>
                                     </div>
                                 </div>
                             </Card>
 
-                            {/* 2. APPOINTMENT HORIZON (Past & Future) */}
-                            <Card className="p-6 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm">
+                            {/* 2. APPOINTMENT HORIZON */}
+                            <Card className="p-6 rounded-2xl bg-white/95 border border-slate-200/60 shadow-sm">
                                 <div className="flex justify-between items-center mb-4">
                                     <div>
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-1">Schedule Horizon</p>
-                                        <h3 className="text-lg font-black tracking-tight text-slate-900">Patient Flow</h3>
+                                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">Schedule Horizon</p>
+                                        <h3 className="text-lg font-extrabold tracking-tight text-slate-900">Patient Flow</h3>
                                     </div>
                                     <Badge variant="outline" className="rounded-full border-slate-200 text-slate-500 font-bold px-3 py-1 text-[10px] uppercase">
                                         4 Remaining
@@ -150,12 +142,12 @@ export function ClinicalMasterHub() {
 
                                     {/* Current/Next Appt */}
                                     <div className="relative flex items-center gap-4">
-                                        <div className="w-10 h-10 rounded-full bg-indigo-600 border-4 border-indigo-100 flex items-center justify-center z-10 shadow-lg shadow-indigo-200">
+                                        <div className="w-10 h-10 rounded-full bg-clinical-action border-4 border-indigo-50 flex items-center justify-center z-10 shadow-md">
                                             <Clock className="w-4 h-4 text-white" />
                                         </div>
                                         <div>
-                                            <p className="text-sm font-black text-slate-900">Sarah Jenkins</p>
-                                            <p className="text-[10px] font-bold text-indigo-600 uppercase tracking-wider">11:30 AM • Root Canal (Active)</p>
+                                            <p className="text-sm font-extrabold text-slate-900">Sarah Jenkins</p>
+                                            <p className="text-[10px] font-bold text-clinical-action uppercase tracking-wider">11:30 AM • Root Canal (Active)</p>
                                         </div>
                                     </div>
 
@@ -172,57 +164,57 @@ export function ClinicalMasterHub() {
                                 </div>
                             </Card>
 
-                            {/* 3. CLINICAL INTELLIGENCE (Lab & Follow-up) */}
+                            {/* 3. CLINICAL INTELLIGENCE */}
                             <div className="grid grid-cols-2 gap-4">
-                                <Card className="p-5 rounded-[2rem] bg-indigo-50/50 border border-indigo-100 hover:bg-indigo-50 transition-colors cursor-pointer group">
-                                    <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                        <Package className="w-5 h-5 text-indigo-600" />
+                                <Card className="p-5 rounded-2xl bg-indigo-50/50 border border-indigo-100 hover:bg-indigo-50 transition-colors cursor-pointer group">
+                                    <div className="w-10 h-10 rounded-xl bg-indigo-100 flex items-center justify-center mb-3">
+                                        <Package className="w-5 h-5 text-clinical-action" />
                                     </div>
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-indigo-400 mb-1">Lab Works</p>
-                                    <p className="text-2xl font-black text-slate-900">02</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-widest text-clinical-action mb-1">Lab Works</p>
+                                    <p className="text-2xl font-extrabold text-slate-900 tabular-nums">02</p>
                                     <p className="text-[10px] font-bold text-slate-500 mt-1">Arriving Today</p>
                                 </Card>
 
-                                <Card className="p-5 rounded-[2rem] bg-emerald-50/50 border border-emerald-100 hover:bg-emerald-50 transition-colors cursor-pointer group">
-                                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
-                                        <Phone className="w-5 h-5 text-emerald-600" />
+                                <Card className="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-100 hover:bg-emerald-50 transition-colors cursor-pointer group">
+                                    <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center mb-3">
+                                        <Phone className="w-5 h-5 text-clinical-complete" />
                                     </div>
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-emerald-500 mb-1">Follow-ups</p>
-                                    <p className="text-2xl font-black text-slate-900">05</p>
+                                    <p className="text-[9px] font-bold uppercase tracking-widest text-clinical-complete mb-1">Follow-ups</p>
+                                    <p className="text-2xl font-extrabold text-slate-900 tabular-nums">05</p>
                                     <p className="text-[10px] font-bold text-slate-500 mt-1">Post-op Calls</p>
                                 </Card>
                             </div>
 
-                            {/* 3. QUICK ACTIONS */}
+                            {/* 4. QUICK ACTIONS */}
                             <div className="grid grid-cols-2 gap-4">
-                                <Button variant="outline" className="h-20 rounded-[2rem] border-slate-200 hover:border-slate-300 hover:bg-slate-50 flex flex-col gap-2 items-center justify-center">
-                                    <FileText className="w-5 h-5 text-indigo-600" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">My Reports</span>
+                                <Button variant="outline" className="h-16 rounded-2xl border-slate-200 hover:border-clinical-action/30 hover:bg-indigo-50/50 flex flex-col gap-2 items-center justify-center transition-colors">
+                                    <FileText className="w-5 h-5 text-clinical-action" />
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">My Reports</span>
                                 </Button>
-                                <Button variant="outline" className="h-20 rounded-[2rem] border-slate-200 hover:border-slate-300 hover:bg-slate-50 flex flex-col gap-2 items-center justify-center">
-                                    <Syringe className="w-5 h-5 text-rose-500" />
-                                    <span className="text-[10px] font-black uppercase tracking-widest text-slate-600">Protocols</span>
+                                <Button variant="outline" className="h-16 rounded-2xl border-slate-200 hover:border-clinical-risk/30 hover:bg-amber-50/50 flex flex-col gap-2 items-center justify-center transition-colors">
+                                    <Syringe className="w-5 h-5 text-clinical-risk" />
+                                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-600">Protocols</span>
                                 </Button>
                             </div>
                         </div>
 
                         {/* RIGHT COLUMN: ACTIVE CASE QUEUE */}
                         <div className="lg:col-span-8">
-                            <Card className="bg-white/80 backdrop-blur-xl border border-white/20 shadow-xl rounded-[3rem] p-8 lg:p-10 h-full min-h-[600px] flex flex-col relative overflow-hidden">
+                            <Card className="bg-white/95 backdrop-blur-xl border border-slate-200/60 shadow-sm rounded-2xl p-6 lg:p-8 h-full min-h-[600px] flex flex-col relative overflow-hidden">
 
                                 {/* Header */}
-                                <div className="flex items-center justify-between mb-8 relative z-10">
+                                <div className="flex items-center justify-between mb-6 relative z-10">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
-                                            <Activity className="w-6 h-6" />
+                                        <div className="w-11 h-11 bg-indigo-50 rounded-xl flex items-center justify-center text-clinical-action">
+                                            <Activity className="w-5 h-5" />
                                         </div>
                                         <div>
-                                            <h3 className="text-2xl font-black tracking-tight text-slate-900">Active Live Feed</h3>
+                                            <h3 className="text-xl font-extrabold tracking-tight text-slate-900">Active Live Feed</h3>
                                             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Real-time Patient Flow</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-2">
-                                        <Badge className="h-8 rounded-full px-4 bg-slate-900 text-white font-bold text-[10px] uppercase tracking-widest">
+                                        <Badge className="h-8 rounded-full px-4 bg-clinical-action text-white font-bold text-[10px] uppercase tracking-widest">
                                             3 Waiting
                                         </Badge>
                                         <Badge variant="outline" className="h-8 rounded-full px-4 border-slate-200 text-slate-500 font-bold text-[10px] uppercase tracking-widest">
@@ -232,17 +224,17 @@ export function ClinicalMasterHub() {
                                 </div>
 
                                 {/* Queue Component */}
-                                <div className="flex-1 -mx-4 px-4 overflow-y-auto custom-scrollbar relative z-10">
+                                <div className="flex-1 -mx-4 px-4 overflow-y-auto relative z-10">
                                     <CaseQueue onSelectPatient={setSelectedPatient} />
                                 </div>
 
-                                {/* Bottom Design Element */}
-                                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
+                                {/* Fade-out at bottom */}
+                                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent pointer-events-none z-20" />
                             </Card>
                         </div>
                     </div>
                 ) : (
-                    <div className="flex-1 flex flex-col gap-10 max-w-7xl mx-auto w-full pb-20">
+                    <div className="flex-1 flex flex-col gap-6 max-w-7xl mx-auto w-full pb-20">
                         {/* 1. Patient Profile Quick-View */}
                         <PatientClinicalProfile
                             patientId={selectedPatient.id}
@@ -251,42 +243,42 @@ export function ClinicalMasterHub() {
                         />
 
                         {/* 2. Main Workflow Area */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                             {/* Left Sidebar: Visual Reference (FDI Map) */}
-                            <div className="lg:col-span-4 border border-slate-100 rounded-[3.5rem] bg-white shadow-xl p-10 flex flex-col sticky top-10 transition-all hover:shadow-2xl">
-                                <h3 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-10 flex items-center gap-3">
-                                    <Skull className="w-5 h-5 text-indigo-500" /> FDI Digital Twin
+                            <div className="lg:col-span-4 border border-slate-200/60 rounded-2xl bg-white/95 backdrop-blur-xl shadow-sm p-6 lg:p-8 flex flex-col sticky top-10 transition-shadow hover:shadow-md">
+                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-3">
+                                    <Skull className="w-5 h-5 text-clinical-action" /> FDI Digital Twin
                                 </h3>
-                                <div className="flex items-center justify-center py-10">
-                                    <div className="scale-125 transition-transform hover:scale-130 cursor-crosshair">
+                                <div className="flex items-center justify-center py-6">
+                                    <div className="scale-110 cursor-crosshair">
                                         <UniversalToothChart mode="MIXED" className="border-none shadow-none p-0 bg-transparent" />
                                     </div>
                                 </div>
 
-                                <div className="mt-10 pt-10 border-t border-slate-50 space-y-6">
-                                    <p className="text-[9px] font-black uppercase tracking-widest text-slate-400 text-center">Standard Intelligence</p>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <Button variant="outline" className="rounded-2xl h-14 text-[10px] font-black border-slate-100 hover:bg-slate-900 hover:text-white transition-all">RESTORE</Button>
-                                        <Button variant="outline" className="rounded-2xl h-14 text-[10px] font-black border-slate-100 hover:bg-slate-900 hover:text-white transition-all">EXTRACT</Button>
+                                <div className="mt-6 pt-6 border-t border-slate-100 space-y-4">
+                                    <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 text-center">Quick Actions</p>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <Button variant="outline" className="rounded-xl h-12 text-[10px] font-bold border-slate-200 hover:bg-clinical-action hover:text-white hover:border-clinical-action transition-all">RESTORE</Button>
+                                        <Button variant="outline" className="rounded-xl h-12 text-[10px] font-bold border-slate-200 hover:bg-clinical-action hover:text-white hover:border-clinical-action transition-all">EXTRACT</Button>
                                     </div>
                                 </div>
                             </div>
 
                             {/* Right: Integrated Department Hub */}
-                            <div className="lg:col-span-8 bg-white border border-slate-100 rounded-[3.5rem] shadow-xl flex flex-col overflow-hidden relative transition-all hover:shadow-2xl">
+                            <div className="lg:col-span-8 bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-sm flex flex-col overflow-hidden transition-shadow hover:shadow-md">
                                 <Tabs defaultValue="sheets" className="flex-1 flex flex-col">
-                                    <div className="px-10 py-6 border-b border-slate-50 bg-[#fbfcfd]">
-                                        <TabsList className="bg-transparent gap-4 h-auto p-0 flex flex-nowrap overflow-x-auto scrollbar-hide">
-                                            <TabsTrigger value="sheets" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-slate-900 data-[state=active]:text-white shadow-sm transition-all">Clinical Notes</TabsTrigger>
-                                            <TabsTrigger value="medical" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-slate-900 data-[state=active]:text-white shadow-sm transition-all">History</TabsTrigger>
-                                            <TabsTrigger value="roadmap" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-slate-900 data-[state=active]:text-white shadow-sm transition-all">Roadmap</TabsTrigger>
-                                            <TabsTrigger value="rx" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-rose-600 data-[state=active]:text-white text-rose-600 shadow-sm transition-all border-rose-100">Rx Box</TabsTrigger>
-                                            <TabsTrigger value="specialties" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-indigo-600 data-[state=active]:text-white shadow-sm transition-all">Lab/Smile</TabsTrigger>
-                                            <TabsTrigger value="imaging" className="rounded-full px-6 py-3 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-blue-600 data-[state=active]:text-white shadow-sm transition-all">Imaging</TabsTrigger>
+                                    <div className="px-6 lg:px-8 py-4 border-b border-slate-100 bg-slate-50/50">
+                                        <TabsList className="bg-transparent gap-2 h-auto p-0 flex flex-nowrap overflow-x-auto">
+                                            <TabsTrigger value="sheets" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Clinical Notes</TabsTrigger>
+                                            <TabsTrigger value="medical" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">History</TabsTrigger>
+                                            <TabsTrigger value="roadmap" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Roadmap</TabsTrigger>
+                                            <TabsTrigger value="rx" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-risk data-[state=active]:text-white text-clinical-risk shadow-sm transition-all">Rx Box</TabsTrigger>
+                                            <TabsTrigger value="specialties" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Lab/Smile</TabsTrigger>
+                                            <TabsTrigger value="imaging" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Imaging</TabsTrigger>
                                         </TabsList>
                                     </div>
 
-                                    <div className="flex-1 p-10 custom-scrollbar">
+                                    <div className="flex-1 p-6 lg:p-8">
                                         <TabsContent value="sheets" className="mt-0">
                                             <CaseSheetRenderer patientId={selectedPatient.id} />
                                         </TabsContent>
@@ -299,8 +291,8 @@ export function ClinicalMasterHub() {
                                             <TreatmentRoadmap />
                                         </TabsContent>
 
-                                        <TabsContent value="rx" className="mt-0 space-y-12 pb-20">
-                                            <div className="gap-10 space-y-10">
+                                        <TabsContent value="rx" className="mt-0 space-y-8 pb-20">
+                                            <div className="space-y-8">
                                                 <PrescriptionEngine patientId={selectedPatient.id} />
                                                 <SurgeryNote patientId={selectedPatient.id} />
                                             </div>
@@ -308,10 +300,10 @@ export function ClinicalMasterHub() {
 
                                         <TabsContent value="specialties" className="mt-0">
                                             <Tabs defaultValue="lab" className="w-full">
-                                                <TabsList className="mb-10 bg-slate-50 p-1.5 rounded-3xl border border-slate-100">
-                                                    <TabsTrigger value="lab" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">Digital Lab</TabsTrigger>
-                                                    <TabsTrigger value="smile" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">Smile Studio</TabsTrigger>
-                                                    <TabsTrigger value="share" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">Noble Share</TabsTrigger>
+                                                <TabsList className="mb-6 bg-slate-50 p-1 rounded-xl border border-slate-100">
+                                                    <TabsTrigger value="lab" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Digital Lab</TabsTrigger>
+                                                    <TabsTrigger value="smile" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Smile Studio</TabsTrigger>
+                                                    <TabsTrigger value="share" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Noble Share</TabsTrigger>
                                                 </TabsList>
                                                 <TabsContent value="lab">
                                                     <LabTracker />
@@ -327,11 +319,11 @@ export function ClinicalMasterHub() {
 
                                         <TabsContent value="imaging" className="mt-0 h-full">
                                             <Tabs defaultValue="gallery" className="w-full flex flex-col h-full">
-                                                <div className="flex items-center justify-between mb-10">
-                                                    <TabsList className="bg-slate-50 p-1.5 rounded-3xl border border-slate-100">
-                                                        <TabsTrigger value="gallery" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">Media Hub</TabsTrigger>
-                                                        <TabsTrigger value="radiology" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">AI Diagnostics</TabsTrigger>
-                                                        <TabsTrigger value="bridge" className="rounded-2xl text-[10px] uppercase font-black px-6 py-3">IoT Cloud</TabsTrigger>
+                                                <div className="flex items-center justify-between mb-6">
+                                                    <TabsList className="bg-slate-50 p-1 rounded-xl border border-slate-100">
+                                                        <TabsTrigger value="gallery" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Media Hub</TabsTrigger>
+                                                        <TabsTrigger value="radiology" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">AI Diagnostics</TabsTrigger>
+                                                        <TabsTrigger value="bridge" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">IoT Cloud</TabsTrigger>
                                                     </TabsList>
                                                 </div>
 
@@ -344,7 +336,7 @@ export function ClinicalMasterHub() {
                                                 </TabsContent>
 
                                                 <TabsContent value="bridge" className="mt-0 flex-1">
-                                                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-10 h-full">
+                                                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-full">
                                                         <div className="xl:col-span-3 min-h-[600px]">
                                                             <IntraOralCamera patientId={selectedPatient.id} />
                                                         </div>

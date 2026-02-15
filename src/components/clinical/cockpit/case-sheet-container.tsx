@@ -3,21 +3,13 @@
 /**
  * Case Sheet Container — The Clinical Cockpit Orchestrator
  * 
- * This is the brain of the doctor's workflow. It:
- * 1. Renders phases in sequence: Intake → Exam → Investigation → Diagnosis → Treatment → Execution → Post-Op
- * 2. Conditionally mounts modules based on patient context (age, gender, diagnosis)
- * 3. Integrates EVERY existing clinical engine:
- *    - provisionalDiagnosisEngine (ICD-10)
- *    - AutomationEngine (billing + stock)
- *    - POST_OP_PROTOCOLS (recovery)
- *    - ToothMapStateManager (index auto-update)
- *    - classifyGVBlack, classifyKennedy, interpretPSR
- *    - SmartNote templates
- *    - Drug risk engine
+ * Noble White Edition: Bento-Glass aesthetic, monochrome Indigo stepper,
+ * no framer-motion, all glove-ready (48px) touch targets.
+ * 
+ * Phases: Intake → Exam → Investigation → Diagnosis → Treatment → Execution → Post-Op
  */
 
-import React, { useMemo, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo } from 'react';
 import {
     UserCheck, ClipboardList, Stethoscope, Search,
     Brain, GitBranch, Play, CheckCircle2,
@@ -42,7 +34,7 @@ import { PediatricMilestones } from '@/components/clinical/cockpit/pediatric-mil
 import { OrthoAnalysis } from '@/components/clinical/cockpit/ortho-analysis';
 import { ToothGrid } from '@/components/clinical/cockpit/tooth-grid';
 
-// New Cockpit Components
+// Cockpit Components
 import { PatientIntakePanel } from './patient-intake-panel';
 import { VitalsRecorder } from './vitals-recorder';
 import { DiagnosisEngine } from './diagnosis-engine';
@@ -52,24 +44,24 @@ import { SmartNoteInjector } from './smart-note-injector';
 import { PostOpPanel } from './post-op-panel';
 
 // ============================================================================
-// PHASE METADATA
+// PHASE METADATA — Monochrome Indigo
 // ============================================================================
 
-const PHASES: { id: CockpitPhase; label: string; icon: React.ReactNode; color: string }[] = [
-    { id: 'PATIENT_SELECT', label: 'Patient', icon: <UserCheck className="w-4 h-4" />, color: 'bg-blue-500' },
-    { id: 'INTAKE', label: 'Intake', icon: <ClipboardList className="w-4 h-4" />, color: 'bg-indigo-500' },
-    { id: 'EXAMINATION', label: 'Examine', icon: <Stethoscope className="w-4 h-4" />, color: 'bg-purple-500' },
-    { id: 'INVESTIGATION', label: 'Investigate', icon: <Search className="w-4 h-4" />, color: 'bg-violet-500' },
-    { id: 'DIAGNOSIS', label: 'Diagnose', icon: <Brain className="w-4 h-4" />, color: 'bg-fuchsia-500' },
-    { id: 'TREATMENT_PLAN', label: 'Plan', icon: <GitBranch className="w-4 h-4" />, color: 'bg-pink-500' },
-    { id: 'EXECUTION', label: 'Execute', icon: <Play className="w-4 h-4" />, color: 'bg-rose-500' },
-    { id: 'POST_OP', label: 'Post-Op', icon: <CheckCircle2 className="w-4 h-4" />, color: 'bg-emerald-500' },
+const PHASES: { id: CockpitPhase; label: string; icon: React.ReactNode }[] = [
+    { id: 'PATIENT_SELECT', label: 'Patient', icon: <UserCheck className="w-4 h-4" /> },
+    { id: 'INTAKE', label: 'Intake', icon: <ClipboardList className="w-4 h-4" /> },
+    { id: 'EXAMINATION', label: 'Examine', icon: <Stethoscope className="w-4 h-4" /> },
+    { id: 'INVESTIGATION', label: 'Investigate', icon: <Search className="w-4 h-4" /> },
+    { id: 'DIAGNOSIS', label: 'Diagnose', icon: <Brain className="w-4 h-4" /> },
+    { id: 'TREATMENT_PLAN', label: 'Plan', icon: <GitBranch className="w-4 h-4" /> },
+    { id: 'EXECUTION', label: 'Execute', icon: <Play className="w-4 h-4" /> },
+    { id: 'POST_OP', label: 'Post-Op', icon: <CheckCircle2 className="w-4 h-4" /> },
 ];
 
 const PHASE_ORDER: CockpitPhase[] = PHASES.map(p => p.id);
 
 // ============================================================================
-// PHASE PROGRESS BAR
+// PHASE PROGRESS BAR — Clean monochrome stepper
 // ============================================================================
 
 function PhaseProgressBar() {
@@ -78,27 +70,35 @@ function PhaseProgressBar() {
     const currentIndex = PHASE_ORDER.indexOf(phase);
 
     return (
-        <div className="flex items-center gap-1 p-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl border border-slate-200/50 dark:border-slate-700/50 shadow-lg">
+        <div className="flex items-center gap-1 p-2 bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 shadow-sm">
             {PHASES.map((p, i) => {
                 const isActive = p.id === phase;
                 const isPast = i < currentIndex;
                 const isFuture = i > currentIndex;
 
                 return (
-                    <button
-                        key={p.id}
-                        onClick={() => isPast && setPhase(p.id)}
-                        className={cn(
-                            'flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium transition-all duration-300',
-                            isActive && `${p.color} text-white shadow-md scale-105`,
-                            isPast && 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 cursor-pointer hover:bg-emerald-100',
-                            isFuture && 'bg-slate-50 dark:bg-slate-800/50 text-slate-400 dark:text-slate-500 cursor-not-allowed'
+                    <React.Fragment key={p.id}>
+                        <button
+                            onClick={() => isPast && setPhase(p.id)}
+                            className={cn(
+                                'flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all min-h-[40px]',
+                                isActive && 'bg-clinical-action text-white shadow-md ring-2 ring-clinical-action/20',
+                                isPast && 'bg-emerald-50 text-emerald-700 cursor-pointer hover:bg-emerald-100',
+                                isFuture && 'bg-slate-50 text-slate-400 cursor-not-allowed'
+                            )}
+                            disabled={isFuture}
+                        >
+                            {isPast ? <CheckCircle2 className="w-3.5 h-3.5 text-clinical-complete" /> : p.icon}
+                            <span className="hidden lg:inline">{p.label}</span>
+                        </button>
+                        {/* Connector line between steps */}
+                        {i < PHASES.length - 1 && (
+                            <div className={cn(
+                                'hidden lg:block w-4 h-0.5 rounded-full flex-shrink-0',
+                                i < currentIndex ? 'bg-clinical-complete' : 'bg-slate-200'
+                            )} />
                         )}
-                        disabled={isFuture}
-                    >
-                        {isPast ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> : p.icon}
-                        <span className="hidden lg:inline">{p.label}</span>
-                    </button>
+                    </React.Fragment>
                 );
             })}
         </div>
@@ -106,7 +106,7 @@ function PhaseProgressBar() {
 }
 
 // ============================================================================
-// RISK BANNER
+// RISK BANNER — Clean, no framer-motion
 // ============================================================================
 
 function RiskBanner() {
@@ -131,28 +131,26 @@ function RiskBanner() {
 
     if (allAlerts.length === 0) return null;
 
-    const riskColor = clinicalRiskScore > 70 ? 'border-red-500 bg-red-50 dark:bg-red-950/30'
-        : clinicalRiskScore > 40 ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/30'
-            : 'border-blue-500 bg-blue-50 dark:bg-blue-950/30';
+    const riskColor = clinicalRiskScore > 70
+        ? 'border-l-red-500 bg-red-50'
+        : clinicalRiskScore > 40
+            ? 'border-l-clinical-risk bg-amber-50'
+            : 'border-l-clinical-action bg-indigo-50/50';
 
     return (
-        <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={cn('rounded-xl border-l-4 p-3 mb-4', riskColor)}
-        >
+        <div className={cn('rounded-xl border border-slate-200/60 border-l-4 p-3 mb-4', riskColor)}>
             <div className="flex items-center gap-2 mb-2">
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
-                <span className="font-semibold text-sm text-slate-900 dark:text-slate-100">
+                <AlertTriangle className="w-4 h-4 text-clinical-risk" />
+                <span className="font-semibold text-sm text-slate-900">
                     Clinical Risk Alerts
                 </span>
                 <Badge
                     variant="outline"
                     className={cn(
-                        'text-[10px] ml-auto',
+                        'text-[10px] ml-auto font-bold',
                         clinicalRiskScore > 70 ? 'text-red-600 border-red-300' :
-                            clinicalRiskScore > 40 ? 'text-amber-600 border-amber-300' :
-                                'text-blue-600 border-blue-300'
+                            clinicalRiskScore > 40 ? 'text-clinical-risk border-amber-300' :
+                                'text-clinical-action border-indigo-300'
                     )}
                 >
                     Risk Score: {clinicalRiskScore}%
@@ -160,12 +158,12 @@ function RiskBanner() {
             </div>
             <div className="space-y-1">
                 {allAlerts.map((alert, i) => (
-                    <p key={i} className="text-xs text-slate-700 dark:text-slate-300">
+                    <p key={i} className="text-xs text-slate-700">
                         {alert}
                     </p>
                 ))}
             </div>
-        </motion.div>
+        </div>
     );
 }
 
@@ -182,11 +180,11 @@ function ConditionalModuleBadges() {
     const patient = useCockpitStore(s => s.patient);
 
     const modules = [
-        showMilestones && { label: 'Pediatric', color: 'bg-sky-100 text-sky-700 border-sky-200', icon: <Baby className="w-3 h-3" /> },
-        showMaternity && { label: 'Maternity', color: 'bg-pink-100 text-pink-700 border-pink-200', icon: <Heart className="w-3 h-3" /> },
-        showWARS && { label: 'WARS', color: 'bg-amber-100 text-amber-700 border-amber-200', icon: <Shield className="w-3 h-3" /> },
-        showPAE && { label: 'PAE', color: 'bg-red-100 text-red-700 border-red-200', icon: <Activity className="w-3 h-3" /> },
-        showOrthoAnalysis && { label: 'Ortho', color: 'bg-violet-100 text-violet-700 border-violet-200', icon: <GitBranch className="w-3 h-3" /> },
+        showMilestones && { label: 'Pediatric', color: 'bg-sky-50 text-sky-700 border-sky-200', icon: <Baby className="w-3 h-3" /> },
+        showMaternity && { label: 'Maternity', color: 'bg-pink-50 text-pink-700 border-pink-200', icon: <Heart className="w-3 h-3" /> },
+        showWARS && { label: 'WARS', color: 'bg-amber-50 text-clinical-risk border-amber-200', icon: <Shield className="w-3 h-3" /> },
+        showPAE && { label: 'PAE', color: 'bg-red-50 text-red-700 border-red-200', icon: <Activity className="w-3 h-3" /> },
+        showOrthoAnalysis && { label: 'Ortho', color: 'bg-violet-50 text-violet-700 border-violet-200', icon: <GitBranch className="w-3 h-3" /> },
     ].filter(Boolean) as { label: string; color: string; icon: React.ReactNode }[];
 
     if (modules.length === 0 || !patient) return null;
@@ -204,37 +202,41 @@ function ConditionalModuleBadges() {
 }
 
 // ============================================================================
-// PATIENT HEADER
+// PATIENT HEADER — Bento-Glass, no gradients
 // ============================================================================
 
 function PatientHeader() {
     const patient = useCockpitStore(s => s.patient);
     const visitId = useCockpitStore(s => s.visitId);
     const clearSession = useCockpitStore(s => s.clearSession);
-    const computeRiskScore = useCockpitStore(s => s.computeRiskScore);
 
     if (!patient) return null;
 
     return (
-        <div className="flex items-center justify-between p-3 bg-gradient-to-r from-indigo-50 to-blue-50 dark:from-indigo-950/30 dark:to-blue-950/30 rounded-xl border border-indigo-100/50 dark:border-indigo-800/30">
+        <div className="flex items-center justify-between p-4 bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 shadow-sm">
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-sm">
+                <div className="w-10 h-10 rounded-xl bg-clinical-action flex items-center justify-center text-white font-bold text-sm">
                     {patient.name.charAt(0)}
                 </div>
                 <div>
-                    <h3 className="font-semibold text-sm text-slate-900 dark:text-white">{patient.name}</h3>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    <h3 className="font-semibold text-sm text-slate-900">{patient.name}</h3>
+                    <p className="text-[11px] text-slate-500">
                         {patient.age}y / {patient.gender} · {patient.phone}
                         {patient.bloodGroup && ` · ${patient.bloodGroup}`}
                     </p>
                 </div>
-                <Badge variant="outline" className="text-[10px] ml-2 bg-white/70 text-slate-500">
+                <Badge variant="outline" className="text-[10px] ml-2 bg-white text-slate-500 border-slate-200">
                     Visit: {visitId?.slice(-6)}
                 </Badge>
             </div>
             <div className="flex items-center gap-2">
                 <ConditionalModuleBadges />
-                <Button variant="ghost" size="sm" onClick={clearSession} className="text-xs text-slate-400 hover:text-red-500">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={clearSession}
+                    className="text-xs text-slate-400 hover:text-red-600 hover:border-red-200 hover:bg-red-50 h-10 rounded-xl transition-colors"
+                >
                     End Session
                 </Button>
             </div>
@@ -243,7 +245,7 @@ function PatientHeader() {
 }
 
 // ============================================================================
-// PHASE RENDERERS
+// PHASE RENDERERS — No AnimatePresence, CSS transitions only
 // ============================================================================
 
 function PhaseContent() {
@@ -251,53 +253,40 @@ function PhaseContent() {
     const patient = useCockpitStore(s => s.patient);
 
     return (
-        <AnimatePresence mode="wait">
-            <motion.div
-                key={phase}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -30 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="flex-1"
-            >
-                {phase === 'PATIENT_SELECT' && <PatientSelectPhase />}
-                {phase === 'INTAKE' && patient && <PatientIntakePanel />}
-                {phase === 'EXAMINATION' && patient && <ExaminationPhase />}
-                {phase === 'INVESTIGATION' && patient && <InvestigationPhase />}
-                {phase === 'DIAGNOSIS' && patient && <DiagnosisPhase />}
-                {phase === 'TREATMENT_PLAN' && patient && <TreatmentPlanFork />}
-                {phase === 'EXECUTION' && patient && <ExecutionPhase />}
-                {phase === 'POST_OP' && patient && <PostOpPhase />}
-            </motion.div>
-        </AnimatePresence>
+        <div className="flex-1 animate-in fade-in duration-200">
+            {phase === 'PATIENT_SELECT' && <PatientSelectPhase />}
+            {phase === 'INTAKE' && patient && <PatientIntakePanel />}
+            {phase === 'EXAMINATION' && patient && <ExaminationPhase />}
+            {phase === 'INVESTIGATION' && patient && <InvestigationPhase />}
+            {phase === 'DIAGNOSIS' && patient && <DiagnosisPhase />}
+            {phase === 'TREATMENT_PLAN' && patient && <TreatmentPlanFork />}
+            {phase === 'EXECUTION' && patient && <ExecutionPhase />}
+            {phase === 'POST_OP' && patient && <PostOpPhase />}
+        </div>
     );
 }
 
-// Patient Select Phase
+// Patient Select Phase — Clean empty state
 function PatientSelectPhase() {
-    const selectPatient = useCockpitStore(s => s.selectPatient);
-
-    // In a real implementation, this would fetch from Supabase/Healthflo
-    // For now, this is a placeholder that will be connected to the patient search
     return (
         <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mb-6 shadow-lg shadow-indigo-200">
-                <UserCheck className="w-10 h-10 text-white" />
+            <div className="w-16 h-16 rounded-2xl bg-clinical-action flex items-center justify-center mb-6 shadow-md">
+                <UserCheck className="w-8 h-8 text-white" />
             </div>
-            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-xl font-extrabold text-slate-900 mb-2">
                 Select a Patient
             </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-md">
+            <p className="text-sm text-slate-500 mb-6 max-w-md">
                 Select a patient from today&apos;s appointments or search by name/phone to begin the clinical session.
             </p>
-            <div className="text-xs text-slate-400 bg-slate-50 dark:bg-slate-800 rounded-lg px-4 py-3 max-w-sm">
+            <div className="text-xs text-slate-500 bg-indigo-50/50 border border-indigo-100 rounded-xl px-4 py-3 max-w-sm">
                 💡 <strong>Tip:</strong> Click any patient in the Appointment Queue to auto-load their case sheet with pre-filled history.
             </div>
         </div>
     );
 }
 
-// Examination Phase — Integrates Vitals + Tooth Grid + Conditional Modules
+// Examination Phase — Vitals + Tooth Grid + Conditional Modules
 function ExaminationPhase() {
     const patient = useCockpitStore(s => s.patient);
     const showMaternity = useCockpitStore(s => s.showMaternity);
@@ -305,19 +294,10 @@ function ExaminationPhase() {
 
     return (
         <div className="space-y-6">
-            {/* Vitals Recorder */}
             <VitalsRecorder type="PRE_OP" />
-
-            {/* Oral Examination - Uses existing consultation component */}
             {patient && <ClinicalConsultation patientId={patient.id} />}
-
-            {/* Advanced Intake - Reuse existing component */}
             <AdvancedIntake />
-
-            {/* Conditional: Maternity Module */}
             {showMaternity && <MaternityModule />}
-
-            {/* Conditional: Pediatric Milestones */}
             {showMilestones && <PediatricModule />}
         </div>
     );
@@ -332,12 +312,12 @@ function InvestigationPhase() {
     return (
         <div className="space-y-6">
             {/* IOPA Counter */}
-            <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-4">
+            <div className="bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 p-5 shadow-sm">
                 <div className="flex items-center justify-between mb-3">
-                    <h3 className="font-semibold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                        <Search className="w-4 h-4 text-violet-500" /> IOPA Exposures
+                    <h3 className="font-semibold text-sm text-slate-900 flex items-center gap-2">
+                        <Search className="w-4 h-4 text-clinical-action" /> IOPA Exposures
                     </h3>
-                    <Badge variant="outline" className="text-violet-600 border-violet-200">
+                    <Badge variant="outline" className="text-clinical-action border-indigo-200 font-bold text-[10px]">
                         {iopaCount} exposures → auto-billed
                     </Badge>
                 </div>
@@ -345,7 +325,7 @@ function InvestigationPhase() {
                     <Button
                         size="sm"
                         onClick={incrementIOPA}
-                        className="bg-violet-600 hover:bg-violet-700 text-white"
+                        className="bg-clinical-action hover:bg-indigo-700 text-white h-10 rounded-xl px-4 font-semibold"
                     >
                         + Add IOPA
                     </Button>
@@ -355,23 +335,18 @@ function InvestigationPhase() {
                 </div>
             </div>
 
-            {/* Media Gallery - Reuse existing */}
+            {/* Media Gallery */}
             {patient && <ClinicalMediaVault />}
         </div>
     );
 }
 
-// Diagnosis Phase — Integrates AI Provisional Diagnosis Engine
+// Diagnosis Phase — AI + ICD-10 + Ortho
 function DiagnosisPhase() {
     return (
         <div className="space-y-6">
-            {/* AI Diagnosis Engine — Reuses existing AIProvisionalDiagnosis */}
             <AIProvisionalDiagnosis />
-
-            {/* New Diagnosis Engine with ICD-10 integration */}
             <DiagnosisEngine />
-
-            {/* Orthodontic Analysis (Conditional) */}
             {(useCockpitStore.getState().showOrthoAnalysis) && (
                 <OrthoAnalysis />
             )}
@@ -381,38 +356,34 @@ function DiagnosisPhase() {
 
 // Execution Phase
 function ExecutionPhase() {
-    const showWARS = useCockpitStore(s => s.showWARS);
-    const showPAE = useCockpitStore(s => s.showPAE);
-    const patient = useCockpitStore(s => s.patient);
-
     return (
         <div className="space-y-6">
-            {/* Surgical Suite */}
             <SurgicalSuite />
-
-            {/* Smart Note Injector */}
             <SmartNoteInjector />
         </div>
     );
 }
 
-// Post-Op Phase — Uses PostOpPanel (Vitals + Rx + Notes + Billing)
+// Post-Op Phase
 function PostOpPhase() {
     return <PostOpPanel />;
 }
 
-// Conditional Modules
+// ============================================================================
+// CONDITIONAL MODULES — Light-mode only
+// ============================================================================
+
 function MaternityModule() {
     const maternity = useCockpitStore(s => s.maternity);
     const setMaternity = useCockpitStore(s => s.setMaternity);
 
     return (
-        <div className="bg-pink-50/50 dark:bg-pink-950/20 rounded-xl border border-pink-200/50 dark:border-pink-800/30 p-4">
-            <h4 className="text-sm font-semibold text-pink-800 dark:text-pink-300 mb-3 flex items-center gap-2">
+        <div className="bg-pink-50/50 rounded-2xl border border-pink-200/60 p-4">
+            <h4 className="text-sm font-semibold text-pink-800 mb-3 flex items-center gap-2">
                 <Heart className="w-4 h-4" /> Maternity Vault
             </h4>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <label className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+                <label className="flex items-center gap-2 text-xs text-slate-700 min-h-[40px]">
                     <input
                         type="checkbox"
                         checked={maternity.isPregnant}
@@ -427,7 +398,7 @@ function MaternityModule() {
                         <select
                             value={maternity.pregnancyMonth || ''}
                             onChange={(e) => setMaternity({ pregnancyMonth: Number(e.target.value) })}
-                            className="w-full text-xs rounded border-pink-200 bg-white dark:bg-slate-800 px-2 py-1.5"
+                            className="w-full text-xs rounded-lg border-pink-200 bg-white px-2 py-2"
                         >
                             <option value="">Select</option>
                             {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(m => (
@@ -437,11 +408,11 @@ function MaternityModule() {
                     </div>
                 )}
                 {maternity.isPregnant && maternity.trimester && (
-                    <Badge variant="outline" className="text-[10px] self-center bg-pink-100 text-pink-700 border-pink-200">
+                    <Badge variant="outline" className="text-[10px] self-center bg-pink-50 text-pink-700 border-pink-200">
                         Trimester {maternity.trimester}
                     </Badge>
                 )}
-                <label className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300">
+                <label className="flex items-center gap-2 text-xs text-slate-700 min-h-[40px]">
                     <input
                         type="checkbox"
                         checked={maternity.isNursing}
@@ -459,24 +430,24 @@ function PediatricModule() {
     const patient = useCockpitStore(s => s.patient);
 
     return (
-        <div className="bg-sky-50/50 dark:bg-sky-950/20 rounded-xl border border-sky-200/50 dark:border-sky-800/30 p-4">
-            <h4 className="text-sm font-semibold text-sky-800 dark:text-sky-300 mb-3 flex items-center gap-2">
+        <div className="bg-sky-50/50 rounded-2xl border border-sky-200/60 p-4">
+            <h4 className="text-sm font-semibold text-sky-800 mb-3 flex items-center gap-2">
                 <Baby className="w-4 h-4" /> Pediatric Assessment
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="bg-white/60 dark:bg-slate-800/50 rounded-lg p-3">
+                <div className="bg-white/80 rounded-xl p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Age</p>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{patient?.age} years</p>
+                    <p className="text-sm font-semibold text-slate-900">{patient?.age} years</p>
                 </div>
-                <div className="bg-white/60 dark:bg-slate-800/50 rounded-lg p-3">
+                <div className="bg-white/80 rounded-xl p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Dentition Stage</p>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                    <p className="text-sm font-semibold text-slate-900">
                         {patient && patient.age < 6 ? 'Primary' : patient && patient.age < PEDIATRIC_AGE_THRESHOLD ? 'Mixed' : 'Permanent'}
                     </p>
                 </div>
-                <div className="bg-white/60 dark:bg-slate-800/50 rounded-lg p-3">
+                <div className="bg-white/80 rounded-xl p-3">
                     <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-1">Suggested Chart</p>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                    <p className="text-sm font-semibold text-slate-900">
                         {patient && patient.age < 6 ? 'Deciduous FDI (51-85)' : 'Permanent FDI (11-48)'}
                     </p>
                 </div>
@@ -486,7 +457,7 @@ function PediatricModule() {
 }
 
 // ============================================================================
-// NAVIGATION FOOTER
+// NAVIGATION FOOTER — Glove-ready, semantic
 // ============================================================================
 
 function PhaseNavigation() {
@@ -501,26 +472,24 @@ function PhaseNavigation() {
     if (!patient && phase === 'PATIENT_SELECT') return null;
 
     return (
-        <div className="flex items-center justify-between p-3 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-xl border border-slate-200/50 dark:border-slate-700/50">
+        <div className="flex items-center justify-between p-3 bg-white/95 backdrop-blur-xl rounded-2xl border border-slate-200/60 shadow-sm">
             <Button
                 variant="outline"
-                size="sm"
                 onClick={prevPhase}
                 disabled={isFirst}
-                className="text-xs"
+                className="text-xs h-12 rounded-xl px-5 font-semibold border-slate-200"
             >
-                <ChevronLeft className="w-3.5 h-3.5 mr-1" /> Previous
+                <ChevronLeft className="w-4 h-4 mr-1.5" /> Previous
             </Button>
-            <span className="text-xs text-slate-500">
-                Step {currentIndex + 1} of {PHASE_ORDER.length}: <strong>{PHASES[currentIndex]?.label}</strong>
+            <span className="text-xs text-slate-500 tabular-nums">
+                Step {currentIndex + 1} of {PHASE_ORDER.length}: <strong className="text-slate-700">{PHASES[currentIndex]?.label}</strong>
             </span>
             <Button
-                size="sm"
                 onClick={nextPhase}
                 disabled={isLast}
-                className="text-xs bg-indigo-600 hover:bg-indigo-700 text-white"
+                className="text-xs h-12 rounded-xl px-5 font-semibold bg-clinical-action hover:bg-indigo-700 text-white"
             >
-                Next <ChevronRight className="w-3.5 h-3.5 ml-1" />
+                Next <ChevronRight className="w-4 h-4 ml-1.5" />
             </Button>
         </div>
     );
@@ -541,7 +510,10 @@ export function CaseSheetContainer() {
             {/* Patient Header */}
             <PatientHeader />
 
-            {/* Pediatric Milestones (Age < constant or Manual Toggle) */}
+            {/* Risk Banner */}
+            <RiskBanner />
+
+            {/* Pediatric Milestones (Age < threshold or Manual Toggle) */}
             {((patient && patient.age < PEDIATRIC_AGE_THRESHOLD) || useCockpitStore.getState().showMilestones) && (
                 <PediatricMilestones />
             )}
