@@ -32,6 +32,7 @@ interface User {
     email: string;
     full_name: string;
     role: Role;
+    clinicId?: string;
     modulePermissions: string[];
     featurePermissions: Record<Permission, boolean>;
 }
