@@ -65,9 +65,7 @@ const config: Config = {
                     900: 'var(--slate-900)',
                     950: 'var(--slate-950)',
                 },
-                white: 'var(--white)',
-                white: 'var(--white)',
-                black: 'var(--black)',
+
 
                 // Clinical Semantics (Wave 0)
                 clinical: {
