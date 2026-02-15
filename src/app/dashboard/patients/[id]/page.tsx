@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Loader2, Calendar, Phone, Mail, MapPin, Activity, TrendingUp, LayoutGrid, ClipboardCheck, Stethoscope } from "lucide-react";
+import { Loader2, Calendar, Phone, Mail, MapPin, Activity, TrendingUp, LayoutGrid, ClipboardCheck, Stethoscope, FileText } from "lucide-react";
 import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-store";
 import { useRouter } from "next/navigation";
 import { VitalsChart } from "@/components/clinical/vitals-chart";
@@ -41,6 +41,16 @@ export default function PatientDetailPage() {
     });
 
     const isLoading = isPatientLoading || isRecordsLoading;
+
+    // DURABLE: Fetch cockpit visit history
+    const { data: visitData } = useQuery({
+        queryKey: ['clinicalVisits', id],
+        queryFn: async () => {
+            const res = await api.get(`/clinical/visits/${id}`);
+            return res.data?.data || { visits: [], latestToothState: {} };
+        },
+        enabled: !!id,
+    });
 
     if (isLoading) return (
         <div className="h-screen flex items-center justify-center">
@@ -177,7 +187,7 @@ export default function PatientDetailPage() {
                     {/* Column 2 & 3: Clinical Workspace */}
                     <div className="lg:col-span-2 space-y-6">
                         <Tabs defaultValue="consultation" className="w-full">
-                            <TabsList className="grid w-full grid-cols-3 mb-4 bg-slate-100/50 p-1 rounded-xl">
+                            <TabsList className="grid w-full grid-cols-4 mb-4 bg-slate-100/50 p-1 rounded-xl">
                                 <TabsTrigger value="consultation" className="text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg transition-all">
                                     <ClipboardCheck className="w-3.5 h-3.5 mr-2" />
                                     Consultation
@@ -190,6 +200,10 @@ export default function PatientDetailPage() {
                                     <TrendingUp className="w-3.5 h-3.5 mr-2" />
                                     Vitals History
                                 </TabsTrigger>
+                                <TabsTrigger value="visits" className="text-xs font-bold data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-lg transition-all">
+                                    <FileText className="w-3.5 h-3.5 mr-2" />
+                                    Cockpit Visits
+                                </TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="consultation">
@@ -201,7 +215,12 @@ export default function PatientDetailPage() {
                             </TabsContent>
 
                             <TabsContent value="charts">
-                                <DentitionChart mode={chartMode} data={{}} onChange={() => { }} readOnly />
+                                <DentitionChart
+                                    mode={chartMode}
+                                    data={visitData?.latestToothState || {}}
+                                    onChange={() => { }}
+                                    readOnly
+                                />
                             </TabsContent>
 
                             <TabsContent value="vitals">
@@ -216,6 +235,108 @@ export default function PatientDetailPage() {
                                         <VitalsChart data={vitalsData} />
                                     </CardContent>
                                 </Card>
+                            </TabsContent>
+
+                            {/* DURABLE: Clinical Cockpit Visit History */}
+                            <TabsContent value="visits">
+                                <div className="space-y-4">
+                                    {(!visitData?.visits || visitData.visits.length === 0) ? (
+                                        <Card className="border-dashed border-slate-200">
+                                            <CardContent className="p-8 text-center">
+                                                <p className="text-sm text-slate-400">No cockpit visit records yet</p>
+                                                <p className="text-xs text-slate-300 mt-1">Records appear after completing sessions in the Clinical Cockpit</p>
+                                            </CardContent>
+                                        </Card>
+                                    ) : (
+                                        visitData.visits.map((visit: any, i: number) => (
+                                            <Card key={visit.id || i} className="border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                                                <CardContent className="p-4">
+                                                    <div className="flex items-start justify-between mb-3">
+                                                        <div>
+                                                            <p className="text-xs font-bold text-slate-900">
+                                                                {new Date(visit.createdAt).toLocaleDateString('en-IN', {
+                                                                    day: '2-digit', month: 'short', year: 'numeric'
+                                                                })}
+                                                            </p>
+                                                            <p className="text-[10px] text-slate-400 mt-0.5">
+                                                                Visit ID: {visit.visitId?.slice(0, 20)}…
+                                                            </p>
+                                                        </div>
+                                                        {visit.clinicalRiskScore > 0 && (
+                                                            <Badge
+                                                                className={`text-[10px] font-bold ${visit.clinicalRiskScore > 60
+                                                                        ? 'bg-red-100 text-red-700'
+                                                                        : visit.clinicalRiskScore > 30
+                                                                            ? 'bg-amber-100 text-amber-700'
+                                                                            : 'bg-emerald-100 text-emerald-700'
+                                                                    }`}
+                                                            >
+                                                                Risk {visit.clinicalRiskScore}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Chief Complaints */}
+                                                    {visit.chiefComplaints?.length > 0 && (
+                                                        <div className="mb-2">
+                                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Chief Complaints</p>
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {visit.chiefComplaints.map((cc: any) => (
+                                                                    <Badge key={cc.id} variant="outline" className="text-[10px]">
+                                                                        {cc.label}
+                                                                    </Badge>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Diagnoses */}
+                                                    {visit.diagnoses?.length > 0 && (
+                                                        <div className="mb-2">
+                                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Diagnoses</p>
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {visit.diagnoses.map((dx: any, j: number) => (
+                                                                    <Badge key={j} className="text-[10px] bg-purple-50 text-purple-700 border border-purple-200">
+                                                                        {dx.diagnosis} ({dx.icdCode})
+                                                                    </Badge>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Procedures */}
+                                                    {visit.procedures?.length > 0 && (
+                                                        <div className="mb-2">
+                                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Procedures</p>
+                                                            <div className="flex flex-wrap gap-1">
+                                                                {visit.procedures.map((proc: any) => (
+                                                                    <Badge key={proc.id} className={`text-[10px] ${proc.status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-50 text-slate-600'
+                                                                        }`}>
+                                                                        {proc.name} {proc.status === 'COMPLETED' ? '✓' : ''}
+                                                                    </Badge>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+
+                                                    {/* Prescriptions */}
+                                                    {visit.prescriptions?.length > 0 && (
+                                                        <div>
+                                                            <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Prescriptions</p>
+                                                            <div className="text-xs text-slate-600">
+                                                                {visit.prescriptions.map((rx: any, j: number) => (
+                                                                    <span key={j}>
+                                                                        {rx.name} {rx.dosage}{j < visit.prescriptions.length - 1 ? ' · ' : ''}
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </CardContent>
+                                            </Card>
+                                        ))
+                                    )}
+                                </div>
                             </TabsContent>
                         </Tabs>
 

@@ -17,6 +17,7 @@ import { create } from 'zustand';
 import { persist, devtools } from 'zustand/middleware';
 import { useBillingStore } from '@/lib/billing-store';
 import { ToothState } from '@/types/clinical';
+import api from '@/lib/api';
 
 // ============================================================================
 // PHASE & TYPE DEFINITIONS
@@ -357,6 +358,11 @@ export interface CockpitState {
     toothState: Record<string, ToothState>;
     iopaCount: number;
 
+    // Visit history (loaded from API)
+    visitHistory: any[];
+    isLoadingHistory: boolean;
+    isSaving: boolean;
+
     // Flags
     showMaternity: boolean;
     showMilestones: boolean;
@@ -376,6 +382,10 @@ export interface CockpitState {
     // Actions - Patient
     selectPatient: (patient: PatientContext) => void;
     clearSession: () => void;
+
+    // Actions - Persistence
+    saveVisit: () => Promise<void>;
+    loadPatientHistory: (patientId: string) => Promise<void>;
 
     // Actions - Clinical data
     addChiefComplaint: (complaint: ChiefComplaint) => void;
@@ -446,6 +456,9 @@ export const useCockpitStore = create<CockpitState>((set, get) => ({
     postOpInstructions: '',
     prescriptions: [],
     iopaCount: 0,
+    visitHistory: [],
+    isLoadingHistory: false,
+    isSaving: false,
     showMaternity: false,
     showMilestones: false,
     showWARS: false,
@@ -481,7 +494,7 @@ export const useCockpitStore = create<CockpitState>((set, get) => ({
             phase: 'INTAKE',
             showMaternity,
             showMilestones,
-            // Reset all clinical data
+            // Reset all clinical data for fresh visit
             chiefComplaints: [],
             medications: [],
             riskAlerts: [],
@@ -506,40 +519,127 @@ export const useCockpitStore = create<CockpitState>((set, get) => ({
             showOrthoAnalysis: false,
             consultationMarkedDone: false,
             clinicalRiskScore: 0,
+            visitHistory: [],
+            isLoadingHistory: false,
+            isSaving: false,
+        });
+
+        // ASYNC: Load patient history in the background
+        get().loadPatientHistory(patient.id);
+    },
+
+    clearSession: async () => {
+        // AUTO-SAVE: Persist the full visit before wiping
+        const state = get();
+        if (state.patient && state.visitId) {
+            await state.saveVisit();
+        }
+
+        set({
+            phase: 'PATIENT_SELECT',
+            patient: null,
+            visitId: null,
+            chiefComplaints: [],
+            medications: [],
+            riskAlerts: [],
+            maternity: { isApplicable: false, isPregnant: false, isNursing: false },
+            vitals: [],
+            media: [],
+            diagnoses: [],
+            procedures: [],
+            managementType: null,
+            anesthesiaMode: null,
+            anesthesiaLog: null,
+            warsScore: null,
+            paeChecklist: null,
+            postOpVitals: null,
+            postOpInstructions: '',
+            prescriptions: [],
+            milestones: { primary: {}, permanent: {}, habits: [] },
+            toothState: {},
+            iopaCount: 0,
+            visitHistory: [],
+            isLoadingHistory: false,
+            isSaving: false,
+            showMaternity: false,
+            showMilestones: false,
+            showWARS: false,
+            showPAE: false,
+            showOrthoAnalysis: false,
+            consultationMarkedDone: false,
+            clinicalRiskScore: 0,
         });
     },
 
-    clearSession: () => set({
-        phase: 'PATIENT_SELECT',
-        patient: null,
-        visitId: null,
-        chiefComplaints: [],
-        medications: [],
-        riskAlerts: [],
-        maternity: { isApplicable: false, isPregnant: false, isNursing: false },
-        vitals: [],
-        media: [],
-        diagnoses: [],
-        procedures: [],
-        managementType: null,
-        anesthesiaMode: null,
-        anesthesiaLog: null,
-        warsScore: null,
-        paeChecklist: null,
-        postOpVitals: null,
-        postOpInstructions: '',
-        prescriptions: [],
-        milestones: { primary: {}, permanent: {}, habits: [] },
-        toothState: {},
-        iopaCount: 0,
-        showMaternity: false,
-        showMilestones: false,
-        showWARS: false,
-        showPAE: false,
-        showOrthoAnalysis: false,
-        consultationMarkedDone: false,
-        clinicalRiskScore: 0,
-    }),
+    // ================================================================
+    // PERSISTENCE: Save full cockpit state to API
+    // ================================================================
+    saveVisit: async () => {
+        const state = get();
+        if (!state.patient || !state.visitId) return;
+
+        set({ isSaving: true });
+        try {
+            await api.post('/clinical/visits', {
+                patientId: state.patient.id,
+                visitId: state.visitId,
+                chiefComplaints: state.chiefComplaints,
+                medications: state.medications,
+                vitals: state.vitals,
+                diagnoses: state.diagnoses,
+                procedures: state.procedures,
+                prescriptions: state.prescriptions,
+                toothState: state.toothState,
+                maternity: state.maternity,
+                anesthesiaLog: state.anesthesiaLog,
+                warsScore: state.warsScore,
+                paeChecklist: state.paeChecklist,
+                postOpInstructions: state.postOpInstructions,
+                iopaCount: state.iopaCount,
+                clinicalRiskScore: state.clinicalRiskScore,
+            });
+            console.log('[Cockpit] Visit saved successfully:', state.visitId);
+        } catch (error) {
+            console.error('[Cockpit] Failed to save visit:', error);
+        } finally {
+            set({ isSaving: false });
+        }
+    },
+
+    // ================================================================
+    // PERSISTENCE: Load patient history from API
+    // ================================================================
+    loadPatientHistory: async (patientId: string) => {
+        set({ isLoadingHistory: true });
+        try {
+            const res = await api.get(`/clinical/visits/${patientId}`);
+            const { visits = [], latestToothState = {}, latestMedications = [] } = res.data?.data || {};
+
+            const state = get();
+
+            // Pre-populate tooth chart from cumulative history
+            const mergedToothState = {
+                ...latestToothState,
+                ...state.toothState, // Current session overrides
+            };
+
+            // Carry forward active medications + auto-compute risk alerts
+            const activeMeds = latestMedications.filter((m: any) => m.isActive);
+
+            set({
+                visitHistory: visits,
+                toothState: Object.keys(mergedToothState).length > 0 ? mergedToothState : state.toothState,
+                medications: activeMeds.length > 0 && state.medications.length === 0 ? activeMeds : state.medications,
+            });
+
+            console.log(`[Cockpit] Loaded ${visits.length} past visits for patient ${patientId}`);
+        } catch (error) {
+            // Graceful: If history load fails, continue with empty state
+            console.warn('[Cockpit] Could not load patient history (API may not be configured):', error);
+        } finally {
+            set({ isLoadingHistory: false });
+        }
+    },
 
     // Clinical data
     addChiefComplaint: (complaint) => set(s => ({

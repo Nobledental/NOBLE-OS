@@ -98,6 +98,110 @@ export const createClinicalNoteSchema = z.object({
 });
 
 // ============================================================================
+// Clinical Visit Schemas (Full Cockpit Snapshot)
+// ============================================================================
+
+export const createClinicalVisitSchema = z.object({
+    patientId: z.string(),
+    visitId: z.string(),
+    // Phase data
+    chiefComplaints: z.array(z.object({
+        id: z.string(),
+        label: z.string(),
+        value: z.string(),
+        toothNumbers: z.array(z.number()).optional()
+    })).default([]),
+    medications: z.array(z.object({
+        name: z.string(),
+        dosage: z.string(),
+        frequency: z.string(),
+        duration: z.string().optional(),
+        isActive: z.boolean(),
+        riskFlags: z.array(z.string()).default([])
+    })).default([]),
+    vitals: z.array(z.object({
+        temperature: z.number().optional(),
+        bpSystolic: z.number().optional(),
+        bpDiastolic: z.number().optional(),
+        heartRate: z.number().optional(),
+        spo2: z.number().optional(),
+        respiratoryRate: z.number().optional(),
+        cns: z.string().optional(),
+        recordedAt: z.string(),
+        type: z.enum(['PRE_OP', 'POST_OP', 'ROUTINE'])
+    })).default([]),
+    diagnoses: z.array(z.object({
+        diagnosis: z.string(),
+        icdCode: z.string(),
+        category: z.string(),
+        confidence: z.number(),
+        toothNumbers: z.array(z.number()),
+        isProvisional: z.boolean(),
+        confirmedAt: z.string().optional()
+    })).default([]),
+    procedures: z.array(z.object({
+        id: z.string(),
+        code: z.string(),
+        name: z.string(),
+        category: z.string(),
+        toothNumbers: z.array(z.number()),
+        managementType: z.enum(['MEDICAL', 'SURGICAL']).nullable(),
+        anesthesiaMode: z.enum(['LA', 'GA']).nullable(),
+        status: z.enum(['PLANNED', 'IN_PROGRESS', 'COMPLETED']),
+        restorationMaterial: z.string().optional(),
+        smartNoteTemplate: z.string().optional(),
+        smartNoteEdited: z.string().optional(),
+        completedAt: z.string().optional()
+    })).default([]),
+    prescriptions: z.array(z.object({
+        name: z.string(),
+        dosage: z.string(),
+        frequency: z.string(),
+        duration: z.string().optional(),
+        isActive: z.boolean(),
+        riskFlags: z.array(z.string()).default([])
+    })).default([]),
+    toothState: z.record(z.string(), z.any()).default({}),
+    maternity: z.object({
+        isApplicable: z.boolean(),
+        isPregnant: z.boolean(),
+        pregnancyMonth: z.number().optional(),
+        trimester: z.number().optional(),
+        lmpDate: z.string().optional(),
+        isNursing: z.boolean(),
+        deliveryDate: z.string().optional()
+    }).optional(),
+    anesthesiaLog: z.object({
+        drugType: z.string(),
+        concentration: z.string(),
+        adrenalineRatio: z.string().optional(),
+        dosage: z.string(),
+        blockType: z.string(),
+        notes: z.string().optional()
+    }).nullable().optional(),
+    warsScore: z.object({
+        wintersClass: z.string(),
+        pellGregoryClass: z.string(),
+        pellGregoryPosition: z.string(),
+        ramusRelation: z.string(),
+        angulation: z.number(),
+        difficultyGrade: z.string()
+    }).nullable().optional(),
+    paeChecklist: z.object({
+        asaClass: z.string(),
+        mallampatiScore: z.number(),
+        fitnessStatus: z.string(),
+        allergiesConfirmed: z.boolean(),
+        allergyDetails: z.string().optional(),
+        bloodWorkDone: z.boolean(),
+        notes: z.string().optional()
+    }).nullable().optional(),
+    postOpInstructions: z.string().default(''),
+    iopaCount: z.number().int().nonnegative().default(0),
+    clinicalRiskScore: z.number().nonnegative().default(0),
+});
+
+// ============================================================================
 // Billing Schemas
 // ============================================================================
 
@@ -211,3 +315,4 @@ export type UpdateInventoryInput = z.infer<typeof updateInventorySchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type OtpLoginInput = z.infer<typeof otpLoginSchema>;
 export type PermissionCheckInput = z.infer<typeof permissionCheckSchema>;
+export type CreateClinicalVisitInput = z.infer<typeof createClinicalVisitSchema>;
