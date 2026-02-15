@@ -97,9 +97,83 @@ export const useBillingStore = create<BillingState>((set, get) => ({
     // Mode switching
     switchMode: (mode) => set({ mode }),
 
-    // ... (rest of actions) ...
+    // Actions - Items
+    addItem: (item) => set((state) => ({ items: [...state.items, { ...item, id: crypto.randomUUID() }] })),
+    removeItem: (id) => set((state) => ({ items: state.items.filter((i) => i.id !== id) })),
+    clearItems: () => set({ items: [], autoItems: [], manualItems: [] }),
 
+    // Actions - Automated billing from clinical
+    addFromClinical: (treatment) => {
+        const cost = calculateTreatmentBill(treatment);
+        const newItem: InvoiceItem = {
+            id: crypto.randomUUID(),
+            name: treatment.treatmentName,
+            baseCost: cost.total,
+            taxRate: 0, // Default for medical services
+            quantity: 1,
+            metadata: {
+                source: 'auto_clinical',
+                treatmentRecordId: treatment.id,
+                teethTreated: treatment.selectedTeeth,
+                procedureId: treatment.procedureId,
+                category: treatment.category
+            }
+        };
+        set((state) => ({
+            autoItems: [...state.autoItems, newItem],
+            items: [...state.items, newItem]
+        }));
+    },
+
+    addMultipleFromClinical: (treatments) => {
+        treatments.forEach((t) => get().addFromClinical(t));
+    },
+
+    removeAutoItem: (itemId) => set((state) => ({
+        autoItems: state.autoItems.filter((i) => i.id !== itemId),
+        items: state.items.filter((i) => i.id !== itemId)
+    })),
+
+    // Actions - Context
+    setPatient: (patientId) => set({ patientId }),
+    setAppointment: (appointmentId) => set({ appointmentId }),
+    setConsultant: (id) => set({ consultantId: id }),
+
+    // Actions - Payment
+    toggleEmi: (enabled) => set({ enableEmi: enabled }),
+    setEmiTenure: (months) => set({ emiTenure: months }),
+
+    // Computed (Helper to get totals)
+    getTotals: () => {
+        const { items, discount } = get();
+        const subtotal = items.reduce((sum, item) => sum + (item.baseCost * item.quantity), 0);
+        const tax = 0; // Simplified for now
+        const total = subtotal - discount + tax;
+        const monthlyEmi = get().enableEmi ? total / get().emiTenure : 0;
+        return { subtotal, discount, tax, total, monthlyEmi };
+    },
+
+    // Invoice generation
+    generateInvoiceNumber: () => `INV-${Date.now()}`,
+    prepareForPayment: () => {
+        // Logic to lock items and move to payment gateway
+    },
+    resetBilling: () => set({
+        items: [],
+        autoItems: [],
+        manualItems: [],
+        patientId: null,
+        appointmentId: null,
+        consultantId: null,
+        enableEmi: false,
+        emiTenure: 12,
+        discount: 0
+    }),
+
+    // Discount Action
     setDiscount: (amount) => set({ discount: amount }),
+
+
 
     // Calculate totals
     getTotals: () => {
