@@ -255,126 +255,16 @@ export function ClinicalMasterHub() {
                     </div>
                 ) : (
                     <div className="flex-1 flex flex-col gap-6 max-w-7xl mx-auto w-full pb-20">
-                        {/* 1. Patient Profile Quick-View */}
+                        {/* 1. Patient Profile (Shrunk Header) */}
                         <PatientClinicalProfile
                             patientId={selectedPatient.id}
                             patientName={selectedPatient.name}
                             uhid={selectedPatient.uhid}
                         />
 
-                        {/* 2. Main Workflow Area */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                            {/* Left Sidebar: Visual Reference (FDI Map) */}
-                            <div className="lg:col-span-4 border border-slate-200/60 rounded-2xl bg-white/95 backdrop-blur-xl shadow-sm p-6 lg:p-8 flex flex-col sticky top-10 transition-shadow hover:shadow-md">
-                                <h3 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-3">
-                                    <Skull className="w-5 h-5 text-clinical-action" /> FDI Digital Twin
-                                </h3>
-                                <div className="flex items-center justify-center py-6">
-                                    <div className="scale-110 cursor-crosshair">
-                                        <DentitionChart
-                                            data={useCockpitStore.getState().toothState}
-                                            onChange={useCockpitStore.getState().setToothState}
-                                            mode={getDentitionMode(cockpitPatient?.age ?? 30)}
-                                            readOnly
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="mt-6 pt-6 border-t border-slate-100 space-y-4">
-                                    <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400 text-center">Quick Actions</p>
-                                    <div className="grid grid-cols-2 gap-3">
-                                        <Button variant="outline" className="rounded-xl h-12 text-[10px] font-bold border-slate-200 hover:bg-clinical-action hover:text-white hover:border-clinical-action transition-all">RESTORE</Button>
-                                        <Button variant="outline" className="rounded-xl h-12 text-[10px] font-bold border-slate-200 hover:bg-clinical-action hover:text-white hover:border-clinical-action transition-all">EXTRACT</Button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Right: Integrated Department Hub */}
-                            <div className="lg:col-span-8 bg-white/95 backdrop-blur-xl border border-slate-200/60 rounded-2xl shadow-sm flex flex-col overflow-hidden transition-shadow hover:shadow-md">
-                                <Tabs defaultValue="sheets" className="flex-1 flex flex-col">
-                                    <div className="px-6 lg:px-8 py-4 border-b border-slate-100 bg-slate-50/50">
-                                        <TabsList className="bg-transparent gap-2 h-auto p-0 flex flex-nowrap overflow-x-auto">
-                                            <TabsTrigger value="sheets" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Clinical Notes</TabsTrigger>
-                                            <TabsTrigger value="medical" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">History</TabsTrigger>
-                                            <TabsTrigger value="roadmap" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Roadmap</TabsTrigger>
-                                            <TabsTrigger value="rx" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-risk data-[state=active]:text-white text-clinical-risk shadow-sm transition-all">Rx Box</TabsTrigger>
-                                            <TabsTrigger value="specialties" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Lab/Smile</TabsTrigger>
-                                            <TabsTrigger value="imaging" className="rounded-xl px-4 py-2.5 font-bold text-[10px] uppercase tracking-widest data-[state=active]:bg-clinical-action data-[state=active]:text-white shadow-sm transition-all">Imaging</TabsTrigger>
-                                        </TabsList>
-                                    </div>
-
-                                    <div className="flex-1 p-6 lg:p-8">
-                                        <TabsContent value="sheets" className="mt-0">
-                                            <CaseSheetRenderer patientId={selectedPatient.id} />
-                                        </TabsContent>
-
-                                        <TabsContent value="medical" className="mt-0">
-                                            <MedicalHistoryDetails onBack={() => { }} />
-                                        </TabsContent>
-
-                                        <TabsContent value="roadmap" className="mt-0">
-                                            <TreatmentRoadmap />
-                                        </TabsContent>
-
-                                        <TabsContent value="rx" className="mt-0 space-y-8 pb-20">
-                                            <div className="space-y-8">
-                                                <PrescriptionEngine patientId={selectedPatient.id} />
-                                                <SurgeryNote patientId={selectedPatient.id} />
-                                            </div>
-                                        </TabsContent>
-
-                                        <TabsContent value="specialties" className="mt-0">
-                                            <Tabs defaultValue="lab" className="w-full">
-                                                <TabsList className="mb-6 bg-slate-50 p-1 rounded-xl border border-slate-100">
-                                                    <TabsTrigger value="lab" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Digital Lab</TabsTrigger>
-                                                    <TabsTrigger value="smile" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Smile Studio</TabsTrigger>
-                                                    <TabsTrigger value="share" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Noble Share</TabsTrigger>
-                                                </TabsList>
-                                                <TabsContent value="lab">
-                                                    <LabTracker />
-                                                </TabsContent>
-                                                <TabsContent value="smile">
-                                                    <NobleSmileStudio />
-                                                </TabsContent>
-                                                <TabsContent value="share">
-                                                    <NobleSharePortal />
-                                                </TabsContent>
-                                            </Tabs>
-                                        </TabsContent>
-
-                                        <TabsContent value="imaging" className="mt-0 h-full">
-                                            <Tabs defaultValue="gallery" className="w-full flex flex-col h-full">
-                                                <div className="flex items-center justify-between mb-6">
-                                                    <TabsList className="bg-slate-50 p-1 rounded-xl border border-slate-100">
-                                                        <TabsTrigger value="gallery" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">Media Hub</TabsTrigger>
-                                                        <TabsTrigger value="radiology" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">AI Diagnostics</TabsTrigger>
-                                                        <TabsTrigger value="bridge" className="rounded-lg text-[10px] uppercase font-bold px-4 py-2.5 data-[state=active]:bg-clinical-action data-[state=active]:text-white">IoT Cloud</TabsTrigger>
-                                                    </TabsList>
-                                                </div>
-
-                                                <TabsContent value="gallery" className="mt-0 flex-1">
-                                                    <ClinicalMediaGallery />
-                                                </TabsContent>
-
-                                                <TabsContent value="radiology" className="mt-0 flex-1">
-                                                    <RadiologyReportGen />
-                                                </TabsContent>
-
-                                                <TabsContent value="bridge" className="mt-0 flex-1">
-                                                    <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 h-full">
-                                                        <div className="xl:col-span-3 min-h-[600px]">
-                                                            <IntraOralCamera patientId={selectedPatient.id} />
-                                                        </div>
-                                                        <div className="xl:col-span-1">
-                                                            <UniversalBridgeHub />
-                                                        </div>
-                                                    </div>
-                                                </TabsContent>
-                                            </Tabs>
-                                        </TabsContent>
-                                    </div>
-                                </Tabs>
-                            </div>
+                        {/* 2. Linear Case Sheet Flow (No Sidebar, No Tabs) */}
+                        <div className="bg-white rounded-[2.5rem] border border-slate-200/60 shadow-sm overflow-hidden min-h-[600px]">
+                            <CaseSheetRenderer patientId={selectedPatient.id} />
                         </div>
                     </div>
                 )}

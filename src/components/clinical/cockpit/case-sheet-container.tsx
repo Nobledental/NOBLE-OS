@@ -289,14 +289,79 @@ function PatientSelectPhase() {
 }
 
 // Examination Phase — Vitals + Tooth Grid + Conditional Modules
+import { DentitionChart } from '@/components/clinical/tooth-chart';
+import { getDentitionMode } from '@/types/clinical';
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
+
 function ExaminationPhase() {
     const patient = useCockpitStore(s => s.patient);
     const showMaternity = useCockpitStore(s => s.showMaternity);
     const showMilestones = useCockpitStore(s => s.showMilestones);
+    const toothState = useCockpitStore(s => s.toothState);
+    const setToothState = useCockpitStore(s => s.setToothState);
+    const [isChartOpen, setIsChartOpen] = React.useState(false);
 
     return (
         <div className="space-y-6">
             <VitalsRecorder type="PRE_OP" />
+
+            {/* FDI Digital Twin Trigger */}
+            <div className="bg-slate-900 rounded-2xl p-6 text-white flex items-center justify-between shadow-xl relative overflow-hidden group cursor-pointer transition-all hover:scale-[1.01]" onClick={() => setIsChartOpen(true)}>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/20 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+
+                <div className="flex items-center gap-4 relative z-10">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-md border border-white/10">
+                        <UserRound className="w-6 h-6 text-indigo-300" />
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-lg tracking-tight">FDI Digital Twin</h3>
+                        <p className="text-slate-400 text-xs uppercase tracking-widest font-bold">Interactive 3D Charting</p>
+                    </div>
+                </div>
+
+                <Button
+                    variant="secondary"
+                    className="h-12 px-6 rounded-xl font-bold uppercase tracking-widest text-[10px] items-center gap-2 hidden sm:flex bg-white text-slate-900 border-none hover:bg-indigo-50"
+                >
+                    Open Chart <ChevronRight className="w-3 h-3" />
+                </Button>
+            </div>
+
+            <Dialog open={isChartOpen} onOpenChange={setIsChartOpen}>
+                <DialogContent className="max-w-[95vw] h-[90vh] rounded-[3rem] p-0 border-none bg-slate-50/95 backdrop-blur-3xl overflow-hidden shadow-2xl">
+                    <div className="h-full flex flex-col">
+                        <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-white/50">
+                            <div>
+                                <h2 className="text-2xl font-black text-slate-900 tracking-tight">FDI Digital Twin</h2>
+                                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Interactive Dental Charting • {patient?.name}</p>
+                            </div>
+                            <Button variant="ghost" className="h-12 w-12 rounded-full bg-slate-100 hover:bg-slate-200" onClick={() => setIsChartOpen(false)}>
+                                <ChevronRight className="w-6 h-6 text-slate-600 rotate-90" />
+                            </Button>
+                        </div>
+                        <div className="flex-1 overflow-y-auto p-8 bg-slate-50/50 flex items-center justify-center">
+                            <div className="scale-110 lg:scale-125 origin-top">
+                                <DentitionChart
+                                    data={toothState}
+                                    onChange={setToothState}
+                                    mode={getDentitionMode(patient?.age ?? 30)}
+                                />
+                            </div>
+                        </div>
+                        <div className="p-6 bg-white border-t border-slate-200 flex justify-end gap-4">
+                            <Button variant="outline" className="h-14 rounded-2xl px-8 font-bold text-slate-500 border-slate-200 hover:bg-slate-50" onClick={() => setIsChartOpen(false)}>CANCEL</Button>
+                            <Button className="h-14 rounded-2xl px-8 font-bold bg-slate-900 text-white hover:bg-slate-800 shadow-xl" onClick={() => setIsChartOpen(false)}>SAVE & CLOSE</Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
+
             {patient && <ClinicalConsultation patientId={patient.id} />}
             <AdvancedIntake />
             {showMaternity && <MaternityModule />}
