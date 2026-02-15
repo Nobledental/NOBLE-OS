@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { MOCK_PATIENT_DB, PatientRecord } from "@/lib/data/patient-db";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, UserPlus, Filter, FileText, Activity, Clock } from "lucide-react";
+import { Search, UserPlus, Filter, FileText, Activity, Clock, Stethoscope } from "lucide-react";
+import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-store";
 import {
     Table,
     TableBody,
@@ -37,6 +39,22 @@ export default function PatientsPage() {
         p.phone.includes(searchTerm) ||
         p.healthFloId.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const router = useRouter();
+    const selectCockpitPatient = useCockpitStore(s => s.selectPatient);
+
+    const handleStartSession = (patient: PatientRecord) => {
+        const ctx: PatientContext = {
+            id: patient.id,
+            name: patient.name,
+            age: patient.age,
+            gender: (patient.gender as 'MALE' | 'FEMALE' | 'OTHER') || 'MALE',
+            phone: patient.phone,
+            isRegistered: true,
+        };
+        selectCockpitPatient(ctx);
+        router.push('/dashboard/clinical');
+    };
 
     return (
         <div className="flex-1 space-y-6 pb-20">
@@ -100,9 +118,22 @@ export default function PatientsPage() {
                                     </Badge>
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    <Button variant="ghost" size="sm" className="text-indigo-600 font-bold text-xs">
-                                        OPEN FILE
-                                    </Button>
+                                    <div className="flex items-center justify-end gap-2">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="text-clinical-action font-bold text-xs gap-1 h-10"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleStartSession(patient);
+                                            }}
+                                        >
+                                            <Stethoscope className="w-3.5 h-3.5" /> Session
+                                        </Button>
+                                        <Button variant="ghost" size="sm" className="text-slate-500 font-bold text-xs h-10">
+                                            OPEN FILE
+                                        </Button>
+                                    </div>
                                 </TableCell>
                             </TableRow>
                         ))}

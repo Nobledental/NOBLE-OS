@@ -14,10 +14,12 @@ import {
     UserCheck, ClipboardList, Stethoscope, Search,
     Brain, GitBranch, Play, CheckCircle2,
     ChevronLeft, ChevronRight, AlertTriangle,
-    Shield, Activity, Baby, Heart
+    Shield, Activity, Baby, Heart, UserRound
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { CaseQueue } from '@/components/clinical/case-queue';
+
 import { cn } from '@/lib/utils';
 import {
     useCockpitStore,
@@ -501,6 +503,36 @@ function PhaseNavigation() {
 
 export function CaseSheetContainer() {
     const patient = useCockpitStore(s => s.patient);
+    const selectPatient = useCockpitStore(s => s.selectPatient);
+
+    // No-Patient Guard: Show inline patient selection
+    if (!patient) {
+        return (
+            <div className="flex flex-col gap-6 h-full items-center justify-center py-12 px-6">
+                <div className="text-center space-y-2 mb-4">
+                    <div className="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center mx-auto mb-4">
+                        <UserRound className="w-8 h-8 text-clinical-action" />
+                    </div>
+                    <h2 className="text-2xl font-bold tracking-tight text-slate-900">Select a Patient</h2>
+                    <p className="text-sm text-slate-500 max-w-md mx-auto">
+                        Choose a patient from the active queue below to begin the clinical workflow.
+                    </p>
+                </div>
+                <div className="w-full max-w-2xl">
+                    <CaseQueue onSelectPatient={(p) => {
+                        selectPatient({
+                            id: p.id,
+                            name: p.name,
+                            age: 30,
+                            gender: 'MALE',
+                            phone: '',
+                            isRegistered: true,
+                        });
+                    }} />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col gap-4 h-full pb-[var(--dock-mobile-height)] md:pb-0">

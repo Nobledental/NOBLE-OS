@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { PermissionGuard } from "@/components/security/permission-guard";
 import { Lock, Skull, Syringe, Activity, FileText, Clock, Calendar, Phone, Package, CheckCircle2 } from "lucide-react";
+import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-store";
 
 // Clinical Specialties & Components
 import { CaseQueue } from "@/components/clinical/case-queue";
@@ -31,11 +32,29 @@ import { ClinicalMediaGallery } from "@/components/clinical/clinical-media-galle
 import { RadiologyReportGen } from "@/components/clinical/radiology-report-gen";
 
 export function ClinicalMasterHub() {
-    const [selectedPatient, setSelectedPatient] = useState<{ id: string; name: string; uhid: string } | null>(null);
+    const selectCockpitPatient = useCockpitStore(s => s.selectPatient);
+    const clearSession = useCockpitStore(s => s.clearSession);
+    const cockpitPatient = useCockpitStore(s => s.patient);
 
-    const handleSelectPatient = () => {
-        setSelectedPatient({ id: "p123", name: "Dhivakaran R", uhid: "NH-102938" });
+    // Bridge: CaseQueue patient click → cockpit store
+    const handleSelectPatient = (queuePatient: { id: string; name: string; uhid: string }) => {
+        const patient: PatientContext = {
+            id: queuePatient.id,
+            name: queuePatient.name,
+            age: 30, // Will be enriched when API data is available
+            gender: 'MALE',
+            phone: '',
+            isRegistered: true,
+        };
+        selectCockpitPatient(patient);
     };
+
+    // Use cockpit patient for selected state (synced)
+    const selectedPatient = cockpitPatient ? {
+        id: cockpitPatient.id,
+        name: cockpitPatient.name,
+        uhid: `NH-${cockpitPatient.id.slice(-6).toUpperCase()}`
+    } : null;
 
     return (
         <div className="flex-1 space-y-6 min-h-screen flex flex-col p-4 lg:p-8 bg-white">
@@ -55,7 +74,7 @@ export function ClinicalMasterHub() {
                     <Button
                         variant="outline"
                         className="rounded-2xl border-slate-200 h-12 px-8 font-bold text-[11px] uppercase tracking-widest hover:bg-red-50 hover:text-red-600 hover:border-red-200 transition-all"
-                        onClick={() => setSelectedPatient(null)}
+                        onClick={() => clearSession()}
                     >
                         Close Session
                     </Button>
@@ -225,7 +244,7 @@ export function ClinicalMasterHub() {
 
                                 {/* Queue Component */}
                                 <div className="flex-1 -mx-4 px-4 overflow-y-auto relative z-10">
-                                    <CaseQueue onSelectPatient={setSelectedPatient} />
+                                    <CaseQueue onSelectPatient={handleSelectPatient} />
                                 </div>
 
                                 {/* Fade-out at bottom */}

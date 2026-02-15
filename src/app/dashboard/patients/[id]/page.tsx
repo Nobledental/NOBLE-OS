@@ -7,7 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Loader2, Calendar, Phone, Mail, MapPin, Activity, TrendingUp, LayoutGrid, ClipboardCheck } from "lucide-react";
+import { Loader2, Calendar, Phone, Mail, MapPin, Activity, TrendingUp, LayoutGrid, ClipboardCheck, Stethoscope } from "lucide-react";
+import { useCockpitStore, type PatientContext } from "@/lib/clinical-cockpit-store";
+import { useRouter } from "next/navigation";
 import { VitalsChart } from "@/components/clinical/vitals-chart";
 import { ClinicalTimeline } from "@/components/clinical/timeline";
 import { ClinicalConsultation } from "@/components/clinical/consultation";
@@ -18,6 +20,8 @@ import { UniversalToothChart } from "@/components/clinical/universal-tooth-chart
 
 export default function PatientDetailPage() {
     const { id } = useParams();
+    const router = useRouter();
+    const selectCockpitPatient = useCockpitStore(s => s.selectPatient);
 
     const { data: patient, isLoading: isPatientLoading } = useQuery({
         queryKey: ['patient', id],
@@ -91,8 +95,25 @@ export default function PatientDetailPage() {
                         </div>
                     </div>
                     <div className="flex space-x-2">
-                        <Button variant="outline" className="border-slate-200 text-slate-700">Schedule Visit</Button>
-                        <Button className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100">New Clinical Note</Button>
+                        <Button variant="outline" className="border-slate-200 text-slate-700 h-12 rounded-xl">Schedule Visit</Button>
+                        <Button
+                            className="bg-clinical-action hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100 h-12 rounded-xl gap-2 font-bold"
+                            onClick={() => {
+                                const ctx: PatientContext = {
+                                    id: patient.id || (id as string),
+                                    name: patient.name,
+                                    age: patient.age || 30,
+                                    gender: (patient.gender as 'MALE' | 'FEMALE' | 'OTHER') || 'MALE',
+                                    phone: patient.pii?.primary_contact || patient.user?.phone || '',
+                                    bloodGroup: patient.blood_group,
+                                    isRegistered: true,
+                                };
+                                selectCockpitPatient(ctx);
+                                router.push('/dashboard/clinical');
+                            }}
+                        >
+                            <Stethoscope className="w-4 h-4" /> Open Cockpit
+                        </Button>
                     </div>
                 </div>
 
