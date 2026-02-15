@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-
 import tailwindAnimate from "tailwindcss-animate";
 
 const config: Config = {
@@ -12,10 +11,9 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', '"SF Pro Display"', '"San Francisco"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                serif: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"San Francisco"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
-                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', '"Liberation Mono"', '"Courier New"', 'monospace'],
-                display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"San Francisco"', 'sans-serif'],
+                sans: ['"SF Pro Text"', '"SF Pro Display"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                display: ['"SF Pro Display"', '"SF Pro Text"', '-apple-system', 'sans-serif'],
+                mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             colors: {
                 border: "hsl(var(--border))",
@@ -51,34 +49,35 @@ const config: Config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
-                // Dynamic Slate Logic for Themes
-                slate: {
-                    50: 'var(--slate-50)',
-                    100: 'var(--slate-100)',
-                    200: 'var(--slate-200)',
-                    300: 'var(--slate-300)',
-                    400: 'var(--slate-400)',
-                    500: 'var(--slate-500)',
-                    600: 'var(--slate-600)',
-                    700: 'var(--slate-700)',
-                    800: 'var(--slate-800)',
-                    900: 'var(--slate-900)',
-                    950: 'var(--slate-950)',
-                },
-
-
-                // Clinical Semantics (Wave 0)
+                // Noble Clinical Semantics
                 clinical: {
-                    risk: 'var(--noble-clinical-risk)',
-                    progress: 'var(--noble-clinical-progress)',
-                    complete: 'var(--noble-clinical-complete)',
-                    action: 'var(--noble-neutral-action)',
+                    risk: 'var(--noble-clinical-risk)',      // Amber: Risk Only
+                    progress: 'var(--noble-clinical-progress)', // Teal: Active
+                    complete: 'var(--noble-clinical-complete)', // Emerald: Success
+                    action: 'var(--noble-neutral-action)',     // Indigo/Blue: Navigation/CTA
                 },
+                // Glass Surface Intensities
+                glass: {
+                    low: 'var(--surface-glass-low)',
+                    med: 'var(--surface-glass-med)',
+                    high: 'var(--surface-glass-high)',
+                },
+            },
+            fontWeight: {
+                'title-xl': '800',
+                'title-lg': '700',
+                'section': '700',
+                'label': '600',
+                'btn': '700',
             },
             borderRadius: {
                 lg: "var(--radius)",
                 md: "calc(var(--radius) - 2px)",
                 sm: "calc(var(--radius) - 4px)",
+            },
+            // Safe-Area Padding for Tablet/Mobile Bottom Docks
+            spacing: {
+                'dock-safe': 'calc(var(--dock-mobile-height) + env(safe-area-inset-bottom) + 1rem)',
             },
             keyframes: {
                 "accordion-down": {

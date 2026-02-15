@@ -4,6 +4,7 @@
 
 @layer base {
     :root {
+        /* Core System Palette */
         --background: 222.2 84% 4.9%;
         --foreground: 210 40% 98%;
         --card: 222.2 84% 4.9%;
@@ -23,339 +24,77 @@
         --border: 217.2 32.6% 17.5%;
         --input: 217.2 32.6% 17.5%;
         --ring: 212.7 26.8% 83.9%;
-        --radius: 0.5rem;
+        --radius: 1.25rem;
+        /* Smoother, more organic corners for Bento */
 
-        --slate-50: #f8fafc;
-        --slate-100: #f1f5f9;
-        --slate-200: #e2e8f0;
-        --slate-300: #cbd5e1;
-        --slate-400: #94a3b8;
-        --slate-500: #64748b;
-        --slate-600: #475569;
-        --slate-700: #334155;
-        --slate-800: #1e293b;
-        --slate-900: #0f172a;
-        --slate-950: #020617;
-        --white: #ffffff;
-        --black: #000000;
-
-        /* Clinical Semantic Palette (Wave 0) */
+        /* Noble Clinical Semantics (STRICT GOVERNANCE) */
         --noble-clinical-risk: #f59e0b;
-        /* Amber-500 */
+        /* Amber: Risk/Warning ONLY */
         --noble-clinical-progress: #0ea5e9;
-        /* Sky-500 */
+        /* Sky: In-Flight Procedures */
         --noble-clinical-complete: #10b981;
-        /* Emerald-500 */
+        /* Emerald: Success/Finalized */
         --noble-neutral-action: #6366f1;
-        /* Indigo-500 */
+        /* Indigo: Routine Navigation */
+
+        /* Glass Intensity Tokens */
+        --surface-glass-low: rgba(255, 255, 255, 0.03);
+        --surface-glass-med: rgba(255, 255, 255, 0.08);
+        --surface-glass-high: rgba(255, 255, 255, 0.15);
+        --medizinisch-glass-blur: blur(24px);
 
         /* Layout Constants */
-        --dock-mobile-height: 96px;
-
-        --neo-vibrant-blue: #007AFF;
-        --neo-electric-blue: #5AC8FA;
-        --neo-emerald: #34C759;
-        --neo-lavender: #AF52DE;
-
-        --medizinisch-blue: #0A84FF;
-        --medizinisch-bg-radial: radial-gradient(circle at 20% 30%, #506176 0%, #1a1f2b 55%, #0E121B 100%);
-        --medizinisch-card-bg: rgba(22, 28, 38, 0.6);
-        --medizinisch-card-border: rgba(255, 255, 255, 0.05);
-        --medizinisch-glass-blur: blur(24px);
-        --medizinisch-active-blue: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+        --dock-mobile-height: 80px;
     }
 
+    /* Light Mode Overrides */
     .light {
-        --background: 0 0% 100%;
+        --background: 210 40% 98%;
         --foreground: 222.2 84% 4.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
-        --primary: 222.2 47.4% 11.2%;
-        --primary-foreground: 210 40% 98%;
-        --secondary: 210 40% 96.1%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
-        --muted: 210 40% 96.1%;
-        --muted-foreground: 215.4 16.3% 46.9%;
-        --accent: 210 40% 96.1%;
-        --accent-foreground: 222.2 47.4% 11.2%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 222.2 84% 4.9%;
-
-        --slate-50: #f8fafc;
-        --slate-100: #f1f5f9;
-        --slate-200: #e2e8f0;
-        --slate-300: #cbd5e1;
-        --slate-400: #94a3b8;
-        --slate-500: #64748b;
-        --slate-600: #475569;
-        --slate-700: #334155;
-        --slate-800: #1e293b;
-        --slate-900: #0f172a;
-        --slate-950: #020617;
-
-        --white: #ffffff;
-        --black: #000000;
-
-        --medizinisch-bg-radial: radial-gradient(circle at 50% 50%, #f8fafc 0%, #f1f5f9 100%);
-        --medizinisch-card-bg: rgba(255, 255, 255, 0.8);
-        --medizinisch-card-border: rgba(0, 0, 0, 0.05);
-        --medizinisch-active-blue: linear-gradient(135deg, rgba(219, 234, 254, 1) 0%, rgba(239, 246, 255, 1) 100%);
-    }
-
-    .neo-rose {
-        --background: 0 0% 100%;
-        --foreground: 340 20% 20%;
-
-        --slate-50: #4a0416;
-        --slate-100: #831843;
-        --slate-200: #9d174d;
-        --slate-300: #be185d;
-        --slate-400: #db2777;
-        --slate-500: #f472b6;
-        --slate-600: #f9a8d4;
-        --slate-700: #fbcfe8;
-        --slate-800: #fce7f3;
-        --slate-900: #fff1f2;
-        --slate-950: #fff0f5;
-
-        --white: #881337;
-        --black: #fff0f5;
-
-        --medizinisch-bg-radial: radial-gradient(circle at 50% 50%, #fff1f2 0%, #ffe4e6 100%);
-        --medizinisch-card-bg: rgba(255, 255, 255, 0.6);
-        --medizinisch-card-border: rgba(244, 114, 182, 0.2);
-        --medizinisch-active-blue: linear-gradient(135deg, rgba(252, 231, 243, 1) 0%, rgba(255, 241, 242, 1) 100%);
-        --neo-vibrant-blue: #db2777;
-        --medizinisch-blue: #db2777;
-    }
-}
-
-@layer base {
-    * {
-        @apply border-border;
-    }
-
-    body {
-        @apply bg-background text-foreground;
+        --surface-glass-low: rgba(0, 0, 0, 0.02);
+        --surface-glass-med: rgba(0, 0, 0, 0.05);
+        --surface-glass-high: rgba(0, 0, 0, 0.08);
+        --noble-clinical-risk: #d97706;
+        /* Darker amber for readability */
     }
 }
 
 @layer utilities {
-    .glass-neo {
-        @apply backdrop-blur-3xl rounded-[2.5rem] saturate-[1.8];
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
-        box-shadow:
-            0 8px 32px 0 rgba(31, 38, 135, 0.07),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+
+    /* The Master Glass Template */
+    .noble-glass {
+        @apply backdrop-blur-[24px] border border-white/10 saturate-[1.1];
+        background: linear-gradient(135deg, var(--surface-glass-high), var(--surface-glass-low));
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
     }
 
-    /* Refined Glass White for Medical Studio blend */
-    .glass-white {
-        @apply backdrop-blur-[50px] rounded-[2.5rem] saturate-[1.2];
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.45);
-        box-shadow:
-            0 10px 40px -10px rgba(0, 0, 0, 0.03),
-            inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+    /* Surgical Cockpit Grid Safe-Zone */
+    .cockpit-safe-area {
+        padding-bottom: calc(var(--dock-mobile-height) + env(safe-area-inset-bottom) + 2rem);
     }
 
-    .glass-frost {
-        @apply backdrop-blur-[24px] rounded-[2.5rem] saturate-[1.2];
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        background: var(--medizinisch-card-bg);
-        box-shadow:
-            0 40px 100px -20px rgba(0, 0, 0, 0.6),
-            inset 0 0 0 1px var(--medizinisch-card-border);
+    /* High-Authority Typography */
+    .text-authority-h1 {
+        @apply font-[800] tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-slate-400;
     }
 
-    /* Wave 0: Standard Surface Tokens */
-    .surface-glass-low {
-        @apply backdrop-blur-md bg-white/40 border border-white/20;
+    /* Scrollbar Eraser */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
     }
 
-    .surface-glass-med {
-        @apply backdrop-blur-lg bg-white/60 border border-white/30 shadow-sm;
-    }
-
-    .surface-glass-high {
-        @apply backdrop-blur-xl bg-white/80 border border-white/40 shadow-md;
-    }
-
-    .surface-modal {
-        @apply backdrop-blur-xl border border-white/20 shadow-2xl rounded-[2.5rem];
-        background-color: rgba(255, 255, 255, 0.9);
-    }
-
-    .card-active-blue {
-        background: var(--medizinisch-active-blue);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        box-shadow: 0 20px 50px -20px rgba(30, 58, 138, 0.4);
-    }
-
-    /* Medical Studio Background */
-    .bg-aurora {
-        background: var(--slate-950);
-        background-image: var(--medizinisch-bg-radial);
-        background-attachment: fixed;
-        background-size: 100% 100%;
-    }
-
-    /* Legacy Mesh Backgrounds - Retained for compatibility */
-    .bg-apple-mesh,
-    .bg-mesh-gradient {
-        background: #fdfcfb;
-        background-image:
-            radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
-            radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
-            radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%),
-            radial-gradient(at 0% 50%, hsla(280, 100%, 20%, 0.6) 0, transparent 50%),
-            radial-gradient(at 50% 50%, hsla(202, 100%, 20%, 0.9) 0, transparent 50%),
-            radial-gradient(at 100% 50%, hsla(350, 100%, 20%, 0.8) 0, transparent 50%),
-            radial-gradient(at 0% 100%, hsla(11, 100%, 20%, 0.7) 0, transparent 50%),
-            radial-gradient(at 50% 100%, hsla(210, 100%, 20%, 0.9) 0, transparent 50%),
-            radial-gradient(at 100% 100%, hsla(225, 100%, 25%, 0.9) 0, transparent 50%);
-    }
-
-    .text-ios-gradient {
-        @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-200 to-white font-black;
-    }
-
-    .animate-float {
-        animation: float 6s ease-in-out infinite;
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
     }
 }
 
-@keyframes float {
-    0% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
-
-    100% {
-        transform: translateY(0px);
-    }
-}
-
-/* Smooth Page Transitions */
-@keyframes page-enter {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-    main {
-        animation: page-enter 0.3s ease-out;
-    }
-}
-
-@keyframes dream-fade-in-up {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes dream-scale-in {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes scanner-slide {
-    0% {
-        transform: translateY(-100%) scaleX(2);
-        opacity: 0;
-    }
-
-    10% {
-        opacity: 0.1;
-    }
-
-    50% {
-        opacity: 0.2;
-    }
-
-    90% {
-        opacity: 0.1;
-    }
-
-    100% {
-        transform: translateY(100vh) scaleX(2);
-        opacity: 0;
-    }
-}
-
-.scanner-line {
-    height: 2px;
-    background: linear-gradient(90deg,
-            transparent 0%,
-            rgba(10, 132, 255, 0.2) 20%,
-            rgba(10, 132, 255, 0.4) 50%,
-            rgba(10, 132, 255, 0.2) 80%,
-            transparent 100%);
-    box-shadow: 0 0 20px rgba(10, 132, 255, 0.2);
-    animation: scanner-slide 8s linear infinite;
-    filter: blur(1px);
-}
-
-.card-glow-success {
-    box-shadow: 0 0 30px -10px rgba(16, 185, 129, 0.2);
-}
-
-.card-glow-warning {
-    box-shadow: 0 0 30px -10px rgba(245, 158, 11, 0.2);
-}
-
-.card-glow-info {
-    box-shadow: 0 0 30px -10px rgba(10, 132, 255, 0.2);
-}
-
-/* --- GLOBAL SCROLLBAR HIDE (User Request: "No scroll bar options ever") --- */
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
-
-/* Enforce global scrollbar hiding */
-::-webkit-scrollbar {
-    width: 0px;
-    height: 0px;
-    background: transparent;
-    display: none;
-}
-
+/* Enforce Global Scrollbar Hide per user request */
 * {
     -ms-overflow-style: none !important;
     scrollbar-width: none !important;
+}
+
+::-webkit-scrollbar {
+    display: none !important;
 }
