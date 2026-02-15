@@ -43,7 +43,7 @@ export function ClinicalMasterHub() {
             {/* Dynamic Header */}
             <div className="flex items-center justify-between shrink-0 max-w-7xl mx-auto w-full">
                 <div>
-                    <h2 className="text-3xl lg:text-5xl font-sans font-black tracking-tighter text-slate-900">
+                    <h2 className="text-2xl lg:text-3xl font-sans font-black tracking-tighter text-slate-900">
                         {selectedPatient ? "Cockpit" : "Command Center"}
                         <span className="text-indigo-600">.</span>
                     </h2>
