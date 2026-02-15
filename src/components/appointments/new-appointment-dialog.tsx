@@ -19,6 +19,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { format, addDays } from "date-fns";
 
 
+// Quick Access Procedures for the "New Patient" tab
+const QUICK_PROCEDURES = PROCEDURE_TYPES.slice(0, 4);
 
 export function NewAppointmentDialog() {
     const [open, setOpen] = useState(false);
