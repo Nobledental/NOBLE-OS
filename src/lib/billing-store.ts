@@ -104,21 +104,12 @@ export const useBillingStore = create<BillingState>((set, get) => ({
 
     // Actions - Automated billing from clinical
     addFromClinical: (treatment) => {
-        const cost = calculateTreatmentBill(treatment);
-        const newItem: InvoiceItem = {
-            id: crypto.randomUUID(),
-            name: treatment.treatmentName,
-            baseCost: cost.total,
-            taxRate: 0, // Default for medical services
-            quantity: 1,
-            metadata: {
-                source: 'auto_clinical',
-                treatmentRecordId: treatment.id,
-                teethTreated: treatment.selectedTeeth,
-                procedureId: treatment.procedureId,
-                category: treatment.category
-            }
-        };
+        const newItem = calculateTreatmentBill(treatment);
+
+        // Avoid adding duplicates based on treatment ID
+        const exists = get().autoItems.some(i => i.metadata?.treatmentRecordId === treatment.id);
+        if (exists) return;
+
         set((state) => ({
             autoItems: [...state.autoItems, newItem],
             items: [...state.items, newItem]
